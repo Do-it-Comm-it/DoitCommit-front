@@ -5,6 +5,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import dotenv from 'dotenv';
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
@@ -17,12 +18,7 @@ const config: Configuration = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
-      '@hooks': path.resolve(__dirname, 'hooks'),
-      '@components': path.resolve(__dirname, 'components'),
-      '@layouts': path.resolve(__dirname, 'layouts'),
-      '@pages': path.resolve(__dirname, 'pages'),
-      '@utils': path.resolve(__dirname, 'utils'),
-      '@typings': path.resolve(__dirname, 'typings'),
+      '@src': path.resolve(__dirname, 'src'),
     },
   },
   entry: {
@@ -48,7 +44,11 @@ const config: Configuration = {
           ],
           env: {
             development: {
-              plugins: ['babel-plugin-styled-components', require.resolve('react-refresh/babel')],
+              plugins: [
+                'babel-plugin-styled-components',
+                '@babel/plugin-transform-runtime',
+                require.resolve('react-refresh/babel'),
+              ],
             },
           },
         },
@@ -78,6 +78,9 @@ const config: Configuration = {
     new HtmlWebpackPlugin({
       template: path.resolve('./index.html'),
       filename: 'index.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed),
     }),
   ],
   output: {
