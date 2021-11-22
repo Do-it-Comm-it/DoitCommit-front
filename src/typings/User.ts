@@ -1,5 +1,9 @@
-export interface User {
-  uid: string;
-  displayName: string;
-  idToken: string;
+import { ITodos } from './Todos';
+
+export interface IUser {
+  isEnrolled: boolean; // 초기정보가 존재하는지, 닉네임이 null이 아닌지?
+  nickname: string | null; // 초기정보 등록 전 까진 null
+  todos: ITodos[] | null;
+  stack: string[]; // 기술스택
+  position: string[]; // 직군
 }
