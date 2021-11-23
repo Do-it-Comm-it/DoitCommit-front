@@ -1,4 +1,6 @@
 export interface ITodos {
+  id: number;
   title: string;
-  completed: boolean;
+  isCompleted: boolean;
 }
+export type TodoList = ITodos[];
