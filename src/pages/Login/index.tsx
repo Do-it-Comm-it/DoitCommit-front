@@ -4,7 +4,7 @@ import { useAuthentication } from '@src/hooks/useAuthentication';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 const Login = () => {
-  const { user } = useAuthentication();
+  const user = useAuthentication();
   const history = useHistory();
   useEffect(() => {
     if (user) {
