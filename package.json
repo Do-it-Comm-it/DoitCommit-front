@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack serve --env development",
-    "build": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack server --mode development --open --hot",
+    "build": "webpack --mode production",
+    "prestart": "cross-env NODE_ENV=production npm run build",
+    "start": "webpack --mode development"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
+    "axios": "^0.24.0",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "firebase": "^9.4.1",
@@ -29,6 +31,7 @@
     "react-router-dom": "^5.3.0",
     "recoil": "^0.5.2",
     "swr": "^1.0.1",
+    "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4",
     "webpack-bundle-analyzer": "^4.5.0"
