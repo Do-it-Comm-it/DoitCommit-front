@@ -14,7 +14,7 @@ export const fetcherWithToken = async (url: string, token: string) => {
     .then((res) => res.data)
     .catch((err) => {
       if (err) {
-        throw new Error('There is error on your site');
+        console.error(err.message)
       }
     });
 };

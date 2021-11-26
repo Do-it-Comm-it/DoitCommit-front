@@ -1,5 +1,5 @@
-import { atom } from 'recoil';
 import { IUser } from '@src/typings/User';
+import { atom } from 'recoil';
 
 export const userAtom = atom<IUser | null>({
   key: 'user',

@@ -7,7 +7,7 @@ const Home = () => {
   const history = useHistory();
   useEffect(() => {
     // 유저는 있지만 닉네임은 없을 때
-    if (user && !user.nickname) {
+    if (user && !user.isEnrolled) {
       history.push('/register'); // 초기 등록 페이지로.
     }
   }, [user]);

@@ -10,10 +10,17 @@ module.exports = {
     historyApiFallback: true,
     port: 3000,
     static: {
-      directory: path.join(__dirname, 'index.html'),
+      directory: path.resolve(__dirname),
     },
     compress: true,
     hot: true,
+    // proxy: {
+    //   '/api/': {
+    //     target: 'http://localhost:8000',
+    //     changeOrigin: true,
+    //     ws: false
+    //   }
+    // }
   },
   entry: {
     app: path.join(__dirname, 'client.tsx'),
