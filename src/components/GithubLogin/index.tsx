@@ -1,10 +1,23 @@
 // Github Login Button Component
 import { signInGithub } from '@src/service/firebase';
 import React from 'react';
-import GithubButton from 'react-github-login-button';
+import { GithubButton } from './styles';
 
+import { BsGithub } from 'react-icons/bs';
 const GithubLogin = () => {
-  return <GithubButton type="dark" label="Sign in with Github" onClick={signInGithub} />;
+  return (
+    <GithubButton onClick={signInGithub}>
+      <BsGithub
+        style={{
+          marginRight: '37px',
+          verticalAlign: 'middle',
+          width: '42px',
+          height: '42px',
+        }}
+      />
+      <span>깃허브 아이디로 로그인</span>
+    </GithubButton>
+  );
 };
 
 export default GithubLogin;
