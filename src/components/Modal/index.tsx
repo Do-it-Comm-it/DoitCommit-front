@@ -1,23 +1,27 @@
+import { modalAtom } from '@src/recoil/atom/modal';
 import React, { useCallback } from 'react';
-import { RecoilState } from 'recoil';
+import { RecoilState, useRecoilState, useRecoilValue } from 'recoil';
 import { CloseModalButton, CreateModal } from './styles';
 
 interface Props {
-  show: boolean;
-  onCloseModal: () => void;
   children: React.ReactNode;
 }
 
-const Modal = ({ show, onCloseModal, children }: Props) => {
+const Modal = ({ children }: Props) => {
+  const [show, setShow] = useRecoilState(modalAtom);
+  const closeModal = useCallback(() => {
+    setShow(false);
+  }, []);
+
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
   if (!show) return null;
 
   return (
-    <CreateModal onClick={onCloseModal}>
+    <CreateModal onClick={closeModal}>
       <div onClick={stopPropagation}>
-        <CloseModalButton onClick={onCloseModal}>&times;</CloseModalButton>
+        <CloseModalButton onClick={closeModal} width="45" height="45" />
         {children}
       </div>
     </CreateModal>

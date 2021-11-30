@@ -2,17 +2,18 @@
 import React from 'react';
 import { signInGoogle } from '@src/service/firebase';
 import { GoogleButton } from './styles';
-import { IoLogoGoogle } from 'react-icons/io';
-
+import GoogleLogo from '@src/assets/google.svg';
 const GoogleLogin = () => {
   return (
     <GoogleButton onClick={signInGoogle}>
-      <IoLogoGoogle
+      <GoogleLogo
+        width="42"
+        height="42"
         style={{
-          marginRight: '50px',
+          position: 'absolute',
+          left: '98px',
+          padding: '5.25px',
           verticalAlign: 'middle',
-          width: '42px',
-          height: '42px',
         }}
       />
       <span>구글 아이디로 로그인</span>

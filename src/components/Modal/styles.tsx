@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import CloseButton from '@src/assets/close_button.svg';
 export const CreateModal = styled.div`
   position: fixed;
   text-align: center;
@@ -27,12 +27,9 @@ export const CreateModal = styled.div`
   }
 `;
 
-export const CloseModalButton = styled.button`
+export const CloseModalButton = styled(CloseButton)`
   position: absolute;
-  right: 10px;
-  top: 6px;
-  background: transparent;
-  border: none;
-  font-size: 30px;
+  right: 0%;
+  bottom: 34rem;
   cursor: pointer;
 `;

@@ -2,19 +2,21 @@
 import { signInGithub } from '@src/service/firebase';
 import React from 'react';
 import { GithubButton } from './styles';
-
-import { BsGithub } from 'react-icons/bs';
+import GithubLogo from '@src/assets/github.svg';
 const GithubLogin = () => {
   return (
     <GithubButton onClick={signInGithub}>
-      <BsGithub
+      <GithubLogo
+        width="42"
+        height="42"
         style={{
-          marginRight: '37px',
+          position: 'absolute',
+          left: '98px',
+          padding: '5.25px',
           verticalAlign: 'middle',
-          width: '42px',
-          height: '42px',
         }}
       />
+
       <span>깃허브 아이디로 로그인</span>
     </GithubButton>
   );
