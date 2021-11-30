@@ -5,7 +5,7 @@ import GithubLogin from '../GithubLogin';
 
 const LoginModal = () => {
   return (
-    <Modal>
+    <Modal id="login">
       <div>
         <p style={{ color: '#AACD06', marginTop: '86px', fontSize: '30px', fontWeight: 700 }}>두잇커밋</p>
         <div style={{ color: '#353535', marginTop: '44px', fontSize: '18px' }}>
