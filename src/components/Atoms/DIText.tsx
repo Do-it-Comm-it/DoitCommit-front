@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 
-type DIInputProps = {
+type DITextProps = {
   fontColor?: string;
   fontSize?: number;
   fontWeight?: number;
@@ -9,7 +9,7 @@ type DIInputProps = {
   children?: React.ReactNode;
 };
 
-const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 1, children }: DIInputProps) => {
+const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 1, children }: DITextProps) => {
   return (
     <Text fontColor={fontColor} fontSize={fontSize} fontWeight={fontWeight}>
       {children}

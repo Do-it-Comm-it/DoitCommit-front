@@ -17,6 +17,7 @@ const Home = () => {
   useEffect(() => {
     // 유저는 있지만 닉네임은 없을 때
     if (user && !user.isEnrolled) {
+      console.log('test');
       // history.push('/register'); // 초기 등록 페이지로.
       setModal({ id: 'register', visible: true });
     }

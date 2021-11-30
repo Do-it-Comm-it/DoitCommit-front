@@ -5,10 +5,9 @@ import { CloseModalButton, CreateModal } from './styles';
 
 interface Props {
   children: React.ReactNode;
-  id: string;
 }
 
-const Modal = ({ id, children }: Props) => {
+const Modal = ({ children }: Props) => {
   const [show, setShow] = useRecoilState(modalAtom);
   const closeModal = useCallback(() => {
     setShow({ ...show, visible: false });
