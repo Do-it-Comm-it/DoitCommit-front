@@ -6,12 +6,7 @@ export interface IUser {
   todos: ITodos[] | null;
   stacks: string[] | null; // 기술스택
   position: string[] | null; // 직군
-}
-
-export type UserResponse = {
-  id: string;
-  email: string | null;
-  name: string | null;
   image: string | null;
   token: string | null;
-};
+  email: string | null;
+}

@@ -9,7 +9,8 @@ type DITextProps = {
   children?: React.ReactNode;
 };
 
-const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 1, children }: DITextProps) => {
+//TO DO: Add font-family , Linkable Text(Optional)
+const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 400, children }: DITextProps) => {
   return (
     <Text fontColor={fontColor} fontSize={fontSize} fontWeight={fontWeight}>
       {children}
@@ -17,7 +18,12 @@ const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 1, children 
   );
 };
 
-const Text = styled.p<{ fontSize: number; fontColor: string; fontWeight: number }>`
+/*
+INFO: font-weight information
+  normal : 400
+  bold: 700
+*/
+const Text = styled.pre<{ fontSize: number; fontColor: string; fontWeight: number }>`
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   color: ${({ fontColor }) => fontColor};

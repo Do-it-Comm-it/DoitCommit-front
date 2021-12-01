@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 
 type DIInputProps = {
+  defaultValue?: string;
   width?: number;
   height?: number;
   borderRadius?: number;
@@ -9,27 +10,35 @@ type DIInputProps = {
   onChange: (text: string) => void;
 };
 
-const DIInput = ({ width = 50, height = 50, borderRadius = 15, onFocus = () => {}, onChange }: DIInputProps) => {
+const DIInput = ({
+  defaultValue = '',
+  width = 120,
+  height = 30,
+  borderRadius = 8,
+  onFocus = () => {},
+  onChange,
+}: DIInputProps) => {
   return (
-    <InputWrapper>
-      <InputArea
-        borderRadius={borderRadius}
-        width={width}
-        height={height}
-        onFocus={onFocus}
-        onChange={(event) => {
-          onChange(event.target.value);
-        }}
-      />
-    </InputWrapper>
+    <InputArea
+      value={defaultValue}
+      borderRadius={borderRadius}
+      width={width}
+      height={height}
+      onFocus={onFocus}
+      onChange={(event) => {
+        onChange(event.target.value);
+      }}
+    />
   );
 };
 
-const InputWrapper = styled.div``;
 const InputArea = styled.input<{ width: number; height: number; borderRadius: number }>`
-  width: width;
-  height: height;
-  border-radius: borderRadius;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  border: 0;
+  margin: 0 auto;
+  border: solid 1px #ccc;
+  border-radius: ${({ borderRadius }) => borderRadius}px;
 `;
 
 export default DIInput;
