@@ -25,6 +25,7 @@ export const useAuthentication = () => {
         setLoading(false);
       } else {
         reset();
+        setLoading(false);
       }
     });
 
