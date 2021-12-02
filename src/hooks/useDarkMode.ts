@@ -1,6 +1,7 @@
 import { themeAtom } from '@src/recoil/atom/theme';
 import { useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
+
 const useDarkMode = () => {
   const [theme, setTheme] = useRecoilState(themeAtom);
   const toggleTheme = useCallback(() => {
@@ -16,4 +17,5 @@ const useDarkMode = () => {
   }, [setTheme, theme]);
   return { theme, toggleTheme };
 };
+
 export default useDarkMode;
