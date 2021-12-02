@@ -1,7 +1,7 @@
 import { themeAtom } from '@src/recoil/atom/theme';
 import { useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
-const useDarkMdoe = () => {
+const useDarkMode = () => {
   const [theme, setTheme] = useRecoilState(themeAtom);
   const toggleTheme = useCallback(() => {
     // atom effect로 set이 실행되면 localStorage 갱신
@@ -16,4 +16,4 @@ const useDarkMdoe = () => {
   }, [setTheme, theme]);
   return { theme, toggleTheme };
 };
-export default useDarkMdoe;
+export default useDarkMode;

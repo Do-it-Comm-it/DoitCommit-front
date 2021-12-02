@@ -8,12 +8,12 @@ import LoginModal from '@src/components/Organisms/LoginModal';
 import RegisterModal from '@src/components/Organisms/RegisterModal';
 import DIText from '@src/components/Atoms/DIText';
 import styled from 'styled-components';
-import useDarkMdoe from '@src/hooks/useDarkMode';
+import useDarkMode from '@src/hooks/useDarkMode';
 const Home = () => {
   const { user, loading } = useAuthentication();
   const history = useHistory();
   const [modal, setModal] = useRecoilState(modalAtom);
-  const { theme, toggleTheme } = useDarkMdoe();
+  const { theme, toggleTheme } = useDarkMode();
 
   useEffect(() => {
     // when user joined first.
