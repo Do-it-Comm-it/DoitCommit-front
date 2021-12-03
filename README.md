@@ -37,3 +37,10 @@
 
 - 절대경로 설정해놓음 import시
   `import from '@src/...'`
+
+
+# Library
+
+- react-icon reference
+
+  `https://react-icons.github.io/react-icons/icons?name=ai`
