@@ -1,6 +1,5 @@
-import useDarkMode from '@src/hooks/useDarkMode';
 import { userAtom } from '@src/recoil/atom/user';
-import React, { useState } from 'react';
+import React from 'react';
 import { AiOutlineBell } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -22,7 +21,7 @@ const HeaderNavigation = () => {
       <LeftArea>
         <SearchBar />
         <AiOutlineBell size={20} />
-        <UserProfile user={user} />
+        <UserProfile user={user} isMenuEnable />
         <ThemeToggle />
       </LeftArea>
     </Navigation>
