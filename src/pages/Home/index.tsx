@@ -8,6 +8,7 @@ import LoginModal from '@src/components/Organisms/LoginModal';
 import RegisterModal from '@src/components/Organisms/RegisterModal';
 import DIText from '@src/components/Atoms/DIText';
 import styled from 'styled-components';
+
 const Home = () => {
   const { user, loading } = useAuthentication();
   const history = useHistory();
