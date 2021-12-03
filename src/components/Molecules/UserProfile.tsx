@@ -49,7 +49,7 @@ const UserProfile = ({ width = 40, height = 40, user }: UserProfileProps) => {
                 <MenuText>정보</MenuText>
               </MenuItem>
               <MenuItem>
-                <MenuText>모드변경</MenuText>
+                <MenuText>테스트</MenuText>
               </MenuItem>
               <MenuItem>
                 <MenuText onClick={signOut}>로그아웃</MenuText>

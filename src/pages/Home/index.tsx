@@ -6,10 +6,9 @@ import { modalAtom } from '@src/recoil/atom/modal';
 import LoginModal from '@src/components/Organisms/LoginModal';
 import RegisterModal from '@src/components/Organisms/RegisterModal';
 import styled from 'styled-components';
-import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 
 const Home = () => {
-  const { user, loading } = useAuthentication();
+  const { user } = useAuthentication();
   const history = useHistory();
   const [modal, setModal] = useRecoilState(modalAtom);
 
@@ -26,13 +25,11 @@ const Home = () => {
 
   return (
     <Container>
-      {loading === true ? <EmptyScreen /> : <HeaderNavigation />}
-      {modal.id === 'login' && <LoginModal />}
-      {modal.id === 'register' && <RegisterModal onFinish={onFinish} />}
+      {modal.id === 'login' && modal.visible && <LoginModal />}
+      {modal.id === 'register' && modal.visible && <RegisterModal onFinish={onFinish} />}
     </Container>
   );
 };
 
-const EmptyScreen = styled.div``;
 const Container = styled.div``;
 export default Home;
