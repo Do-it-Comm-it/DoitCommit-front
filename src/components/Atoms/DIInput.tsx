@@ -10,6 +10,7 @@ type DIInputProps = {
   onBlur?: () => void;
   onChange: (text: string) => void;
   backgroundColor?: string;
+  placholder?: string;
 };
 
 const DIInput = ({
@@ -21,6 +22,7 @@ const DIInput = ({
   onFocus = () => {},
   onChange,
   onBlur,
+  placholder,
 }: DIInputProps) => {
   return (
     <InputArea
@@ -34,6 +36,7 @@ const DIInput = ({
         onChange(event.target.value);
       }}
       onBlur={onBlur}
+      placeholder={placholder}
     />
   );
 };

@@ -85,6 +85,7 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
             </CardHeader>
             <CardContent>
               <DropDown
+                placholder={'기술 및 태그를 선택해주세요.'}
                 items={[
                   'javascript',
                   'java',
@@ -141,10 +142,12 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
         )}
         {page === 2 && (
           <CardStyle>
-            <DIText fontColor={'#AACD06'} fontSize={22}>
-              이제. {user?.nickname} 님만의 {<br />}프로필 이미지를 설정해주세요!
-            </DIText>
-            <DIText>미 업로드 시, 기본 프로필 이미지로 설정됩니다.</DIText>
+            <CardHeader>
+              <DIText fontColor={'#AACD06'} fontSize={22}>
+                이제. {user?.nickname} 님만의 {<br />}프로필 이미지를 설정해주세요!
+              </DIText>
+              <DIText>미 업로드 시, 기본 프로필 이미지로 설정됩니다.</DIText>
+            </CardHeader>
             <CardContent>
               <UserProfile user={user} width={120} height={120} />
             </CardContent>
@@ -170,12 +173,16 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
         )}
         {page === 3 && (
           <CardStyle>
-            <DIText fontColor={'#AACD06'} fontSize={40}>
-              DOitCOMMIT
-            </DIText>
-            <DIText>축하드려요! 가입되셨습니다!</DIText>
-            <DIText>앞으로 {user?.nickname} 님의 멋진 활동 응원할게요!</DIText>
+            <CardHeader>
+              <DIText fontColor={'#AACD06'} fontSize={40}>
+                DOitCOMMIT
+              </DIText>
+            </CardHeader>
+            <CardContent>
+              <DIText>축하드려요! 가입되셨습니다!</DIText>
 
+              <DIText>앞으로 {user?.nickname} 님의 멋진 활동 응원할게요!</DIText>
+            </CardContent>
             <CardBottom>
               <DIButton value={'시작하기'} onClick={onFinish} />
             </CardBottom>
