@@ -9,10 +9,11 @@ type UserProfileProps = {
   width?: number;
   height?: number;
   user: IUser | null;
+  isMenuEnable?: boolean;
 };
 
 //TODO: It needs profile default image if user image is empty.
-const UserProfile = ({ width = 40, height = 40, user }: UserProfileProps) => {
+const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false }: UserProfileProps) => {
   const [show, setShow] = useState<boolean>(false);
   const setModal = useSetRecoilState(modalAtom);
   const showMenu = useCallback(() => {
@@ -23,43 +24,51 @@ const UserProfile = ({ width = 40, height = 40, user }: UserProfileProps) => {
     setModal({ id: 'login', visible: true });
   }, [setModal]);
 
-  return (
-    <>
-      {user === null ? (
-        <DIButton width={80} height={30} onClick={onClickLogin}>
-          로그인
-        </DIButton>
-      ) : (
-        <Circle
-          tabIndex={0}
-          width={width}
-          height={height}
-          onBlur={() => {
-            setShow(false);
-          }}
-          onClick={() => {
-            showMenu();
-          }}
-        >
-          {user && <ProfileImage src={user.image ?? ''} width={width} height={height} alt={'connection error'} />}
+  if (isMenuEnable) {
+    return (
+      <>
+        {user === null ? (
+          <DIButton width={80} height={30} onClick={onClickLogin}>
+            로그인
+          </DIButton>
+        ) : (
+          <Circle
+            tabIndex={0}
+            width={width}
+            height={height}
+            onBlur={() => {
+              setShow(false);
+            }}
+            onClick={() => {
+              showMenu();
+            }}
+          >
+            {user && <ProfileImage src={user.image ?? ''} width={width} height={height} alt={'connection error'} />}
 
-          {show && (
-            <Menu>
-              <MenuItem>
-                <MenuText>정보</MenuText>
-              </MenuItem>
-              <MenuItem>
-                <MenuText>테스트</MenuText>
-              </MenuItem>
-              <MenuItem>
-                <MenuText onClick={signOut}>로그아웃</MenuText>
-              </MenuItem>
-            </Menu>
-          )}
-        </Circle>
-      )}
-    </>
-  );
+            {show && (
+              <Menu>
+                <MenuItem>
+                  <MenuText>정보</MenuText>
+                </MenuItem>
+                <MenuItem>
+                  <MenuText>테스트</MenuText>
+                </MenuItem>
+                <MenuItem>
+                  <MenuText onClick={signOut}>로그아웃</MenuText>
+                </MenuItem>
+              </Menu>
+            )}
+          </Circle>
+        )}
+      </>
+    );
+  } else {
+    return (
+      <Circle tabIndex={0} width={width} height={height}>
+        {user && <ProfileImage src={user.image ?? ''} width={width} height={height} alt={'connection error'} />}
+      </Circle>
+    );
+  }
 };
 
 const Circle = styled.div<{ width: number; height: number }>`
