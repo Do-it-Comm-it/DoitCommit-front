@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import CloseButton from '@src/assets/close_button.svg';
 export const CreateModal = styled.div`
+  display: flex;
+  align-items: center;
   position: fixed;
   text-align: center;
   left: 0;
@@ -13,8 +15,7 @@ export const CreateModal = styled.div`
 
   & > div {
     opacity: 1 !important;
-    margin-top: 200px;
-    display: inline-block;
+    margin: 0 auto;
     width: 494px;
     height: 539px;
     background: white;
