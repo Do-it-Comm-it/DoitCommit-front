@@ -6,7 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import useDarkMode from '@src/hooks/useDarkMode';
 import { dark, light } from '@src/utils/theme';
 import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
-
+import Sidebar from '@src/components/Organisms/Sidebar';
+import GlobalStyle from './GlobalStyles';
 const App = () => {
   const { theme } = useDarkMode();
   const { loading } = useAuthentication();
@@ -17,7 +18,9 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme === 'light' ? light : dark}>
+      <GlobalStyle />
       <HeaderNavigation />
+      <Sidebar />
       <Switch>
         <Route exact path="/" component={Home} />
       </Switch>
