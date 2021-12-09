@@ -1,72 +1,56 @@
 import React from 'react';
 import styled from 'styled-components';
 import ExpandIcon from '@src/assets/메뉴확장.svg';
-import { IUser } from '@src/typings/User';
-import UserProfile from './UserProfile';
-import Profile from '@src/assets/user.svg';
 import { useAuthentication } from '@src/hooks/useAuthentication';
+import { useSetRecoilState } from 'recoil';
+import { modalAtom } from '@src/recoil/atom/modal';
+import UserProfile from './UserProfile';
 
-interface Props {
-  open: boolean;
-  user: IUser | null;
-}
-const SidebarTop = ({ open }: Props) => {
+const SidebarTop = () => {
   const { user } = useAuthentication();
+  const setModal = useSetRecoilState(modalAtom);
   return (
-    <>
-      <SidebarTopWrapper open={open}>
-        <ExpandIcon />
-        <ImageContainer>
-          <div>{user ? <UserProfile width={49} height={49} user={user} /> : <Profile />}</div>
-        </ImageContainer>
-      </SidebarTopWrapper>
-    </>
+    <SidebarTopWrapper>
+      <ExpandIcon />
+      <Container>
+        <div>{user && <UserProfile user={user} width={40} height={40} />}</div>
+        {!user && <span onClick={() => setModal({ id: 'login', visible: true })}>로그인</span>}
+      </Container>
+    </SidebarTopWrapper>
   );
 };
 
-const SidebarTopWrapper = styled.div<{ open: boolean }>`
-  height: 258px;
+export const SidebarTopWrapper = styled.div`
+  height: 150px;
   position: relative;
-  padding: ${(props) => (props.open ? '21px 1px' : '21px 27px')};
-  align-items: center;
-  justify-content: center;
+  padding: 21px 31px;
+  margin-bottom: 15px;
 
   &::after {
     content: '';
     position: absolute;
     width: 80%;
     height: 1px;
-    background-color: #8f9294;
+    background-color: #66727a;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
   }
-  & > h2 {
-    ${(props) =>
-      props.open && {
-        position: 'absolute',
-        top: 21,
-        left: 27,
-      }}
-  }
-  & > svg {
-    ${(props) =>
-      props.open && {
-        position: 'absolute',
-        top: 30,
-        right: 30,
-      }}
-  }
 `;
 
-const ImageContainer = styled.div`
+const Container = styled.div`
   width: 100%;
   display: flex;
+  white-space: nowrap;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  & > div {
-    position: absolute;
-    top: 100px;
+
+  & > span {
+    color: #ffffff;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 50px;
   }
 `;
 

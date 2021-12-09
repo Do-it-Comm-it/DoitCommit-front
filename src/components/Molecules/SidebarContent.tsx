@@ -1,25 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { sidebarItem, sidebarItemBottom } from '@src/data/sidebarData';
+import { sidebarItem } from '@src/data/sidebarData';
 const SidebarContent = () => {
   return (
-    <SidebarItemWrapper>
+    <Container>
       <SidebarUl>
         <div>
           {sidebarItem.map((item, index) => (
             <li key={index}>
-              <SidebarLink to="#">
-                {item.icon}
-                <span>{item.title}</span>
-              </SidebarLink>
-            </li>
-          ))}
-        </div>
-        <div>
-          {sidebarItemBottom.map((item, index) => (
-            <li key={index}>
-              <SidebarLink to="#">
+              <SidebarLink to={item.path}>
                 {item.icon}
                 <span>{item.title}</span>
               </SidebarLink>
@@ -27,18 +17,12 @@ const SidebarContent = () => {
           ))}
         </div>
       </SidebarUl>
-    </SidebarItemWrapper>
+    </Container>
   );
 };
 
-const SidebarItemWrapper = styled.div`
+const Container = styled.div`
   width: 308px;
-
-  & > li {
-    padding: 0px;
-    margin-right: 32px;
-    list-style: none;
-  }
 `;
 
 const SidebarUl = styled.ul`
@@ -46,7 +30,19 @@ const SidebarUl = styled.ul`
   padding: 0px;
 
   & > div {
-    margin-bottom: 100px;
+    & > li {
+      :nth-child(5) {
+        margin-bottom: 15px;
+        ::after {
+          content: '';
+          position: absolute;
+          width: 80%;
+          left: 50%;
+          transform: translateX(-50%);
+          border-bottom: 1px solid #66727a;
+        }
+      }
+    }
   }
 `;
 
@@ -54,7 +50,6 @@ const SidebarLink = styled(Link)`
   width: 100%;
   padding: 18px 18px 18px 32px;
   font-size: 16px;
-  line-height: 23px;
   display: block;
   color: #ffffff;
   text-decoration: none;

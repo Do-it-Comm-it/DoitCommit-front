@@ -1,46 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SidebarContent from '@src/components/Molecules/SidebarContent';
-import SidebarTop from '@src/components/Molecules/SidebarTop';
-import { useAuthentication } from '@src/hooks/useAuthentication';
-import { useCallback } from 'react';
+import SidebarTop, { SidebarTopWrapper } from '@src/components/Molecules/SidebarTop';
+import SidebarFooter from '@src/components/Molecules/SidebarFooter';
 const Sidebar = () => {
-  const { user } = useAuthentication();
-  const [open, setOpen] = useState(false);
-
-  const onMouseOver = useCallback(() => {
-    setOpen(true);
-  }, []);
-  const onMouseOut = useCallback(() => {
-    setOpen(false);
-  }, []);
   return (
-    <SidebarOutbox open={open} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
-      <SidebarContainer open={open}>
-        <SidebarTop open={open} user={user} />
-        <SidebarContent />
-      </SidebarContainer>
-    </SidebarOutbox>
+    <SidebarContainer>
+      <SidebarTop />
+      <SidebarContent />
+      <SidebarFooter />
+    </SidebarContainer>
   );
 };
 
-const SidebarOutbox = styled.div<{ open: boolean }>`
-  width: ${(props) => (props.open ? '308px' : '83px')};
-  height: 100vh;
-  background-color: aqua;
-  overflow: hidden;
+const SidebarContainer = styled.div`
+  position: fixed;
+  width: 83px;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 1;
   transition: 0.5s;
-`;
-const SidebarContainer = styled.div<{ open: boolean }>`
-  width: 100%;
-  height: 100vh;
+  overflow-x: hidden;
   background-color: #353535;
-  margin-right: ${(props) => (props.open ? null : '20px')};
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:hover {
+    width: 308px;
+    ${SidebarTopWrapper} {
+      & > svg {
+        position: absolute;
+        right: 0;
+        margin-right: 30px;
+      }
 
-  &::after {
-    display: block;
-    content: '';
-    clear: both;
+      & > div {
+        margin-top: 28px;
+      }
+    }
   }
 `;
 
