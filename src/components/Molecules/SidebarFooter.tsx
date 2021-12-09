@@ -1,8 +1,8 @@
 import useDarkMode from '@src/hooks/useDarkMode';
 import React from 'react';
 import styled from 'styled-components';
-import LightModeIcon from '@src/assets/라이트모드.svg';
-import DarkModeIcon from '@src/assets/다크모드.svg';
+import LightModeIcon from '@src/assets/lightmode.svg';
+import DarkModeIcon from '@src/assets/darkmode.svg';
 
 const SidebarFooter = () => {
   const { theme, toggleTheme } = useDarkMode();
@@ -22,12 +22,16 @@ const SidebarFooter = () => {
 };
 
 const Container = styled.div`
+  margin-top: auto;
   width: 100%;
   padding: 25px 25px 25px 32px;
   background-color: #18171c;
   color: #ffffff;
-  margin-top: 300px;
   & > div {
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
     line-height: 23px;
     white-space: nowrap;
     & > svg {

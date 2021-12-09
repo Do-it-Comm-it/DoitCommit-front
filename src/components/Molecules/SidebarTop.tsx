@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ExpandIcon from '@src/assets/메뉴확장.svg';
+import ExpandIcon from '@src/assets/menu_extended.svg';
 import { useAuthentication } from '@src/hooks/useAuthentication';
 import { useSetRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';

@@ -1,11 +1,11 @@
 import React from 'react';
-import MenuIcon from '@src/assets/메뉴.svg';
-import CalendarIcon from '@src/assets/캘린더.svg';
-import CommunityIcon from '@src/assets/커뮤니티.svg';
-import MypageIcon from '@src/assets/프로필.svg';
-import DoitIcon from '@src/assets/두잇.svg';
-import TutorialIcon from '@src/assets/게시판.svg';
-import ChallengeIcon from '@src/assets/구인공고.svg';
+import MenuIcon from '@src/assets/menu.svg';
+import CalendarIcon from '@src/assets/calander.svg';
+import CommunityIcon from '@src/assets/community.svg';
+import MypageIcon from '@src/assets/profile.svg';
+import DoitIcon from '@src/assets/doit.svg';
+import TutorialIcon from '@src/assets/board.svg';
+import ChallengeIcon from '@src/assets/hire.svg';
 export const sidebarItem = [
   {
     title: '홈화면',

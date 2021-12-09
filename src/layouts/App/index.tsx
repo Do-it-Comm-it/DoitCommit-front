@@ -19,8 +19,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme === 'light' ? light : dark}>
       <GlobalStyle />
-      <HeaderNavigation />
       <Sidebar />
+      <HeaderNavigation />
       <Switch>
         <Route exact path="/" component={Home} />
       </Switch>

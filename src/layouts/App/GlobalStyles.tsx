@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     width: 100%;
     min-height: 100vh;
+    padding-left: 83px;
   }
 
 
