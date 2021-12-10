@@ -1,5 +1,5 @@
 import { modalAtom } from '@src/recoil/atom/modal';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { CloseModalButton, CreateModal } from './styles';
 

@@ -30,11 +30,11 @@ jobs:
           node-version: '14.x'
 
       # Runs a single command using the runners shell
-      - name: Install Server dependencies
+      - name: install package dependencies
         run: yarn
 
       - name: tsc check
         run: yarn tsc
-          
+
       - name: lint check
         run: yarn lint

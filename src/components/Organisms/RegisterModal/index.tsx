@@ -24,7 +24,7 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
   const [user, setUser] = useRecoilState(userAtom);
   const [name, setName] = useState<string | null>(user?.nickname ?? null);
   const [techList, setTechList] = useState<string[]>([]);
-  const [image, setImage] = useState<string>();
+  // const [image, setImage] = useState<string>();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
   const onUpload = useCallback(() => {
@@ -35,7 +35,7 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
   const onFileChange = useCallback((event) => {
     const fileUploaded = event.target.files[0];
     console.log(fileUploaded);
-    setImage(fileUploaded);
+    // setImage(fileUploaded);
     //set file upload here
   }, []);
 
