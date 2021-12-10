@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'EliceDigitalBaeum Bold';
+  src: url('./EliceDigitalBaeumOTF_Bold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EliceDigitalBaeum Regular';
+  src: url('./EliceDigitalBaeumOTF_Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansKR Bold';
+  src: url('./NotoSansKR-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansKR Regular';
+  src: url('./NotoSansKR-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}

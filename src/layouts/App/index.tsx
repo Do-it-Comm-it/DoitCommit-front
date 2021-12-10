@@ -8,6 +8,8 @@ import { dark, light } from '@src/utils/theme';
 import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 import Sidebar from '@src/components/Organisms/Sidebar';
 import GlobalStyle from './GlobalStyles';
+import '../../assets/fonts/font.css';
+
 const App = () => {
   const { theme } = useDarkMode();
   const { loading } = useAuthentication();

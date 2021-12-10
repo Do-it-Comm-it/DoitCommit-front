@@ -27,6 +27,7 @@ const Text = styled.pre<{ fontSize: number; fontColor: string; fontWeight: numbe
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   color: ${({ fontColor }) => fontColor};
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
 `;
 
 export default DIText;

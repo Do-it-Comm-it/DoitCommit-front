@@ -12,7 +12,6 @@ const GlobalStyle = createGlobalStyle`
     padding-left: 83px;
   }
 
-
 `;
 
 export default GlobalStyle;
