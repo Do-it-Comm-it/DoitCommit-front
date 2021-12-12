@@ -7,12 +7,14 @@ type DITextProps = {
   fontWeight?: number;
   fontFamily?: string;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
+  onClick?: () => void;
 };
 
 //TO DO: Add font-family , Linkable Text(Optional)
-const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 400, children }: DITextProps) => {
+const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 400, children, style, onClick }: DITextProps) => {
   return (
-    <Text fontColor={fontColor} fontSize={fontSize} fontWeight={fontWeight}>
+    <Text style={style} fontColor={fontColor} fontSize={fontSize} fontWeight={fontWeight} onClick={onClick}>
       {children}
     </Text>
   );

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import React from 'react';
+import styled from 'styled-components';
 
 type DIButtonProps = {
   value?: string;
@@ -10,11 +10,13 @@ type DIButtonProps = {
   width?: number;
   height?: number;
   onClick: () => void;
+  disabled?: boolean;
 };
 
 const DIButton = ({
-  width = 120,
-  height = 45,
+  disabled = false,
+  width = 154,
+  height = 52,
   value = 'Click',
   borderRadius = 15,
   backgroundColor = '#AACD06',
@@ -24,6 +26,7 @@ const DIButton = ({
 }: DIButtonProps) => {
   return (
     <Button
+      disabled={disabled}
       width={width}
       height={height}
       value={value}
@@ -44,6 +47,7 @@ const Button = styled.button<{
   borderRadius: number;
   backgroundColor: string;
   hoverColor: string;
+  disabled: boolean;
 }>`
   background-color: ${({ backgroundColor }) => backgroundColor};
   font-weight: ${({ backgroundColor }) => backgroundColor};
@@ -52,10 +56,13 @@ const Button = styled.button<{
   outline: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
+  color: ${({ theme }) => theme.colors.background};
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-size: 20px;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 
   &:hover {
     background-color: ${({ hoverColor }) => hoverColor};
   }
 `;
-
 export default DIButton;

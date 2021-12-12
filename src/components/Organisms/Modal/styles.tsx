@@ -16,12 +16,12 @@ export const CreateModal = styled.div`
   & > div {
     opacity: 1 !important;
     margin: 0 auto;
-    width: 494px;
-    height: 539px;
+    width: 600px;
+    height: 440px;
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
     background-color: #ffffff;
-    border-radius: 6px;
+    border-radius: 20px;
     user-select: none;
     z-index: 1012;
     position: relative;

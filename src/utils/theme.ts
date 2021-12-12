@@ -7,6 +7,7 @@ declare module 'styled-components' {
       EliceDigitalBaeumRegular: string;
       NotoSansKRBold: string;
       NotoSansKRRegular: string;
+      NotoSansKRLight: string;
     };
     colors: {
       background: string;
@@ -32,6 +33,7 @@ export const light: DefaultTheme = {
     EliceDigitalBaeumRegular: 'EliceDigitalBaeum Regular',
     NotoSansKRBold: 'NotoSansKR Bold',
     NotoSansKRRegular: 'NotoSansKR Regular',
+    NotoSansKRLight: 'NotoSansKR Light',
   },
   colors: {
     background: '#FFFFFF',
@@ -56,6 +58,7 @@ export const dark: DefaultTheme = {
     EliceDigitalBaeumRegular: 'EliceDigitalBaeum Regular',
     NotoSansKRBold: 'NotoSansKR Bold',
     NotoSansKRRegular: 'NotoSansKR Regular',
+    NotoSansKRLight: 'NotoSansKR Light',
   },
   colors: {
     background: '#293144',

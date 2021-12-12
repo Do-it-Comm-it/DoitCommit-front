@@ -5,9 +5,10 @@ import { CloseModalButton, CreateModal } from './styles';
 
 interface Props {
   children: React.ReactNode;
+  showCloseIcon?: boolean;
 }
 
-const Modal = ({ children }: Props) => {
+const Modal = ({ children, showCloseIcon = false }: Props) => {
   const [show, setShow] = useRecoilState(modalAtom);
   const closeModal = useCallback(() => {
     setShow({ ...show, visible: false });
@@ -22,7 +23,7 @@ const Modal = ({ children }: Props) => {
       {show.visible && (
         <CreateModal onClick={closeModal}>
           <div onClick={stopPropagation}>
-            <CloseModalButton onClick={closeModal} width="45" height="45" />
+            {showCloseIcon && <CloseModalButton onClick={closeModal} width="45" height="45" />}
             {children}
           </div>
         </CreateModal>
