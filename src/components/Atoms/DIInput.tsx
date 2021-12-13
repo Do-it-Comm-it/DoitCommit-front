@@ -47,9 +47,22 @@ const InputArea = styled.input<{ width: number; height: number; borderRadius: nu
   border: 0;
   margin: 0 auto;
   border: solid 1px #ccc;
+  font-size: 18px;
   border-radius: ${({ borderRadius }) => borderRadius}px;
   background-color: ${({ backgroundColor }) => backgroundColor};
   text-indent: 8px;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid red;
+    box-shadow: 0 0 4px #aacd06;
+    border-color: ${({ theme }) => theme.colors.main};
+  }
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.dark.a2};
+    text-align: center;
+  }
 `;
 
 export default DIInput;

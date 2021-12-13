@@ -7,12 +7,30 @@ type DITextProps = {
   fontWeight?: number;
   fontFamily?: string;
   children?: React.ReactNode;
+  lineHeight?: number;
+  style?: React.CSSProperties;
+  onClick?: () => void;
 };
 
 //TO DO: Add font-family , Linkable Text(Optional)
-const DIText = ({ fontColor = "'#fff'", fontSize = 16, fontWeight = 400, children }: DITextProps) => {
+const DIText = ({
+  fontColor = "'#fff'",
+  fontSize = 16,
+  fontWeight = 400,
+  children,
+  style,
+  onClick,
+  lineHeight,
+}: DITextProps) => {
   return (
-    <Text fontColor={fontColor} fontSize={fontSize} fontWeight={fontWeight}>
+    <Text
+      style={style}
+      fontColor={fontColor}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      onClick={onClick}
+      lineHeight={lineHeight}
+    >
       {children}
     </Text>
   );
@@ -23,11 +41,12 @@ INFO: font-weight information
   normal : 400
   bold: 700
 */
-const Text = styled.pre<{ fontSize: number; fontColor: string; fontWeight: number }>`
+const Text = styled.pre<{ fontSize: number; fontColor: string; fontWeight: number; lineHeight?: number }>`
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   color: ${({ fontColor }) => fontColor};
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  line-height: ${({ lineHeight }) => lineHeight}px;
 `;
 
 export default DIText;

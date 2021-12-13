@@ -25,3 +25,10 @@
   font-weight: 400;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'NotoSansKR Light';
+  src: url('./NotoSansKR-Light.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}

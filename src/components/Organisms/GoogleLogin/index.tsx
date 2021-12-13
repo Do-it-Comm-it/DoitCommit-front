@@ -1,24 +1,43 @@
 // Google Login Button Component
 import React from 'react';
 import { signInGoogle } from '@src/service/firebase';
-import { GoogleButton } from './styles';
-import GoogleLogo from '@src/assets/google.svg';
+import { FcGoogle } from 'react-icons/fc';
+import DIText from '@src/components/Atoms/DIText';
+import styled, { useTheme } from 'styled-components';
 const GoogleLogin = () => {
+  const theme = useTheme();
+
   return (
     <GoogleButton onClick={signInGoogle}>
-      <GoogleLogo
-        width="42"
-        height="42"
-        style={{
-          position: 'absolute',
-          left: '98px',
-          padding: '5.25px',
-          verticalAlign: 'middle',
-        }}
-      />
-      <span>구글 아이디로 로그인</span>
+      <GoogleLogo size={30} />
+      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold}>
+        Google로 계속
+      </DIText>
     </GoogleButton>
   );
 };
 
+const GoogleLogo = styled(FcGoogle)`
+  margin-right: 20px;
+`;
+
 export default GoogleLogin;
+
+const GoogleButton = styled.button`
+  display: inline-flex;
+  width: 383px;
+  height: 68px;
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid #dadada;
+  border-radius: 6px;
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.dark.a5};
+  margin-top: 44px;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+`;
