@@ -1,18 +1,38 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Home from '@src/pages/Home';
 import { useAuthentication } from '@src/hooks/useAuthentication';
 import { ThemeProvider } from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { modalAtom } from '@src/recoil/atom/modal';
 import useDarkMode from '@src/hooks/useDarkMode';
 import { dark, light } from '@src/utils/theme';
 import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 import Sidebar from '@src/components/Organisms/Sidebar';
 import GlobalStyle from './GlobalStyles';
-import '../../assets/fonts/font.css';
+import '@src/assets/fonts/font.css';
+import MyPage from '@src/pages/MyPage';
+import RegisterModal from '@src/components/Organisms/RegisterModal';
+import LoginModal from '@src/components/Organisms/LoginModal';
 
 const App = () => {
   const { theme } = useDarkMode();
   const { loading } = useAuthentication();
+
+  const { user } = useAuthentication();
+  const history = useHistory();
+  const [modal, setModal] = useRecoilState(modalAtom);
+
+  useEffect(() => {
+    // when user joined first.
+    if (user && !user.isEnrolled) {
+      setModal({ id: 'register', visible: true });
+    }
+  }, [user, history, setModal]);
+
+  const onFinish = useCallback(() => {
+    setModal({ id: 'register', visible: false });
+  }, [setModal]);
 
   if (loading) {
     return <></>;
@@ -25,7 +45,16 @@ const App = () => {
       <HeaderNavigation />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/mypage" component={MyPage} />
       </Switch>
+      {modal.id === 'login' && modal.visible && (
+        <LoginModal
+          onClose={() => {
+            setModal({ id: 'login', visible: false });
+          }}
+        />
+      )}
+      {modal.id === 'register' && modal.visible && <RegisterModal onFinish={onFinish} />}
     </ThemeProvider>
   );
 };
