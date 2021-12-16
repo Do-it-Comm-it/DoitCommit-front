@@ -11,7 +11,6 @@ import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 import Sidebar from '@src/components/Organisms/Sidebar';
 import GlobalStyle from './GlobalStyles';
 import '@src/assets/fonts/font.css';
-import MyPage from '@src/pages/MyPage';
 import RegisterModal from '@src/components/Organisms/RegisterModal';
 import LoginModal from '@src/components/Organisms/LoginModal';
 
@@ -45,7 +44,6 @@ const App = () => {
       <HeaderNavigation />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/mypage" component={MyPage} />
       </Switch>
       {modal.id === 'login' && modal.visible && (
         <LoginModal
