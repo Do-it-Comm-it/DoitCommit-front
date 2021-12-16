@@ -1,10 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-import { useAuthentication } from '@src/hooks/useAuthentication';
-import { useHistory } from 'react-router';
-import { useRecoilState } from 'recoil';
-import { modalAtom } from '@src/recoil/atom/modal';
-import LoginModal from '@src/components/Organisms/LoginModal';
-import RegisterModal from '@src/components/Organisms/RegisterModal';
+import React from 'react';
 import styled from 'styled-components';
 import HomeTitle from '@src/components/Organisms/Home/HomeTitle';
 import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
@@ -14,21 +8,6 @@ import HomeDutorial from '@src/components/Organisms/Home/HomeDutorial';
 import HomeBanner from '@src/components/Organisms/Home/HomeBanner';
 
 const Home = () => {
-  const { user } = useAuthentication();
-  const history = useHistory();
-  const [modal, setModal] = useRecoilState(modalAtom);
-
-  useEffect(() => {
-    // when user joined first.
-    if (user && !user.isEnrolled) {
-      setModal({ id: 'register', visible: true });
-    }
-  }, [user, history, setModal]);
-
-  const onFinish = useCallback(() => {
-    setModal({ id: 'register', visible: false });
-  }, [setModal]);
-
   return (
     <Container>
       <HomeTitle />
@@ -45,15 +24,6 @@ const Home = () => {
           </Bottom>
         </Second>
       </Content>
-
-      {modal.id === 'login' && modal.visible && (
-        <LoginModal
-          onClose={() => {
-            setModal({ id: 'login', visible: false });
-          }}
-        />
-      )}
-      {modal.id === 'register' && modal.visible && <RegisterModal onFinish={onFinish} />}
     </Container>
   );
 };
