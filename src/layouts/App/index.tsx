@@ -10,6 +10,7 @@ import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 import Sidebar from '@src/components/Organisms/Sidebar';
 import GlobalStyle from './GlobalStyles';
 import '@src/assets/fonts/font.css';
+import MyPage from '@src/pages/MyPage';
 
 const App = () => {
   const { theme } = useDarkMode();
@@ -27,6 +28,7 @@ const App = () => {
       <HeaderNavigation />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/mypage" component={MyPage} />
       </Switch>
     </ThemeProvider>
   );

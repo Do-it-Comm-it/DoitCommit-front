@@ -10,7 +10,7 @@ export const sidebarItem = [
   {
     title: '홈화면',
     icon: <MenuIcon />,
-    path: '#',
+    path: '/',
   },
   {
     title: '두잇플래너',
@@ -41,6 +41,6 @@ export const sidebarItem = [
   {
     title: '마이페이지',
     icon: <MypageIcon />,
-    path: '#',
+    path: '/mypage',
   },
 ];
