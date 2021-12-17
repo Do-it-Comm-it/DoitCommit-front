@@ -11,7 +11,7 @@ interface Props {
 const PrivateRoute: VFC<Props> = ({ component, exact, path }) => {
   const user = useRecoilValue(userAtom);
 
-  return user ? <Route path={path} exact={exact} component={component} /> : <Redirect to="/login" />;
+  return user ? <Route path={path} exact={exact} component={component} /> : <Redirect to="/" />;
 };
 
 export default PrivateRoute;
