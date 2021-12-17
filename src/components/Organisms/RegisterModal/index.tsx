@@ -8,7 +8,6 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 import DIInput from '../../Atoms/DIInput';
-import Modal from '../Modal';
 import Divider from '@src/components/Atoms/Divider';
 import { AiOutlineCheck, AiOutlineLeft } from 'react-icons/ai';
 import { RiErrorWarningLine } from 'react-icons/ri';
@@ -275,35 +274,37 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
   }, [onFinish, theme, user]);
 
   return (
-    <Modal>
-      <Container>
-        <Header>
-          <BackIcon
-            color={theme.colors.dark.a3}
-            size={24}
-            onClick={() => {
-              if (page > 0) {
-                setPage((prev) => prev - 1);
-              }
-              if (page === 0) {
-                onFinish();
-              }
-            }}
-          />
-          <Label>
-            {[...Array(4)].map((_, index) => {
-              return <PageLabel active={page === index}>{page === index ? index + 1 : ``}</PageLabel>;
-            })}
-          </Label>
-          <CloseModalButton onClick={onFinish} />
-          <Divider />
-        </Header>
-        {page === 0 && NickNameContent()}
-        {page === 1 && TechContent()}
-        {page === 2 && ImageContent()}
-        {page === 3 && FinishContent()}
-      </Container>
-    </Modal>
+    <Container>
+      <Header>
+        <BackIcon
+          color={theme.colors.dark.a3}
+          size={24}
+          onClick={() => {
+            if (page > 0) {
+              setPage((prev) => prev - 1);
+            }
+            if (page === 0) {
+              onFinish();
+            }
+          }}
+        />
+        <Label>
+          {[...Array(4)].map((_, index) => {
+            return (
+              <PageLabel key={index} active={page === index}>
+                {page === index ? index + 1 : ``}
+              </PageLabel>
+            );
+          })}
+        </Label>
+        <CloseModalButton onClick={onFinish} />
+        <Divider />
+      </Header>
+      {page === 0 && NickNameContent()}
+      {page === 1 && TechContent()}
+      {page === 2 && ImageContent()}
+      {page === 3 && FinishContent()}
+    </Container>
   );
 };
 

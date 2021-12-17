@@ -1,30 +1,38 @@
+import { useAuthentication } from '@src/hooks/useAuthentication';
 import { modalAtom } from '@src/recoil/atom/modal';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import LoginModal from '../LoginModal';
+import RegisterModal from '../RegisterModal';
 import { CloseModalButton, CreateModal } from './styles';
 
 interface Props {
-  children: React.ReactNode;
   showCloseIcon?: boolean;
 }
 
-const Modal = ({ children, showCloseIcon = false }: Props) => {
-  const [show, setShow] = useRecoilState(modalAtom);
+const Modal = ({ showCloseIcon = false }: Props) => {
+  const [modal, setModal] = useRecoilState(modalAtom);
+  const { user } = useAuthentication();
   const closeModal = useCallback(() => {
-    setShow({ ...show, visible: false });
-  }, [show, setShow]);
+    setModal({ ...modal, visible: false });
+  }, [modal, setModal]);
 
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
 
+  useEffect(() => {
+    if (user && !user.isEnrolled) setModal({ id: 'register', visible: true });
+  }, [user, setModal]);
+
   return (
     <>
-      {show.visible && (
+      {modal.visible && (
         <CreateModal onClick={closeModal}>
           <div onClick={stopPropagation}>
             {showCloseIcon && <CloseModalButton onClick={closeModal} width="45" height="45" />}
-            {children}
+            {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} />}
+            {modal.id === 'register' && modal.visible && <RegisterModal onFinish={closeModal} />}
           </div>
         </CreateModal>
       )}
