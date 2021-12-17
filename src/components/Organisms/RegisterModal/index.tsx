@@ -290,7 +290,11 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
         />
         <Label>
           {[...Array(4)].map((_, index) => {
-            return <PageLabel active={page === index}>{page === index ? index + 1 : ``}</PageLabel>;
+            return (
+              <PageLabel key={index} active={page === index}>
+                {page === index ? index + 1 : ``}
+              </PageLabel>
+            );
           })}
         </Label>
         <CloseModalButton onClick={onFinish} />
