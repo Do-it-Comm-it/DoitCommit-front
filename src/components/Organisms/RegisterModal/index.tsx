@@ -11,7 +11,7 @@ import DIInput from '../../Atoms/DIInput';
 import Divider from '@src/components/Atoms/Divider';
 import { AiOutlineCheck, AiOutlineLeft } from 'react-icons/ai';
 import { RiErrorWarningLine } from 'react-icons/ri';
-import Select from 'react-select';
+import SelectInput from '../SelectInput';
 import { MdCheck, MdEdit } from 'react-icons/md';
 
 type RegisterModalProps = {
@@ -22,31 +22,6 @@ type Tech = {
   value: string;
   label: string;
 };
-const options = [
-  { value: 'javascript', label: 'javascript' },
-  { value: 'java', label: 'java' },
-  { value: 'typescript', label: 'typescript' },
-  { value: 'react', label: 'react' },
-  { value: 'spring', label: 'spring' },
-  { value: 'c/c++', label: 'c/c++' },
-  { value: 'angular', label: 'angular' },
-  { value: 'vue', label: 'vue' },
-  { value: 'next', label: 'next' },
-  { value: 'nuxt', label: 'nuxt' },
-  { value: 'cloud', label: 'cloud' },
-  { value: 'CI/CD', label: 'CI/CD' },
-  { value: 'testing', label: 'testing' },
-  { value: 'flutter', label: 'flutter' },
-  { value: 'kotlin', label: 'kotlin' },
-  { value: 'android', label: 'android' },
-  { value: 'ios', label: 'ios' },
-  { value: 'c#', label: 'c#' },
-  { value: 'rust', label: 'rust' },
-  { value: 'nest', label: 'nest' },
-  { value: 'R', label: 'R' },
-  { value: 'python', label: 'python' },
-  { value: 'AI', label: 'AI' },
-];
 
 //TODO:
 //1. Check user nickname is already taken or not.
@@ -147,51 +122,7 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <TechSelect
-            onChange={(value) => {
-              setTechList(value as Tech[]);
-            }}
-            options={options}
-            isMulti
-            placeholder={'EX) Java, C#, Javascript'}
-            styles={{
-              input: (defaultStyles) => ({
-                ...defaultStyles,
-                height: 45,
-              }),
-              placeholder: (defaultStyles) => ({
-                ...defaultStyles,
-                color: theme.colors.dark.a2,
-              }),
-              multiValue: (defaultStyles) => ({
-                ...defaultStyles,
-                display: 'flex',
-                borderRadius: 5,
-                backgroundColor: theme.colors.main,
-              }),
-              multiValueLabel: (defaultStyles) => ({
-                ...defaultStyles,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingLeft: 5,
-                paddingRight: 5,
-                borderTopLeftRadius: 10,
-                borderBottomLeftRadius: 10,
-                backgroundColor: theme.colors.main,
-                color: theme.colors.background,
-              }),
-              multiValueRemove: (defaultStyles) => ({
-                ...defaultStyles,
-                display: 'flex',
-                alignItems: 'center',
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 10,
-                backgroundColor: theme.colors.main,
-                color: theme.colors.background,
-              }),
-            }}
-          />
+          <SelectInput onChange={(value) => setTechList(value as Tech[])} width={450} />
         </CardContent>
         <CardBottom>
           <DIButton
@@ -368,10 +299,6 @@ const CloseModalButton = styled(CloseIcon)`
   right: 20px;
   color: ${({ theme }) => theme.colors.dark};
   cursor: pointer;
-`;
-
-const TechSelect = styled(Select)`
-  width: 450px;
 `;
 
 const ProfileContent = styled.div`
