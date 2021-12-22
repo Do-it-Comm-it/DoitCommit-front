@@ -1,29 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
 import ExpandIcon from '@src/assets/menu_extended.svg';
-import { useAuthentication } from '@src/hooks/useAuthentication';
-import { useSetRecoilState } from 'recoil';
-import { modalAtom } from '@src/recoil/atom/modal';
-import UserProfile from './UserProfile';
-
+import { useRecoilState } from 'recoil';
+import { sidebarAtom } from '@src/recoil/atom/sidebar';
+import DIText from '../Atoms/DIText';
 const SidebarTop = () => {
-  const { user } = useAuthentication();
-  const setModal = useSetRecoilState(modalAtom);
+  const [open, setOpen] = useRecoilState(sidebarAtom);
   return (
-    <SidebarTopWrapper>
-      <ExpandIcon />
+    <SidebarTopWrapper open={open}>
+      <IconWrapper open={open}>
+        <ExpandIcon onClick={() => setOpen(!open)} />
+      </IconWrapper>
       <Container>
-        <div>{user && <UserProfile user={user} width={40} height={40} />}</div>
-        {!user && <span onClick={() => setModal({ id: 'login', visible: true })}>로그인</span>}
+        <DIText
+          fontColor="#ffffff"
+          fontWeight={700}
+          fontSize={22}
+          style={{ letterSpacing: 0.2, whiteSpace: 'initial', textAlign: 'center' }}
+        >
+          두잇커밋
+        </DIText>
       </Container>
     </SidebarTopWrapper>
   );
 };
 
-export const SidebarTopWrapper = styled.div`
+export const SidebarTopWrapper = styled.div<{ open: boolean }>`
   height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-  padding: 21px 31px;
+  padding: 21px 15px;
   margin-bottom: 15px;
 
   &::after {
@@ -37,21 +45,22 @@ export const SidebarTopWrapper = styled.div`
     transform: translateX(-50%);
   }
 `;
-
-const Container = styled.div`
+const IconWrapper = styled.div<{ open: boolean }>`
   width: 100%;
   display: flex;
-  white-space: nowrap;
-  height: 100%;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
 
-  & > span {
-    color: #ffffff;
-    font-size: 15px;
-    cursor: pointer;
-    margin-top: 50px;
+  & > svg {
+    margin-left: ${({ open }) => open && 'auto'};
   }
+`;
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default SidebarTop;

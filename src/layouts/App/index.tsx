@@ -12,18 +12,20 @@ import GlobalStyle from './GlobalStyles';
 import '@src/assets/fonts/font.css';
 import MyPage from '@src/pages/MyPage';
 import PrivateRoute from '@src/PriavteRoute';
+import { useRecoilValue } from 'recoil';
+import { sidebarAtom } from '@src/recoil/atom/sidebar';
 
 const App = () => {
   const { theme } = useDarkMode();
   const { loading } = useAuthentication();
-
+  const open = useRecoilValue(sidebarAtom);
   if (loading) {
     return <></>;
   }
 
   return (
     <ThemeProvider theme={theme === 'light' ? light : dark}>
-      <GlobalStyle />
+      <GlobalStyle open={open} />
       <Sidebar />
       <Modal />
       <HeaderNavigation />

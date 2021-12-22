@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import SidebarContent from '@src/components/Molecules/SidebarContent';
-import SidebarTop, { SidebarTopWrapper } from '@src/components/Molecules/SidebarTop';
+import SidebarTop from '@src/components/Molecules/SidebarTop';
 import SidebarFooter from '@src/components/Molecules/SidebarFooter';
+import { useRecoilValue } from 'recoil';
+import { sidebarAtom } from '@src/recoil/atom/sidebar';
+
 const Sidebar = () => {
+  const open = useRecoilValue(sidebarAtom);
+
   return (
-    <SidebarContainer>
+    <SidebarContainer open={open}>
       <SidebarTop />
       <SidebarContent />
       <SidebarFooter />
@@ -13,11 +18,11 @@ const Sidebar = () => {
   );
 };
 
-const SidebarContainer = styled.div`
+const SidebarContainer = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: column;
   position: fixed;
-  width: 83px;
+  width: ${({ open }) => (open ? 308 : 83)}px;
   left: 0;
   top: 0;
   height: 100%;
@@ -27,20 +32,6 @@ const SidebarContainer = styled.div`
   background-color: #353535;
   &::-webkit-scrollbar {
     display: none;
-  }
-  &:hover {
-    width: 308px;
-    ${SidebarTopWrapper} {
-      & > svg {
-        position: absolute;
-        right: 0;
-        margin-right: 30px;
-      }
-
-      & > div {
-        margin-top: 28px;
-      }
-    }
   }
 `;
 
