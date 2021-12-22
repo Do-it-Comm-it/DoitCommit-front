@@ -16,7 +16,7 @@ const SidebarTop = () => {
           fontColor="#ffffff"
           fontWeight={700}
           fontSize={22}
-          style={{ letterSpacing: 0.2, whiteSpace: 'initial', textAlign: 'center' }}
+          style={{ letterSpacing: 0.2, whiteSpace: 'initial', textAlign: 'center', userSelect: 'none' }}
         >
           두잇커밋
         </DIText>
@@ -30,7 +30,6 @@ export const SidebarTopWrapper = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
   padding: 21px 15px;
   margin-bottom: 15px;
 
