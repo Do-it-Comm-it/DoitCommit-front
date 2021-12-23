@@ -9,7 +9,7 @@ const SidebarTop = () => {
   return (
     <SidebarTopWrapper open={open}>
       <IconWrapper open={open}>
-        <ExpandIcon onClick={() => setOpen(!open)} />
+        <ExpandIcon onClick={() => setOpen((prev) => !prev)} />
       </IconWrapper>
       <Container>
         <DIText
@@ -26,6 +26,7 @@ const SidebarTop = () => {
 };
 
 export const SidebarTopWrapper = styled.div<{ open: boolean }>`
+  position: relative;
   height: 150px;
   display: flex;
   flex-direction: column;

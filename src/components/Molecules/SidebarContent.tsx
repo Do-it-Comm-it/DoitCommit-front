@@ -2,14 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { sidebarItem } from '@src/data/sidebarData';
+import { useSetRecoilState } from 'recoil';
+import { sidebarAtom } from '@src/recoil/atom/sidebar';
 const SidebarContent = () => {
+  const setOpen = useSetRecoilState(sidebarAtom);
   return (
     <Container>
       <SidebarUl>
         <div>
           {sidebarItem.map((item, index) => (
             <li key={index}>
-              <SidebarLink to={item.path}>
+              <SidebarLink to={item.path} onClick={() => setOpen(false)}>
                 {item.icon}
                 <span>{item.title}</span>
               </SidebarLink>

@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle<{ open: boolean }>`
+const GlobalStyle = createGlobalStyle`
   * {
       padding: 0;
       margin: 0;
@@ -12,10 +12,7 @@ const GlobalStyle = createGlobalStyle<{ open: boolean }>`
     min-height: 100vh;
     padding-left: 83px;
     padding-top: 52px;
-    margin-left: ${({ open }) => open && 225}px;
-    transition: 0.5s;
   }
-
 `;
 
 export default GlobalStyle;

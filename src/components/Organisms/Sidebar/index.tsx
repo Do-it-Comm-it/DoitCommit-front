@@ -3,14 +3,32 @@ import styled from 'styled-components';
 import SidebarContent from '@src/components/Molecules/SidebarContent';
 import SidebarTop from '@src/components/Molecules/SidebarTop';
 import SidebarFooter from '@src/components/Molecules/SidebarFooter';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 const Sidebar = () => {
-  const open = useRecoilValue(sidebarAtom);
+  const [open, setOpen] = useRecoilState(sidebarAtom);
+  const sidebarRef = useRef(null);
 
+  // 컴포넌트 바깥 영역 클릭시 닫히게끔
+  const clickListener = useCallback(
+    (e) => {
+      if (!(sidebarRef.current! as any).contains(e.target)) {
+        setOpen(false);
+      }
+    },
+    [setOpen],
+  );
+
+  useEffect(() => {
+    document.addEventListener('click', clickListener);
+    return () => document.removeEventListener('click', clickListener);
+  }, [clickListener]);
   return (
-    <SidebarContainer open={open}>
+    <SidebarContainer open={open} ref={sidebarRef}>
       <SidebarTop />
       <SidebarContent />
       <SidebarFooter />
@@ -23,6 +41,7 @@ const SidebarContainer = styled.div<{ open: boolean }>`
   flex-direction: column;
   position: fixed;
   width: ${({ open }) => (open ? 308 : 83)}px;
+  min-width: ${({ open }) => (open ? 308 : 83)}px;
   left: 0;
   top: 0;
   height: 100%;
