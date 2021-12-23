@@ -1,7 +1,7 @@
 import React, { VFC } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from './recoil/atom/user';
+import { userAtom } from '../recoil/atom/user';
 
 interface Props {
   component: React.FC;

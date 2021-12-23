@@ -10,8 +10,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: #eeeeee;
     width: 100%;
     min-height: 100vh;
-    padding-left: 83px;
-    padding-top: 52px;
   }
 `;
 

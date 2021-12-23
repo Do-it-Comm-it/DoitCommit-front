@@ -2,17 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { sidebarItem } from '@src/data/sidebarData';
-import { useSetRecoilState } from 'recoil';
-import { sidebarAtom } from '@src/recoil/atom/sidebar';
-const SidebarContent = () => {
-  const setOpen = useSetRecoilState(sidebarAtom);
+
+type Props = {
+  onClose: () => void;
+};
+
+const SidebarContent = ({ onClose }: Props) => {
   return (
     <Container>
       <SidebarUl>
         <div>
           {sidebarItem.map((item, index) => (
             <li key={index}>
-              <SidebarLink to={item.path} onClick={() => setOpen(false)}>
+              <SidebarLink to={item.path} onClick={onClose}>
                 {item.icon}
                 <span>{item.title}</span>
               </SidebarLink>
@@ -65,4 +67,4 @@ const SidebarLink = styled(Link)`
     background-color: #aacd06;
   }
 `;
-export default SidebarContent;
+export default React.memo(SidebarContent);

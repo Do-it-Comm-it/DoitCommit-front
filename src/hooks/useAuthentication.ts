@@ -2,6 +2,7 @@ import { auth } from '@src/service/firebase';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userAtom } from '@src/recoil/atom/user';
+import { fetcherWithToken } from '@src/utils/fetcher';
 
 export const useAuthentication = () => {
   const [user, setUser] = useRecoilState(userAtom);
@@ -12,16 +13,18 @@ export const useAuthentication = () => {
       if (firebaseUser) {
         //TODO: connection with backend side.
         //now, it saves user without backend(temporary method)
-        setUser({
-          isEnrolled: false,
-          position: [],
-          stacks: [],
-          todos: [],
-          nickname: firebaseUser.displayName,
-          email: firebaseUser.email,
-          image: firebaseUser.photoURL,
-          token: firebaseUser.refreshToken,
-        });
+        fetcherWithToken('http://localhost:8888/api/firebase/auth', await firebaseUser.getIdToken());
+
+        // setUser({
+        //   isEnrolled: false,
+        //   position: [],
+        //   stacks: [],
+        //   todos: [],
+        //   nickname: firebaseUser.displayName,
+        //   email: firebaseUser.email,
+        //   image: firebaseUser.photoURL,
+        //   token: firebaseUser.refreshToken,
+        // });
         setLoading(false);
       } else {
         reset();

@@ -1,19 +1,23 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import ExpandIcon from '@src/assets/menu_extended.svg';
-import { useRecoilState } from 'recoil';
-import { sidebarAtom } from '@src/recoil/atom/sidebar';
-import DIText from '../Atoms/DIText';
-const SidebarTop = () => {
-  const [open, setOpen] = useRecoilState(sidebarAtom);
+import DIText from '@src/components/Atoms/DIText';
+
+type Props = {
+  open: boolean;
+  onToggle: () => void;
+};
+
+const SidebarTop = ({ open, onToggle }: Props) => {
+  const theme = useTheme();
   return (
     <SidebarTopWrapper open={open}>
-      <IconWrapper open={open}>
-        <ExpandIcon onClick={() => setOpen((prev) => !prev)} />
+      <IconWrapper open={open} onClick={onToggle}>
+        <ExpandIcon />
       </IconWrapper>
       <Container>
         <DIText
-          fontColor="#ffffff"
+          fontColor={theme.colors.background}
           fontWeight={700}
           fontSize={22}
           style={{ letterSpacing: 0.2, whiteSpace: 'initial', textAlign: 'center', userSelect: 'none' }}
@@ -53,6 +57,11 @@ const IconWrapper = styled.div<{ open: boolean }>`
 
   & > svg {
     margin-left: ${({ open }) => open && 'auto'};
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
   }
 `;
 const Container = styled.div`

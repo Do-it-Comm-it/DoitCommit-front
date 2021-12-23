@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import SidebarContent from '@src/components/Molecules/SidebarContent';
-import SidebarTop from '@src/components/Molecules/SidebarTop';
-import SidebarFooter from '@src/components/Molecules/SidebarFooter';
-import { useRecoilState } from 'recoil';
-import { sidebarAtom } from '@src/recoil/atom/sidebar';
+import SidebarContent from '@src/components/Molecules/Sidebar/SidebarContent';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
+import SidebarTop from '@src/components/Molecules/Sidebar/SidebarTop';
+import SidebarFooter from '@src/components/Molecules/Sidebar/SidebarFooter';
 
 const Sidebar = () => {
-  const [open, setOpen] = useRecoilState(sidebarAtom);
-  const sidebarRef = useRef(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   // 컴포넌트 바깥 영역 클릭시 닫히게끔
   const clickListener = useCallback(
     (e) => {
-      if (!(sidebarRef.current! as any).contains(e.target)) {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
         setOpen(false);
       }
     },
@@ -27,10 +25,13 @@ const Sidebar = () => {
     document.addEventListener('click', clickListener);
     return () => document.removeEventListener('click', clickListener);
   }, [clickListener]);
+
+  const onToggle = () => setOpen((prev) => !prev);
+  const onClose = useCallback(() => setOpen(false), []);
   return (
     <SidebarContainer open={open} ref={sidebarRef}>
-      <SidebarTop />
-      <SidebarContent />
+      <SidebarTop open={open} onToggle={onToggle} />
+      <SidebarContent onClose={onClose} />
       <SidebarFooter />
     </SidebarContainer>
   );
@@ -39,7 +40,7 @@ const Sidebar = () => {
 const SidebarContainer = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: relative;
   width: ${({ open }) => (open ? 308 : 83)}px;
   min-width: ${({ open }) => (open ? 308 : 83)}px;
   left: 0;
