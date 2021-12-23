@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import SidebarContent from '@src/components/Molecules/SidebarContent';
-import SidebarTop, { SidebarTopWrapper } from '@src/components/Molecules/SidebarTop';
-import SidebarFooter from '@src/components/Molecules/SidebarFooter';
+import SidebarContent from '@src/components/Molecules/Sidebar/SidebarContent';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import { useCallback } from 'react';
+import SidebarTop from '@src/components/Molecules/Sidebar/SidebarTop';
+import SidebarFooter from '@src/components/Molecules/Sidebar/SidebarFooter';
+
 const Sidebar = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  // 컴포넌트 바깥 영역 클릭시 닫히게끔
+  const clickListener = useCallback(
+    (e) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    },
+    [setOpen],
+  );
+
+  useEffect(() => {
+    document.addEventListener('click', clickListener);
+    return () => document.removeEventListener('click', clickListener);
+  }, [clickListener]);
+
+  const onToggle = () => setOpen((prev) => !prev);
+  const onClose = useCallback(() => setOpen(false), []);
   return (
-    <SidebarContainer>
-      <SidebarTop />
-      <SidebarContent />
+    <SidebarContainer open={open} ref={sidebarRef}>
+      <SidebarTop open={open} onToggle={onToggle} />
+      <SidebarContent onClose={onClose} />
       <SidebarFooter />
     </SidebarContainer>
   );
 };
 
-const SidebarContainer = styled.div`
+const SidebarContainer = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: column;
-  position: fixed;
-  width: 83px;
+  position: relative;
+  width: ${({ open }) => (open ? 308 : 83)}px;
+  min-width: ${({ open }) => (open ? 308 : 83)}px;
   left: 0;
   top: 0;
   height: 100%;
@@ -27,20 +52,6 @@ const SidebarContainer = styled.div`
   background-color: #353535;
   &::-webkit-scrollbar {
     display: none;
-  }
-  &:hover {
-    width: 308px;
-    ${SidebarTopWrapper} {
-      & > svg {
-        position: absolute;
-        right: 0;
-        margin-right: 30px;
-      }
-
-      & > div {
-        margin-top: 28px;
-      }
-    }
   }
 `;
 

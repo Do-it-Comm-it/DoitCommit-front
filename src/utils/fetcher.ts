@@ -1,15 +1,17 @@
 import axios from 'axios';
 
+const axiosInstance = axios.create();
+
 // fetcher for swr
 export const fetcher = (url: string) => axios.get(url, { withCredentials: true }).then((res) => res.data);
 export const fetcherWithToken = async (url: string, token: string) => {
   await axios
     .get(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
         accept: 'application/json',
       },
-      withCredentials: true,
+      // withCredentials: true,
     })
     .then((res) => res.data)
     .catch((err) => {
@@ -18,3 +20,6 @@ export const fetcherWithToken = async (url: string, token: string) => {
       }
     });
 };
+
+//axios refreshtoken controller by intercpetors.
+axiosInstance.interceptors.request.use();

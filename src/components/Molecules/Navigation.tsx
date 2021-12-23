@@ -13,10 +13,10 @@ const Navigation = ({ children, position = 'top' }: NavigationProps) => {
 export default Navigation;
 
 const Container = styled.nav<{ position: string }>`
-  position: fixed;
-  top: 0;
+  position: relative;
   background-color: ${({ theme }) => theme.colors.background};
   display: flex;
+  flex: 1;
   flex-direction: row;
   width: 100%;
   height: 52px;
