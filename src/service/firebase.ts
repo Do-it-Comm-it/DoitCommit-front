@@ -23,7 +23,26 @@ export const signInGoogle = () => {
 // github auth
 export const signInGithub = () => {
   const provider = new firebase.auth.GithubAuthProvider();
-  return auth.signInWithPopup(provider);
+  return auth
+    .signInWithPopup(provider)
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        var email = err.email;
+        auth.fetchSignInMethodsForEmail(email).then((methods) => {
+          if (methods[0] === 'google.com') {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({ login_hint: err.email });
+            auth.signInWithPopup(provider).then((res) => {
+              auth.signInWithCredential(res.credential!).then(() => {
+                auth.currentUser?.linkWithCredential(err.credential);
+              });
+            });
+          }
+        });
+      }
+    });
 };
 
 export const signOut = () => {
