@@ -1,4 +1,3 @@
-import { useAuthentication } from '@src/hooks/useAuthentication';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { userAtom } from '@src/recoil/atom/user';
 import React, { useCallback, useEffect } from 'react';
@@ -23,7 +22,7 @@ const Modal = ({ showCloseIcon = false }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (user && !user.isEnrolled) setModal({ id: 'register', visible: true });
+    if (user && !user.nickname) setModal({ id: 'register', visible: true });
   }, [user, setModal]);
 
   return (
