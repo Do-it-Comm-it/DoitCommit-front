@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import HomeTitle from '@src/components/Organisms/Home/HomeTitle';
 import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
-import HomePlanner from '@src/components/Organisms/Home/HomePlanner';
-import HomeCommunity from '@src/components/Organisms/Home/HomeCommunity';
-import HomeDutorial from '@src/components/Organisms/Home/HomeDutorial';
-import HomeBanner from '@src/components/Organisms/Home/HomeBanner';
+import Planner from '@src/components/Organisms/Home/Planner';
+import Tutorial from '@src/components/Organisms/Home/Tutorial';
+import Community from '@src/components/Organisms/Home/Community';
+import Banner from '@src/components/Organisms/Home/Banner';
 
 const Home = () => {
   return (
@@ -15,12 +15,12 @@ const Home = () => {
         <HomeTodoList />
         <Second>
           <Top>
-            <HomePlanner />
-            <HomeDutorial />
-            <HomeCommunity />
+            <Planner />
+            <Tutorial />
+            <Community />
           </Top>
           <Bottom>
-            <HomeBanner />
+            <Banner />
           </Bottom>
         </Second>
       </Content>
@@ -38,20 +38,25 @@ const Container = styled.div`
 `;
 const Content = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
 `;
 const Second = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 const Top = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
 `;
 const Bottom = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
 `;
 export default Home;
