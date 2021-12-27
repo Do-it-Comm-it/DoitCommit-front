@@ -62,6 +62,7 @@ const Button = styled.button<{
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 
   &:hover {
+    cursor: pointer;
     background-color: ${({ hoverColor }) => hoverColor};
   }
 `;
