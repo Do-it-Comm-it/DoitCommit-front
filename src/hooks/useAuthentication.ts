@@ -15,16 +15,16 @@ export const useAuthentication = () => {
         //now, it saves user without backend(temporary method)
         fetcherWithToken('http://localhost:8888/api/firebase/auth', await firebaseUser.getIdToken());
 
-        // setUser({
-        //   isEnrolled: false,
-        //   position: [],
-        //   stacks: [],
-        //   todos: [],
-        //   nickname: firebaseUser.displayName,
-        //   email: firebaseUser.email,
-        //   image: firebaseUser.photoURL,
-        //   token: firebaseUser.refreshToken,
-        // });
+        setUser({
+          isEnrolled: false,
+          position: [],
+          stacks: [],
+          todos: [],
+          nickname: firebaseUser.displayName,
+          email: firebaseUser.email,
+          image: firebaseUser.photoURL,
+          token: firebaseUser.refreshToken,
+        });
         setLoading(false);
       } else {
         reset();
