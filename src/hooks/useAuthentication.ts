@@ -14,10 +14,10 @@ export const useAuthentication = () => {
       if (firebaseUser) {
         //TODO: connection with backend side.
         //now, it saves user without backend(temporary method)
-        fetcherWithToken('http://localhost:8888/api/firebase/auth', await firebaseUser.getIdToken());
-
+        // const data = await fetcherWithToken('http://localhost:8888/api/firebase/auth', await firebaseUser.getIdToken());
+        // console.log(data.userInfo);
         setUser({
-          position: [],
+          position: '',
           tech: [],
           todos: [],
           // nickname: res.nickname || firebaseUser.displayName,
