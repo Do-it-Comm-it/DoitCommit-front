@@ -1,7 +1,10 @@
 import DIText from '@src/components/Atoms/DIText';
+import ContentBox from '@src/components/Molecules/ContentBox';
+import { userAtom } from '@src/recoil/atom/user';
 import React, { useMemo } from 'react';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { BsCheck } from 'react-icons/bs';
+import { useRecoilValue } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 
 type TodoType = {
@@ -11,6 +14,7 @@ type TodoType = {
 };
 
 const HomeTodoList = () => {
+  const user = useRecoilValue(userAtom);
   const theme = useTheme();
   const todos: TodoType[] = useMemo(() => {
     return [
@@ -43,10 +47,7 @@ const HomeTodoList = () => {
   }, []);
 
   return (
-    <Container>
-      <Title fontSize={17} fontFamily={theme.font.NotoSansKRRegular}>
-        투두 리스트
-      </Title>
+    <ContentBox title="투두 리스트" minHeight={790} requiredHeader requiredLogin={user ? false : true}>
       <TodoBox>
         <TodoTitle fontSize={16} fontFamily={theme.font.NotoSansKRRegular} style={{ paddingBottom: 20 }}>
           투데이 투두
@@ -66,25 +67,16 @@ const HomeTodoList = () => {
           ))}
         </TodoList>
       </TodoBox>
-    </Container>
+    </ContentBox>
   );
 };
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Title = styled(DIText)``;
 const TodoTitle = styled(DIText)``;
 const TodoBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 40px;
-  height: 485px;
-  border: 1px solid #eaeaea;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   box-sizing: border-box;
 `;
