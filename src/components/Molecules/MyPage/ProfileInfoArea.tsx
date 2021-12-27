@@ -60,7 +60,7 @@ const Label = styled.label`
   color: #8f9294;
   font-size: 16px;
   font-weight: 400;
-  margin-right: 69px;
+  width: 30%;
   white-space: nowrap;
 `;
 const LabelContainer = styled.div`
