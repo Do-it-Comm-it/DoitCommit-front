@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userAtom } from '@src/recoil/atom/user';
 import { fetcherWithToken } from '@src/utils/fetcher';
+import { IUser } from '@src/typings/User';
 
 export const useAuthentication = () => {
-  const [user, setUser] = useRecoilState(userAtom);
+  const [user, setUser] = useRecoilState<IUser | null>(userAtom);
   const [loading, setLoading] = useState<boolean>(true);
   const reset = useResetRecoilState(userAtom);
   useEffect(() => {
@@ -16,14 +17,16 @@ export const useAuthentication = () => {
         fetcherWithToken('http://localhost:8888/api/firebase/auth', await firebaseUser.getIdToken());
 
         setUser({
-          isEnrolled: false,
           position: [],
-          stacks: [],
+          tech: [],
           todos: [],
+          // nickname: res.nickname || firebaseUser.displayName,
           nickname: firebaseUser.displayName,
           email: firebaseUser.email,
           image: firebaseUser.photoURL,
-          token: firebaseUser.refreshToken,
+          githubUrl: '',
+          url1: '',
+          url2: '',
         });
         setLoading(false);
       } else {

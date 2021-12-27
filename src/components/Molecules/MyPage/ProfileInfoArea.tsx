@@ -18,10 +18,25 @@ const ProfileInfoArea = () => {
         <Label>깃허브</Label>
         <span>www.github.com</span>
       </InfoArea>
+      <InfoArea>
+        <Label>URL</Label>
+        <span>www.z00mni.com</span>
+      </InfoArea>
 
       <InfoArea>
         <Label>관심기술</Label>
-        <span>....</span>
+        <LabelContainer>
+          {user?.tech?.map((item, index) => (
+            <TechLabel key={index}>{item}</TechLabel>
+          ))}
+          {/* <TechLabel>Javascript</TechLabel>
+          <TechLabel>React</TechLabel>
+          <TechLabel>Typescript</TechLabel>
+          <TechLabel>Node</TechLabel>
+          <TechLabel>Android</TechLabel>
+          <TechLabel>Ios</TechLabel>
+          <TechLabel>Vue</TechLabel> */}
+        </LabelContainer>
       </InfoArea>
     </Container>
   );
@@ -46,6 +61,20 @@ const Label = styled.label`
   font-size: 16px;
   font-weight: 400;
   margin-right: 69px;
+  white-space: nowrap;
+`;
+const LabelContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+`;
+const TechLabel = styled.label`
+  background-color: #aacd06;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 5px 6px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 `;
 
 export default ProfileInfoArea;
