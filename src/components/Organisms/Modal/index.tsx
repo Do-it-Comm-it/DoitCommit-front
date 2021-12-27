@@ -1,7 +1,8 @@
 import { useAuthentication } from '@src/hooks/useAuthentication';
 import { modalAtom } from '@src/recoil/atom/modal';
+import { userAtom } from '@src/recoil/atom/user';
 import React, { useCallback, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import LoginModal from '../LoginModal';
 import RegisterModal from '../RegisterModal';
 import { CloseModalButton, CreateModal } from './styles';
@@ -12,7 +13,7 @@ interface Props {
 
 const Modal = ({ showCloseIcon = false }: Props) => {
   const [modal, setModal] = useRecoilState(modalAtom);
-  const { user } = useAuthentication();
+  const user = useRecoilValue(userAtom);
   const closeModal = useCallback(() => {
     setModal({ ...modal, visible: false });
   }, [modal, setModal]);
