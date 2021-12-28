@@ -14,19 +14,22 @@ export const useAuthentication = () => {
       if (firebaseUser) {
         //TODO: connection with backend side.
         //now, it saves user without backend(temporary method)
-        // const data = await fetcherWithToken('http://localhost:8888/api/firebase/auth', await firebaseUser.getIdToken());
-        // console.log(data.userInfo);
+        const { userInfo } = await fetcherWithToken(
+          'http://localhost:8888/api/firebase/auth',
+          await firebaseUser.getIdToken(),
+        );
         setUser({
-          position: '',
-          tech: [],
-          todos: [],
+          position: userInfo?.userPosition,
+          tech: userInfo?.userTech,
+          todos: null,
           // nickname: res.nickname || firebaseUser.displayName,
-          nickname: firebaseUser.displayName,
-          email: firebaseUser.email,
-          image: firebaseUser.photoURL,
-          githubUrl: '',
-          url1: '',
-          url2: '',
+          nickname: userInfo.userNickname,
+          email: userInfo.userEmail,
+          image: userInfo?.userImage ? userInfo.userImage : firebaseUser.photoURL,
+          githubUrl: userInfo?.userGithubUrl,
+          url1: userInfo?.userUrl1,
+          url2: userInfo?.userUrl2,
+          token: await firebaseUser.getIdToken(),
         });
         setLoading(false);
       } else {

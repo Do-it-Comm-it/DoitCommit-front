@@ -10,4 +10,5 @@ export interface IUser {
   url1: string | null;
   url2: string | null;
   githubUrl: string | null;
+  token: string;
 }

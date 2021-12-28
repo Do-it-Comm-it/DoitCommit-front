@@ -1,5 +1,6 @@
 import { modalAtom } from '@src/recoil/atom/modal';
 import { userAtom } from '@src/recoil/atom/user';
+import { putWithToken } from '@src/utils/fetcher';
 import React, { useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import LoginModal from '../LoginModal';
@@ -17,6 +18,18 @@ const Modal = ({ showCloseIcon = false }: Props) => {
     setModal({ ...modal, visible: false });
   }, [modal, setModal]);
 
+  const onFinish = useCallback(() => {
+    putWithToken('http://localhost:8888/api/user', user && user.token, {
+      // 현재 닉네임만 수정해보았음.
+      userNickname: user?.nickname,
+    }).then((res) => {
+      // 응답이 true 이면 모달창 닫기
+      if (res) {
+        setModal({ ...modal, visible: false });
+      }
+    });
+  }, [modal, setModal, user]);
+
   const stopPropagation = useCallback((e) => {
     e.stopPropagation();
   }, []);
@@ -32,7 +45,7 @@ const Modal = ({ showCloseIcon = false }: Props) => {
           <div onClick={stopPropagation}>
             {showCloseIcon && <CloseModalButton onClick={closeModal} width="45" height="45" />}
             {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} />}
-            {modal.id === 'register' && modal.visible && <RegisterModal onFinish={closeModal} />}
+            {modal.id === 'register' && modal.visible && <RegisterModal onFinish={onFinish} />}
           </div>
         </CreateModal>
       )}
