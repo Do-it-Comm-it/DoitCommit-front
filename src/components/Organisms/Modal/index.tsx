@@ -23,6 +23,9 @@ const Modal = ({ showCloseIcon = false }: Props) => {
 
   useEffect(() => {
     if (user && !user.nickname) setModal({ id: 'register', visible: true });
+    else {
+      setModal({ id: 'login', visible: false });
+    }
   }, [user, setModal]);
 
   return (
