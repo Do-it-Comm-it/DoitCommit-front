@@ -17,8 +17,8 @@ const putUserInfo = async (User: IUser) => {
   return await requestAPI().put('/users/', User);
 };
 
-const resignUser = async (User: IUser) => {
-  return await requestAPI().delete('/users/resign', User);
+const resignUser = async () => {
+  return await requestAPI().delete('/users/resign');
 };
 
 export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo, resignUser };
