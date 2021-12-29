@@ -1,24 +1,55 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+const apiUrl = process.env.API_URL ?? 'http://localhost:8888';
 
 const axiosInstance = axios.create();
 
-// fetcher for swr
-export const fetcher = (url: string) => axios.get(url, { withCredentials: true }).then((res) => res.data);
-export const fetcherWithToken = async (url: string, token: string) =>
-  await axios
-    .get(url, {
-      headers: {
-        Authorization: `${token}`,
+export const requestAPI = (token?: string | null) => {
+  const authHeader = (token: string | null) => {
+    if (token !== null && token.length > 0) {
+      return {
+        Authorization: `Bearer ${token}`,
         accept: 'application/json',
-      },
-      // withCredentials: true,
-    })
-    .then((res) => res.data)
-    .catch((err) => {
-      if (err) {
-        console.error(err.message);
+      };
+    } else {
+      return {
+        Authorization: '',
+        accept: 'application/json',
+      };
+    }
+  };
+
+  const handleResponse = (response: AxiosResponse) => {
+    if (response.status === 401 || response.status === 403) {
+      return {
+        error: 'bad Response',
+      };
+    }
+    return response.data;
+  };
+
+  const request = (method: 'GET' | 'POST' | 'PUT') => {
+    return (url: string, bodyJson?: any) => {
+      const requestOptions: AxiosRequestConfig = {
+        method,
+        headers: authHeader(token ?? null),
+        withCredentials: true,
+      };
+      if (requestOptions.headers && bodyJson) {
+        requestOptions.headers['Content-Type'] = 'application/json';
+        requestOptions.data = JSON.stringify(bodyJson);
       }
-    });
+
+      return axios(`${apiUrl}` + url, requestOptions).then(handleResponse);
+    };
+  };
+
+  return {
+    get: request('GET'),
+    post: request('POST'),
+    put: request('PUT'),
+  };
+};
 
 //axios refreshtoken controller by intercpetors.
 axiosInstance.interceptors.request.use();

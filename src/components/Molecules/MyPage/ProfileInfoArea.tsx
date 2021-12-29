@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 const ProfileInfoArea = () => {
   const user = useRecoilValue(userAtom);
+
   return (
     <Container>
       <InfoArea>
@@ -29,13 +30,6 @@ const ProfileInfoArea = () => {
           {user?.tech?.map((item, index) => (
             <TechLabel key={index}>{item}</TechLabel>
           ))}
-          <TechLabel>Javascript</TechLabel>
-          <TechLabel>React</TechLabel>
-          <TechLabel>Typescript</TechLabel>
-          <TechLabel>Node</TechLabel>
-          <TechLabel>Android</TechLabel>
-          <TechLabel>Ios</TechLabel>
-          <TechLabel>Vue</TechLabel>
         </LabelContainer>
       </InfoArea>
     </Container>
