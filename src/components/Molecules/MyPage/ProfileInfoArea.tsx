@@ -29,13 +29,13 @@ const ProfileInfoArea = () => {
           {user?.tech?.map((item, index) => (
             <TechLabel key={index}>{item}</TechLabel>
           ))}
-          {/* <TechLabel>Javascript</TechLabel>
+          <TechLabel>Javascript</TechLabel>
           <TechLabel>React</TechLabel>
           <TechLabel>Typescript</TechLabel>
           <TechLabel>Node</TechLabel>
           <TechLabel>Android</TechLabel>
           <TechLabel>Ios</TechLabel>
-          <TechLabel>Vue</TechLabel> */}
+          <TechLabel>Vue</TechLabel>
         </LabelContainer>
       </InfoArea>
     </Container>
