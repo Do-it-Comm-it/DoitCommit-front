@@ -13,4 +13,8 @@ const getUserInfo = async (User: IUser) => {
   return await requestAPI().post('/users/me', User);
 };
 
-export { getAuthUser, saveExtendedUserInfo, getUserInfo };
+const putUserInfo = async (User: IUser) => {
+  return await requestAPI().put('/users/', User);
+};
+
+export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo };
