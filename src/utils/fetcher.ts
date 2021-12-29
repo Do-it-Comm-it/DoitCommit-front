@@ -50,10 +50,11 @@ export const requestAPI = (token?: string | null) => {
       const requestOptions: AxiosRequestConfig = {
         method,
         headers: authHeader(token ?? null),
+        withCredentials: true,
       };
-
       if (requestOptions.headers && bodyJson && method === 'POST') {
         requestOptions.headers['Content-Type'] = 'application/json';
+        requestOptions.data = JSON.stringify(bodyJson);
       }
 
       return axios(`${apiUrl}` + url, requestOptions).then(handleResponse);

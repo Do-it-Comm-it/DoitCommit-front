@@ -13,6 +13,7 @@ import { AiOutlineCheck, AiOutlineLeft } from 'react-icons/ai';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
 import { MdCheck, MdEdit } from 'react-icons/md';
+import { saveExtendedUserInfo } from '@src/service/api';
 
 type RegisterModalProps = {
   onFinish: () => void;
@@ -62,6 +63,14 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
   const onChangeName = useCallback((text: string) => {
     setName(text);
   }, []);
+
+  const onCompleteSignUp = useCallback(async () => {
+    const result = await saveExtendedUserInfo({ ...(user as IUser), tech: techList.map((v) => v.value) });
+
+    if (result.affected > 0) {
+      onFinish();
+    }
+  }, [techList, user, onFinish]);
 
   const NickNameContent = useCallback(() => {
     return (
@@ -198,11 +207,11 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
           </HeaderDescription>
         </CardContent>
         <CardBottom>
-          <DIButton value={'시작하기'} onClick={onFinish} />
+          <DIButton value={'시작하기'} onClick={onCompleteSignUp} />
         </CardBottom>
       </CardStyle>
     );
-  }, [onFinish, theme, user]);
+  }, [onCompleteSignUp, theme, user]);
 
   return (
     <Container>

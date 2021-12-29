@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 const ProfileInfoArea = () => {
   const user = useRecoilValue(userAtom);
+
   return (
     <Container>
       <InfoArea>
