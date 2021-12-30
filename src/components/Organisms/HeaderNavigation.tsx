@@ -1,6 +1,6 @@
 import { userAtom } from '@src/recoil/atom/user';
-import React from 'react';
 import { AiOutlineBell } from 'react-icons/ai';
+import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Navigation from '../Molecules/Navigation';
@@ -10,6 +10,7 @@ import UserIcon from '@src/assets/user.svg';
 import { signOut } from '@src/service/firebase';
 import { useCallback } from 'react';
 import { modalAtom } from '@src/recoil/atom/modal';
+
 const HeaderNavigation = () => {
   const user = useRecoilValue(userAtom);
   const setModal = useSetRecoilState(modalAtom);
