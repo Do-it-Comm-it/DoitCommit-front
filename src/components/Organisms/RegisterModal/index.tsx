@@ -12,9 +12,9 @@ import Divider from '@src/components/Atoms/Divider';
 import { AiOutlineCheck, AiOutlineLeft } from 'react-icons/ai';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
-import { MdCheck, MdEdit } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 import CheckIcon from '@src/assets/check.svg';
-
+import { putUserInfo } from '@src/service/api';
 
 type RegisterModalProps = {
   onFinish: () => void;
