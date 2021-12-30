@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import DIInput from '../Atoms/DIInput';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { useDebounce } from '@src/hooks/useDebounce';
+import Search from '@src/assets/search.svg';
 
-const SearchBar = ({ width = 230, height = 25, defaultValue = '' }) => {
+const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [value, setValue] = useState('');
   const debouncedKeyword = useDebounce(value, 250);
@@ -24,12 +24,13 @@ const SearchBar = ({ width = 230, height = 25, defaultValue = '' }) => {
 
   return (
     <Contanier>
-      {!isFocused && <SearchIcon size={20} />}
+      {!isFocused && <SearchIcon />}
       <DIInput
         defaultValue={value}
         width={width}
         height={height}
         onChange={onChange}
+        borderRadius={64}
         onFocus={() => {
           setIsFocused(true);
         }}
@@ -40,10 +41,10 @@ const SearchBar = ({ width = 230, height = 25, defaultValue = '' }) => {
     </Contanier>
   );
 };
-const SearchIcon = styled(AiOutlineSearch)`
+const SearchIcon = styled(Search)`
   position: absolute;
-  top: 4px;
-  left: 6px;
+  top: 8px;
+  left: 10px;
 `;
 const Contanier = styled.div`
   position: relative;

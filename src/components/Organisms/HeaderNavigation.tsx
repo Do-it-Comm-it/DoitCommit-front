@@ -1,28 +1,43 @@
 import { userAtom } from '@src/recoil/atom/user';
 import React from 'react';
 import { AiOutlineBell } from 'react-icons/ai';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import DIText from '../Atoms/DIText';
 import Navigation from '../Molecules/Navigation';
 import SearchBar from '../Molecules/SearchBar';
 import UserProfile from '../Molecules/UserProfile';
-import ThemeToggle from './ThemeToggle';
-
+import UserIcon from '@src/assets/user.svg';
+import { signOut } from '@src/service/firebase';
+import { useCallback } from 'react';
+import { modalAtom } from '@src/recoil/atom/modal';
 const HeaderNavigation = () => {
   const user = useRecoilValue(userAtom);
+  const setModal = useSetRecoilState(modalAtom);
+  const onClickLogin = useCallback(() => {
+    setModal({ id: 'login', visible: true });
+  }, [setModal]);
 
   return (
     <Navigation position={'top'}>
-      <RightArea>
-        <DIText>{'DO it Commit!'}</DIText>
-      </RightArea>
+      <RightArea></RightArea>
 
       <LeftArea>
-        <SearchBar />
-        <AiOutlineBell size={20} />
-        <UserProfile user={user} isMenuEnable />
-        <ThemeToggle />
+        <SearchBarWrapper>
+          <SearchBar />
+        </SearchBarWrapper>
+        {!user && (
+          <Content>
+            <span onClick={onClickLogin}>Login</span>
+            <UserIcon width={54} height={54} />
+          </Content>
+        )}
+        {user && (
+          <Content>
+            <AiOutlineBell size={20} />
+            <span onClick={signOut}>Logout</span>
+            <UserProfile user={user} isMenuEnable />
+          </Content>
+        )}
       </LeftArea>
     </Navigation>
   );
@@ -39,5 +54,25 @@ const LeftArea = styled.div`
   justify-content: space-around;
   margin-left: auto;
 `;
+const SearchBarWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 70%;
+  border-right: 1px solid #eaeaea;
+`;
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 
+  & > span {
+    font-size: 16px;
+    color: #18171c;
+    margin-right: auto;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+`;
 export default HeaderNavigation;

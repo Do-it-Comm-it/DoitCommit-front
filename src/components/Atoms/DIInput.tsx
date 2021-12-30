@@ -17,7 +17,7 @@ const DIInput = ({
   defaultValue = '',
   width = 120,
   height = 30,
-  borderRadius = 8,
+  borderRadius = 5,
   backgroundColor = '#fff',
   onFocus = () => {},
   onChange,
@@ -46,7 +46,7 @@ const InputArea = styled.input<{ width: number; height: number; borderRadius: nu
   height: ${({ height }) => height}px;
   border: 0;
   margin: 0 auto;
-  border: solid 1px #ccc;
+  border: solid 2px #ececec;
   font-size: 18px;
   border-radius: ${({ borderRadius }) => borderRadius}px;
   background-color: ${({ backgroundColor }) => backgroundColor};

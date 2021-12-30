@@ -18,7 +18,7 @@ const DIButton = ({
   width = 154,
   height = 52,
   value = 'Click',
-  borderRadius = 15,
+  borderRadius = 5,
   backgroundColor = '#AACD06',
   hoverColor = '#97b806',
   children,

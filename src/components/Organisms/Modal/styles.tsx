@@ -14,6 +14,8 @@ export const CreateModal = styled.div`
   backdrop-filter: blur(3px);
 
   & > div {
+    display: flex;
+    flex-direction: column;
     opacity: 1 !important;
     margin: 0 auto;
     width: 600px;
@@ -21,10 +23,9 @@ export const CreateModal = styled.div`
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
     background-color: #ffffff;
-    border-radius: 20px;
+    border-radius: 5px;
     user-select: none;
     z-index: 1012;
-    position: relative;
   }
 `;
 
