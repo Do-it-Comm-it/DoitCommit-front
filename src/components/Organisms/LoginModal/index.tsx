@@ -16,8 +16,9 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
     <Container>
       <Header>
         <CloseModalButton onClick={onClose} />
-        <Divider />
       </Header>
+      <Divider />
+
       <Content>
         <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
           안녕하세요!
@@ -48,23 +49,33 @@ const HeaderDescription = styled(DIText)``;
 const HelpText = styled(DIText)``;
 const Link = styled(DIText)``;
 const Container = styled.div`
-  height: 300px;
-`;
-const Header = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100px;
+  height: 100%;
 `;
-const Content = styled.div``;
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 0 20px;
+`;
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
 const CloseModalButton = styled(CloseIcon)`
   width: 25px;
-  position: absolute;
-  top: -20px;
-  right: 20px;
+  margin-left: auto;
   color: ${({ theme }) => theme.colors.dark};
   cursor: pointer;
 `;

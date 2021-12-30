@@ -12,8 +12,9 @@ import Divider from '@src/components/Atoms/Divider';
 import { AiOutlineCheck, AiOutlineLeft } from 'react-icons/ai';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
-import { MdCheck, MdEdit } from 'react-icons/md';
-import { putUserInfo, saveExtendedUserInfo } from '@src/service/api';
+import { MdEdit } from 'react-icons/md';
+import { putUserInfo } from '@src/service/api';
+import CheckIcon from '@src/assets/check.svg';
 
 type RegisterModalProps = {
   onFinish: () => void;
@@ -77,9 +78,9 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
       <CardStyle>
         <CardHeader>
           <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
-            두잇커밋에 처음 오셧군요?
+            두잇커밋에 처음 오셨군요?
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight}>
+          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
             앞으로 사용하실 닉네임을 정해주세요.
           </HeaderDescription>
         </CardHeader>
@@ -90,7 +91,7 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
               width={285}
               height={65}
               onChange={onChangeName}
-              placholder={'최대 6글자'}
+              placholder={'최대 8글자'}
             />
           </InputPlace>
           {checkName ? (
@@ -123,10 +124,15 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
     return (
       <CardStyle>
         <CardHeader>
-          <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
+          <HeaderTitle
+            style={{ paddingBottom: 14 }}
+            fontSize={28}
+            fontFamily={theme.font.NotoSansKRBold}
+            fontColor={theme.colors.dark.a6}
+          >
             반갑습니다. {user?.nickname} 님
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight}>
+          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
             사용중인 기술이나 관심있는 태그를 설정해주세요.
           </HeaderDescription>
         </CardHeader>
@@ -149,10 +155,15 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
     return (
       <CardStyle>
         <CardHeader>
-          <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
+          <HeaderTitle
+            style={{ paddingBottom: 14 }}
+            fontSize={28}
+            fontFamily={theme.font.NotoSansKRBold}
+            fontColor={theme.colors.dark.a6}
+          >
             프로필 이미지를 설정하세요
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight}>
+          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
             미 업로드 시, 기본 프로필 이미지로 설정됩니다.
           </HeaderDescription>
         </CardHeader>
@@ -195,14 +206,14 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
     return (
       <CardStyle>
         <CardHeader>
-          <MdCheck size={36} color={theme.colors.main} />
+          <CheckIcon />
         </CardHeader>
         <CardContent>
           <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
             축하드려요! 가입되셨습니다!
           </HeaderTitle>
 
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight}>
+          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
             앞으로 {user?.nickname} 님의 멋진 활동 응원할게요!
           </HeaderDescription>
         </CardContent>
@@ -216,18 +227,15 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
   return (
     <Container>
       <Header>
-        <BackIcon
-          color={theme.colors.dark.a3}
-          size={24}
-          onClick={() => {
-            if (page > 0) {
+        {page !== 0 && (
+          <BackIcon
+            color={theme.colors.dark.a3}
+            size={24}
+            onClick={() => {
               setPage((prev) => prev - 1);
-            }
-            if (page === 0) {
-              onFinish();
-            }
-          }}
-        />
+            }}
+          />
+        )}
         <Label>
           {[...Array(4)].map((_, index) => {
             return (
@@ -238,8 +246,9 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
           })}
         </Label>
         <CloseModalButton onClick={onFinish} />
-        <Divider />
       </Header>
+      <Divider />
+
       {page === 0 && NickNameContent()}
       {page === 1 && TechContent()}
       {page === 2 && ImageContent()}
@@ -249,14 +258,19 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
 };
 
 const Container = styled.div`
-  height: 300px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 `;
+
 const CardStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
+  padding-top: 30px;
 `;
 const CardHeader = styled.div`
   display: flex;
@@ -274,7 +288,7 @@ const CardContent = styled.div`
 `;
 const CardBottom = styled.div`
   display: flex;
-  padding-bottom: 30px;
+  padding-bottom: 52px;
   margin-top: auto;
 `;
 const HeaderTitle = styled(DIText)``;
@@ -293,19 +307,18 @@ const FileInput = styled.input`
 
 const Header = styled.div`
   display: flex;
-  position: relative;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  height: 80px;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100px;
+  padding: 0 20px;
 `;
 
 const CloseModalButton = styled(CloseIcon)`
   width: 25px;
-  position: absolute;
-  top: -20px;
-  right: 20px;
+  margin-left: auto;
+  align-items: center;
   color: ${({ theme }) => theme.colors.dark};
   cursor: pointer;
 `;
@@ -354,7 +367,7 @@ const Label = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  padding-bottom: 20px;
+  margin-left: auto;
 `;
 const PageLabel = styled.div<{ active: boolean }>`
   margin-right: 5px;
