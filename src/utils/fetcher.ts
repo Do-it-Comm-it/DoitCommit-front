@@ -28,7 +28,7 @@ export const requestAPI = (token?: string | null) => {
     return response.data;
   };
 
-  const request = (method: 'GET' | 'POST' | 'PUT') => {
+  const request = (method: 'GET' | 'POST' | 'PUT' | 'DELETE') => {
     return (url: string, bodyJson?: any) => {
       const requestOptions: AxiosRequestConfig = {
         method,
@@ -48,6 +48,7 @@ export const requestAPI = (token?: string | null) => {
     get: request('GET'),
     post: request('POST'),
     put: request('PUT'),
+    delete: request('DELETE'),
   };
 };
 

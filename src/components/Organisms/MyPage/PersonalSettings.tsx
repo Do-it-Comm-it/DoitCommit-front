@@ -13,7 +13,7 @@ const PersonalSettings = () => {
   // TODO: Documents Page. (Not fixed)
   // TODO: User resign action (need to implement user resign api)
   const user = useRecoilValue(userAtom);
-  const [techList, setTechList] = useState<Tech[]>([]);
+  const [, setTechList] = useState<Tech[]>([]);
   const [info, setInfo] = useState({
     nickname: '',
     position: '',

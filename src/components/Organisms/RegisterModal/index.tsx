@@ -13,8 +13,8 @@ import { AiOutlineCheck, AiOutlineLeft } from 'react-icons/ai';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
 import { MdEdit } from 'react-icons/md';
-import { putUserInfo } from '@src/service/api';
 import CheckIcon from '@src/assets/check.svg';
+import { putUserInfo } from '@src/service/api';
 
 type RegisterModalProps = {
   onFinish: () => void;
