@@ -13,11 +13,10 @@ import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
 
 const App = () => {
   const { theme } = useDarkMode();
-  const { loading } = useAuthentication();
 
-  if (loading) {
-    return <></>;
-  }
+  // if (loading) {
+  //   return <></>;
+  // }
 
   return (
     <ThemeProvider theme={theme === 'light' ? light : dark}>

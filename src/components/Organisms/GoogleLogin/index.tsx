@@ -8,7 +8,7 @@ const GoogleLogin = () => {
   const theme = useTheme();
 
   return (
-    <GoogleButton onClick={signInGoogle}>
+    <GoogleButton href={process.env.GOOGLE_URL}>
       <GoogleLogo size={30} />
       <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold}>
         Google로 계속
@@ -23,13 +23,14 @@ const GoogleLogo = styled(FcGoogle)`
 
 export default GoogleLogin;
 
-const GoogleButton = styled.button`
+const GoogleButton = styled.a`
   display: inline-flex;
   width: 383px;
   height: 68px;
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid #dadada;
   border-radius: 6px;
+  text-decoration: none;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.dark.a5};
   margin-top: 44px;
