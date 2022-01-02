@@ -9,11 +9,10 @@ type Tech = {
   label: string;
 };
 const PersonalSettings = () => {
-  // TODO: defaultValue from User data
-  // TODO: Documents Page. (Not fixed)
-  // TODO: User resign action (need to implement user resign api)
+  // TODO : default value about registered user
+  // TODO : Refactoring input code
   const user = useRecoilValue(userAtom);
-  const [, setTechList] = useState<Tech[]>([]);
+  const [tech, setTechList] = useState<Tech[]>([]);
   const [info, setInfo] = useState({
     nickname: '',
     position: '',
@@ -35,24 +34,33 @@ const PersonalSettings = () => {
     <Container>
       <Ul>
         <Li>
-          <Label>닉네임</Label>
+          <Label>로그인 ID</Label>
+          <Input name="loginId" onChange={onChange} />
+        </Li>
+        <Li>
+          <Label>이름 (별명)</Label>
           <Input name="nickname" onChange={onChange} defaultValue={user?.nickname!} />
         </Li>
         <Li>
-          <Label>직군</Label>
-          <Input name="position" onChange={onChange} defaultValue={user?.position!} />
+          <Label>E-mail</Label>
+          <Input name="email" onChange={onChange} />
         </Li>
         <Li>
-          <Label>관심 기술</Label>
-          <SelectInput width={475} onChange={(value) => setTechList(value as Tech[])} />
+          <Label>직군·직종</Label>
+          <Input name="position" onChange={onChange} />
         </Li>
       </Ul>
 
       <Ul>
         <Li>
-          <Label>GITHUB</Label>
+          <Label>관심기술</Label>
+          <SelectInput width={475} onChange={(value) => setTechList(value as Tech[])} />
+        </Li>
+        <Li>
+          <Label>Github</Label>
           <Input name="github" onChange={onChange} />
         </Li>
+
         <Li>
           <Label>URL</Label>
           <Input name="url1" onChange={onChange} />

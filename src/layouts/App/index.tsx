@@ -24,7 +24,7 @@ const App = () => {
         <GlobalStyle />
         <CommonComponentWrapper>
           <PublicRoute exact path="/" component={Home} />
-          <PrivateRoute exact path="/mypage" component={MyPage} />
+          <PublicRoute exact path="/mypage" component={MyPage} />
         </CommonComponentWrapper>
       </BrowserRouter>
     </ThemeProvider>
