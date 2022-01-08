@@ -34,10 +34,6 @@ const PersonalSettings = () => {
     <Container>
       <Ul>
         <Li>
-          <Label>로그인 ID</Label>
-          <Input name="loginId" onChange={onChange} />
-        </Li>
-        <Li>
           <Label>이름 (별명)</Label>
           <Input name="nickname" onChange={onChange} defaultValue={user?.nickname!} />
         </Li>
@@ -49,16 +45,16 @@ const PersonalSettings = () => {
           <Label>직군·직종</Label>
           <Input name="position" onChange={onChange} />
         </Li>
+        <Li>
+          <Label>Github</Label>
+          <Input name="github" onChange={onChange} />
+        </Li>
       </Ul>
 
       <Ul>
         <Li>
           <Label>관심기술</Label>
           <SelectInput width={475} onChange={(value) => setTechList(value as Tech[])} />
-        </Li>
-        <Li>
-          <Label>Github</Label>
-          <Input name="github" onChange={onChange} />
         </Li>
 
         <Li>
@@ -77,14 +73,15 @@ const PersonalSettings = () => {
 const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
   flex-direction: row;
   width: 100%;
   height: 100%;
 `;
 const Ul = styled.ul`
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
+  padding-top: 50px;
 `;
 
 const Li = styled.li`
@@ -94,7 +91,7 @@ const Li = styled.li`
   padding-bottom: 38px;
 `;
 const Input = styled.input`
-  height: 50px;
+  height: 55px;
   border: 0 none;
   background-color: #eeeeee;
   border-radius: 5px;

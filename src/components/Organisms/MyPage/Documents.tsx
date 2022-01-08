@@ -18,14 +18,12 @@ const Documents = () => {
       <TabContainer>
         <TabButton content="계정" onClick={() => handleTab(1)} selected={tabIndex === 1} fontSize={16} />
         <TabButton content="알림" onClick={() => handleTab(2)} selected={tabIndex === 2} fontSize={16} />
-        <TabButton content="언어와지역" onClick={() => handleTab(3)} selected={tabIndex === 3} fontSize={16} />
-        <TabButton content="보안" onClick={() => handleTab(4)} selected={tabIndex === 4} fontSize={16} />
+        <TabButton content="보안" onClick={() => handleTab(3)} selected={tabIndex === 3} fontSize={16} />
       </TabContainer>
       <Content>
         {tabIndex === 1 && <Account />}
         {tabIndex === 2 && <Notification />}
-        {tabIndex === 3 && <LanguageAndLocation />}
-        {tabIndex === 4 && <Security />}
+        {tabIndex === 3 && <Security />}
       </Content>
     </Container>
   );
