@@ -5,23 +5,20 @@ import styled from 'styled-components';
 const ProfileInfoArea = () => {
   const user = useRecoilValue(userAtom);
 
+  // TODO : default value about registered user
   return (
     <Container>
       <InfoArea>
-        <Label>닉네임</Label>
-        <span>{user?.nickname}</span>
+        <Label>이름</Label>
+        <span>...</span>
       </InfoArea>
       <InfoArea>
         <Label>직군</Label>
-        <span>{user?.position}</span>
+        <span>...</span>
       </InfoArea>
       <InfoArea>
-        <Label>깃허브</Label>
-        <span>www.github.com</span>
-      </InfoArea>
-      <InfoArea>
-        <Label>URL</Label>
-        <span>www.z00mni.com</span>
+        <Label>이메일</Label>
+        <span>...</span>
       </InfoArea>
 
       <InfoArea>
@@ -31,6 +28,14 @@ const ProfileInfoArea = () => {
             <TechLabel key={index}>{item}</TechLabel>
           ))}
         </LabelContainer>
+      </InfoArea>
+      <InfoArea>
+        <Label>깃허브</Label>
+        <span>...</span>
+      </InfoArea>
+      <InfoArea>
+        <Label>URL</Label>
+        <span>...</span>
       </InfoArea>
     </Container>
   );

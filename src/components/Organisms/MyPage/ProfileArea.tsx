@@ -41,8 +41,8 @@ const Container = styled.div`
   display: flex;
   padding: 15px;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-  border: solid 1px rgba(234, 234, 234, 1);
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
   margin-right: 16px;
 `;
 

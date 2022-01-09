@@ -9,11 +9,10 @@ type Tech = {
   label: string;
 };
 const PersonalSettings = () => {
-  // TODO: defaultValue from User data
-  // TODO: Documents Page. (Not fixed)
-  // TODO: User resign action (need to implement user resign api)
+  // TODO : default value about registered user
+  // TODO : Refactoring input code
   const user = useRecoilValue(userAtom);
-  const [, setTechList] = useState<Tech[]>([]);
+  const [tech, setTechList] = useState<Tech[]>([]);
   const [info, setInfo] = useState({
     nickname: '',
     position: '',
@@ -35,24 +34,29 @@ const PersonalSettings = () => {
     <Container>
       <Ul>
         <Li>
-          <Label>닉네임</Label>
+          <Label>이름 (별명)</Label>
           <Input name="nickname" onChange={onChange} defaultValue={user?.nickname!} />
         </Li>
         <Li>
-          <Label>직군</Label>
-          <Input name="position" onChange={onChange} defaultValue={user?.position!} />
+          <Label>E-mail</Label>
+          <Input name="email" onChange={onChange} />
         </Li>
         <Li>
-          <Label>관심 기술</Label>
-          <SelectInput width={475} onChange={(value) => setTechList(value as Tech[])} />
+          <Label>직군·직종</Label>
+          <Input name="position" onChange={onChange} />
+        </Li>
+        <Li>
+          <Label>Github</Label>
+          <Input name="github" onChange={onChange} />
         </Li>
       </Ul>
 
       <Ul>
         <Li>
-          <Label>GITHUB</Label>
-          <Input name="github" onChange={onChange} />
+          <Label>관심기술</Label>
+          <SelectInput width={475} onChange={(value) => setTechList(value as Tech[])} />
         </Li>
+
         <Li>
           <Label>URL</Label>
           <Input name="url1" onChange={onChange} />
@@ -69,14 +73,15 @@ const PersonalSettings = () => {
 const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
   flex-direction: row;
   width: 100%;
   height: 100%;
 `;
 const Ul = styled.ul`
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
+  padding-top: 50px;
 `;
 
 const Li = styled.li`
@@ -86,7 +91,7 @@ const Li = styled.li`
   padding-bottom: 38px;
 `;
 const Input = styled.input`
-  height: 50px;
+  height: 55px;
   border: 0 none;
   background-color: #eeeeee;
   border-radius: 5px;

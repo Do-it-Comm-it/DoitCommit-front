@@ -23,6 +23,7 @@ declare module 'styled-components' {
         a4: string;
         a5: string;
         a6: string;
+        a7: string;
       };
     };
   }
@@ -50,6 +51,7 @@ export const light: DefaultTheme = {
       a4: '#616161',
       a5: '#353535',
       a6: '#2D2D2D',
+      a7: '18171C',
     },
   },
 };
@@ -76,6 +78,7 @@ export const dark: DefaultTheme = {
       a4: '#616161',
       a5: '#353535',
       a6: '#2D2D2D',
+      a7: '#18171C',
     },
   },
 };

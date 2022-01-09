@@ -12,8 +12,8 @@ const ProfileFormArea = () => {
   return (
     <Container>
       <TabContainer>
-        <TabButton content="Personal Settings" onClick={() => handleTab(1)} selected={tabIndex === 1} />
-        <TabButton content="Documents" onClick={() => handleTab(2)} selected={tabIndex === 2} />
+        <TabButton content="Personal Settings" onClick={() => handleTab(1)} selected={tabIndex === 1} border />
+        <TabButton content="Documents" onClick={() => handleTab(2)} selected={tabIndex === 2} border />
         <Button>확인</Button>
       </TabContainer>
       <Content>{tabIndex === 1 ? <PersonalSettings /> : <Documents />}</Content>
@@ -28,17 +28,18 @@ const Container = styled.div`
   min-width: 1150px;
   height: 100%;
   min-height: 702px;
-  background-color: rgba(255, 255, 255, 1);
-  border: solid 1px rgba(234, 234, 234, 1);
-  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+  padding: 10px;
 `;
 
 const TabContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  height: 80px;
   width: 100%;
-  padding: 10px;
-  padding-bottom: 15px;
+  padding: 0 10px;
   border-bottom: 1px solid #eaeaea;
 `;
 const Content = styled.div`
@@ -46,7 +47,7 @@ const Content = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 15px;
+  padding: 10px;
 `;
 
 const Button = styled.button`

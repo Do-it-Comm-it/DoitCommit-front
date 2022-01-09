@@ -1,11 +1,15 @@
 import ProfileArea from '@src/components/Organisms/MyPage/ProfileArea';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import ProfileFormArea from '@src/components/Organisms/MyPage/ProfileFormArea';
+import DIText from '@src/components/Atoms/DIText';
 const MyPage = () => {
+  const theme = useTheme();
   return (
     <Container>
-      <h2>마이페이지</h2>
+      <DIText fontWeight={700} fontColor={theme.colors.dark.a7} fontSize={30} style={{ paddingBottom: '20px' }}>
+        마이페이지
+      </DIText>
       <Content>
         <ProfileArea />
         <ProfileFormArea />
