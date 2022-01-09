@@ -35,7 +35,7 @@ const MenuContainer = styled.div`
 `;
 
 const Button = styled.button`
-  width: 100px;
+  width: 150px;
   height: 32px;
   background-color: #ffffff;
   border: 1px solid #ff8b8b;
