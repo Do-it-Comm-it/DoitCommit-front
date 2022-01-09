@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-export const requestAPI = (token?: string | null) => {
+export const requestAPI = () => {
   // 서버에서 쿠키를 set 해줄 것으로 보여 이 부분은 주석 처리 했습니다.
 
   // const authHeader = (token: string | null) => {
