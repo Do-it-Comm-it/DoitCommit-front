@@ -67,24 +67,22 @@ axiosInstance.interceptors.request.use();
 // requset -> 401 Unauthorized (accessToken expires) -> request new accessToken -> request previous ones
 // with newly earned accessToken
 
-export const axiosResponseInterceptor = () => {
-  const interceptor = axiosInstance.interceptors.response.use(
-    (response) => response,
-    async (err: AxiosError) => {
-      // 401 Unauthorized가 아닌 다른 에러라면
-      if (err.response?.status !== 401) {
-        return Promise.resolve(err);
-      }
-      // 무한 루프 방지 eject
-      axiosInstance.interceptors.response.eject(interceptor);
-      return axiosInstance
-        .get('/refresh') // 임의로 정해둔 새로운 accessToken을 발급받기 위한 컨트롤러
-        .then(() => {
-          return axiosInstance(err.response?.config!); // 이전 request 재요청
-        })
-        .catch((err) => {
-          return Promise.reject(err);
-        });
-    },
-  );
-};
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (err: AxiosError) => {
+    // 401 Unauthorized가 아닌 다른 에러라면
+    if (err.response?.status !== 401) {
+      return Promise.resolve(err);
+    }
+    // 무한 루프 방지 eject
+    axiosInstance.interceptors.response.eject(0);
+    return axiosInstance
+      .get('/refresh') // 임의로 정해둔 새로운 accessToken을 발급받기 위한 컨트롤러
+      .then(() => {
+        return axiosInstance(err.response?.config!); // 이전 request 재요청
+      })
+      .catch((err) => {
+        return Promise.reject(err);
+      });
+  },
+);
