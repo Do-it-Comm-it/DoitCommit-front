@@ -14,7 +14,7 @@ export const useAuthentication = () => {
       if (firebaseUser) {
         let techList = null;
         const token = await firebaseUser.getIdToken();
-        const { user } = await getAuthUser(token);
+        const { user } = await getAuthUser();
 
         if (user.tech) {
           techList = user.tech.split(',');
