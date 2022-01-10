@@ -76,6 +76,7 @@ const Container = styled.div<{ contentWidth?: number; contentHeight?: number }>`
   position: relative;
   flex-direction: column;
   width: ${({ contentWidth }) => (contentWidth ? `${contentWidth}px` : `100%`)};
+  min-width: ${({ contentWidth }) => contentWidth ?? `600px`};
   height: ${({ contentHeight }) => (contentHeight ? `${contentHeight}px` : `100%`)};
   padding-right: 16px;
   justify-content: space-between;
@@ -94,6 +95,7 @@ const LoginWrapper = styled.div`
   min-width: 80px;
   width: 50%;
   height: 50%;
+  min-height: 200px;
   box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
   background: transparent;
 `;

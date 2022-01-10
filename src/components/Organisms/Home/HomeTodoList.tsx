@@ -47,7 +47,7 @@ const HomeTodoList = () => {
   }, []);
 
   return (
-    <ContentBox title="투두 리스트" minHeight={790} requiredHeader requiredLogin={user ? false : true}>
+    <ContentBox title="투두 리스트" minHeight={490} requiredHeader requiredLogin={user ? false : true}>
       <TodoBox>
         <TodoTitle fontSize={16} fontFamily={theme.font.NotoSansKRRegular} style={{ paddingBottom: 20 }}>
           투데이 투두

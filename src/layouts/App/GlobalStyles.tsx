@@ -6,10 +6,13 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
       box-sizing: border-box;
   }
+  html {
+  height: 100vh;
+}
   body {
     background-color: #eeeeee;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
   }
 `;
 

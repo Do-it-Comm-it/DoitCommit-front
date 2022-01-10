@@ -35,6 +35,7 @@ const Container = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.dark.a1};
   padding: 70px;
+  padding-bottom: 20px;
 `;
 const Content = styled.div`
   width: 100%;

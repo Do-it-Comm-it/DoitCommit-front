@@ -55,6 +55,7 @@ const SidebarLink = styled(Link)`
   width: 100%;
   padding: 18px 18px 18px 32px;
   font-size: 16px;
+  height: 100%;
   display: block;
   color: #ffffff;
   text-decoration: none;
