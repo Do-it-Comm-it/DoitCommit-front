@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Banner = () => {
   return (
-    <ContentBox contentWidth={900} minHeight={370} contentHeight={400}>
+    <ContentBox contentWidth={900} minHeight={270} contentHeight={400}>
       <BannerItem />
     </ContentBox>
   );
