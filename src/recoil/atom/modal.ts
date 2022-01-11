@@ -1,5 +1,9 @@
 import { atom } from 'recoil';
-export const modalAtom = atom({
+type Modal = {
+  id: 'register' | 'login' | 'none';
+  visible: boolean;
+};
+export const modalAtom = atom<Modal>({
   key: 'modal',
   default: {
     id: 'none',
