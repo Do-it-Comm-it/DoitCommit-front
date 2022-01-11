@@ -58,7 +58,7 @@ const SelectInput = ({ onChange, width }: Props) => {
 };
 
 const TechSelect = styled(Select)<{ width?: number }>`
-  width: ${({ width }) => width}px;
+  width: ${({ width }) => width}%;
 `;
 
 export default SelectInput;

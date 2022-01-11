@@ -34,10 +34,8 @@ const ProfileArea = () => {
   );
 };
 const Container = styled.div`
-  width: 514px;
-  min-width: 514px;
+  width: 30%;
   height: 100%;
-  min-height: 702px;
   display: flex;
   padding: 15px;
   flex-direction: column;
