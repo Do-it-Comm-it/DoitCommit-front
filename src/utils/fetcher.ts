@@ -77,7 +77,7 @@ axiosInstance.interceptors.response.use(
     // 무한 루프 방지 eject
     axiosInstance.interceptors.response.eject(0);
     return axiosInstance
-      .get('/refresh') // 임의로 정해둔 새로운 accessToken을 발급받기 위한 컨트롤러
+      .get('/auth/refreshToken') // 임의로 정해둔 새로운 accessToken을 발급받기 위한 컨트롤러
       .then(() => {
         return axiosInstance(err.response?.config!); // 이전 request 재요청
       })
