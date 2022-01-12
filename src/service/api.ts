@@ -1,8 +1,8 @@
 import { IUser } from '@src/typings/User';
 import { requestAPI } from '@src/utils/fetcher';
 
-const getAuthUser = async (token: string) => {
-  return await requestAPI(token).get('/auth');
+const getAuthUser = async () => {
+  return await requestAPI().get('/auth');
 };
 
 const saveExtendedUserInfo = async (User: IUser) => {
