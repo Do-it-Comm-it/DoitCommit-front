@@ -10,24 +10,26 @@ export const useAuthentication = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const reset = useResetRecoilState(userAtom);
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
-      if (firebaseUser) {
-        let techList = null;
-        const token = await firebaseUser.getIdToken();
-        const { user } = await getAuthUser();
+    // const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
+    //   if (firebaseUser) {
+    //     let techList = null;
+    //     const token = await firebaseUser.getIdToken();
+    //     const { user } = await getAuthUser(token);
 
-        if (user.tech) {
-          techList = user.tech.split(',');
-        }
-        setUser({ ...user, tech: techList });
-        setLoading(false);
-      } else {
-        reset();
-        setLoading(false);
-      }
-    });
+    //     if (user.tech) {
+    //       techList = user.tech.split(',');
+    //     }
+    //     setUser({ ...user, tech: techList });
+    //     setLoading(false);
+    //   } else {
+    //     reset();
+    //     setLoading(false);
+    //   }
+    // });
 
-    return () => unsubscribe();
+    //  return () => unsubscribe();
+
+    const unsubscribe = async () => {};
   }, [setUser, reset]);
 
   return { user, loading };

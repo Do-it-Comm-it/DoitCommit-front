@@ -24,14 +24,12 @@ const Container = styled.section`
   width: 100%;
   height: 100%;
   padding: 70px;
-  min-height: 702px;
 `;
 const Content = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
-  max-height: 702px;
 `;
 
 export default MyPage;

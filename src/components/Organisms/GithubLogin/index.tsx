@@ -1,5 +1,4 @@
 // Github Login Button Component
-import { signInGithub } from '@src/service/firebase';
 import React from 'react';
 import DIText from '@src/components/Atoms/DIText';
 import styled, { useTheme } from 'styled-components';
@@ -8,7 +7,7 @@ const GithubLogin = () => {
   const theme = useTheme();
 
   return (
-    <GithubButton onClick={signInGithub}>
+    <GithubButton href={`${process.env.API_URL}/oauth2/authorization/github`}>
       <GithubLogo size={30} />
       <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold}>
         Github로 계속
@@ -17,7 +16,7 @@ const GithubLogin = () => {
   );
 };
 
-const GithubButton = styled.button`
+const GithubButton = styled.a`
   display: inline-flex;
   width: 383px;
   height: 68px;
@@ -30,6 +29,7 @@ const GithubButton = styled.button`
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 `;
 
 const GithubLogo = styled(BsGithub)`

@@ -137,7 +137,7 @@ const RegisterModal = ({ onFinish }: RegisterModalProps) => {
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <SelectInput onChange={(value) => setTechList(value as Tech[])} width={450} />
+          <SelectInput onChange={(value) => setTechList(value as Tech[])} width={100} />
         </CardContent>
         <CardBottom>
           <DIButton

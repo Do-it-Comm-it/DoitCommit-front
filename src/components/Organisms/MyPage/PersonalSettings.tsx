@@ -54,7 +54,7 @@ const PersonalSettings = () => {
       <Ul>
         <Li>
           <Label>관심기술</Label>
-          <SelectInput width={475} onChange={(value) => setTechList(value as Tech[])} />
+          <SelectInput width={100} onChange={(value) => setTechList(value as Tech[])} />
         </Li>
 
         <Li>
@@ -80,8 +80,9 @@ const Container = styled.div`
 const Ul = styled.ul`
   display: flex;
   justify-content: flex-start;
+  width: 50%;
   flex-direction: column;
-  padding-top: 50px;
+  padding: 50px;
 `;
 
 const Li = styled.li`
@@ -96,7 +97,7 @@ const Input = styled.input`
   background-color: #eeeeee;
   border-radius: 5px;
   padding: 6px 13px;
-  width: 475px;
+  width: 100%;
   outline: none;
   &:focus {
     box-shadow: 0px 0px 4px #aacd06;

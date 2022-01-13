@@ -1,14 +1,12 @@
 // Google Login Button Component
 import React from 'react';
-import { signInGoogle } from '@src/service/firebase';
 import { FcGoogle } from 'react-icons/fc';
 import DIText from '@src/components/Atoms/DIText';
 import styled, { useTheme } from 'styled-components';
 const GoogleLogin = () => {
   const theme = useTheme();
-
   return (
-    <GoogleButton href={process.env.GOOGLE_URL}>
+    <GoogleButton href={`${process.env.API_URL}/oauth2/authorization/google`}>
       <GoogleLogo size={30} />
       <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold}>
         Google로 계속
