@@ -10,10 +10,12 @@ export const CommonComponentWrapper: React.FC = ({ children }) => {
     <Container>
       <Sidebar />
       <Modal />
-      <Body>
-        <HeaderNavigation />
-        <Switch>{children}</Switch>
-      </Body>
+      <React.Suspense fallback={<h2>Loading..</h2>}>
+        <Body>
+          <HeaderNavigation />
+          <Switch>{children}</Switch>
+        </Body>
+      </React.Suspense>
     </Container>
   );
 };

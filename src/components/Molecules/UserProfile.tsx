@@ -1,10 +1,10 @@
 import { IUser } from '@src/typings/User';
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { signOut } from '@src/service/firebase';
 import DIButton from '../Atoms/DIButton';
 import { useSetRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
+import useAuthentication from '@src/hooks/useAuthentication';
 type UserProfileProps = {
   width?: number;
   height?: number;
@@ -14,6 +14,7 @@ type UserProfileProps = {
 
 //TODO: It needs profile default image if user image is empty.
 const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false }: UserProfileProps) => {
+  const { logout } = useAuthentication();
   const [show, setShow] = useState<boolean>(false);
   const setModal = useSetRecoilState(modalAtom);
   const showMenu = useCallback(() => {
@@ -43,7 +44,9 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false }: Us
               showMenu();
             }}
           >
-            {user && <ProfileImage src={user.image ?? ''} width={width} height={height} alt={'connection error'} />}
+            {user && (
+              <ProfileImage src={user.pictureUrl ?? ''} width={width} height={height} alt={'connection error'} />
+            )}
 
             {show && (
               <Menu>
@@ -54,7 +57,7 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false }: Us
                   <MenuText>테스트</MenuText>
                 </MenuItem>
                 <MenuItem>
-                  <MenuText onClick={signOut}>로그아웃</MenuText>
+                  <MenuText onClick={logout}>로그아웃</MenuText>
                 </MenuItem>
               </Menu>
             )}
@@ -65,7 +68,7 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false }: Us
   } else {
     return (
       <Circle tabIndex={0} width={width} height={height}>
-        {user && <ProfileImage src={user.image ?? ''} width={width} height={height} alt={'connection error'} />}
+        {user && <ProfileImage src={user.pictureUrl ?? ''} width={width} height={height} alt={'connection error'} />}
       </Circle>
     );
   }

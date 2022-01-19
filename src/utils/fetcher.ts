@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const apiUrl = process.env.API_URL ?? 'http://localhost:8888';
 
@@ -40,22 +40,6 @@ axiosInstance.interceptors.response.use(
 );
 
 export const requestAPI = () => {
-  // 서버에서 쿠키를 set 해줄 것으로 보여 이 부분은 주석 처리 했습니다.
-
-  // const authHeader = (token: string | null) => {
-  //   if (token !== null && token.length > 0) {
-  //     return {
-  //       Authorization: `Bearer ${token}`,
-  //       accept: 'application/json',
-  //     };
-  //   } else {
-  //     return {
-  //       Authorization: '',
-  //       accept: 'application/json',
-  //     };
-  //   }
-  // };
-
   const handleResponse = (response: AxiosResponse) => {
     if (response.status === 401 || response.status === 403) {
       return {
@@ -67,19 +51,6 @@ export const requestAPI = () => {
 
   const request = (method: 'GET' | 'POST' | 'PUT' | 'DELETE') => {
     return (url: string, bodyJson?: any) => {
-      // const requestOptions: AxiosRequestConfig = {
-      //   method,
-      //   headers: authHeader(token ?? null),
-      //   withCredentials: true,
-      // };
-      // if (requestOptions.headers && bodyJson) {
-      //   requestOptions.headers['Content-Type'] = 'application/json';
-      //   requestOptions.data = JSON.stringify(bodyJson);
-      // }
-
-      // return axios(`${apiUrl}` + url, requestOptions).then(handleResponse);
-
-      // 만든 axiosInstance를 사용하기 위해 위의 코드들은 주석처리 했습니다.
       return axiosInstance({
         url,
         method: method,

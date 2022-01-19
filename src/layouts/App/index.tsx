@@ -1,22 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Home from '@src/pages/Home';
-import { useAuthentication } from '@src/hooks/useAuthentication';
+import useAuthentication from '@src/hooks/useAuthentication';
 import { ThemeProvider } from 'styled-components';
 import useDarkMode from '@src/hooks/useDarkMode';
 import { dark, light } from '@src/utils/theme';
 import GlobalStyle from './GlobalStyles';
 import '@src/assets/fonts/font.css';
 import MyPage from '@src/pages/MyPage';
-import PrivateRoute from '@src/routes/PriavteRoute';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
+import { getUserInfo } from '@src/service/api';
+
+const Home = React.lazy(() => import('@src/pages/Home/index'));
 
 const App = () => {
   const { theme } = useDarkMode();
+  const { authorize } = useAuthentication();
+  useEffect(() => {
+    const fetchUser = async () => {
+      await getUserInfo().then((user) => {
+        authorize(user);
+      });
+    };
 
-  // if (loading) {
-  //   return <></>;
-  // }
+    fetchUser();
+  }, [authorize]);
 
   return (
     <ThemeProvider theme={theme === 'light' ? light : dark}>

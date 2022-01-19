@@ -7,11 +7,12 @@ import Navigation from '../Molecules/Navigation';
 import SearchBar from '../Molecules/SearchBar';
 import UserProfile from '../Molecules/UserProfile';
 import UserIcon from '@src/assets/user.svg';
-import { signOut } from '@src/service/firebase';
 import { useCallback } from 'react';
 import { modalAtom } from '@src/recoil/atom/modal';
+import useAuthentication from '@src/hooks/useAuthentication';
 
 const HeaderNavigation = () => {
+  const { logout } = useAuthentication();
   const user = useRecoilValue(userAtom);
   const setModal = useSetRecoilState(modalAtom);
   const onClickLogin = useCallback(() => {
@@ -35,7 +36,7 @@ const HeaderNavigation = () => {
         {user && (
           <Content>
             <AiOutlineBell size={20} />
-            <span onClick={signOut}>Logout</span>
+            <span onClick={logout}>Logout</span>
             <UserProfile user={user} isMenuEnable />
           </Content>
         )}
