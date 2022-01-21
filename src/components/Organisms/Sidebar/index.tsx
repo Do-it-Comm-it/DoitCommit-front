@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SidebarContent from '@src/components/Molecules/Sidebar/SidebarContent';
 import { useRef } from 'react';
-import { useEffect } from 'react';
 import { useCallback } from 'react';
 import SidebarTop from '@src/components/Molecules/Sidebar/SidebarTop';
 import SidebarFooter from '@src/components/Molecules/Sidebar/SidebarFooter';
