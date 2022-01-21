@@ -1,3 +1,4 @@
+import DIButton from '@src/components/Atoms/DIButton';
 import { userAtom } from '@src/recoil/atom/user';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
@@ -37,6 +38,11 @@ const ProfileInfoArea = () => {
         <Label>URL</Label>
         <Input />
       </Content>
+      <div>
+        <DIButton color="#fff" onClick={() => {}} width={180} height={51} backgroundColor="#AACD06" borderRadius={51}>
+          내 프로필 저장
+        </DIButton>
+      </div>
     </Container>
   );
 };
@@ -47,6 +53,11 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 15px;
+
+  & > div {
+    margin-left: auto;
+    padding: 30px 0;
+  }
 `;
 
 const Content = styled.div`

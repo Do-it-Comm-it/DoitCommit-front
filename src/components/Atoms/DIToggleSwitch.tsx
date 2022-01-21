@@ -1,10 +1,16 @@
 import React from 'react';
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
-const ToggleSwitch = () => {
+interface Props {
+  value: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+}
+const ToggleSwitch = ({ value = false, onChange, name }: Props) => {
   return (
     <CheckboxContainer>
-      <CheckBox id="checkbox" type="checkbox" />
+      <CheckBox id="checkbox" type="checkbox" checked={value} onChange={onChange} name={name} />
       <CheckboxLabel htmlFor="checkbox" />
     </CheckboxContainer>
   );

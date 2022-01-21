@@ -11,6 +11,9 @@ type DIButtonProps = {
   height?: number;
   onClick: () => void;
   disabled?: boolean;
+  style?: React.CSSProperties;
+  borderColor?: string;
+  color?: string;
 };
 
 const DIButton = ({
@@ -20,9 +23,12 @@ const DIButton = ({
   value = 'Click',
   borderRadius = 5,
   backgroundColor = '#AACD06',
-  hoverColor = '#97b806',
+  hoverColor,
+  borderColor,
+  color,
   children,
   onClick = () => {},
+  style,
 }: DIButtonProps) => {
   return (
     <Button
@@ -35,6 +41,9 @@ const DIButton = ({
       hoverColor={hoverColor}
       name={value}
       onClick={onClick}
+      style={style}
+      borderColor={borderColor}
+      color={color}
     >
       {children ? children : value}
     </Button>
@@ -46,8 +55,10 @@ const Button = styled.button<{
   height: number;
   borderRadius: number;
   backgroundColor: string;
-  hoverColor: string;
+  hoverColor?: string;
   disabled: boolean;
+  borderColor?: string;
+  color?: string;
 }>`
   background-color: ${({ backgroundColor }) => backgroundColor};
   font-weight: ${({ backgroundColor }) => backgroundColor};
@@ -56,10 +67,11 @@ const Button = styled.button<{
   outline: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  color: ${({ theme }) => theme.colors.background};
+  color: ${({ color }) => color};
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-size: 20px;
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  border: 1px solid ${({ borderColor }) => borderColor};
 
   &:hover {
     cursor: pointer;
