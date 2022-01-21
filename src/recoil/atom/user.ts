@@ -6,6 +6,9 @@ export const userAtom = atom<IUser | null>({
   key: 'user',
   default: selector({
     key: 'user/Default',
-    get: async () => await getUserInfo(),
+    get: () =>
+      getUserInfo().catch((err) => {
+        Promise.reject(err);
+      }),
   }),
 });
