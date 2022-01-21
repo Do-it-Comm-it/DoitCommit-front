@@ -8,7 +8,6 @@ import GlobalStyle from './GlobalStyles';
 import '@src/assets/fonts/font.css';
 import MyPage from '@src/pages/MyPage';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
-import { getUserInfo } from '@src/service/api';
 
 const Home = React.lazy(() => import('@src/pages/Home/index'));
 
@@ -16,13 +15,7 @@ const App = () => {
   const { theme } = useDarkMode();
   const { authorize } = useAuthentication();
   useEffect(() => {
-    const fetchUser = async () => {
-      await getUserInfo().then((user) => {
-        authorize(user);
-      });
-    };
-
-    fetchUser();
+    authorize();
   }, [authorize]);
 
   return (

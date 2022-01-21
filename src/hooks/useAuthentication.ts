@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { userAtom } from '@src/recoil/atom/user';
 import { IUser } from '@src/typings/User';
+import { AxiosError } from 'axios';
+import { getUserInfo } from '@src/service/api';
 
 const useAuthentication = () => {
   const setUser = useSetRecoilState(userAtom);
@@ -9,10 +11,10 @@ const useAuthentication = () => {
     () => ({
       authorize: () =>
         getUserInfo()
-          .then((user) => {
+          .then((user: IUser) => {
             return Promise.resolve(() => setUser(user));
           })
-          .catch((_error) => {
+          .catch((_error: AxiosError) => {
             return Promise.reject(() => setUser(null));
           }),
       logout: () => setUser(null),
