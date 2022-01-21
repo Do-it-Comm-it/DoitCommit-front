@@ -39,7 +39,7 @@ const ProfileInfoArea = () => {
         <Input />
       </Content>
       <div>
-        <DIButton color="#fff" onClick={() => {}} width={180} height={51} backgroundColor="#AACD06" borderRadius={51}>
+        <DIButton color="#fff" onClick={() => {}} backgroundColor="#AACD06" borderRadius={51}>
           내 프로필 저장
         </DIButton>
       </div>
