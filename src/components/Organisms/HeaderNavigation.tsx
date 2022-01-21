@@ -86,11 +86,11 @@ const Content = styled.div`
 `;
 
 const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
-  display: flex;
+  display: none;
   margin-right: auto;
   cursor: pointer;
   @media ${devices.laptop} {
-    display: none;
+    display: flex;
   }
 `;
 export default HeaderNavigation;

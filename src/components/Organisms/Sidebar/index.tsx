@@ -27,14 +27,15 @@ const Sidebar = () => {
 };
 
 const SidebarContainer = styled.div<{ open: boolean }>`
-  display: ${({ open }) => (open ? 'flex' : 'none')};
+  display: flex;
   @media ${devices.laptop} {
-    display: flex;
+    display: ${({ open }) => (open ? 'flex' : 'none')};
   }
-  flex-direction: column;
-  position: relative;
   width: ${({ open }) => (open ? 308 : 83)}px;
   min-width: ${({ open }) => (open ? 308 : 83)}px;
+  flex-direction: column;
+  position: relative;
+
   left: 0;
   top: 0;
   min-height: 100vh;
