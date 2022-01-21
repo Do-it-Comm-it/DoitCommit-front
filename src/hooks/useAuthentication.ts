@@ -7,7 +7,14 @@ const useAuthentication = () => {
   const setUser = useSetRecoilState(userAtom);
   return useMemo(
     () => ({
-      authorize: (user: IUser) => setUser(user),
+      authorize: () =>
+        getUserInfo()
+          .then((user) => {
+            return Promise.resolve(() => setUser(user));
+          })
+          .catch((_error) => {
+            return Promise.reject(() => setUser(null));
+          }),
       logout: () => setUser(null),
     }),
     [setUser],
