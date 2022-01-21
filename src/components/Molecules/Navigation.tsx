@@ -18,6 +18,7 @@ const Container = styled.nav<{ position: string }>`
   background-color: ${({ theme }) => theme.colors.background};
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
   box-shadow: ${({ position }) =>
     position === 'top' ? `0px 4px 4px rgba(0, 0, 0, 0.08)` : `0px 4px 4px rgba(0, 0, 0, 0.08)`};
