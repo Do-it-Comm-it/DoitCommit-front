@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   height: 100vh;
 }
   body {
-    background-color: #eeeeee;
+    background-color: #F9F9F9;
     width: 100%;
     min-height: 100%;
   }

@@ -8,35 +8,35 @@ const ProfileInfoArea = () => {
   // TODO : default value about registered user
   return (
     <Container>
-      <InfoArea>
+      <Content>
         <Label>이름</Label>
-        <span>...</span>
-      </InfoArea>
-      <InfoArea>
-        <Label>직군</Label>
-        <span>...</span>
-      </InfoArea>
-      <InfoArea>
-        <Label>이메일</Label>
-        <span>...</span>
-      </InfoArea>
+        <Input />
+      </Content>
 
-      <InfoArea>
+      <Content>
+        <Label>이메일</Label>
+        <Input />
+      </Content>
+
+      <Content>
+        <Label>전문 분야</Label>
+        <Input />
+      </Content>
+
+      <Content>
         <Label>관심기술</Label>
-        <LabelContainer>
-          {user?.tech?.map((item, index) => (
-            <TechLabel key={index}>{item}</TechLabel>
-          ))}
-        </LabelContainer>
-      </InfoArea>
-      <InfoArea>
-        <Label>깃허브</Label>
-        <span>...</span>
-      </InfoArea>
-      <InfoArea>
+        <Input />
+      </Content>
+
+      <Content>
+        <Label>Github</Label>
+        <Input />
+      </Content>
+
+      <Content>
         <Label>URL</Label>
-        <span>...</span>
-      </InfoArea>
+        <Input />
+      </Content>
     </Container>
   );
 };
@@ -44,36 +44,33 @@ const ProfileInfoArea = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 10px;
-`;
-const InfoArea = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-  justify-content: flex-start;
-`;
-const Label = styled.label`
-  color: #8f9294;
-  font-size: 16px;
-  font-weight: 400;
-  width: 30%;
-  white-space: nowrap;
-`;
-const LabelContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-`;
-const TechLabel = styled.label`
-  background-color: #aacd06;
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  padding: 5px 6px;
-  margin-right: 5px;
-  margin-bottom: 5px;
+  height: 100%;
+  padding: 15px;
 `;
 
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 36px;
+`;
+
+const Label = styled.label`
+  color: #8f9294;
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 59px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
+  outline: none;
+  border: none;
+  padding-left: 15px;
+`;
 export default ProfileInfoArea;

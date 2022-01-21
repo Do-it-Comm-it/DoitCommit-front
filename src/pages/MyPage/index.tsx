@@ -1,19 +1,13 @@
-import ProfileArea from '@src/components/Organisms/MyPage/ProfileArea';
+import Body from '@src/components/Organisms/MyPage/Body';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import ProfileFormArea from '@src/components/Organisms/MyPage/ProfileFormArea';
-import DIText from '@src/components/Atoms/DIText';
+import { Route } from 'react-router-dom';
 const MyPage = () => {
   const theme = useTheme();
+
   return (
     <Container>
-      <DIText fontWeight={700} fontColor={theme.colors.dark.a7} fontSize={30} style={{ paddingBottom: '20px' }}>
-        마이페이지
-      </DIText>
-      <Content>
-        <ProfileArea />
-        <ProfileFormArea />
-      </Content>
+      <Body />
     </Container>
   );
 };
@@ -21,14 +15,7 @@ const MyPage = () => {
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 70px;
-`;
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+  width: 80%;
   height: 100%;
 `;
 
