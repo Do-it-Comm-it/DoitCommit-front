@@ -1,48 +1,49 @@
 import DIButton from '@src/components/Atoms/DIButton';
+import infoFormData from '@src/data/formData';
 import { userAtom } from '@src/recoil/atom/user';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import AddInput from './AddInput';
+import Form from './Form';
 const ProfileInfoArea = () => {
   const user = useRecoilValue(userAtom);
-
+  const [formData, setFormData] = useState(infoFormData);
+  const [input, setInput] = useState({
+    ...formData,
+  });
+  const onChangeInput = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setInput({
+        ...input,
+        [name]: value,
+      });
+      console.log(name, value);
+    },
+    [input],
+  );
+  const addForm = useCallback(() => {
+    setFormData([
+      ...formData,
+      {
+        label: 'url2',
+        name: 'url2',
+      },
+    ]);
+  }, [formData]);
   // TODO : default value about registered user
   return (
     <Container>
-      <Content>
-        <Label>이름</Label>
-        <Input />
-      </Content>
-
-      <Content>
-        <Label>이메일</Label>
-        <Input />
-      </Content>
-
-      <Content>
-        <Label>전문 분야</Label>
-        <Input />
-      </Content>
-
-      <Content>
-        <Label>관심기술</Label>
-        <Input />
-      </Content>
-
-      <Content>
-        <Label>Github</Label>
-        <Input />
-      </Content>
-
-      <Content>
-        <Label>URL</Label>
-        <Input />
-      </Content>
+      {formData.map((item, i) => (
+        <Form name={item.name} label={item.label} onChange={onChangeInput} key={i} />
+      ))}
       <div>
-        <DIButton color="#fff" onClick={() => {}} backgroundColor="#AACD06" borderRadius={51}>
-          내 프로필 저장
-        </DIButton>
+        <AddInput onClick={addForm} />
       </div>
+      <DIButton color="#fff" onClick={() => {}} backgroundColor="#AACD06" borderRadius={51}>
+        내 프로필 저장
+      </DIButton>
     </Container>
   );
 };
@@ -54,34 +55,10 @@ const Container = styled.div`
   height: 100%;
   padding: 15px;
 
-  & > div {
+  & > button {
+    margin: 20px 0;
     margin-left: auto;
-    padding: 30px 0;
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 36px;
-`;
-
-const Label = styled.label`
-  color: #8f9294;
-  font-size: 20px;
-  font-weight: 500;
-  white-space: nowrap;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  height: 59px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
-  outline: none;
-  border: none;
-  padding-left: 15px;
-`;
 export default ProfileInfoArea;
