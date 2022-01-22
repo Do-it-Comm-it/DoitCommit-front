@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import DILink from '@src/components/Atoms/DILink';
+import ShareIconSVG from '@src/assets/share.svg';
 const Header = () => {
   return (
     <Container>
-      <Content>
-        <DILink to="/mypage" fontColor="#8F9294" fontSize={28} fontWeight={500}>
-          마이페이지
-        </DILink>
-        <DILink to="/mypage/setting" fontColor="#8F9294" fontSize={28} fontWeight={500}>
-          환경 설정
-        </DILink>
-      </Content>
+      <DILink to="/mypage" fontColor="#8F9294" fontSize={28} fontWeight={500}>
+        마이페이지
+      </DILink>
+      <DILink to="/mypage/setting" fontColor="#8F9294" fontSize={28} fontWeight={500}>
+        환경 설정
+      </DILink>
+      <ShareIcon />
     </Container>
   );
 };
@@ -25,11 +25,13 @@ const Container = styled.div`
   justify-content: center;
   border-bottom: 1px solid #eaeaea;
   padding: 30px 0;
+
+  & > a {
+    margin-left: auto;
+  }
 `;
 
-const Content = styled.div`
-  display: flex;
-  height: 100%;
-  justify-content: space-between;
-  width: 30%;
+const ShareIcon = styled(ShareIconSVG)`
+  margin-left: auto;
+  cursor: pointer;
 `;
