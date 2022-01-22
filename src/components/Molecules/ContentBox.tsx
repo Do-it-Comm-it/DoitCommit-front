@@ -11,8 +11,7 @@ type Props = {
   title?: string;
   contentWidth?: number;
   contentHeight?: number;
-  minHeight?: number;
-  children?: React.ReactElement;
+  children?: React.ReactElement | React.ReactElement[];
   onClick?: () => void;
   requiredLogin?: boolean;
 };
@@ -23,7 +22,6 @@ const ContentBox: React.FC<Props> = ({
   title,
   contentWidth,
   contentHeight,
-  minHeight,
   children,
   onClick,
 }: Props) => {
@@ -37,19 +35,14 @@ const ContentBox: React.FC<Props> = ({
     <Container contentWidth={contentWidth} contentHeight={contentHeight}>
       {requiredHeader && (
         <HeaderWrapper>
-          <Title>{title}</Title>
+          <Title fontFamily={theme.font.NotoSansKRRegular} fontSize={20} lineHeight={29}>
+            {title}
+          </Title>
           <PlusIcon size={16} onClick={onClick} />
         </HeaderWrapper>
       )}
 
-      <ContentWrapper
-        contentWidth={contentWidth}
-        contentHeight={contentHeight}
-        minHeight={minHeight}
-        requiredLogin={requiredLogin}
-      >
-        {children}
-      </ContentWrapper>
+      <ContentWrapper requiredLogin={requiredLogin}>{children}</ContentWrapper>
 
       {requiredLogin && (
         <LoginWrapper>
@@ -76,10 +69,7 @@ const Container = styled.div<{ contentWidth?: number; contentHeight?: number }>`
   position: relative;
   flex-direction: column;
   width: ${({ contentWidth }) => (contentWidth ? `${contentWidth}px` : `100%`)};
-  min-width: ${({ contentWidth }) => contentWidth ?? `600px`};
   height: ${({ contentHeight }) => (contentHeight ? `${contentHeight}px` : `100%`)};
-  padding-right: 16px;
-  justify-content: space-between;
 `;
 
 const LoginWrapper = styled.div`
@@ -126,6 +116,7 @@ const HeaderWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin: 0px 5px;
 `;
 const LoginHeader = styled.div`
   display: flex;
@@ -133,25 +124,15 @@ const LoginHeader = styled.div`
   align-items: center;
 `;
 const ContentWrapper = styled.div<{
-  contentWidth?: number;
-  contentHeight?: number;
-  minHeight?: number;
-  maxHeight?: number;
   requiredLogin?: boolean;
 }>`
   display: flex;
-  width: 100%;
-  min-height: ${({ minHeight }) => minHeight}px;
-  height: 100%;
   flex-direction: column;
-  max-width: ${({ contentWidth }) => (contentWidth ? `${contentWidth}px` : `100%`)};
-  height: ${({ contentHeight }) => (contentHeight ? `${contentHeight}px` : `100%`)};
-  background-color: ${({ theme }) => theme.colors.background};
-  margin-top: 16px;
-
-  ${({ requiredLogin }) => `
-    filter: blur(${requiredLogin ? 10 : 0}px)
-  `}
+  filter: ${({ requiredLogin }) => `
+    blur(${requiredLogin ? 10 : 0}px)
+  `};
+  justify-content: center;
+  align-items: center;
 `;
 
 export default ContentBox;

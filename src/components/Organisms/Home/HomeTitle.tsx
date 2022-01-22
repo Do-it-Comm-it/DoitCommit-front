@@ -5,27 +5,17 @@ import { useRecoilValue } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 
 const HomeTitle = () => {
+  //TODO: 사용자 생성날짜 필요.
   const user = useRecoilValue(userAtom);
   const theme = useTheme();
   return (
     <Container>
-      <Title fontSize={30} fontFamily={theme.font.EliceDigitalBaeumBold}>
-        Hello
+      <Title fontSize={30} fontFamily={theme.font.NotoSansKRBold}>
+        {user?.username ?? `Stranger`}님!{'  '}
       </Title>
-      <Name fontSize={30} fontFamily={theme.font.EliceDigitalBaeumBold} fontColor={theme.colors.main}>
-        {' '}
-        {user?.username ?? `Stranger`}
+      <Name fontSize={30} fontFamily={theme.font.NotoSansKRRegular}>
+        {user?.username ? `두잇커밋과 함께한지, ${0}일째 입니다.` : `두잇커밋에 어서오세요!`}
       </Name>
-      <Sub
-        fontSize={20}
-        fontFamily={theme.font.NotoSansKRRegular}
-        style={{
-          paddingLeft: 18,
-          paddingTop: 10,
-        }}
-      >
-        지금 두잇커밋과 함께 commit하세요!
-      </Sub>
     </Container>
   );
 };
@@ -38,6 +28,5 @@ const Container = styled.div`
 `;
 
 const Title = styled(DIText)``;
-const Sub = styled(DIText)``;
 const Name = styled(DIText)``;
 export default HomeTitle;
