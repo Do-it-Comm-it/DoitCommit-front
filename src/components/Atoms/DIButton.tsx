@@ -24,11 +24,11 @@ const DIButton = ({
   borderRadius = 5,
   backgroundColor = '#AACD06',
   hoverColor,
-  borderColor,
-  color,
   children,
   onClick = () => {},
   style,
+  color = '#fff',
+  borderColor = '#AACD06',
 }: DIButtonProps) => {
   return (
     <Button
@@ -42,8 +42,8 @@ const DIButton = ({
       name={value}
       onClick={onClick}
       style={style}
-      borderColor={borderColor}
       color={color}
+      borderColor={borderColor}
     >
       {children ? children : value}
     </Button>
