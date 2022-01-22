@@ -36,7 +36,7 @@ const Setting = () => {
       </DIText>
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             게시물 알림
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -47,7 +47,7 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             일정 알림
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -58,7 +58,7 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             이메일 알림
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -69,7 +69,7 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             모든 알림 비활성화
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -79,13 +79,13 @@ const Setting = () => {
         <ToggleSwitch name="notification" value={toggle.notification} onChange={onChangeToggle} />
       </Content>
 
-      <DIText fontColor="#18171c" fontWeight={400} fontSize={25} style={{ marginTop: '20px' }}>
+      <DIText fontColor="#18171c" fontSize={25} fontWeight={400}>
         계정 설정
       </DIText>
 
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             테마 설정
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -93,17 +93,17 @@ const Setting = () => {
           </DIText>
         </TextContainer>
         <span>
-          <DIButton borderRadius={51} backgroundColor="#AACD06" onClick={() => {}} color="#fff">
+          <DIButton borderRadius={51} backgroundColor="#AACD06" onClick={() => {}}>
             라이트모드
           </DIButton>
-          <DIButton borderRadius={51} backgroundColor="#353535" onClick={() => {}} color="#fff">
+          <DIButton borderRadius={51} backgroundColor="#353535" borderColor="#353535" onClick={() => {}}>
             다크모드
           </DIButton>
         </span>
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             모든 기기에서 로그아웃
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -116,7 +116,7 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor="#18171c" fontWeight={400} fontSize={20} style={{ padding: '10px 0' }}>
+          <DIText fontColor="#18171c" fontWeight={400} fontSize={20}>
             내 계정 삭제
           </DIText>
           <DIText fontColor="#8F9294" fontSize={16} fontWeight={400}>
@@ -127,11 +127,9 @@ const Setting = () => {
           내 계정 삭제
         </DIButton>
       </Content>
-      <div>
-        <DIButton color="#fff" backgroundColor="#AACD06" borderRadius={51} onClick={() => {}}>
-          내 프로필 저장
-        </DIButton>
-      </div>
+      <DIButton color="#fff" backgroundColor="#AACD06" borderRadius={51} onClick={() => {}}>
+        내 프로필 저장
+      </DIButton>
     </Container>
   );
 };
@@ -144,9 +142,9 @@ const Container = styled.div`
   width: 70%;
   height: 100%;
 
-  & > div {
+  & > button {
+    margin: 20px 0;
     margin-left: auto;
-    padding: 50px 0;
   }
 `;
 const Content = styled.div`
@@ -157,14 +155,25 @@ const Content = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  padding: 50px 0;
+
+  & > span > button {
+    margin-right: 15px;
+  }
 
   @media ${devices.laptop} {
     flex-direction: column;
     align-items: flex-start;
+    padding: 30px 0;
+
+    & > div > pre {
+      padding: 10px 0;
+    }
   }
 `;
 
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;

@@ -1,10 +1,7 @@
 import Body from '@src/components/Organisms/MyPage/Body';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
-import { Route } from 'react-router-dom';
+import styled from 'styled-components';
 const MyPage = () => {
-  const theme = useTheme();
-
   return (
     <Container>
       <Body />

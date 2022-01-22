@@ -5,6 +5,7 @@ import ProfileImageArea from '@src/components/Molecules/MyPage/ProfileImageArea'
 import ProfileInfoArea from '@src/components/Molecules/MyPage/ProfileInfoArea';
 import { Route } from 'react-router-dom';
 import Setting from '@src/components/Molecules/MyPage/Setting';
+import { devices } from '@src/utils/theme';
 const Body = () => {
   return (
     <Container>
@@ -38,6 +39,10 @@ const ProfileContent = styled.div`
   height: 100%;
   padding-top: 30px;
   justify-content: center;
+
+  @media ${devices.tablet} {
+    flex-wrap: wrap;
+  }
 `;
 
 const SettingContent = styled.div`
