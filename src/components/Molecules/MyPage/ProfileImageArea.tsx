@@ -22,7 +22,7 @@ const ProfileImageArea = () => {
     <>
       {user && (
         <Container>
-          <ProfileImage src={user?.image!} alt="Error!" />
+          <ProfileImage src={user?.pictureUrl!} alt="Error!" />
           <input type="file" ref={hiddenFileInput} onChange={onFileChange} style={{ display: 'none' }} />
           <EditIcon onClick={onUpload} />
         </Container>

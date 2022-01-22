@@ -14,7 +14,7 @@ const HomeTitle = () => {
       </Title>
       <Name fontSize={30} fontFamily={theme.font.EliceDigitalBaeumBold} fontColor={theme.colors.main}>
         {' '}
-        {user?.nickname ?? `Stranger`}
+        {user?.username ?? `Stranger`}
       </Name>
       <Sub
         fontSize={20}

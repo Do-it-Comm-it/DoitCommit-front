@@ -1,36 +1,26 @@
-import { auth } from '@src/service/firebase';
-import { useEffect, useState } from 'react';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useMemo } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { userAtom } from '@src/recoil/atom/user';
 import { IUser } from '@src/typings/User';
-import { getAuthUser } from '@src/service/api';
+import { AxiosError } from 'axios';
+import { getUserInfo } from '@src/service/api';
 
-export const useAuthentication = () => {
-  const [user, setUser] = useRecoilState<IUser | null>(userAtom);
-  const [loading, setLoading] = useState<boolean>(true);
-  const reset = useResetRecoilState(userAtom);
-  useEffect(() => {
-    // const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
-    //   if (firebaseUser) {
-    //     let techList = null;
-    //     const token = await firebaseUser.getIdToken();
-    //     const { user } = await getAuthUser(token);
-
-    //     if (user.tech) {
-    //       techList = user.tech.split(',');
-    //     }
-    //     setUser({ ...user, tech: techList });
-    //     setLoading(false);
-    //   } else {
-    //     reset();
-    //     setLoading(false);
-    //   }
-    // });
-
-    //  return () => unsubscribe();
-
-    const unsubscribe = async () => {};
-  }, [setUser, reset]);
-
-  return { user, loading };
+const useAuthentication = () => {
+  const setUser = useSetRecoilState(userAtom);
+  return useMemo(
+    () => ({
+      authorize: () =>
+        getUserInfo()
+          .then((user: IUser) => {
+            return Promise.resolve(() => setUser(user));
+          })
+          .catch((_error: AxiosError) => {
+            return Promise.reject(() => setUser(null));
+          }),
+      logout: () => setUser(null),
+    }),
+    [setUser],
+  );
 };
+
+export default useAuthentication;

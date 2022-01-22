@@ -9,8 +9,8 @@ const saveExtendedUserInfo = async (User: IUser) => {
   return await requestAPI().post('/users/save', User);
 };
 
-const getUserInfo = async (User: IUser) => {
-  return await requestAPI().post('/users/me', User);
+const getUserInfo = async () => {
+  return await requestAPI().get('/members/info');
 };
 
 const putUserInfo = async (User: IUser) => {
