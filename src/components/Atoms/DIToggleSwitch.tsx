@@ -5,7 +5,7 @@ import styled from 'styled-components';
 interface Props {
   value: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  name: string;
+  name?: string;
 }
 const ToggleSwitch = ({ value = false, onChange, name }: Props) => {
   return (
