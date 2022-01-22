@@ -42,6 +42,7 @@ const ProfileContent = styled.div`
 
   @media ${devices.tablet} {
     flex-wrap: wrap;
+    justify-content: center;
   }
 `;
 

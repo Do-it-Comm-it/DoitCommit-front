@@ -176,4 +176,10 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  @media ${devices.tablet} {
+    & > pre {
+      white-space: pre-wrap;
+    }
+  }
 `;

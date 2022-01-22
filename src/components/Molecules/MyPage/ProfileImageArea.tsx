@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import EditIconSVG from '@src/assets/edit.svg';
 import ProfileIconSVG from '@src/assets/user.svg';
 import DIText from '@src/components/Atoms/DIText';
+import { devices } from '@src/utils/theme';
 const ProfileImageArea = () => {
   const user = useRecoilValue(userAtom);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
@@ -40,6 +41,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 60px;
+  @media ${devices.tablet} {
+    align-items: center;
+  }
 `;
 const ProfileImage = styled.img`
   width: 245px;
