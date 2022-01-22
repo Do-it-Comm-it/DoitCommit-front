@@ -1,7 +1,7 @@
 import useDarkMode from '@src/hooks/useDarkMode';
 import React from 'react';
 import styled from 'styled-components';
-import Toggle from '../Molecules/Toggle';
+import DIToggleSwitch from '../Atoms/DIToggleSwitch';
 import { MdModeNight } from 'react-icons/md';
 import { BsSunFill } from 'react-icons/bs';
 const ThemeToggle = () => {
@@ -9,7 +9,7 @@ const ThemeToggle = () => {
 
   return (
     <Container>
-      <Toggle value={theme === 'light' ? false : true} onChange={toggleTheme} />
+      <DIToggleSwitch value={theme === 'light' ? false : true} onChange={toggleTheme} />
       {theme === 'light' ? <BsSunFill size={20} /> : <MdModeNight size={20} />}
     </Container>
   );

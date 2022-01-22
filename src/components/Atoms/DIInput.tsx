@@ -11,6 +11,7 @@ type DIInputProps = {
   onChange: (text: string) => void;
   backgroundColor?: string;
   placholder?: string;
+  style?: React.CSSProperties;
 };
 
 const DIInput = ({
@@ -23,6 +24,7 @@ const DIInput = ({
   onChange,
   onBlur,
   placholder,
+  style,
 }: DIInputProps) => {
   return (
     <InputArea
@@ -37,6 +39,7 @@ const DIInput = ({
       }}
       onBlur={onBlur}
       placeholder={placholder}
+      style={style}
     />
   );
 };

@@ -8,6 +8,7 @@ import '@src/assets/fonts/font.css';
 import MyPage from '@src/pages/MyPage';
 import Home from '@src/pages/Home';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
+import Footer from '@src/components/Organisms/Footer';
 
 const App = () => {
   const { theme } = useDarkMode();
@@ -19,9 +20,10 @@ const App = () => {
           <GlobalStyle />
           <CommonComponentWrapper>
             <PublicRoute exact path="/" component={Home} />
-            <PublicRoute exact path="/mypage" component={MyPage} />
+            <PublicRoute path="/mypage" component={MyPage} />
           </CommonComponentWrapper>
         </BrowserRouter>
+        <Footer />
       </ThemeProvider>
     </React.Suspense>
   );

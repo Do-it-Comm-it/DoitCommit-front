@@ -7,10 +7,11 @@ const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
   }
   html {
+    width: 100%;
   height: 100vh;
 }
   body {
-    background-color: #eeeeee;
+    background-color: #F9F9F9;
     width: 100%;
     min-height: 100%;
   }

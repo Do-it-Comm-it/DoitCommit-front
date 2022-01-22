@@ -3,6 +3,9 @@ import React, { useRef, useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import EditIconSVG from '@src/assets/edit.svg';
+import ProfileIconSVG from '@src/assets/user.svg';
+import DIText from '@src/components/Atoms/DIText';
+import { devices } from '@src/utils/theme';
 const ProfileImageArea = () => {
   const user = useRecoilValue(userAtom);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
@@ -19,33 +22,43 @@ const ProfileImageArea = () => {
   }, []);
 
   return (
-    <>
-      {user && (
-        <Container>
+    <Container>
+      <DIText fontColor="#18171c" fontWeight={500} fontSize={25} style={{ marginBottom: '20px' }}>
+        프로필 설정
+      </DIText>
+      <ImageWrapper>
+        {user?.pictureUrl ? (
           <ProfileImage src={user?.pictureUrl!} alt="Error!" />
-          <input type="file" ref={hiddenFileInput} onChange={onFileChange} style={{ display: 'none' }} />
-          <EditIcon onClick={onUpload} />
-        </Container>
-      )}
-    </>
+        ) : (
+          <ProfileIconSVG width={238} height={238} />
+        )}
+        <EditIcon />
+      </ImageWrapper>
+    </Container>
   );
 };
 const Container = styled.div`
   display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  padding-top: 30px;
+  flex-direction: column;
+  margin-right: 60px;
+  @media ${devices.tablet} {
+    align-items: center;
+  }
 `;
 const ProfileImage = styled.img`
   width: 245px;
   height: 245px;
   border-radius: 100%;
 `;
+const ImageWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
 const EditIcon = styled(EditIconSVG)`
   position: absolute;
   bottom: 0;
-  right: 155px;
+  right: 50px;
   cursor: pointer;
 `;
 

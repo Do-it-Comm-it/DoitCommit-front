@@ -82,3 +82,17 @@ export const dark: DefaultTheme = {
     },
   },
 };
+
+export const sizes = {
+  tablet: '768px',
+  laptop: '1024px',
+  laptopL: '1440px',
+  desktop: '2560px',
+};
+
+export const devices = {
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};

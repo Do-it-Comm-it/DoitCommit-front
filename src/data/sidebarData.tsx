@@ -40,7 +40,7 @@ export const sidebarItem = [
   },
   {
     title: '마이페이지',
-    icon: <MypageIcon />,
+    icon: <MypageIcon width={24} height={24} />,
     path: '/mypage',
   },
 ];
