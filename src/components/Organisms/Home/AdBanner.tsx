@@ -3,17 +3,20 @@ import React from 'react';
 import BannerImage from '@src/assets/banner1.svg';
 import styled from 'styled-components';
 
-const Banner = () => {
+const AdBanner = () => {
   return (
-    <ContentBox contentWidth={900} minHeight={270} contentHeight={400}>
-      <BannerItem />
+    <ContentBox>
+      <Banner />
     </ContentBox>
   );
 };
 
-const BannerItem = styled(BannerImage)`
+const Banner = styled(BannerImage)`
+  margin-top: 50px;
   width: 100%;
-  height: 100%;
+
+  box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
+  border-radius: 10px;
 `;
 
-export default Banner;
+export default AdBanner;

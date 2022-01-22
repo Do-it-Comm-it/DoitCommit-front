@@ -1,0 +1,113 @@
+import React from 'react';
+import styled from 'styled-components';
+import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
+type CommunityBoxProps = {
+  title: string;
+  subTitle: string;
+  body: string;
+  tech: string;
+  isMarked: boolean;
+};
+
+const CommunityBox = ({ title, subTitle, body, tech, isMarked }: CommunityBoxProps) => {
+  return (
+    <Container>
+      <Header>
+        <Title>{title}</Title>
+        {isMarked ? <BookMark /> : <BookMarkFill />}
+      </Header>
+      <Content>
+        <TechBox>{tech}</TechBox>
+        <ContentBox>
+          <SubTitle>{subTitle}</SubTitle>
+          <Body>{body}</Body>
+        </ContentBox>
+      </Content>
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  display: flex;
+  width: 386px;
+  height: 136px;
+  background: ${({ theme }) => theme.colors.background};
+  flex-direction: column;
+
+  box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
+  border-radius: 10px;
+  margin-top: 12px;
+`;
+const Header = styled.div`
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  margin-left: 23px;
+  margin-right: 20px;
+`;
+
+const Title = styled.span`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: ${({ theme }) => theme.colors.dark.a3};
+`;
+const Content = styled.div`
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 13px;
+  margin-left: 23px;
+  margin-right: 20px;
+  margin-bottom: 18px;
+`;
+const BookMark = styled(BsBookmark)``;
+const BookMarkFill = styled(BsFillBookmarkFill)``;
+const TechBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  left: 623px;
+  top: 820px;
+
+  background: ${({ theme }) => theme.colors.main};
+
+  box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
+  border-radius: 10px;
+
+  color: ${({ theme }) => theme.colors.background};
+`;
+const ContentBox = styled.div`
+  display: flex;
+  margin-left: 22px;
+
+  flex-direction: column;
+`;
+const SubTitle = styled.span`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 23px;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.colors.dark.a5};
+`;
+const Body = styled.span`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: ${({ theme }) => theme.colors.dark.a3};
+`;
+export default CommunityBox;
