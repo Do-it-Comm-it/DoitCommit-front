@@ -3,6 +3,18 @@ import PlannerBox from '@src/components/Molecules/Planner/PlannerBox';
 import PlannerDate from '@src/components/Molecules/Planner/PlannerDate';
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
+
+const todayPlanners = [
+  {
+    title: '두잇커밋 회의',
+    participants: ['전예진,윤창민'],
+  },
+  {
+    title: '두잇커밋 회의',
+    participants: ['전예진,윤창민'],
+  },
+];
+
 const Planner = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -33,8 +45,9 @@ const Planner = () => {
           ))}
         </Dates>
         <Planners>
-          <PlannerBox></PlannerBox>
-          <PlannerBox></PlannerBox>
+          {todayPlanners.map((planner) => (
+            <PlannerBox participants={planner.participants} title={planner.title} />
+          ))}
         </Planners>
       </PlannerWrapper>
     </ContentBox>

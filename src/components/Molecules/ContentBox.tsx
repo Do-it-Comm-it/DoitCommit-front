@@ -128,9 +128,9 @@ const ContentWrapper = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  ${({ requiredLogin }) => `
-    filter: blur(${requiredLogin ? 10 : 0}px)
-  `}
+  filter: ${({ requiredLogin }) => `
+    blur(${requiredLogin ? 10 : 0}px)
+  `};
   justify-content: center;
   align-items: center;
 `;

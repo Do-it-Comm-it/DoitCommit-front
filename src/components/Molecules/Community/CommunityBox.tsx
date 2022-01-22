@@ -17,7 +17,10 @@ const CommunityBox = ({ title, subTitle, body, tech, isMarked }: CommunityBoxPro
         {isMarked ? <BookMark /> : <BookMarkFill />}
       </Header>
       <Content>
-        <TechBox>{tech}</TechBox>
+        <TechBox>
+          <Circle />
+          {tech}
+        </TechBox>
         <ContentBox>
           <SubTitle>{subTitle}</SubTitle>
           <Body>{body}</Body>
@@ -71,13 +74,12 @@ const Content = styled.div`
 const BookMark = styled(BsBookmark)``;
 const BookMarkFill = styled(BsFillBookmarkFill)``;
 const TechBox = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 70px;
   height: 70px;
-  left: 623px;
-  top: 820px;
 
   background: ${({ theme }) => theme.colors.main};
 
@@ -110,4 +112,17 @@ const Body = styled.span`
 
   color: ${({ theme }) => theme.colors.dark.a3};
 `;
+const Circle = styled.div`
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: -3px;
+  left: -3px;
+
+  background: #ff4b4b;
+  border: 2px solid #fefefe;
+  border-radius: 10px;
+  box-sizing: border-box;
+`;
+
 export default CommunityBox;

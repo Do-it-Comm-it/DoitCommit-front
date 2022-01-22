@@ -45,7 +45,7 @@ const ContentWrapper = styled.div`
 `;
 const Column = styled.div`
   width: 100%;
-  max-width: 900px;
+  max-width: 800px;
   height: 100%;
   display: flex;
   flex-direction: column;

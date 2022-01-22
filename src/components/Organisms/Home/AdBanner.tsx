@@ -14,7 +14,6 @@ const AdBanner = () => {
 const Banner = styled(BannerImage)`
   margin-top: 50px;
   width: 100%;
-
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
 `;
