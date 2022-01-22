@@ -25,6 +25,13 @@ jobs:
 
       - name: tsc check
         run: yarn tsc
+        
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "API_URL=$API_URL" >> .env
+        env:
+          API_URL: ${{ secrets.API_URL }}
+
 
       - name: build our react
         run: yarn build
