@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import LoginModal from '../LoginModal';
 import RegisterModal from '../RegisterModal';
+import TodoModal from '../TodoModal';
 import { CloseModalButton, CreateModal } from './styles';
 
 interface Props {
@@ -33,6 +34,7 @@ const Modal = ({ showCloseIcon = false }: Props) => {
             {showCloseIcon && <CloseModalButton onClick={closeModal} width="45" height="45" />}
             {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} />}
             {modal.id === 'register' && modal.visible && <RegisterModal onFinish={closeModal} />}
+            {modal.id === 'todo' && modal.visible && <TodoModal />}
           </div>
         </CreateModal>
       )}
