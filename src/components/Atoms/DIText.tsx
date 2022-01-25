@@ -18,6 +18,7 @@ const DIText = ({
   fontSize = 16,
   fontWeight = 400,
   children,
+  fontFamily,
   style,
   onClick,
   lineHeight,
@@ -30,6 +31,7 @@ const DIText = ({
       fontWeight={fontWeight}
       onClick={onClick}
       lineHeight={lineHeight}
+      fontFamily={fontFamily}
     >
       {children}
     </Text>
@@ -41,11 +43,17 @@ INFO: font-weight information
   normal : 400
   bold: 700
 */
-const Text = styled.pre<{ fontSize: number; fontColor: string; fontWeight: number; lineHeight?: number }>`
+const Text = styled.pre<{
+  fontSize: number;
+  fontColor: string;
+  fontWeight: number;
+  lineHeight?: number;
+  fontFamily?: string;
+}>`
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   color: ${({ fontColor }) => fontColor};
-  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-family: ${({ theme, fontFamily }) => (fontFamily ? fontFamily : theme.font.NotoSansKRRegular)};
   line-height: ${({ lineHeight }) => lineHeight}px;
 `;
 

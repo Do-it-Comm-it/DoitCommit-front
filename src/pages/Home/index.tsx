@@ -3,27 +3,27 @@ import styled from 'styled-components';
 import HomeTitle from '@src/components/Organisms/Home/HomeTitle';
 import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
 import Planner from '@src/components/Organisms/Home/Planner';
-import Tutorial from '@src/components/Organisms/Home/Tutorial';
 import Community from '@src/components/Organisms/Home/Community';
-import Banner from '@src/components/Organisms/Home/Banner';
+import AdBanner from '@src/components/Organisms/Home/AdBanner';
 
 const Home = () => {
   return (
     <Container>
       <HomeTitle />
-      <Content>
-        <HomeTodoList />
-        <Second>
+      <ContentWrapper>
+        <Column>
           <Top>
-            <Planner />
-            <Tutorial />
-            <Community />
+            <AdBanner />
           </Top>
           <Bottom>
-            <Banner />
+            <Planner />
+            <Community />
           </Bottom>
-        </Second>
-      </Content>
+        </Column>
+        <Row>
+          <HomeTodoList />
+        </Row>
+      </ContentWrapper>
     </Container>
   );
 };
@@ -36,26 +36,33 @@ const Container = styled.div`
   padding: 70px;
   padding-bottom: 20px;
 `;
-const Content = styled.div`
+const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
 `;
-const Second = styled.div`
+const Column = styled.div`
   width: 100%;
+  max-width: 800px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 `;
-const Top = styled.div`
+const Row = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+`;
+const Top = styled.div`
+  display: flex;
+  margin-bottom: 30px;
 `;
 const Bottom = styled.div`
-  width: 100%;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 export default Home;
