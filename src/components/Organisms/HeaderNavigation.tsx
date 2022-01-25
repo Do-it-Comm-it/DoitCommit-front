@@ -19,7 +19,7 @@ const HeaderNavigation = () => {
   const setModal = useSetRecoilState(modalAtom);
   const [open, setOpen] = useRecoilState(sidebarAtom);
   const onClickLogin = useCallback(() => {
-    setModal({ id: 'login', visible: true });
+    setModal({ id: 'register', visible: true });
   }, [setModal]);
 
   const onToggle = useCallback(() => {

@@ -27,7 +27,9 @@ const Modal = () => {
       {modal.id === 'register' && modal.visible && (
         <RegisterModal onFinish={closeModal} onClose={closeModal} stopPropagation={stopPropagation} />
       )}
-      {modal.id === 'todo' && modal.visible && <TodoModal onClose={closeModal} stopPropagation={stopPropagation} />}
+      {modal.id === 'todo' && modal.visible && (
+        <TodoModal onClose={closeModal} stopPropagation={stopPropagation} width={772} height={647} />
+      )}
     </>
   );
 };

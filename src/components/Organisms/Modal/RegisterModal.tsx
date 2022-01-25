@@ -15,12 +15,14 @@ import SelectInput from '../SelectInput';
 import { MdEdit } from 'react-icons/md';
 import CheckIcon from '@src/assets/check.svg';
 import { putUserInfo } from '@src/service/api';
-import { CreateModal } from '@src/components/Atoms/Modal';
+import ModalContainer from '@src/components/Molecules/ModalContainer';
 
 type RegisterModalProps = {
   onFinish: () => void;
   onClose: () => void;
   stopPropagation: (e: any) => void;
+  width?: number;
+  height?: number;
 };
 
 type Tech = {
@@ -32,7 +34,7 @@ type Tech = {
 //1. Check user nickname is already taken or not.
 //2. Upload Profile Image.
 //3. techList is hardcoded, it should go in DB i think.
-const RegisterModal = ({ onFinish, onClose, stopPropagation }: RegisterModalProps) => {
+const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: RegisterModalProps) => {
   const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [user, setUser] = useRecoilState(userAtom);
@@ -228,39 +230,37 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation }: RegisterModalProp
   }, [onCompleteSignUp, theme, user]);
 
   return (
-    <CreateModal onClick={onClose}>
-      <div onClick={stopPropagation}>
-        <Container>
-          <Header>
-            {page !== 0 && (
-              <BackIcon
-                color={theme.colors.dark.a3}
-                size={24}
-                onClick={() => {
-                  setPage((prev) => prev - 1);
-                }}
-              />
-            )}
-            <Label>
-              {[...Array(4)].map((_, index) => {
-                return (
-                  <PageLabel key={index} active={page === index}>
-                    {page === index ? index + 1 : ``}
-                  </PageLabel>
-                );
-              })}
-            </Label>
-            <CloseModalButton onClick={onFinish} />
-          </Header>
-          <Divider />
+    <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
+      <Container>
+        <Header>
+          {page !== 0 && (
+            <BackIcon
+              color={theme.colors.dark.a3}
+              size={24}
+              onClick={() => {
+                setPage((prev) => prev - 1);
+              }}
+            />
+          )}
+          <Label>
+            {[...Array(4)].map((_, index) => {
+              return (
+                <PageLabel key={index} active={page === index}>
+                  {page === index ? index + 1 : ``}
+                </PageLabel>
+              );
+            })}
+          </Label>
+          <CloseModalButton onClick={onFinish} />
+        </Header>
+        <Divider />
 
-          {page === 0 && NickNameContent()}
-          {page === 1 && TechContent()}
-          {page === 2 && ImageContent()}
-          {page === 3 && FinishContent()}
-        </Container>
-      </div>
-    </CreateModal>
+        {page === 0 && NickNameContent()}
+        {page === 1 && TechContent()}
+        {page === 2 && ImageContent()}
+        {page === 3 && FinishContent()}
+      </Container>
+    </ModalContainer>
   );
 };
 
