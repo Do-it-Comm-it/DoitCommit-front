@@ -30,14 +30,17 @@ export const ContentCol = styled.div<{
     | 'space-between'
     | 'space-evenly'
     | 'space-around';
+  padding?: string;
+  heightFull?: boolean;
+  widthFull?: boolean;
 }>`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: ${({ widthFull }) => widthFull && '100%'};
+  height: ${({ heightFull }) => heightFull && '100%'};
   align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
-  padding: 20px;
+  padding: ${({ padding }) => padding};
 `;
 
 export const ContentRow = styled.div<{
@@ -51,10 +54,15 @@ export const ContentRow = styled.div<{
     | 'space-between'
     | 'space-evenly'
     | 'space-around';
+  padding?: string;
+  heightFull?: boolean;
+  widthFull?: boolean;
 }>`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: ${({ widthFull }) => widthFull && '100%'};
+  height: ${({ heightFull }) => heightFull && '100%'};
   align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
+  padding: ${({ padding }) => padding};
 `;
