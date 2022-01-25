@@ -8,6 +8,7 @@ import AdBanner from '@src/components/Organisms/Home/AdBanner';
 
 const Home = () => {
   return (
+    <Test>
     <Container>
       <HomeTitle />
       <ContentWrapper>
@@ -25,8 +26,14 @@ const Home = () => {
         </Row>
       </ContentWrapper>
     </Container>
+    </Test>
   );
 };
+
+const Test = styled.div`
+display: flex;
+background-color: red;
+`;
 
 const Container = styled.div`
   display: flex;
