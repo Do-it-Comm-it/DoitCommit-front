@@ -21,4 +21,10 @@ const resignUser = async () => {
   return await requestAPI().delete('/users/resign');
 };
 
-export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo, resignUser };
+const logoutUser = async () => {
+  const { code } = await requestAPI().post('/auth/logout');
+  // if code === 1 => logout success
+  return code;
+};
+
+export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo, resignUser, logoutUser };

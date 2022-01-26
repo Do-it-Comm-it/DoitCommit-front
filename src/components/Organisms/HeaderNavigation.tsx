@@ -1,7 +1,7 @@
 import { userAtom } from '@src/recoil/atom/user';
 import { AiOutlineBell } from 'react-icons/ai';
 import React from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Navigation from '../Molecules/Navigation';
 import SearchBar from '../Molecules/SearchBar';
@@ -9,18 +9,25 @@ import UserProfile from '../Molecules/UserProfile';
 import UserIcon from '@src/assets/user.svg';
 import { useCallback } from 'react';
 import { modalAtom } from '@src/recoil/atom/modal';
-import useAuthentication from '@src/hooks/useAuthentication';
 import ExpandIconSVG from '@src/assets/expand.svg';
 import { devices } from '@src/utils/theme';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
+import { logoutUser } from '@src/service/api';
 const HeaderNavigation = () => {
-  const { logout } = useAuthentication();
-  const user = useRecoilValue(userAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   const setModal = useSetRecoilState(modalAtom);
   const [open, setOpen] = useRecoilState(sidebarAtom);
   const onClickLogin = useCallback(() => {
     setModal({ id: 'login', visible: true });
   }, [setModal]);
+  const onClickLogout = useCallback(async () => {
+    try {
+      // if returned value of logoutUser() === 1 -> logout success
+      if (await logoutUser()) setUser(null);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [setUser]);
 
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);
@@ -43,7 +50,7 @@ const HeaderNavigation = () => {
         {user && (
           <Content>
             <AiOutlineBell size={20} />
-            <span onClick={logout}>Logout</span>
+            <span onClick={onClickLogout}>Logout</span>
             <UserProfile user={user} isMenuEnable />
           </Content>
         )}
