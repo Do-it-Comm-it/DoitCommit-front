@@ -53,8 +53,8 @@ const HomeTodoList = () => {
   return (
     <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>
       <TodoWrapper>
-        {todos.map((todo: TodoType) => (
-          <TodoBox todo={todo} />
+        {todos.map((todo: TodoType, idx) => (
+          <TodoBox todo={todo} key={idx} />
         ))}
         <AddTodoBox />
       </TodoWrapper>
