@@ -1,7 +1,7 @@
 import { userAtom } from '@src/recoil/atom/user';
 import { AiOutlineBell } from 'react-icons/ai';
 import React from 'react';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Navigation from '../Molecules/Navigation';
 import SearchBar from '../Molecules/SearchBar';

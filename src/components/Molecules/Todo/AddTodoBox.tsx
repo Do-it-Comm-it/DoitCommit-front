@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HiOutlinePlus } from 'react-icons/hi';
+import { useRecoilState } from 'recoil';
+import { modalAtom } from '@src/recoil/atom/modal';
 const AddTodoBox = () => {
+  const [modal, setModal] = useRecoilState(modalAtom);
   return (
     <Container>
-      <PlusIcon size={40} />
+      <PlusIcon size={40} onClick={() => setModal({ id: 'todo', visible: true })} />
     </Container>
   );
 };

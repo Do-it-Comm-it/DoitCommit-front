@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import NotiIconSVG from '@src/assets/notification.svg';
 import { Container, ContentRow, Header } from '@src/components/Atoms/Modal';
@@ -9,6 +9,8 @@ import DIButton from '@src/components/Atoms/DIButton';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
+import useInput from '@src/hooks/useInput';
+import { addTodo } from '@src/service/api';
 
 interface Props {
   onClose: () => void;
@@ -18,16 +20,32 @@ interface Props {
 }
 const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
   const [modal, setModal] = useRecoilState(modalAtom);
+  const [title, onChangeTitle] = useInput('');
+  const [content, onChangeContent] = useInput('');
+  const [type, setType] = useState('스터디');
+  const [importance, setImportance] = useState('low');
+  const [isFixed, setIsFixed] = useState(false);
+
+  const submitTodo = useCallback(async () => {
+    await addTodo({
+      title,
+      importance,
+      type,
+      content,
+      isFixed,
+    });
+  }, [title, importance, type, content, isFixed]);
+
   return (
     <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
       <Container>
         <Header>
-          <Input onChange={() => {}} placeholder="제목 없음" />
-          <NotiIcon />
+          <Input value={title} onChange={onChangeTitle} placeholder="제목 없음" />
+          <NotiIcon isFixed={isFixed} onClick={() => setIsFixed(!isFixed)} />
         </Header>
-        <TagContainer />
+        <TagContainer onChangeImportance={setImportance} importance={importance} type={type} onChangeType={setType} />
         <Divider />
-        <TextAreaContainer />
+        <TextAreaContainer content={content} onChangeContent={onChangeContent} />
         <ContentRow alignItems="center" justifyContent="center" padding="20px 0">
           <DIButton
             onClick={() => {
@@ -42,7 +60,7 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
           >
             취소 하기
           </DIButton>
-          <DIButton onClick={() => {}} backgroundColor="#AACD06" borderRadius={51}>
+          <DIButton onClick={submitTodo} backgroundColor="#020202" borderRadius={51}>
             저장 하기
           </DIButton>
         </ContentRow>
@@ -53,11 +71,13 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
 
 export default TodoModal;
 
-const NotiIcon = styled(NotiIconSVG)`
+const NotiIcon = styled(NotiIconSVG)<{ isFixed: boolean }>`
   position: absolute;
   top: 30px;
   right: 30px;
   cursor: pointer;
+
+  background-color: ${({ isFixed }) => (isFixed ? 'red' : 'none')};
 `;
 
 const Input = styled.input`

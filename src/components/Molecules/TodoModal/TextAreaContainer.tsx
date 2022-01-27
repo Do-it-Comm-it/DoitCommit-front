@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { Container, ContentCol, ContentRow } from '@src/components/Atoms/Modal';
-const TextAreaContainer = () => {
+
+interface Props {
+  content: string;
+  onChangeContent: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+}
+const TextAreaContainer = ({ content, onChangeContent }: Props) => {
   return (
     <Container>
       <ContentCol heightFull widthFull padding="20px">
         <ContentRow widthFull heightFull>
           <Label>내용</Label>
-          <TextArea placeholder="내용을 입력 하세요. (최대 230자)" />
+          <TextArea placeholder="내용을 입력 하세요. (최대 230자)" onChange={onChangeContent} />
         </ContentRow>
       </ContentCol>
     </Container>
