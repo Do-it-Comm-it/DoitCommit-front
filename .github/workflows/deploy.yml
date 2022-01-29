@@ -11,6 +11,11 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@master
 
+      - name: Setup Python for AWS CLI
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -19,19 +24,27 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
+      - name: Install AWS CLI
+        run: pip3 install awscli --upgrade --user
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
 
       - name: install package dependencies
         run: yarn
 
       - name: tsc check
         run: yarn tsc
-        
+
       - name: Generate Environment Variables File for Production
         run: |
           echo "API_URL=$API_URL" >> .env
         env:
           API_URL: ${{ secrets.API_URL }}
-
 
       - name: build our react
         run: yarn build
@@ -45,3 +58,6 @@ jobs:
             --recursive \
             --region ap-northeast-2 \
             dist s3://doit-front
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CDN_DISTRIBUTION_ID }} --paths "/*"
