@@ -11,8 +11,8 @@ const saveExtendedUserInfo = async (User: IUser) => {
 };
 
 const getUserInfo = async () => {
-  const { data } = await requestAPI().get('/members/info');
-  return data;
+  const user = await requestAPI().get('/members/info');
+  return user;
 };
 
 const putUserInfo = async (User: IUser) => {
