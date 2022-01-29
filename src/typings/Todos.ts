@@ -12,3 +12,9 @@ export type AddTodo = {
   isFixed: boolean;
 };
 export type TodoList = ITodos[];
+
+export enum TodoType {
+  'STUDY' = 'STUDY',
+  'DAILY' = 'DAILY',
+  'WORK' = 'WORK',
+}

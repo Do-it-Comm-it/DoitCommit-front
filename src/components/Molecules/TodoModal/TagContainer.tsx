@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, ContentCol, ContentRow } from '@src/components/Atoms/Modal';
+import { TodoType } from '@src/typings/Todos';
 
 interface Props {
   importance: string;
   type: string;
   onChangeImportance: (importance: string) => void;
-  onChangeType: (type: string) => void;
+  onChangeType: (type: TodoType) => void;
 }
 const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Props) => {
   return (
@@ -44,24 +45,24 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
           <CheckButton
             backgroundColor="#AACD06"
             color="#ffffff"
-            checked={type === '스터디'}
-            onClick={() => onChangeType('스터디')}
+            checked={type === TodoType.STUDY}
+            onClick={() => onChangeType(TodoType.STUDY)}
           >
             스터디
           </CheckButton>
           <CheckButton
             backgroundColor="#AACD06"
             color="#ffffff"
-            checked={type === '데일리'}
-            onClick={() => onChangeType('데일리')}
+            checked={type === TodoType.DAILY}
+            onClick={() => onChangeType(TodoType.DAILY)}
           >
             데일리
           </CheckButton>
           <CheckButton
             backgroundColor="#AACD06"
             color="#ffffff"
-            checked={type === '워크'}
-            onClick={() => onChangeType('워크')}
+            checked={type === TodoType.WORK}
+            onClick={() => onChangeType(TodoType.WORK)}
           >
             워크
           </CheckButton>
