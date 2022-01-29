@@ -8,7 +8,6 @@ import AdBanner from '@src/components/Organisms/Home/AdBanner';
 
 const Home = () => {
   return (
-    <Test>
     <Container>
       <HomeTitle />
       <ContentWrapper>
@@ -26,14 +25,13 @@ const Home = () => {
         </Row>
       </ContentWrapper>
     </Container>
-    </Test>
   );
 };
 
-const Test = styled.div`
-display: flex;
-background-color: red;
-`;
+// const Test = styled.div`
+// display: flex;
+// background-color: red;
+// `;
 
 const Container = styled.div`
   display: flex;
@@ -41,8 +39,16 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 70px;
+  padding-left: 153px; 
   padding-bottom: 20px;
+
+  @media (max-width:1024px) {  /* cmcm : 지정해주신 변수명으로 사이즈 지정하면 오류가 생깁니다ㅠ */
+    padding-left: 70px;
+  }
+
 `;
+
+
 const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
