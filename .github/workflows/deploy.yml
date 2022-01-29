@@ -25,13 +25,12 @@ jobs:
 
       - name: tsc check
         run: yarn tsc
-        
+
       - name: Generate Environment Variables File for Production
         run: |
           echo "API_URL=$API_URL" >> .env
         env:
           API_URL: ${{ secrets.API_URL }}
-
 
       - name: build our react
         run: yarn build
@@ -45,3 +44,6 @@ jobs:
             --recursive \
             --region ap-northeast-2 \
             dist s3://doit-front
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CDN_DISTRIBUTION_ID }} --paths "/*"
