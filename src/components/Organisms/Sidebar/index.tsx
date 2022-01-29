@@ -34,7 +34,7 @@ const SidebarContainer = styled.div<{ open: boolean }>`
   width: ${({ open }) => (open ? 308 : 83)}px;
   min-width: ${({ open }) => (open ? 308 : 83)}px;
   flex-direction: column;
-  position: relative;
+  position: fixed;
 
   left: 0;
   top: 0;
