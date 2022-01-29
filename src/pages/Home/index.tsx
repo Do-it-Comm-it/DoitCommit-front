@@ -5,7 +5,7 @@ import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
 import Planner from '@src/components/Organisms/Home/Planner';
 import Community from '@src/components/Organisms/Home/Community';
 import AdBanner from '@src/components/Organisms/Home/AdBanner';
-
+import { devices } from '@src/utils/theme';
 const Home = () => {
   return (
     <Container>
@@ -34,8 +34,14 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 70px;
+  padding-left: 153px;
   padding-bottom: 20px;
+
+  @media ${devices.laptop} {
+    padding-left: 70px;
+  }
 `;
+
 const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
