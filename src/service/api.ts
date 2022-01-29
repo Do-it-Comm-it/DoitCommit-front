@@ -1,3 +1,4 @@
+import { AddTodo } from '@src/typings/Todos';
 import { IUser } from '@src/typings/User';
 import { requestAPI } from '@src/utils/fetcher';
 
@@ -10,7 +11,8 @@ const saveExtendedUserInfo = async (User: IUser) => {
 };
 
 const getUserInfo = async () => {
-  return await requestAPI().get('/members/info');
+  const { data } = await requestAPI().get('/members/info');
+  return data;
 };
 
 const putUserInfo = async (User: IUser) => {
@@ -21,4 +23,14 @@ const resignUser = async () => {
   return await requestAPI().delete('/users/resign');
 };
 
-export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo, resignUser };
+const logoutUser = async () => {
+  const { code } = await requestAPI().post('/auth/logout');
+  // if code === 1 => logout success
+  return code;
+};
+
+const addTodo = async (body: AddTodo) => {
+  return await requestAPI().post('/todos', body);
+};
+
+export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo, resignUser, logoutUser, addTodo };

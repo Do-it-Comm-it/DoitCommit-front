@@ -45,8 +45,8 @@ const Planner = () => {
           ))}
         </Dates>
         <Planners>
-          {todayPlanners.map((planner) => (
-            <PlannerBox participants={planner.participants} title={planner.title} />
+          {todayPlanners.map((planner, idx) => (
+            <PlannerBox participants={planner.participants} title={planner.title} key={idx} />
           ))}
         </Planners>
       </PlannerWrapper>

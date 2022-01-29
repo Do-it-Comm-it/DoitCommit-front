@@ -2,15 +2,11 @@ import { modalAtom } from '@src/recoil/atom/modal';
 import { userAtom } from '@src/recoil/atom/user';
 import React, { useCallback, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import LoginModal from '../LoginModal';
-import RegisterModal from '../RegisterModal';
-import { CloseModalButton, CreateModal } from './styles';
+import LoginModal from '@src/components/Organisms/Modal/LoginModal';
+import RegisterModal from '@src/components/Organisms/Modal/RegisterModal';
+import TodoModal from '@src/components/Organisms/Modal/TodoModal';
 
-interface Props {
-  showCloseIcon?: boolean;
-}
-
-const Modal = ({ showCloseIcon = false }: Props) => {
+const Modal = () => {
   const [modal, setModal] = useRecoilState(modalAtom);
   const user = useRecoilValue(userAtom);
   const closeModal = useCallback(() => {
@@ -27,14 +23,12 @@ const Modal = ({ showCloseIcon = false }: Props) => {
 
   return (
     <>
-      {modal.visible && (
-        <CreateModal onClick={closeModal}>
-          <div onClick={stopPropagation}>
-            {showCloseIcon && <CloseModalButton onClick={closeModal} width="45" height="45" />}
-            {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} />}
-            {modal.id === 'register' && modal.visible && <RegisterModal onFinish={closeModal} />}
-          </div>
-        </CreateModal>
+      {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} stopPropagation={stopPropagation} />}
+      {modal.id === 'register' && modal.visible && (
+        <RegisterModal onFinish={closeModal} onClose={closeModal} stopPropagation={stopPropagation} />
+      )}
+      {modal.id === 'todo' && modal.visible && (
+        <TodoModal onClose={closeModal} stopPropagation={stopPropagation} width={772} height={647} />
       )}
     </>
   );
