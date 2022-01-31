@@ -4805,6 +4805,11 @@
   "resolved" "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz"
   "version" "1.1.1"
 
+"object-to-formdata@^4.4.1":
+  "integrity" "sha512-hHqo2JID8muY6hSeaEmze8BRN7bYu/BZvh2a+okxMHrYOkU29kxqlkn1ITAqsH7Mx9eRSWlJ3cC6sV3sx5F+6Q=="
+  "resolved" "https://registry.npmjs.org/object-to-formdata/-/object-to-formdata-4.4.1.tgz"
+  "version" "4.4.1"
+
 "object.assign@^4.1.0", "object.assign@^4.1.2":
   "integrity" "sha512-ixT2L5THXsApyiUPYKmW+2EHpXXe5Ii3M+f4e+aJFAHao5amFRW6J0OO6c/LU8Be47utCx2GL89hxGB6XSmKuQ=="
   "resolved" "https://registry.npmjs.org/object.assign/-/object.assign-4.1.2.tgz"
