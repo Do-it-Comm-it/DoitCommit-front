@@ -1,7 +1,7 @@
 const infoFormData = [
   {
     label: '이름',
-    name: 'name',
+    name: 'nickname',
   },
   {
     label: '이메일',
@@ -12,16 +12,12 @@ const infoFormData = [
     name: 'position',
   },
   {
-    label: '관심기술',
-    name: 'tech',
-  },
-  {
     label: 'Github',
-    name: 'github',
+    name: 'githubUrl',
   },
   {
     label: 'URL',
-    name: 'url',
+    name: 'url1',
   },
 ];
 
