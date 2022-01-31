@@ -1,16 +1,18 @@
+import { IUser } from '@src/typings/User';
 import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
   name: string;
   label: string;
+  user: IUser;
   onChange?: (e: any) => void;
 }
-const Form = ({ name, label, onChange }: Props) => {
+const Form = ({ name, label, onChange, user }: Props) => {
   return (
     <Content>
       <Label>{label}</Label>
-      <Input name={name} onChange={onChange} />
+      <Input name={name} onChange={onChange} defaultValue={(user as any)[name]} />
     </Content>
   );
 };
