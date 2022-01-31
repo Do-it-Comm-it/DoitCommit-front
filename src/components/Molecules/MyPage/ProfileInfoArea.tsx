@@ -1,4 +1,5 @@
 import DIButton from '@src/components/Atoms/DIButton';
+import { Content, Label } from '@src/components/Atoms/Mypage';
 import SelectInput from '@src/components/Organisms/SelectInput';
 import infoFormData from '@src/data/formData';
 import { fileAtom } from '@src/recoil/atom/file';
@@ -13,7 +14,7 @@ import AddInput from './AddInput';
 import Form from './Form';
 
 const ProfileInfoArea = () => {
-  const user = useRecoilValue(userAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   const [techList, setTechList] = useRecoilState(techAtom);
   const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
   const file = useRecoilValue(fileAtom);
@@ -45,15 +46,21 @@ const ProfileInfoArea = () => {
   }, [formData]);
   const onSubmit = useCallback(async () => {
     const updateInfo = { ...input, interestTechSet: techList, file: file.image };
-    console.log(file.previewUrl);
-    await updateUserInfo(user!, updateInfo);
+    const result = await updateUserInfo(user!, updateInfo);
+    if (result === 1) {
+      alert('수정 되었습니다!');
+      window.location.reload();
+    }
   }, [input, techList, user, file]);
   return (
     <Container>
       {formData.map((item, i) => (
         <Form name={item.name} label={item.label} onChange={onChangeInput} key={i} user={user!} />
       ))}
-      <SelectInput onChange={(value) => setTechList(value as Tech[])} value={techList} />
+      <Content>
+        <Label>관심기술</Label>
+        <SelectInput onChange={(value) => setTechList(value as Tech[])} value={techList} />
+      </Content>
       <div>
         <AddInput onClick={addForm} />
       </div>
