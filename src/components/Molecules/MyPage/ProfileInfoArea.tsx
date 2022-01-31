@@ -1,16 +1,28 @@
 import DIButton from '@src/components/Atoms/DIButton';
+import SelectInput from '@src/components/Organisms/SelectInput';
 import infoFormData from '@src/data/formData';
+import { fileAtom } from '@src/recoil/atom/file';
+import { techAtom } from '@src/recoil/atom/tech';
 import { userAtom } from '@src/recoil/atom/user';
+import { updateUserInfo } from '@src/service/api';
+import { Tech } from '@src/typings/Tech';
 import React, { useCallback, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import AddInput from './AddInput';
 import Form from './Form';
+
 const ProfileInfoArea = () => {
   const user = useRecoilValue(userAtom);
-  const [formData, setFormData] = useState(infoFormData);
+  const [techList, setTechList] = useRecoilState(techAtom);
+  const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
+  const file = useRecoilValue(fileAtom);
   const [input, setInput] = useState({
-    ...formData,
+    nickname: user?.nickname,
+    email: user?.email,
+    githubUrl: user?.githubUrl,
+    position: user?.position,
+    url1: user?.url1,
   });
   const onChangeInput = useCallback(
     (e) => {
@@ -19,7 +31,6 @@ const ProfileInfoArea = () => {
         ...input,
         [name]: value,
       });
-      console.log(name, value);
     },
     [input],
   );
@@ -32,16 +43,21 @@ const ProfileInfoArea = () => {
       },
     ]);
   }, [formData]);
-  // TODO : default value about registered user
+  const onSubmit = useCallback(async () => {
+    const updateInfo = { ...input, interestTechSet: techList, file: file.image };
+    console.log(file.previewUrl);
+    await updateUserInfo(user!, updateInfo);
+  }, [input, techList, user, file]);
   return (
     <Container>
       {formData.map((item, i) => (
-        <Form name={item.name} label={item.label} onChange={onChangeInput} key={i} />
+        <Form name={item.name} label={item.label} onChange={onChangeInput} key={i} user={user!} />
       ))}
+      <SelectInput onChange={(value) => setTechList(value as Tech[])} value={techList} />
       <div>
         <AddInput onClick={addForm} />
       </div>
-      <DIButton color="#fff" onClick={() => {}} backgroundColor="#AACD06" borderRadius={51}>
+      <DIButton color="#fff" onClick={onSubmit} backgroundColor="#AACD06" borderRadius={51}>
         내 프로필 저장
       </DIButton>
     </Container>

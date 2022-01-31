@@ -14,8 +14,10 @@ import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
 import { MdEdit } from 'react-icons/md';
 import CheckIcon from '@src/assets/check.svg';
-import { putUserInfo } from '@src/service/api';
+import { updateUserInfo } from '@src/service/api';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
+import { Tech } from '@src/typings/Tech';
+import { fileAtom } from '@src/recoil/atom/file';
 
 type RegisterModalProps = {
   onFinish: () => void;
@@ -23,11 +25,6 @@ type RegisterModalProps = {
   stopPropagation: (e: any) => void;
   width?: number;
   height?: number;
-};
-
-type Tech = {
-  value: string;
-  label: string;
 };
 
 //TODO:
@@ -38,8 +35,10 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [user, setUser] = useRecoilState(userAtom);
-  const [name, setName] = useState<string | null>(null);
-  const [techList, setTechList] = useState<Tech[]>([]);
+  const [nickname, setNickname] = useState<string | null>(null);
+  const [interestTechSet, setInterestTechSet] = useState<Tech[]>([]);
+  const [file, setFile] = useRecoilState(fileAtom);
+
   // const [image, setImage] = useState<string>();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [checkName, setCheckName] = useState<boolean>(false);
@@ -49,12 +48,20 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
       hiddenFileInput.current.click();
     }
   }, [hiddenFileInput]);
-  const onFileChange = useCallback((event) => {
-    const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
-    // setImage(fileUploaded);
-    //set file upload here
-  }, []);
+  const onFileChange = useCallback(
+    (event) => {
+      const reader = new FileReader();
+      const file = event.target.files[0];
+      reader.onload = () => {
+        setFile({
+          file,
+          previewUrl: reader.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    },
+    [setFile],
+  );
 
   useEffect(() => {
     if (true) {
@@ -67,16 +74,19 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   }, []);
 
   const onChangeName = useCallback((text: string) => {
-    setName(text);
+    setNickname(text);
   }, []);
 
   const onCompleteSignUp = useCallback(async () => {
-    const result = await putUserInfo({ ...(user as IUser), tech: techList.map((v) => v.value) });
-
-    if (result.affected > 0) {
-      onFinish();
-    }
-  }, [techList, user, onFinish]);
+    const input = {
+      nickname,
+      interestTechSet,
+      file: file.image,
+    };
+    console.log(input);
+    const result = await updateUserInfo(user!, input);
+    if (result === 1) onFinish();
+  }, [user, onFinish, file, interestTechSet, nickname]);
 
   const NickNameContent = useCallback(() => {
     return (
@@ -92,7 +102,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardContent>
           <InputPlace>
             <DIInput
-              defaultValue={name ?? ''}
+              defaultValue={nickname ?? ''}
               width={285}
               height={65}
               onChange={onChangeName}
@@ -113,17 +123,17 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
-            disabled={name === null || name.trim().length === 0}
+            disabled={nickname === null || nickname.trim().length === 0}
             value={'다음'}
             onClick={() => {
-              setUser({ ...(user as IUser), nickname: name });
+              setUser({ ...(user as IUser), nickname });
               onChangePage(1);
             }}
           />
         </CardBottom>
       </CardStyle>
     );
-  }, [checkName, name, onChangeName, onChangePage, setUser, theme, user]);
+  }, [checkName, nickname, onChangeName, onChangePage, setUser, theme, user]);
 
   const TechContent = useCallback(() => {
     return (
@@ -142,7 +152,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <SelectInput onChange={(value) => setTechList(value as Tech[])} width={100} />
+          <SelectInput onChange={(value) => setInterestTechSet(value as Tech[])} width={100} />
         </CardContent>
         <CardBottom>
           <DIButton
@@ -175,7 +185,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardContent>
           <ProfileContent>
             <ProfilePicture>
-              <UserProfile user={user} width={72} height={72} />
+              <UserProfile user={user} src={file.previewUrl} width={72} height={72} />
               <EditIcon
                 size={24}
                 color={theme.colors.background}
@@ -205,7 +215,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardBottom>
       </CardStyle>
     );
-  }, [onChangePage, onFileChange, onUpload, theme, user]);
+  }, [onChangePage, onFileChange, onUpload, theme, user, file]);
 
   const FinishContent = useCallback(() => {
     return (

@@ -2,15 +2,18 @@ import React from 'react';
 import Select from 'react-select';
 import options from '@src/data/techListData';
 import styled, { useTheme } from 'styled-components';
+import { Tech } from '@src/typings/Tech';
 
 interface Props {
   onChange: (value: unknown) => void;
   width?: number;
+  value?: Tech[];
 }
-const SelectInput = ({ onChange, width }: Props) => {
+const SelectInput = ({ onChange, width, value }: Props) => {
   const theme = useTheme();
   return (
     <TechSelect
+      value={value}
       width={width}
       onChange={onChange}
       options={options}
