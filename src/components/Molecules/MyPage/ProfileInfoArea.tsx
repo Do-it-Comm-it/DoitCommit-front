@@ -3,8 +3,7 @@ import { Content, Label } from '@src/components/Atoms/Mypage';
 import SelectInput from '@src/components/Organisms/SelectInput';
 import infoFormData from '@src/data/formData';
 import { fileAtom } from '@src/recoil/atom/file';
-import { techAtom } from '@src/recoil/atom/tech';
-import { userAtom } from '@src/recoil/atom/user';
+import { techState, userAtom } from '@src/recoil/atom/user';
 import { updateUserInfo } from '@src/service/api';
 import { Tech } from '@src/typings/Tech';
 import React, { useCallback, useState } from 'react';
@@ -15,7 +14,7 @@ import Form from './Form';
 
 const ProfileInfoArea = () => {
   const [user, setUser] = useRecoilState(userAtom);
-  const [techList, setTechList] = useRecoilState(techAtom);
+  const [techList, setTechList] = useRecoilState(techState);
   const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
   const file = useRecoilValue(fileAtom);
   const [input, setInput] = useState({
@@ -59,7 +58,10 @@ const ProfileInfoArea = () => {
       ))}
       <Content>
         <Label>관심기술</Label>
-        <SelectInput onChange={(value) => setTechList(value as Tech[])} value={techList} />
+        <SelectInput
+          onChange={(value) => setTechList((value as Tech[]).map((tech: Tech) => tech.value))}
+          value={techList as Tech[]}
+        />
       </Content>
       <div>
         <AddInput onClick={addForm} />

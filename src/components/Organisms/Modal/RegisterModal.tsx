@@ -1,7 +1,7 @@
 import DIButton from '@src/components/Atoms/DIButton';
 import DIText from '@src/components/Atoms/DIText';
 import UserProfile from '@src/components/Molecules/UserProfile';
-import { userAtom } from '@src/recoil/atom/user';
+import { techState, userAtom } from '@src/recoil/atom/user';
 import { IUser } from '@src/typings/User';
 import CloseIcon from '@src/assets/close_button.svg';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
@@ -36,7 +36,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const [page, setPage] = useState<number>(0);
   const [user, setUser] = useRecoilState(userAtom);
   const [nickname, setNickname] = useState<string | null>(null);
-  const [interestTechSet, setInterestTechSet] = useState<Tech[]>([]);
+  const [interestTechSet, setInterestTechSet] = useRecoilState(techState);
   const [file, setFile] = useRecoilState(fileAtom);
 
   // const [image, setImage] = useState<string>();
@@ -152,7 +152,10 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <SelectInput onChange={(value) => setInterestTechSet(value as Tech[])} width={100} />
+          <SelectInput
+            onChange={(value) => setInterestTechSet((value as Tech[]).map((tech: Tech) => tech.value))}
+            width={100}
+          />
         </CardContent>
         <CardBottom>
           <DIButton
