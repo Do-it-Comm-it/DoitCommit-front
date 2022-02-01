@@ -1,6 +1,8 @@
+import { Tech } from '@src/typings/Tech';
 import { AddTodo } from '@src/typings/Todos';
 import { IUser } from '@src/typings/User';
 import { requestAPI } from '@src/utils/fetcher';
+import { serialize } from 'object-to-formdata';
 
 const getAuthUser = async () => {
   return await requestAPI().get('/auth');
@@ -11,12 +13,29 @@ const saveExtendedUserInfo = async (User: IUser) => {
 };
 
 const getUserInfo = async () => {
-  const user = await requestAPI().get('/members/info');
-  return user;
+  const { data } = await requestAPI().get('/members/info');
+  return data;
 };
 
-const putUserInfo = async (User: IUser) => {
-  return await requestAPI().put('/users/', User);
+const updateUserInfo = async (user: IUser, input: any) => {
+  if (input.file !== '') {
+    const formData = serialize({
+      ...(user as IUser),
+      ...input,
+      interestTechSet: input.interestTechSet.map((tech: Tech) => tech.value),
+    });
+    const { code } = await requestAPI().put('/members/update', formData, 'multipart/form-data');
+    return code;
+  } else {
+    delete input.file;
+    const formData = serialize({
+      ...(user as IUser),
+      ...input,
+      interestTechSet: input.interestTechSet.map((tech: Tech) => tech.value),
+    });
+    const { code } = await requestAPI().put('/members/update', formData, 'multipart/form-data');
+    return code;
+  }
 };
 
 const resignUser = async () => {
@@ -33,4 +52,4 @@ const addTodo = async (body: AddTodo) => {
   return await requestAPI().post('/todos', body);
 };
 
-export { getAuthUser, saveExtendedUserInfo, getUserInfo, putUserInfo, resignUser, logoutUser, addTodo };
+export { getAuthUser, saveExtendedUserInfo, getUserInfo, updateUserInfo, resignUser, logoutUser, addTodo };

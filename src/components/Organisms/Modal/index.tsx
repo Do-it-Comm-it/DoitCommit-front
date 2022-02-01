@@ -18,7 +18,7 @@ const Modal = () => {
   }, []);
 
   useEffect(() => {
-    if (user && !user.nickname) setModal({ id: 'register', visible: true });
+    if (user && user.nickname === null) setModal({ id: 'register', visible: true });
   }, [user, setModal]);
 
   return (

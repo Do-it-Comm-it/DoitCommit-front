@@ -5,7 +5,6 @@ const apiUrl = process.env.API_URL ?? 'http://localhost:8888';
 const axiosInstance = axios.create({
   baseURL: apiUrl,
   headers: {
-    'Content-Type': 'application/json',
     accept: 'application/json',
   },
   withCredentials: true, // for cookie
@@ -50,11 +49,14 @@ export const requestAPI = () => {
   };
 
   const request = (method: 'GET' | 'POST' | 'PUT' | 'DELETE') => {
-    return (url: string, bodyJson?: any) => {
+    return (url: string, bodyJson?: any, contentType?: string) => {
       return axiosInstance({
         url,
         method: method,
         data: bodyJson,
+        headers: {
+          'Content-Type': contentType ?? 'application/json',
+        },
       }).then(handleResponse);
     };
   };
