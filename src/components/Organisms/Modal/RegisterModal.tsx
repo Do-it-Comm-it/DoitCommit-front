@@ -1,7 +1,7 @@
 import DIButton from '@src/components/Atoms/DIButton';
 import DIText from '@src/components/Atoms/DIText';
 import UserProfile from '@src/components/Molecules/UserProfile';
-import { techState, userAtom } from '@src/recoil/atom/user';
+import { userAtom, userFormState } from '@src/recoil/atom/user';
 import { IUser } from '@src/typings/User';
 import CloseIcon from '@src/assets/close_button.svg';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
@@ -35,8 +35,8 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [user, setUser] = useRecoilState(userAtom);
-  const [nickname, setNickname] = useState<string | null>(null);
-  const [interestTechSet, setInterestTechSet] = useRecoilState(techState);
+  const [nickname, setNickname] = useRecoilState(userFormState('nickname'));
+  const [interestTechSet, setInterestTechSet] = useRecoilState(userFormState('interestTechSet'));
   const [file, setFile] = useRecoilState(fileAtom);
 
   // const [image, setImage] = useState<string>();
@@ -167,7 +167,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardBottom>
       </CardStyle>
     );
-  }, [onChangePage, theme, user]);
+  }, [onChangePage, theme, user, setInterestTechSet]);
 
   const ImageContent = useCallback(() => {
     return (
