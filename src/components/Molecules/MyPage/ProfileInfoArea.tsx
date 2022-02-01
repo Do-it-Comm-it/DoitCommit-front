@@ -3,37 +3,25 @@ import { Content, Label } from '@src/components/Atoms/Mypage';
 import SelectInput from '@src/components/Organisms/SelectInput';
 import infoFormData from '@src/data/formData';
 import { fileAtom } from '@src/recoil/atom/file';
-import { techState, userAtom } from '@src/recoil/atom/user';
+import { userAtom, userFormState } from '@src/recoil/atom/user';
 import { updateUserInfo } from '@src/service/api';
 import { Tech } from '@src/typings/Tech';
 import React, { useCallback, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import AddInput from './AddInput';
 import Form from './Form';
 
 const ProfileInfoArea = () => {
   const [user, setUser] = useRecoilState(userAtom);
-  const [techList, setTechList] = useRecoilState(techState);
+  const [techList, setTechList] = useRecoilState(userFormState('interestTechSet'));
   const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
   const file = useRecoilValue(fileAtom);
-  const [input, setInput] = useState({
-    nickname: user?.nickname,
-    email: user?.email,
-    githubUrl: user?.githubUrl,
-    position: user?.position,
-    url1: user?.url1,
-  });
-  const onChangeInput = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-      setInput({
-        ...input,
-        [name]: value,
-      });
-    },
-    [input],
-  );
+  const nickname = useRecoilValue(userFormState('nickname'));
+  const email = useRecoilValue(userFormState('email'));
+  const position = useRecoilValue(userFormState('position'));
+  const githubUrl = useRecoilValue(userFormState('githubUrl'));
+  const url1 = useRecoilValue(userFormState('url1'));
   const addForm = useCallback(() => {
     setFormData([
       ...formData,
@@ -44,23 +32,31 @@ const ProfileInfoArea = () => {
     ]);
   }, [formData]);
   const onSubmit = useCallback(async () => {
+    const input = {
+      nickname,
+      email,
+      position,
+      githubUrl,
+      url1,
+    };
+    console.log(input);
     const updateInfo = { ...input, interestTechSet: techList, file: file.image };
     const result = await updateUserInfo(user!, updateInfo);
     if (result === 1) {
       alert('수정 되었습니다!');
       window.location.reload();
     }
-  }, [input, techList, user, file]);
+  }, [url1, email, githubUrl, position, techList, user, file, nickname]);
   return (
     <Container>
       {formData.map((item, i) => (
-        <Form name={item.name} label={item.label} onChange={onChangeInput} key={i} user={user!} />
+        <Form name={item.name} label={item.label} key={i} user={user!} />
       ))}
       <Content>
         <Label>관심기술</Label>
         <SelectInput
           onChange={(value) => setTechList((value as Tech[]).map((tech: Tech) => tech.value))}
-          value={techList as Tech[]}
+          value={techList}
         />
       </Content>
       <div>
