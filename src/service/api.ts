@@ -48,8 +48,13 @@ const logoutUser = async () => {
   return code;
 };
 
+const getTodo = async () => {
+  const { data } = await requestAPI().get('/todos/main');
+  return data;
+};
+
 const addTodo = async (body: AddTodo) => {
   return await requestAPI().post('/todos', body);
 };
 
-export { getAuthUser, saveExtendedUserInfo, getUserInfo, updateUserInfo, resignUser, logoutUser, addTodo };
+export { getAuthUser, saveExtendedUserInfo, getUserInfo, updateUserInfo, resignUser, logoutUser, addTodo, getTodo };

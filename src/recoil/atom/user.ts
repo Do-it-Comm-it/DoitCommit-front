@@ -1,5 +1,5 @@
-import { getUserInfo } from '@src/service/api';
-import { Tech } from '@src/typings/Tech';
+import { getTodo, getUserInfo } from '@src/service/api';
+import { ITodos } from '@src/typings/Todos';
 import { IUser } from '@src/typings/User';
 import { atom, selector, selectorFamily } from 'recoil';
 
@@ -38,4 +38,15 @@ export const userFormState = selectorFamily({
         [field]: newValue,
       }));
     },
+});
+
+export const todoAtom = atom<ITodos[] | []>({
+  key: 'atom/todo',
+  default: selector({
+    key: 'todo/Default',
+    get: () =>
+      getTodo().catch((err) => {
+        Promise.reject(err);
+      }),
+  }),
 });

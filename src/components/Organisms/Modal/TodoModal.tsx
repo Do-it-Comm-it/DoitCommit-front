@@ -13,6 +13,7 @@ import ModalContainer from '@src/components/Molecules/ModalContainer';
 import useInput from '@src/hooks/useInput';
 import { addTodo } from '@src/service/api';
 import { TodoType } from '@src/typings/Todos';
+import { todoAtom } from '@src/recoil/atom/user';
 
 interface Props {
   onClose: () => void;
@@ -22,22 +23,28 @@ interface Props {
 }
 
 const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
+  const [todos, setTodos] = useRecoilState(todoAtom);
   const [modal, setModal] = useRecoilState(modalAtom);
   const [title, onChangeTitle] = useInput('');
   const [content, onChangeContent] = useInput('');
   const [type, setType] = useState<TodoType>(TodoType.STUDY);
-  const [importance, setImportance] = useState('low');
+  const [importance, setImportance] = useState('LOW');
   const [isFixed, setIsFixed] = useState(false);
   const theme = useTheme();
   const submitTodo = useCallback(async () => {
-    await addTodo({
+    const newTodo = {
       title,
       importance,
       type,
       content,
       isFixed,
-    });
-  }, [title, importance, type, content, isFixed]);
+    };
+    await addTodo(newTodo);
+    if (todos.length < 4) {
+      setTodos([...todos, newTodo]);
+    }
+    setModal({ ...modal, visible: false });
+  }, [title, importance, type, content, isFixed, setTodos, todos, modal, setModal]);
 
   console.log(isFixed);
 

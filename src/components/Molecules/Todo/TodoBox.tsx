@@ -6,9 +6,10 @@ import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
+import { ITodos } from '@src/typings/Todos';
 
 type TodoBoxProps = {
-  todo: TodoType;
+  todo: ITodos;
 };
 
 const TodoBox = ({ todo }: TodoBoxProps) => {
@@ -17,23 +18,23 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
       <Container>
         <Header>
           <Labels>
-            <PlannerLabel level={todo.level} />
+            <PlannerLabel level={todo.importance} />
             <PlannerLabel name={todo.type} />
           </Labels>
-          {todo.isPinned ? <FillPin size={16} /> : <Pin size={16} />}
+          {todo.isFixed ? <FillPin size={16} /> : <Pin size={16} />}
         </Header>
         <Content>
           <Title>{todo.title}</Title>
           <Date>
-            {todo.date.getDay() +
+            {/* {todo.todoDateTime?.getDay() +
               ' ' +
-              todo.date.getFullYear() +
+              todo.todoDateTime?.getFullYear() +
               ' ' +
-              todo.date.getHours() +
+              todo.todoDateTime?.getHours() +
               ':' +
-              todo.date.getMinutes()}
+              todo.todoDateTime?.getMinutes()} */}
           </Date>
-          <Body>{todo.body}</Body>
+          <Body>{todo.content}</Body>
         </Content>
         <Footer>
           <DeleteIcon />
