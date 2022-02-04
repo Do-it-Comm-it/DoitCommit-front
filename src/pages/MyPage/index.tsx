@@ -1,3 +1,4 @@
+import Footer from '@src/components/Organisms/Footer';
 import Body from '@src/components/Organisms/MyPage/Body';
 import React from 'react';
 import styled from 'styled-components';
@@ -5,6 +6,7 @@ const MyPage = () => {
   return (
     <Container>
       <Body />
+      <Footer />
     </Container>
   );
 };

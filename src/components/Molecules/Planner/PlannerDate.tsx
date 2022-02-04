@@ -1,3 +1,4 @@
+import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -42,6 +43,11 @@ const Container = styled.div<{ selected: boolean }>`
   &:hover {
     cursor: pointer;
     opacity: 0.8;
+  }
+
+  @media ${devices.tablet} {
+    width: 98px;
+    height: 130px;
   }
 `;
 

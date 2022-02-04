@@ -30,7 +30,7 @@ const Planner = () => {
   );
 
   return (
-    <ContentBox title="두잇 플래너" contentWidth={400} requiredHeader>
+    <ContentBox title="두잇 플래너" requiredHeader>
       <PlannerWrapper>
         <Dates>
           {dateList.map((day, idx) => (

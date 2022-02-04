@@ -2,6 +2,7 @@ import ContentBox from '@src/components/Molecules/ContentBox';
 import React from 'react';
 import BannerImage from '@src/assets/banner1.svg';
 import styled from 'styled-components';
+import { devices } from '@src/utils/theme';
 
 const AdBanner = () => {
   return (

@@ -26,6 +26,11 @@ const Wrapper = styled.div`
 
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
+
+  @media (max-width: ${1295}px) {
+    width: 100%;
+    margin: 10px;
+  }
 `;
 
 const Content = styled.div`

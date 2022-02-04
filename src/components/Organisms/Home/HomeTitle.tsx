@@ -1,5 +1,6 @@
 import DIText from '@src/components/Atoms/DIText';
 import { userAtom } from '@src/recoil/atom/user';
+import { devices } from '@src/utils/theme';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled, { useTheme } from 'styled-components';
@@ -25,6 +26,12 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   padding-bottom: 30px;
+
+  @media ${devices.tablet} {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
 `;
 
 const Title = styled(DIText)``;
