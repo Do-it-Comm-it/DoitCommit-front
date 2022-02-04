@@ -1,5 +1,4 @@
-import { getTodo, getUserInfo } from '@src/service/api';
-import { ITodos } from '@src/typings/Todos';
+import { getUserInfo } from '@src/service/api';
 import { IUser } from '@src/typings/User';
 import { atom, selector, selectorFamily } from 'recoil';
 

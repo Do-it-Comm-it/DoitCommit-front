@@ -53,6 +53,11 @@ const getTodo = async () => {
   return data;
 };
 
+const getTodoData = async (id: number) => {
+  const { data } = await requestAPI().get(`/todos/${String(id)}`);
+  return data;
+};
+
 const addTodo = async (body: AddTodo) => {
   return await requestAPI().post('/todos', body);
 };
@@ -74,6 +79,7 @@ export {
   logoutUser,
   addTodo,
   getTodo,
+  getTodoData,
   deleteTodo,
   fixedTodo,
 };

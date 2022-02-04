@@ -1,12 +1,20 @@
 import { getTodo } from '@src/service/api';
 import { ITodos } from '@src/typings/Todos';
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
+import { userAtom } from './user';
 
 export const todoAtom = atom({
   key: 'atom/todo',
   default: selector({
     key: 'selector/todo',
-    get: () => getTodo().catch((err) => Promise.reject(err)),
+    get: ({ get }) => {
+      const user = get(userAtom);
+      if (!user) {
+        return [];
+      } else {
+        return getTodo().catch((err) => Promise.reject(err));
+      }
+    },
   }),
 });
 

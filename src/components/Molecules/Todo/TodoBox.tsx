@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PlannerLabel from '../Planner/PlannerLabel';
 import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
@@ -6,9 +6,8 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
-import { todoAtom, todoItemState } from '@src/recoil/atom/todo';
+import { todoIdState, todoItemState } from '@src/recoil/atom/todo';
 import { deleteTodo, fixedTodo } from '@src/service/api';
-import { ITodos } from '@src/typings/Todos';
 
 type TodoBoxProps = {
   id: number;
@@ -16,10 +15,14 @@ type TodoBoxProps = {
 
 const TodoBox = ({ id }: TodoBoxProps) => {
   const todo = useRecoilValue(todoItemState(id));
-  const onDelete = useRecoilCallback(({ set }) => async () => {
+  const onDelete = useRecoilCallback(({ snapshot, set }) => async () => {
+    const todoIds = snapshot.getLoadable(todoIdState).getValue();
     const result = await deleteTodo(String(id));
     if (result === 1) {
-      set(todoAtom, (prevState: any) => [...prevState].filter((t: ITodos) => t.todoId !== id));
+      set(
+        todoIdState,
+        [...todoIds].filter((t) => t !== id),
+      );
     }
   });
   const onFixed = useRecoilCallback(({ set }) => async () => {

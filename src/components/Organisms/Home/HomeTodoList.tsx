@@ -2,12 +2,10 @@ import ContentBox from '@src/components/Molecules/ContentBox';
 import AddTodoBox from '@src/components/Molecules/Todo/AddTodoBox';
 import TodoBox from '@src/components/Molecules/Todo/TodoBox';
 import { userAtom } from '@src/recoil/atom/user';
-import { ITodos } from '@src/typings/Todos';
 import React from 'react';
-import { todoAtom, todoIdState } from '@src/recoil/atom/todo';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { todoIdState } from '@src/recoil/atom/todo';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { useEffect } from 'react';
 
 export type TodoType = {
   id: number;

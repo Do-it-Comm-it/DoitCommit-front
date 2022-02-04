@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import NotiIconSVG from '@src/assets/notification.svg';
 import NotiIconFixedSVG from '@src/assets/notification-fixed.svg';
@@ -12,8 +12,8 @@ import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 import useInput from '@src/hooks/useInput';
 import { addTodo } from '@src/service/api';
-import { ITodos, TodoType } from '@src/typings/Todos';
-import { todoAtom, todoIdState } from '@src/recoil/atom/todo';
+import { TodoType } from '@src/typings/Todos';
+import { todoAtom } from '@src/recoil/atom/todo';
 
 interface Props {
   onClose: () => void;
@@ -30,19 +30,6 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
   const [importance, setImportance] = useState('LOW');
   const [isFixed, setIsFixed] = useState(false);
   const theme = useTheme();
-  // const submitTodo = useCallback(async () => {
-  //   const { data } = await addTodo({
-  //     title,
-  //     importance,
-  //     type,
-  //     content,
-  //     isFixed,
-  //   });
-  //   if (todos.length < 4) {
-  //     setTodos([...todos, data as ITodos]);
-  //   }
-  //   setModal({ ...modal, visible: false });
-  // }, [title, importance, type, content, isFixed, setTodos, todos, modal, setModal]);
 
   const submitTodo = useRecoilCallback(({ set }) => async () => {
     const { data } = await addTodo({
