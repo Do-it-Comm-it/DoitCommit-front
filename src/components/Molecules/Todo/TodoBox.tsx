@@ -1,18 +1,36 @@
-import { TodoType } from '@src/components/Organisms/Home/HomeTodoList';
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import PlannerLabel from '../Planner/PlannerLabel';
 import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { todoAtom, todoItemState } from '@src/recoil/atom/todo';
+import { deleteTodo, fixedTodo } from '@src/service/api';
 import { ITodos } from '@src/typings/Todos';
 
 type TodoBoxProps = {
-  todo: ITodos;
+  id: number;
 };
 
-const TodoBox = ({ todo }: TodoBoxProps) => {
+const TodoBox = ({ id }: TodoBoxProps) => {
+  const todo = useRecoilValue(todoItemState(id));
+  const onDelete = useRecoilCallback(({ set }) => async () => {
+    const result = await deleteTodo(String(id));
+    if (result === 1) {
+      set(todoAtom, (prevState: any) => [...prevState].filter((t: ITodos) => t.todoId !== id));
+    }
+  });
+  const onFixed = useRecoilCallback(({ set }) => async () => {
+    const result = await fixedTodo(String(id));
+    if (result === 1) {
+      set(todoItemState(id), (prevState: any) => ({
+        ...prevState,
+        isFixed: !todo.isFixed,
+      }));
+    }
+  });
   return (
     <Wrapper>
       <Container>
@@ -21,7 +39,7 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
             <PlannerLabel level={todo.importance} />
             <PlannerLabel name={todo.type} />
           </Labels>
-          {todo.isFixed ? <FillPin size={16} /> : <Pin size={16} />}
+          {todo.isFixed ? <FillPin size={16} onClick={onFixed} /> : <Pin size={16} onClick={onFixed} />}
         </Header>
         <Content>
           <Title>{todo.title}</Title>
@@ -37,7 +55,7 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
           <Body>{todo.content}</Body>
         </Content>
         <Footer>
-          <DeleteIcon />
+          <DeleteIcon onClick={onDelete} />
           <Left>
             <EditIcon />
             <CheckIcon />
@@ -130,4 +148,4 @@ const Footer = styled.div`
   justify-content: space-between;
 `;
 const Left = styled.div``;
-export default TodoBox;
+export default React.memo(TodoBox);

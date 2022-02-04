@@ -39,14 +39,3 @@ export const userFormState = selectorFamily({
       }));
     },
 });
-
-export const todoAtom = atom<ITodos[] | []>({
-  key: 'atom/todo',
-  default: selector({
-    key: 'todo/Default',
-    get: () =>
-      getTodo().catch((err) => {
-        Promise.reject(err);
-      }),
-  }),
-});

@@ -1,11 +1,13 @@
 import ContentBox from '@src/components/Molecules/ContentBox';
 import AddTodoBox from '@src/components/Molecules/Todo/AddTodoBox';
 import TodoBox from '@src/components/Molecules/Todo/TodoBox';
-import { todoAtom, userAtom } from '@src/recoil/atom/user';
+import { userAtom } from '@src/recoil/atom/user';
 import { ITodos } from '@src/typings/Todos';
-import React, { useMemo } from 'react';
+import React from 'react';
+import { todoAtom, todoIdState } from '@src/recoil/atom/todo';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 export type TodoType = {
   id: number;
@@ -19,12 +21,12 @@ export type TodoType = {
 
 const HomeTodoList = () => {
   const user = useRecoilValue(userAtom);
-  const [todos, setTodos] = useRecoilState(todoAtom);
+  const todoIds = useRecoilValue(todoIdState);
 
   return (
     <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>
       <TodoWrapper>
-        {todos && todos.map((todo: ITodos, idx: number) => <TodoBox todo={todo} key={idx} />)}
+        {todoIds && todoIds?.map((todoId) => <TodoBox key={todoId} id={todoId} />)}
         <AddTodoBox />
       </TodoWrapper>
     </ContentBox>

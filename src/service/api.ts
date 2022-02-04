@@ -56,5 +56,24 @@ const getTodo = async () => {
 const addTodo = async (body: AddTodo) => {
   return await requestAPI().post('/todos', body);
 };
+const deleteTodo = async (id: string) => {
+  const { code } = await requestAPI().delete(`/todos/${id}`);
+  return code;
+};
+const fixedTodo = async (id: string) => {
+  const { code } = await requestAPI().patch(`todos/${id}/fixed`);
+  return code;
+};
 
-export { getAuthUser, saveExtendedUserInfo, getUserInfo, updateUserInfo, resignUser, logoutUser, addTodo, getTodo };
+export {
+  getAuthUser,
+  saveExtendedUserInfo,
+  getUserInfo,
+  updateUserInfo,
+  resignUser,
+  logoutUser,
+  addTodo,
+  getTodo,
+  deleteTodo,
+  fixedTodo,
+};

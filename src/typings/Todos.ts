@@ -1,5 +1,5 @@
 export interface ITodos {
-  id?: number;
+  todoId?: number;
   title: string;
   content: string;
   type: string;

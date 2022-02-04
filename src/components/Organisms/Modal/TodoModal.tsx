@@ -7,13 +7,13 @@ import TagContainer from '@src/components/Molecules/TodoModal/TagContainer';
 import TextAreaContainer from '@src/components/Molecules/TodoModal/TextAreaContainer';
 import Divider from '@src/components/Atoms/Divider';
 import DIButton from '@src/components/Atoms/DIButton';
-import { useRecoilState } from 'recoil';
+import { useRecoilCallback, useRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 import useInput from '@src/hooks/useInput';
 import { addTodo } from '@src/service/api';
-import { TodoType } from '@src/typings/Todos';
-import { todoAtom } from '@src/recoil/atom/user';
+import { ITodos, TodoType } from '@src/typings/Todos';
+import { todoAtom, todoIdState } from '@src/recoil/atom/todo';
 
 interface Props {
   onClose: () => void;
@@ -23,7 +23,6 @@ interface Props {
 }
 
 const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
-  const [todos, setTodos] = useRecoilState(todoAtom);
   const [modal, setModal] = useRecoilState(modalAtom);
   const [title, onChangeTitle] = useInput('');
   const [content, onChangeContent] = useInput('');
@@ -31,23 +30,31 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
   const [importance, setImportance] = useState('LOW');
   const [isFixed, setIsFixed] = useState(false);
   const theme = useTheme();
-  const submitTodo = useCallback(async () => {
-    const newTodo = {
+  // const submitTodo = useCallback(async () => {
+  //   const { data } = await addTodo({
+  //     title,
+  //     importance,
+  //     type,
+  //     content,
+  //     isFixed,
+  //   });
+  //   if (todos.length < 4) {
+  //     setTodos([...todos, data as ITodos]);
+  //   }
+  //   setModal({ ...modal, visible: false });
+  // }, [title, importance, type, content, isFixed, setTodos, todos, modal, setModal]);
+
+  const submitTodo = useRecoilCallback(({ set }) => async () => {
+    const { data } = await addTodo({
       title,
       importance,
       type,
       content,
       isFixed,
-    };
-    await addTodo(newTodo);
-    if (todos.length < 4) {
-      setTodos([...todos, newTodo]);
-    }
-    setModal({ ...modal, visible: false });
-  }, [title, importance, type, content, isFixed, setTodos, todos, modal, setModal]);
-
-  console.log(isFixed);
-
+    });
+    set(todoAtom, (prevState: any) => [...prevState, data]);
+    setModal({ id: 'todo', visible: false });
+  });
   return (
     <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
       <Container>
