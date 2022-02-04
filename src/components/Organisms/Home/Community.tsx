@@ -3,7 +3,7 @@ import ContentBox from '@src/components/Molecules/ContentBox';
 import React from 'react';
 const Community = () => {
   return (
-    <ContentBox title="커뮤니티" contentWidth={400} requiredHeader>
+    <ContentBox title="커뮤니티" requiredHeader>
       <CommunityBox
         body={'CSS2와 CSS3의 가장 큰 차이점은 CSS3...'}
         isMarked={false}

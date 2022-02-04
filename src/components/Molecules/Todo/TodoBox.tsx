@@ -6,6 +6,7 @@ import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
+import { devices } from '@src/utils/theme';
 
 type TodoBoxProps = {
   todo: TodoType;
@@ -49,7 +50,7 @@ const TodoBox = ({ todo }: TodoBoxProps) => {
 
 const Wrapper = styled.div`
   display: flex;
-  min-width: 386px;
+  min-width: 286px;
   min-height: 330px;
   width: 100%;
   background: ${({ theme }) => theme.colors.background};
@@ -57,6 +58,14 @@ const Wrapper = styled.div`
 
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
+
+  @media ${devices.laptop} {
+    max-width: 386px;
+  }
+
+  @media ${devices.tablet} {
+    max-width: 100%;
+  }
 `;
 
 const Container = styled.div`
