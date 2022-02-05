@@ -40,6 +40,10 @@ const Container = styled.div`
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
   margin-top: 12px;
+
+  @media (max-width: ${1295}px) {
+    width: 100%;
+  }
 `;
 const Header = styled.div`
   height: 20px;

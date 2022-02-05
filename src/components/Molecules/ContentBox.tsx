@@ -6,6 +6,7 @@ import { MdOutlineLockOpen } from 'react-icons/md';
 import DIButton from '../Atoms/DIButton';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { useSetRecoilState } from 'recoil';
+import { devices } from '@src/utils/theme';
 type Props = {
   requiredHeader?: boolean;
   title?: string;

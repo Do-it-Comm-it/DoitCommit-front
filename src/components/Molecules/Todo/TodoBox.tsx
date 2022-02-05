@@ -9,6 +9,7 @@ import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 import { todoIdState, todoItemState } from '@src/recoil/atom/todo';
 import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
 import { modalAtom } from '@src/recoil/atom/modal';
+import { devices } from '@src/utils/theme';
 
 type TodoBoxProps = {
   id: number;
@@ -86,7 +87,7 @@ const TodoBox = ({ id }: TodoBoxProps) => {
 
 const Wrapper = styled.div`
   display: flex;
-  min-width: 386px;
+  min-width: 286px;
   min-height: 330px;
   width: 100%;
   background: ${({ theme }) => theme.colors.background};
@@ -94,6 +95,14 @@ const Wrapper = styled.div`
 
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
+
+  @media ${devices.laptop} {
+    max-width: 386px;
+  }
+
+  @media ${devices.tablet} {
+    max-width: 100%;
+  }
 `;
 
 const Container = styled.div`

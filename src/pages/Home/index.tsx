@@ -40,7 +40,7 @@ const Container = styled.div`
   padding-bottom: 20px;
 
   @media ${devices.laptop} {
-    padding-left: 70px;
+    padding: 8%;
   }
 `;
 
@@ -49,6 +49,11 @@ const ContentWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
+
+  @media ${devices.laptop} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const Column = styled.div`
   width: 100%;
@@ -56,6 +61,10 @@ const Column = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  @media ${devices.laptop} {
+    max-width: 100%;
+  }
 `;
 const Row = styled.div`
   width: 100%;
@@ -63,6 +72,11 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 30px;
+
+  @media ${devices.laptop} {
+    margin-top: 30px;
+    margin-left: 0px;
+  }
 `;
 const Top = styled.div`
   display: flex;
@@ -72,5 +86,19 @@ const Bottom = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 10px;
+  @media (max-width: ${1295}px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media ${devices.laptop} {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  @media ${devices.tablet} {
+    flex-direction: column;
+  }
 `;
 export default Home;
