@@ -10,6 +10,7 @@ import { todoAtom, todoIdState, todoItemState } from '@src/recoil/atom/todo';
 import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
+import { convertDayToName } from '../Planner/PlannerDate';
 
 type TodoBoxProps = {
   id: number;
@@ -50,6 +51,7 @@ const TodoBox = ({ id }: TodoBoxProps) => {
   const onEdit = useCallback(() => {
     setModal({ id: 'todo/edit', visible: true, todoId: id });
   }, [setModal, id]);
+
   return (
     <Wrapper>
       <Container>
@@ -62,15 +64,7 @@ const TodoBox = ({ id }: TodoBoxProps) => {
         </Header>
         <Content>
           <Title>{todo.title}</Title>
-          <Date>
-            {/* {todo.todoDateTime?.getDay() +
-              ' ' +
-              todo.todoDateTime?.getFullYear() +
-              ' ' +
-              todo.todoDateTime?.getHours() +
-              ':' +
-              todo.todoDateTime?.getMinutes()} */}
-          </Date>
+          <DateRow>{ConvertDate(todo.todoDateTime ?? '')}</DateRow>
           <Body>{todo.content}</Body>
         </Content>
         <Footer>
@@ -83,6 +77,12 @@ const TodoBox = ({ id }: TodoBoxProps) => {
       </Container>
     </Wrapper>
   );
+};
+
+const ConvertDate = (date: string) => {
+  const d = new Date(date.replaceAll('/', '-'));
+
+  return `${convertDayToName(d.getDay())} ${d.getDay()} ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
 };
 
 const Wrapper = styled.div`
@@ -148,7 +148,7 @@ const Title = styled.span`
 
   color: ${({ theme }) => theme.colors.dark.a5};
 `;
-const Date = styled.span`
+const DateRow = styled.span`
   margin-top: 12px;
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
