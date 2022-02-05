@@ -7,7 +7,7 @@ import { userAtom, userFormState } from '@src/recoil/atom/user';
 import { updateUserInfo } from '@src/service/api';
 import { Tech } from '@src/typings/Tech';
 import React, { useCallback, useState } from 'react';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import AddInput from './AddInput';
 import Form from './Form';
@@ -39,7 +39,7 @@ const ProfileInfoArea = () => {
       githubUrl,
       url1,
     };
-    console.log(input);
+
     const updateInfo = { ...input, interestTechSet: techList, file: file.image };
     const result = await updateUserInfo(user!, updateInfo);
     if (result === 1) {

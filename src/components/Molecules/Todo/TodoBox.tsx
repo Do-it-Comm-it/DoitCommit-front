@@ -5,76 +5,71 @@ import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
-import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
-import { todoAtom, todoIdState, todoItemState } from '@src/recoil/atom/todo';
+import { useSetRecoilState } from 'recoil';
 import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
 import { convertDayToName } from '../Planner/PlannerDate';
+import { ITodos } from '@src/typings/Todos';
 
 type TodoBoxProps = {
-  id: number;
+  todo: ITodos;
+  onRefetch: () => void;
 };
 
-const TodoBox = ({ id }: TodoBoxProps) => {
-  const todo = useRecoilValue(todoItemState(id));
+const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
   const setModal = useSetRecoilState(modalAtom);
-  const onDelete = useRecoilCallback(({ snapshot, set }) => async () => {
-    const prev = snapshot.getLoadable(todoAtom).getValue();
-    const result = await deleteTodo(String(id));
-    if (result === 1) {
-      set(
-        todoAtom,
-        [...prev].filter((t) => t.todoId !== id),
-      );
+
+  const onDelete = useCallback(async () => {
+    const result = await deleteTodo(String(todo.todoId));
+    if (result) {
+      onRefetch();
     }
-  });
-  const onFixed = useRecoilCallback(({ set }) => async () => {
-    const result = await fixedTodo(String(id));
+  }, [todo.todoId, onRefetch]);
+
+  const onFixed = useCallback(async () => {
+    const result = await fixedTodo(String(todo.todoId));
     if (result === 1) {
-      set(todoItemState(id), (prevState: any) => ({
-        ...prevState,
-        isFixed: !todo.isFixed,
-      }));
+      onRefetch();
     }
-  });
-  const onFinish = useRecoilCallback(({ set }) => async () => {
-    const result = await finishTodo(String(id));
+  }, [todo.todoId, onRefetch]);
+
+  const onFinish = useCallback(async () => {
+    const result = await finishTodo(String(todo.todoId));
     if (result === 1) {
-      set(todoItemState(id), (prevState: any) => ({
-        ...prevState,
-        isFinished: !todo.isFinished,
-      }));
+      onRefetch();
     }
-  });
+  }, [todo.todoId, onRefetch]);
 
   const onEdit = useCallback(() => {
-    setModal({ id: 'todo', visible: true, todoId: id });
-  }, [setModal, id]);
+    setModal({ id: 'todo', visible: true, todoId: todo.todoId });
+  }, [setModal, todo.todoId]);
 
   return (
     <Wrapper>
-      <Container>
-        <Header>
-          <Labels>
-            <PlannerLabel level={todo.importance} />
-            <PlannerLabel name={todo.type} />
-          </Labels>
-          {todo.isFixed ? <FillPin size={16} onClick={onFixed} /> : <Pin size={16} onClick={onFixed} />}
-        </Header>
-        <Content>
-          <Title>{todo.title}</Title>
-          <DateRow>{ConvertDate(todo.todoDateTime ?? '')}</DateRow>
-          <Body>{todo.content}</Body>
-        </Content>
-        <Footer>
-          <DeleteIcon onClick={onDelete} />
-          <Left>
-            <EditIcon onClick={onEdit} />
-            <CheckIcon onClick={onFinish} />
-          </Left>
-        </Footer>
-      </Container>
+      {todo && (
+        <Container>
+          <Header>
+            <Labels>
+              <PlannerLabel level={todo.importance} />
+              <PlannerLabel name={todo.type} />
+            </Labels>
+            {todo.isFixed ? <FillPin size={16} onClick={onFixed} /> : <Pin size={16} onClick={onFixed} />}
+          </Header>
+          <Content>
+            <Title>{todo.title}</Title>
+            <DateRow>{ConvertDate(todo.todoDateTime ?? '')}</DateRow>
+            <Body>{todo.content}</Body>
+          </Content>
+          <Footer>
+            <DeleteIcon onClick={onDelete} />
+            <Left>
+              <EditIcon onClick={onEdit} />
+              <CheckIcon onClick={onFinish} />
+            </Left>
+          </Footer>
+        </Container>
+      )}
     </Wrapper>
   );
 };
@@ -126,10 +121,18 @@ const FillPin = styled(AiFillPushpin)`
 `;
 const DeleteIcon = styled(RiDeleteBin6Line)`
   color: ${({ theme }) => theme.colors.dark.a3};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const EditIcon = styled(MdModeEdit)`
   color: ${({ theme }) => theme.colors.dark.a3};
   margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const CheckIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.dark.a3};
