@@ -1,5 +1,4 @@
 import { getUserInfo } from '@src/service/api';
-import { Tech } from '@src/typings/Tech';
 import { IUser } from '@src/typings/User';
 import { atom, selector, selectorFamily } from 'recoil';
 

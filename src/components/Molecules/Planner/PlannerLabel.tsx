@@ -3,26 +3,26 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 
 type PlannerLabelProps = {
-  level?: number;
+  level?: string;
   name?: string;
 };
 
 const PlannerLabel = ({ level, name }: PlannerLabelProps) => {
   const label = useMemo(() => {
     switch (level) {
-      case 0:
+      case 'LOW':
         return {
           color: '#4F8234',
           backgroundColor: '#E3F4E4',
           label: 'Low',
         };
-      case 1:
+      case 'MEDIUM':
         return {
           color: '#5872CF',
           backgroundColor: '#E6F3FE',
           label: 'Medium',
         };
-      case 2:
+      case 'HIGH':
         return {
           color: '#E24781',
           backgroundColor: '#FDECF2',

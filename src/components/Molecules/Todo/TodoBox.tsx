@@ -1,51 +1,83 @@
-import { TodoType } from '@src/components/Organisms/Home/HomeTodoList';
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import PlannerLabel from '../Planner/PlannerLabel';
 import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
+import { useSetRecoilState } from 'recoil';
+import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
+import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
+import { convertDayToName } from '../Planner/PlannerDate';
+import { ITodos } from '@src/typings/Todos';
 
 type TodoBoxProps = {
-  todo: TodoType;
+  todo: ITodos;
+  onRefetch: () => void;
 };
 
-const TodoBox = ({ todo }: TodoBoxProps) => {
+const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
+  const setModal = useSetRecoilState(modalAtom);
+
+  const onDelete = useCallback(async () => {
+    const result = await deleteTodo(String(todo.todoId));
+    if (result) {
+      onRefetch();
+    }
+  }, [todo.todoId, onRefetch]);
+
+  const onFixed = useCallback(async () => {
+    const result = await fixedTodo(String(todo.todoId));
+    if (result === 1) {
+      onRefetch();
+    }
+  }, [todo.todoId, onRefetch]);
+
+  const onFinish = useCallback(async () => {
+    const result = await finishTodo(String(todo.todoId));
+    if (result === 1) {
+      onRefetch();
+    }
+  }, [todo.todoId, onRefetch]);
+
+  const onEdit = useCallback(() => {
+    setModal({ id: 'todo', visible: true, todoId: todo.todoId });
+  }, [setModal, todo.todoId]);
+
   return (
     <Wrapper>
-      <Container>
-        <Header>
-          <Labels>
-            <PlannerLabel level={todo.level} />
-            <PlannerLabel name={todo.type} />
-          </Labels>
-          {todo.isPinned ? <FillPin size={16} /> : <Pin size={16} />}
-        </Header>
-        <Content>
-          <Title>{todo.title}</Title>
-          <Date>
-            {todo.date.getDay() +
-              ' ' +
-              todo.date.getFullYear() +
-              ' ' +
-              todo.date.getHours() +
-              ':' +
-              todo.date.getMinutes()}
-          </Date>
-          <Body>{todo.body}</Body>
-        </Content>
-        <Footer>
-          <DeleteIcon />
-          <Left>
-            <EditIcon />
-            <CheckIcon />
-          </Left>
-        </Footer>
-      </Container>
+      {todo && (
+        <Container>
+          <Header>
+            <Labels>
+              <PlannerLabel level={todo.importance} />
+              <PlannerLabel name={todo.type} />
+            </Labels>
+            {todo.isFixed ? <FillPin size={16} onClick={onFixed} /> : <Pin size={16} onClick={onFixed} />}
+          </Header>
+          <Content>
+            <Title>{todo.title}</Title>
+            <DateRow>{ConvertDate(todo.todoDateTime ?? '')}</DateRow>
+            <Body>{todo.content}</Body>
+          </Content>
+          <Footer>
+            <DeleteIcon onClick={onDelete} />
+            <Left>
+              <EditIcon onClick={onEdit} />
+              <CheckIcon onClick={onFinish} />
+            </Left>
+          </Footer>
+        </Container>
+      )}
     </Wrapper>
   );
+};
+
+const ConvertDate = (date: string) => {
+  const d = new Date(date.replaceAll('/', '-'));
+
+  return `${convertDayToName(d.getDay())} ${d.getDay()} ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
 };
 
 const Wrapper = styled.div`
@@ -89,10 +121,18 @@ const FillPin = styled(AiFillPushpin)`
 `;
 const DeleteIcon = styled(RiDeleteBin6Line)`
   color: ${({ theme }) => theme.colors.dark.a3};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const EditIcon = styled(MdModeEdit)`
   color: ${({ theme }) => theme.colors.dark.a3};
   margin-right: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const CheckIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.dark.a3};
@@ -111,7 +151,7 @@ const Title = styled.span`
 
   color: ${({ theme }) => theme.colors.dark.a5};
 `;
-const Date = styled.span`
+const DateRow = styled.span`
   margin-top: 12px;
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
@@ -138,4 +178,4 @@ const Footer = styled.div`
   justify-content: space-between;
 `;
 const Left = styled.div``;
-export default TodoBox;
+export default React.memo(TodoBox);

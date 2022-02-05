@@ -10,7 +10,7 @@ interface Props {
   user: IUser;
 }
 const Form = ({ name, label, user }: Props) => {
-  const [input, setInput] = useRecoilState(userFormState(name));
+  const [, setInput] = useRecoilState(userFormState(name));
   return (
     <Content>
       <Label>{label}</Label>

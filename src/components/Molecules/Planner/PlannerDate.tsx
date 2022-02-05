@@ -22,7 +22,7 @@ const PlannerDate = ({ selected, year, month, day, onChangeDate }: PlannerDatePr
   );
 };
 
-const convertDayToName = (day: number) => {
+export const convertDayToName = (day: number) => {
   return DayNames.filter((_, i) => i === day)[0];
 };
 

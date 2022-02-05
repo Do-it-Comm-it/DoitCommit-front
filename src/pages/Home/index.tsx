@@ -21,7 +21,9 @@ const Home = () => {
           </Bottom>
         </Column>
         <Row>
-          <HomeTodoList />
+          <React.Suspense fallback={<div>Loading..</div>}>
+            <HomeTodoList />
+          </React.Suspense>
         </Row>
       </ContentWrapper>
     </Container>

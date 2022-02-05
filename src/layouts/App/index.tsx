@@ -8,22 +8,25 @@ import '@src/assets/fonts/font.css';
 import MyPage from '@src/pages/MyPage';
 import Home from '@src/pages/Home';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const App = () => {
   const { theme } = useDarkMode();
-
+  const queryClient = new QueryClient();
   return (
-    <React.Suspense fallback={<h2>Loading</h2>}>
-      <ThemeProvider theme={theme === 'light' ? light : dark}>
-        <BrowserRouter>
-          <GlobalStyle />
-          <CommonComponentWrapper>
-            <PublicRoute exact path="/" component={Home} />
-            <PublicRoute path="/mypage" component={MyPage} />
-          </CommonComponentWrapper>
-        </BrowserRouter>
-      </ThemeProvider>
-    </React.Suspense>
+    <QueryClientProvider client={queryClient}>
+      <React.Suspense fallback={<h2>Loading</h2>}>
+        <ThemeProvider theme={theme === 'light' ? light : dark}>
+          <BrowserRouter>
+            <GlobalStyle />
+            <CommonComponentWrapper>
+              <PublicRoute exact path="/" component={Home} />
+              <PublicRoute path="/mypage" component={MyPage} />
+            </CommonComponentWrapper>
+          </BrowserRouter>
+        </ThemeProvider>
+      </React.Suspense>
+    </QueryClientProvider>
   );
 };
 

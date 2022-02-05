@@ -48,7 +48,7 @@ export const requestAPI = () => {
     return response.data;
   };
 
-  const request = (method: 'GET' | 'POST' | 'PUT' | 'DELETE') => {
+  const request = (method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH') => {
     return (url: string, bodyJson?: any, contentType?: string) => {
       return axiosInstance({
         url,
@@ -66,5 +66,6 @@ export const requestAPI = () => {
     post: request('POST'),
     put: request('PUT'),
     delete: request('DELETE'),
+    patch: request('PATCH'),
   };
 };

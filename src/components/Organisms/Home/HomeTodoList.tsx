@@ -2,10 +2,11 @@ import ContentBox from '@src/components/Molecules/ContentBox';
 import AddTodoBox from '@src/components/Molecules/Todo/AddTodoBox';
 import TodoBox from '@src/components/Molecules/Todo/TodoBox';
 import { userAtom } from '@src/recoil/atom/user';
+import React from 'react';
 import { devices } from '@src/utils/theme';
-import React, { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { useTodos } from '@src/hooks/useTodo';
 
 export type TodoType = {
   id: number;
@@ -19,44 +20,12 @@ export type TodoType = {
 
 const HomeTodoList = () => {
   const user = useRecoilValue(userAtom);
-  const todos: TodoType[] = useMemo(() => {
-    return [
-      {
-        id: 1,
-        level: 0,
-        title: '제이쿼리 입문 강의 듣기',
-        date: new Date(),
-        body: 'CSS2와 CSS3의 차이점',
-        type: 'Study',
-        isPinned: true,
-      },
-      {
-        id: 2,
-        level: 2,
-        title: '제이쿼리 입문 강의 듣기',
-        date: new Date(),
-        body: null,
-        type: 'Study',
-        isPinned: true,
-      },
-      {
-        id: 3,
-        level: 1,
-        title: '제이쿼리 입문 강의 듣기',
-        date: new Date(),
-        body: null,
-        type: 'Study',
-        isPinned: false,
-      },
-    ];
-  }, []);
+  const { data: todos, refetch: onRefetch } = useTodos();
 
   return (
     <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>
       <TodoWrapper>
-        {todos.map((todo: TodoType, idx) => (
-          <TodoBox todo={todo} key={idx} />
-        ))}
+        {todos && todos.slice(0, 4).map((todo) => <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />)}
         <AddTodoBox />
       </TodoWrapper>
     </ContentBox>

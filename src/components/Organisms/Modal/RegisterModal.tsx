@@ -73,9 +73,12 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
     setPage(page);
   }, []);
 
-  const onChangeName = useCallback((text: string) => {
-    setNickname(text);
-  }, []);
+  const onChangeName = useCallback(
+    (text: string) => {
+      setNickname(text);
+    },
+    [setNickname],
+  );
 
   const onCompleteSignUp = useCallback(async () => {
     const input = {

@@ -1,7 +1,12 @@
 export interface ITodos {
-  id: number;
+  todoId?: number;
   title: string;
-  isCompleted: boolean;
+  content: string;
+  type: TodoType;
+  importance: string;
+  isFixed: boolean;
+  isFinished?: boolean;
+  todoDateTime?: string;
 }
 
 export type AddTodo = {

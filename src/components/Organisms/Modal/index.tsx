@@ -28,7 +28,13 @@ const Modal = () => {
         <RegisterModal onFinish={closeModal} onClose={closeModal} stopPropagation={stopPropagation} />
       )}
       {modal.id === 'todo' && modal.visible && (
-        <TodoModal onClose={closeModal} stopPropagation={stopPropagation} width={772} height={647} />
+        <TodoModal
+          onClose={closeModal}
+          stopPropagation={stopPropagation}
+          width={772}
+          height={647}
+          todoId={modal.todoId}
+        />
       )}
     </>
   );

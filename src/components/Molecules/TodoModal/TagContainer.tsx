@@ -18,24 +18,24 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
           <CheckButton
             backgroundColor="#E3F4E4"
             color="#4F8234"
-            checked={importance === 'low'}
-            onClick={() => onChangeImportance('low')}
+            checked={importance === 'LOW'}
+            onClick={() => onChangeImportance('LOW')}
           >
             Low
           </CheckButton>
           <CheckButton
             backgroundColor="#E6F3FE"
             color="#5872CF"
-            checked={importance === 'medium'}
-            onClick={() => onChangeImportance('medium')}
+            checked={importance === 'MEDIUM'}
+            onClick={() => onChangeImportance('MEDIUM')}
           >
             Medium
           </CheckButton>
           <CheckButton
             backgroundColor="#FDECF2"
             color="#E24781"
-            checked={importance === 'high'}
-            onClick={() => onChangeImportance('high')}
+            checked={importance === 'HIGH'}
+            onClick={() => onChangeImportance('HIGH')}
           >
             High
           </CheckButton>
