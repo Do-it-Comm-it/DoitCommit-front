@@ -25,7 +25,7 @@ const HomeTodoList = () => {
   return (
     <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>
       <TodoWrapper>
-        {todoIds && todoIds?.map((todoId) => <TodoBox key={todoId} id={todoId} />)}
+        {todoIds && todoIds.slice(0, 4)?.map((todoId) => <TodoBox key={todoId} id={todoId} />)}
         <AddTodoBox />
       </TodoWrapper>
     </ContentBox>
