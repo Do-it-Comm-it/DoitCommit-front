@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import NotiIconSVG from '@src/assets/notification.svg';
 import NotiIconFixedSVG from '@src/assets/notification-fixed.svg';
@@ -11,42 +11,69 @@ import { useRecoilCallback, useRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 import useInput from '@src/hooks/useInput';
-import { addTodo } from '@src/service/api';
+import { addTodo, editTodo } from '@src/service/api';
 import { TodoType } from '@src/typings/Todos';
-import { todoAtom, todoIdState } from '@src/recoil/atom/todo';
+import { todoAtom, todoItemState } from '@src/recoil/atom/todo';
 
 interface Props {
   onClose: () => void;
   stopPropagation: (e: any) => void;
   width?: number;
   height?: number;
+  todoId?: number;
 }
 
-const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
+const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Props) => {
   const [modal, setModal] = useRecoilState(modalAtom);
-  const [title, onChangeTitle] = useInput('');
-  const [content, onChangeContent] = useInput('');
-  const [type, setType] = useState<TodoType>(TodoType.STUDY);
-  const [importance, setImportance] = useState('LOW');
-  const [isFixed, setIsFixed] = useState(false);
+  const [todo, setTodo] = useRecoilState(todoItemState(todoId));
+
+  const [type, setType] = useState<TodoType>(todo.type);
+  const [importance, setImportance] = useState(todo.importance);
+  const [isFixed, setIsFixed] = useState(todo.isFixed);
   const theme = useTheme();
+  console.log(todoId);
 
   const submitTodo = useRecoilCallback(({ set, snapshot }) => async () => {
     const { data } = await addTodo({
-      title,
+      title: todo.title,
       importance,
       type,
-      content,
+      content: todo.content,
       isFixed,
     });
     set(todoAtom, (prevState: any) => [...prevState, data]);
     setModal({ id: 'todo', visible: false });
   });
+  const onEdit = useRecoilCallback(({ set, snapshot }) => async () => {
+    const prev = snapshot.getLoadable(todoItemState(todoId!)).getValue();
+    const updated = {
+      ...prev,
+      title: todo.title,
+      content: todo.content,
+      type,
+      importance,
+      isFixed,
+    };
+    const result = await editTodo(String(todoId), updated);
+    if (result === 1) {
+      set(todoItemState(todoId!), { ...updated });
+      setModal({ id: 'todo/edit', visible: false });
+    }
+  });
+  const onChangeInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setTodo({
+        ...todo,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [setTodo, todo],
+  );
   return (
     <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
       <Container>
         <Header>
-          <Input value={title} onChange={onChangeTitle} placeholder="제목 없음" />
+          <Input defaultValue={todo.title} onChange={onChangeInput} placeholder="제목 없음" name="title" />
           {isFixed ? (
             <NotiFixedIcon onClick={() => setIsFixed(!isFixed)} />
           ) : (
@@ -55,7 +82,7 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
         </Header>
         <TagContainer onChangeImportance={setImportance} importance={importance} type={type} onChangeType={setType} />
         <Divider />
-        <TextAreaContainer content={content} onChangeContent={onChangeContent} />
+        <TextAreaContainer content={todo.content} onChangeContent={onChangeInput} />
         <ContentRow alignItems="center" justifyContent="center" padding="20px 0">
           <DIButton
             onClick={() => {
@@ -70,7 +97,13 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
           >
             취소 하기
           </DIButton>
-          <DIButton onClick={submitTodo} backgroundColor={theme.colors.main} borderRadius={51}>
+          <DIButton
+            onClick={() => {
+              todoId === -1 ? submitTodo() : onEdit();
+            }}
+            backgroundColor={theme.colors.main}
+            borderRadius={51}
+          >
             저장 하기
           </DIButton>
         </ContentRow>

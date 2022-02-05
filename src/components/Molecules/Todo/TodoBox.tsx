@@ -49,7 +49,7 @@ const TodoBox = ({ id }: TodoBoxProps) => {
   });
 
   const onEdit = useCallback(() => {
-    setModal({ id: 'todo/edit', visible: true, todoId: id });
+    setModal({ id: 'todo', visible: true, todoId: id });
   }, [setModal, id]);
 
   return (

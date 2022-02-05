@@ -1,5 +1,5 @@
 import { getTodo } from '@src/service/api';
-import { ITodos } from '@src/typings/Todos';
+import { ITodos, TodoType } from '@src/typings/Todos';
 import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import { userAtom } from './user';
 
@@ -33,18 +33,30 @@ export const todoItemState = atomFamily<ITodos, number>({
     get:
       (id: number) =>
       ({ get }) => {
-        const data = get(todoAtom);
-        const target = data.find((v: ITodos) => v.todoId === id);
-        return {
-          todoId: target.todoId,
-          type: target.type,
-          title: target.title,
-          content: target.content,
-          importance: target.importance,
-          todoDateTime: target.todoDateTime,
-          isFixed: target.isFixed,
-          isFinished: target.isFinished,
-        };
+        console.log('selectorId', id);
+        if (id === -1)
+          return {
+            title: '',
+            importance: 'LOW',
+            content: '',
+            type: TodoType.DAILY,
+            isFinished: false,
+            isFixed: false,
+          };
+        else {
+          const data = get(todoAtom);
+          const target = data.find((v: ITodos) => v.todoId === id);
+          return {
+            todoId: target.todoId,
+            type: target.type,
+            title: target.title,
+            content: target.content,
+            importance: target.importance,
+            todoDateTime: target.todoDateTime,
+            isFixed: target.isFixed,
+            isFinished: target.isFinished,
+          };
+        }
       },
   }),
 });

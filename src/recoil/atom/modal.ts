@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 type Modal = {
   id: 'register' | 'login' | 'todo' | 'todo/edit' | 'none';
   visible: boolean;
-  todoId?: number | null;
+  todoId?: number;
 };
 export const modalAtom = atom<Modal>({
   key: 'modal',

@@ -14,6 +14,7 @@ const TextAreaContainer = ({ content, onChangeContent }: Props) => {
         <ContentRow widthFull heightFull>
           <Label>내용</Label>
           <TextArea
+            name="content"
             placeholder="내용을 입력 하세요. (최대 230자)"
             onChange={onChangeContent}
             defaultValue={content || ''}
