@@ -32,7 +32,6 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
   const theme = useTheme();
 
   const submitTodo = useRecoilCallback(({ set, snapshot }) => async () => {
-    const prev = snapshot.getLoadable(todoIdState).getValue();
     const { data } = await addTodo({
       title,
       importance,
@@ -40,7 +39,7 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
       content,
       isFixed,
     });
-    set(todoAtom, [...prev, data]);
+    set(todoAtom, (prevState: any) => [...prevState, data]);
     setModal({ id: 'todo', visible: false });
   });
   return (
