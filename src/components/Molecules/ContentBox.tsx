@@ -6,7 +6,7 @@ import { MdOutlineLockOpen } from 'react-icons/md';
 import DIButton from '../Atoms/DIButton';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { useSetRecoilState } from 'recoil';
-import { devices } from '@src/utils/theme';
+
 type Props = {
   requiredHeader?: boolean;
   title?: string;
@@ -134,6 +134,8 @@ const ContentWrapper = styled.div<{
   `};
   justify-content: center;
   align-items: center;
+
+  ${({ requiredLogin }) => requiredLogin && 'pointer-events : none'};
 `;
 
 export default ContentBox;

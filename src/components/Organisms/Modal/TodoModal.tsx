@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import NotiIconSVG from '@src/assets/notification.svg';
 import NotiIconFixedSVG from '@src/assets/notification-fixed.svg';
@@ -7,55 +7,89 @@ import TagContainer from '@src/components/Molecules/TodoModal/TagContainer';
 import TextAreaContainer from '@src/components/Molecules/TodoModal/TextAreaContainer';
 import Divider from '@src/components/Atoms/Divider';
 import DIButton from '@src/components/Atoms/DIButton';
-import { useRecoilCallback, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
-import useInput from '@src/hooks/useInput';
-import { addTodo } from '@src/service/api';
-import { TodoType } from '@src/typings/Todos';
-import { todoAtom, todoIdState } from '@src/recoil/atom/todo';
+
+import { addTodo, editTodo } from '@src/service/api';
+import { ITodos, TodoType } from '@src/typings/Todos';
+import { useTodoItem, useTodos } from '@src/hooks/useTodo';
 
 interface Props {
   onClose: () => void;
   stopPropagation: (e: any) => void;
   width?: number;
   height?: number;
+  todoId?: number;
 }
 
-const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
-  const [modal, setModal] = useRecoilState(modalAtom);
-  const [title, onChangeTitle] = useInput('');
-  const [content, onChangeContent] = useInput('');
-  const [type, setType] = useState<TodoType>(TodoType.STUDY);
-  const [importance, setImportance] = useState('LOW');
-  const [isFixed, setIsFixed] = useState(false);
+const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Props) => {
   const theme = useTheme();
-
-  const submitTodo = useRecoilCallback(({ set, snapshot }) => async () => {
-    const { data } = await addTodo({
-      title,
-      importance,
-      type,
-      content,
-      isFixed,
-    });
-    set(todoAtom, (prevState: any) => [...prevState, data]);
-    setModal({ id: 'todo', visible: false });
+  const { refetch } = useTodos();
+  const [modal, setModal] = useRecoilState(modalAtom);
+  const [todo, setTodo] = useState<ITodos>({
+    title: '',
+    importance: 'LOW',
+    content: '',
+    type: TodoType.DAILY,
+    isFinished: false,
+    isFixed: false,
   });
+  const { data: todoItem } = useTodoItem(todoId);
+
+  useEffect(() => {
+    if (!(todoId === -1) && todoItem) {
+      setTodo(todoItem);
+    }
+  }, [todoId, todoItem]);
+
+  const submitTodo = useCallback(async () => {
+    await addTodo(todo);
+    setModal({ id: 'todo', visible: false });
+    refetch();
+  }, [refetch, setModal, todo]);
+
+  const onEdit = useCallback(async () => {
+    const result = await editTodo(String(todoId), todo);
+    if (result === 1) {
+      setModal({ id: 'todo/edit', visible: false });
+      refetch();
+    }
+  }, [refetch, setModal, todo, todoId]);
+
+  const onChangeInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setTodo({
+        ...todo,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [setTodo, todo],
+  );
+
   return (
     <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
       <Container>
         <Header>
-          <Input value={title} onChange={onChangeTitle} placeholder="제목 없음" />
-          {isFixed ? (
-            <NotiFixedIcon onClick={() => setIsFixed(!isFixed)} />
+          <Input defaultValue={todo.title} onChange={onChangeInput} placeholder="제목 없음" name="title" />
+          {todo.isFixed ? (
+            <NotiFixedIcon onClick={() => setTodo({ ...todo, isFixed: false })} />
           ) : (
-            <NotiIcon onClick={() => setIsFixed(!isFixed)} />
+            <NotiIcon onClick={() => setTodo({ ...todo, isFixed: true })} />
           )}
         </Header>
-        <TagContainer onChangeImportance={setImportance} importance={importance} type={type} onChangeType={setType} />
+        <TagContainer
+          onChangeImportance={(i) => {
+            setTodo({ ...todo, importance: i });
+          }}
+          importance={todo.importance}
+          type={todo.type}
+          onChangeType={(t) => {
+            setTodo({ ...todo, type: t });
+          }}
+        />
         <Divider />
-        <TextAreaContainer content={content} onChangeContent={onChangeContent} />
+        <TextAreaContainer content={todo.content} onChangeContent={onChangeInput} />
         <ContentRow alignItems="center" justifyContent="center" padding="20px 0">
           <DIButton
             onClick={() => {
@@ -70,7 +104,13 @@ const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
           >
             취소 하기
           </DIButton>
-          <DIButton onClick={submitTodo} backgroundColor={theme.colors.main} borderRadius={51}>
+          <DIButton
+            onClick={() => {
+              todoId === -1 ? submitTodo() : onEdit();
+            }}
+            backgroundColor={theme.colors.main}
+            borderRadius={51}
+          >
             저장 하기
           </DIButton>
         </ContentRow>

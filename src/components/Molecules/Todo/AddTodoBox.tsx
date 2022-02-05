@@ -7,8 +7,8 @@ import { devices } from '@src/utils/theme';
 const AddTodoBox = () => {
   const [, setModal] = useRecoilState(modalAtom);
   return (
-    <Container>
-      <PlusIcon size={40} onClick={() => setModal({ id: 'todo', visible: true })} />
+    <Container onClick={() => setModal({ id: 'todo', visible: true })}>
+      <PlusIcon size={40} />
     </Container>
   );
 };
