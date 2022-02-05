@@ -6,7 +6,7 @@ export interface ITodos {
   importance: string;
   isFixed: boolean;
   isFinished?: boolean;
-  todoDateTime?: Date;
+  todoDateTime?: string;
 }
 
 export type AddTodo = {
