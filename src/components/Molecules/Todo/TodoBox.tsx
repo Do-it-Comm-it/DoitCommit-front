@@ -6,7 +6,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
-import { todoIdState, todoItemState } from '@src/recoil/atom/todo';
+import { todoAtom, todoIdState, todoItemState } from '@src/recoil/atom/todo';
 import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
@@ -19,12 +19,12 @@ const TodoBox = ({ id }: TodoBoxProps) => {
   const todo = useRecoilValue(todoItemState(id));
   const setModal = useSetRecoilState(modalAtom);
   const onDelete = useRecoilCallback(({ snapshot, set }) => async () => {
-    const todoIds = snapshot.getLoadable(todoIdState).getValue();
+    const prev = snapshot.getLoadable(todoAtom).getValue();
     const result = await deleteTodo(String(id));
     if (result === 1) {
       set(
-        todoIdState,
-        [...todoIds].filter((t) => t !== id),
+        todoAtom,
+        [...prev].filter((t) => t.todoId !== id),
       );
     }
   });
