@@ -5,6 +5,7 @@ import { Container, ContentCol, ContentRow } from '@src/components/Atoms/Modal';
 interface Props {
   content: string;
   onChangeContent: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  defaultValue?: string;
 }
 const TextAreaContainer = ({ content, onChangeContent }: Props) => {
   return (
@@ -12,7 +13,11 @@ const TextAreaContainer = ({ content, onChangeContent }: Props) => {
       <ContentCol heightFull widthFull padding="20px">
         <ContentRow widthFull heightFull>
           <Label>내용</Label>
-          <TextArea placeholder="내용을 입력 하세요. (최대 230자)" onChange={onChangeContent} />
+          <TextArea
+            placeholder="내용을 입력 하세요. (최대 230자)"
+            onChange={onChangeContent}
+            defaultValue={content || ''}
+          />
         </ContentRow>
       </ContentCol>
     </Container>

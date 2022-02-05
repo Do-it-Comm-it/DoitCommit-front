@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import LoginModal from '@src/components/Organisms/Modal/LoginModal';
 import RegisterModal from '@src/components/Organisms/Modal/RegisterModal';
 import TodoModal from '@src/components/Organisms/Modal/TodoModal';
+import TodoEditModal from './TodoEditModal';
 
 const Modal = () => {
   const [modal, setModal] = useRecoilState(modalAtom);
@@ -29,6 +30,9 @@ const Modal = () => {
       )}
       {modal.id === 'todo' && modal.visible && (
         <TodoModal onClose={closeModal} stopPropagation={stopPropagation} width={772} height={647} />
+      )}
+      {modal.id === 'todo/edit' && modal.visible && (
+        <TodoEditModal onClose={closeModal} stopPropagation={stopPropagation} width={772} height={647} />
       )}
     </>
   );

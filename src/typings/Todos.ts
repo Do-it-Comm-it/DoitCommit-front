@@ -2,7 +2,7 @@ export interface ITodos {
   todoId?: number;
   title: string;
   content: string;
-  type: string;
+  type: TodoType;
   importance: string;
   isFixed: boolean;
   isFinished?: boolean;

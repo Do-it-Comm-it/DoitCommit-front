@@ -66,7 +66,16 @@ const deleteTodo = async (id: string) => {
   return code;
 };
 const fixedTodo = async (id: string) => {
-  const { code } = await requestAPI().patch(`todos/${id}/fixed`);
+  const { code } = await requestAPI().patch(`/todos/${id}/fixed`);
+  return code;
+};
+
+const finishTodo = async (id: string) => {
+  const { code } = await requestAPI().patch(`/todos/${id}/finished`);
+  return code;
+};
+const editTodo = async (id: string, body: any) => {
+  const { code } = await requestAPI().put(`/todos/${id}`, body);
   return code;
 };
 
@@ -82,4 +91,6 @@ export {
   getTodoData,
   deleteTodo,
   fixedTodo,
+  finishTodo,
+  editTodo,
 };

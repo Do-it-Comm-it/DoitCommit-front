@@ -31,7 +31,7 @@ export const todoItemState = atomFamily<ITodos, number>({
   default: selectorFamily({
     key: 'todoItem/Default',
     get:
-      (id) =>
+      (id: number) =>
       ({ get }) => {
         const data = get(todoAtom);
         const target = data.find((v: ITodos) => v.todoId === id);

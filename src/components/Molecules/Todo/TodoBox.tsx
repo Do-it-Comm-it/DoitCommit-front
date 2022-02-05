@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import PlannerLabel from '../Planner/PlannerLabel';
 import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 import { todoIdState, todoItemState } from '@src/recoil/atom/todo';
-import { deleteTodo, fixedTodo } from '@src/service/api';
+import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
+import { modalAtom } from '@src/recoil/atom/modal';
 
 type TodoBoxProps = {
   id: number;
@@ -15,6 +16,7 @@ type TodoBoxProps = {
 
 const TodoBox = ({ id }: TodoBoxProps) => {
   const todo = useRecoilValue(todoItemState(id));
+  const setModal = useSetRecoilState(modalAtom);
   const onDelete = useRecoilCallback(({ snapshot, set }) => async () => {
     const todoIds = snapshot.getLoadable(todoIdState).getValue();
     const result = await deleteTodo(String(id));
@@ -34,6 +36,19 @@ const TodoBox = ({ id }: TodoBoxProps) => {
       }));
     }
   });
+  const onFinish = useRecoilCallback(({ set }) => async () => {
+    const result = await finishTodo(String(id));
+    if (result === 1) {
+      set(todoItemState(id), (prevState: any) => ({
+        ...prevState,
+        isFinished: !todo.isFinished,
+      }));
+    }
+  });
+
+  const onEdit = useCallback(() => {
+    setModal({ id: 'todo/edit', visible: true, todoId: id });
+  }, [setModal, id]);
   return (
     <Wrapper>
       <Container>
@@ -60,8 +75,8 @@ const TodoBox = ({ id }: TodoBoxProps) => {
         <Footer>
           <DeleteIcon onClick={onDelete} />
           <Left>
-            <EditIcon />
-            <CheckIcon />
+            <EditIcon onClick={onEdit} />
+            <CheckIcon onClick={onFinish} />
           </Left>
         </Footer>
       </Container>
