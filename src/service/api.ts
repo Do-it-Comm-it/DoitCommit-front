@@ -56,6 +56,11 @@ const logoutUser = async () => {
   return code;
 };
 
+const checkNickname = async (nickname: string) => {
+  const { data } = await requestAPI().get(`/members/check?nickname=${nickname}`);
+  return data;
+};
+
 const getTodo = async () => {
   const { data } = await requestAPI().get('/todos/main');
   return data;
@@ -94,6 +99,7 @@ export {
   updateUserInfo,
   resignUser,
   logoutUser,
+  checkNickname,
   addTodo,
   getTodo,
   getTodoData,

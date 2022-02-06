@@ -2,7 +2,7 @@ import DIButton from '@src/components/Atoms/DIButton';
 import DIText from '@src/components/Atoms/DIText';
 import UserProfile from '@src/components/Molecules/UserProfile';
 import CloseIcon from '@src/assets/close_button.svg';
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 import DIInput from '../../Atoms/DIInput';
@@ -12,12 +12,12 @@ import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
 import { MdEdit } from 'react-icons/md';
 import CheckIcon from '@src/assets/check.svg';
-import { updateUserInfo } from '@src/service/api';
+import { checkNickname, updateUserInfo } from '@src/service/api';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 import { Tech } from '@src/typings/Tech';
 import { fileAtom } from '@src/recoil/atom/file';
 import { useUser } from '@src/hooks/useAuthentication';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 type RegisterModalProps = {
   onFinish: () => void;
@@ -41,7 +41,10 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
 
   // const [image, setImage] = useState<string>();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
-  const [checkName, setCheckName] = useState<boolean>(false);
+  const { data: check } = useQuery('nicknameCheck', () => checkNickname(nickname), {
+    enabled: user && nickname.trim().length && page === 0 ? true : false,
+    refetchInterval: 100,
+  });
 
   const onUpload = useCallback(() => {
     if (hiddenFileInput.current) {
@@ -86,11 +89,6 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
       },
     },
   );
-  useEffect(() => {
-    if (true) {
-      setCheckName(true);
-    }
-  }, []);
 
   const NickNameContent = useCallback(() => {
     return (
@@ -113,7 +111,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
               placholder={'최대 8글자'}
             />
           </InputPlace>
-          {checkName ? (
+          {check ? (
             <DIText fontColor={theme.colors.main}>
               <AiOutlineCheck />
               사용가능한 닉네임입니다.
@@ -127,7 +125,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
-            disabled={nickname === null || nickname.trim().length === 0}
+            disabled={!check || nickname.trim().length === 0}
             value={'다음'}
             onClick={() => {
               onChangePage(1);
@@ -136,7 +134,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardBottom>
       </CardStyle>
     );
-  }, [checkName, nickname, onChangeName, onChangePage, theme]);
+  }, [nickname, onChangeName, onChangePage, theme, check]);
 
   const TechContent = useCallback(() => {
     return (
