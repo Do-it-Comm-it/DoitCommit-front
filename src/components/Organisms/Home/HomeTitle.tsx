@@ -1,13 +1,12 @@
 import DIText from '@src/components/Atoms/DIText';
-import { userAtom } from '@src/recoil/atom/user';
+import { useUser } from '@src/hooks/useAuthentication';
 import { devices } from '@src/utils/theme';
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 
 const HomeTitle = () => {
   //TODO: 사용자 생성날짜 필요.
-  const user = useRecoilValue(userAtom);
+  const { data: user } = useUser();
   const theme = useTheme();
   return (
     <Container>

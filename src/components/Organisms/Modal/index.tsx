@@ -1,14 +1,14 @@
 import { modalAtom } from '@src/recoil/atom/modal';
-import { userAtom } from '@src/recoil/atom/user';
 import React, { useCallback, useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import LoginModal from '@src/components/Organisms/Modal/LoginModal';
 import RegisterModal from '@src/components/Organisms/Modal/RegisterModal';
 import TodoModal from '@src/components/Organisms/Modal/TodoModal';
+import { useUser } from '@src/hooks/useAuthentication';
 
 const Modal = () => {
+  const { data: user } = useUser();
   const [modal, setModal] = useRecoilState(modalAtom);
-  const user = useRecoilValue(userAtom);
   const closeModal = useCallback(() => {
     setModal({ ...modal, visible: false });
   }, [modal, setModal]);

@@ -2,26 +2,36 @@ import DIButton from '@src/components/Atoms/DIButton';
 import { Content, Label } from '@src/components/Atoms/Mypage';
 import SelectInput from '@src/components/Organisms/SelectInput';
 import infoFormData from '@src/data/formData';
+import { useUser } from '@src/hooks/useAuthentication';
 import { fileAtom } from '@src/recoil/atom/file';
-import { userAtom, userFormState } from '@src/recoil/atom/user';
 import { updateUserInfo } from '@src/service/api';
 import { Tech } from '@src/typings/Tech';
-import React, { useCallback, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { IUser } from '@src/typings/User';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import AddInput from './AddInput';
 import Form from './Form';
 
 const ProfileInfoArea = () => {
-  const [user, setUser] = useRecoilState(userAtom);
-  const [techList, setTechList] = useRecoilState(userFormState('interestTechSet'));
+  const { data: user, status } = useUser();
   const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
+  const queryClient = useQueryClient();
   const file = useRecoilValue(fileAtom);
-  const nickname = useRecoilValue(userFormState('nickname'));
-  const email = useRecoilValue(userFormState('email'));
-  const position = useRecoilValue(userFormState('position'));
-  const githubUrl = useRecoilValue(userFormState('githubUrl'));
-  const url1 = useRecoilValue(userFormState('url1'));
+  const [input, setInput] = useState<IUser>({
+    ...user!,
+  });
+
+  const onChangeInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    },
+    [input],
+  );
   const addForm = useCallback(() => {
     setFormData([
       ...formData,
@@ -31,41 +41,58 @@ const ProfileInfoArea = () => {
       },
     ]);
   }, [formData]);
-  const onSubmit = useCallback(async () => {
-    const input = {
-      nickname,
-      email,
-      position,
-      githubUrl,
-      url1,
-    };
 
-    const updateInfo = { ...input, interestTechSet: techList, file: file.image };
-    const result = await updateUserInfo(user!, updateInfo);
-    if (result === 1) {
-      alert('수정 되었습니다!');
-      window.location.reload();
+  const onSubmit = useMutation(
+    (newInfo: any) => {
+      return updateUserInfo(user!, { ...newInfo, file: file.image });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('user');
+      },
+    },
+  );
+  useEffect(() => {
+    if (status === 'success') {
+      setInput({ ...user! });
     }
-  }, [url1, email, githubUrl, position, techList, user, file, nickname]);
+  }, [status, user]);
+
   return (
-    <Container>
-      {formData.map((item, i) => (
-        <Form name={item.name} label={item.label} key={i} user={user!} />
-      ))}
-      <Content>
-        <Label>관심기술</Label>
-        <SelectInput
-          onChange={(value) => setTechList((value as Tech[]).map((tech: Tech) => tech.value))}
-          value={techList}
-        />
-      </Content>
-      <div>
-        <AddInput onClick={addForm} />
-      </div>
-      <DIButton color="#fff" onClick={onSubmit} backgroundColor="#AACD06" borderRadius={51}>
-        내 프로필 저장
-      </DIButton>
-    </Container>
+    <>
+      {user && (
+        <Container>
+          {formData.map((item, i) => (
+            <Form name={item.name} label={item.label} key={i} user={user!} onChangeInput={onChangeInput} />
+          ))}
+          <Content>
+            <Label>관심기술</Label>
+            <SelectInput
+              onChange={(value) => {
+                setInput({
+                  ...input,
+                  interestTechSet: value as Tech[],
+                });
+              }}
+              value={input.interestTechSet as Tech[]}
+            />
+          </Content>
+          <div>
+            <AddInput onClick={addForm} />
+          </div>
+          <DIButton
+            color="#fff"
+            onClick={() => {
+              onSubmit.mutate(input as any);
+            }}
+            backgroundColor="#AACD06"
+            borderRadius={51}
+          >
+            내 프로필 저장
+          </DIButton>
+        </Container>
+      )}
+    </>
   );
 };
 

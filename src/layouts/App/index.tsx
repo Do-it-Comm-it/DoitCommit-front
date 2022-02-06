@@ -9,6 +9,7 @@ import MyPage from '@src/pages/MyPage';
 import Home from '@src/pages/Home';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import PrivateRoute from '@src/routes/PrivateRoute';
 
 const App = () => {
   const { theme } = useDarkMode();
@@ -21,7 +22,7 @@ const App = () => {
             <GlobalStyle />
             <CommonComponentWrapper>
               <PublicRoute exact path="/" component={Home} />
-              <PublicRoute path="/mypage" component={MyPage} />
+              <PrivateRoute path="/mypage" component={MyPage} />
             </CommonComponentWrapper>
           </BrowserRouter>
         </ThemeProvider>

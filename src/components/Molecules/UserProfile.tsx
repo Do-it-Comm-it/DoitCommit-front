@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import DIButton from '../Atoms/DIButton';
 import { useSetRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
-import useAuthentication from '@src/hooks/useAuthentication';
+import { logoutUser } from '@src/service/api';
+import { useQueryClient } from 'react-query';
 type UserProfileProps = {
   width?: number;
   height?: number;
@@ -15,9 +16,10 @@ type UserProfileProps = {
 
 //TODO: It needs profile default image if user image is empty.
 const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src }: UserProfileProps) => {
-  const { logout } = useAuthentication();
   const [show, setShow] = useState<boolean>(false);
   const setModal = useSetRecoilState(modalAtom);
+  const queryClient = useQueryClient();
+
   const showMenu = useCallback(() => {
     setShow(true);
   }, []);
@@ -25,6 +27,19 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src 
   const onClickLogin = useCallback(() => {
     setModal({ id: 'login', visible: true });
   }, [setModal]);
+  const onClickLogout = useCallback(async () => {
+    try {
+      if (await logoutUser()) {
+        queryClient
+          .getQueryCache()
+          .findAll('user')
+          .forEach((query) => query.setData(null));
+        queryClient.invalidateQueries('user');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [queryClient]);
 
   if (isMenuEnable) {
     return (
@@ -58,7 +73,7 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src 
                   <MenuText>테스트</MenuText>
                 </MenuItem>
                 <MenuItem>
-                  <MenuText onClick={logout}>로그아웃</MenuText>
+                  <MenuText onClick={onClickLogout}>로그아웃</MenuText>
                 </MenuItem>
               </Menu>
             )}
