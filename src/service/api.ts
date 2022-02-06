@@ -14,7 +14,15 @@ const saveExtendedUserInfo = async (User: IUser) => {
 
 const getUserInfo = async () => {
   const { data } = await requestAPI().get('/members/info');
-  return data;
+  return {
+    ...data,
+    interestTechSet: data.interestTechSet.map((tech: string) => {
+      return {
+        value: tech,
+        label: tech,
+      };
+    }),
+  };
 };
 
 const updateUserInfo = async (user: IUser, input: any) => {
