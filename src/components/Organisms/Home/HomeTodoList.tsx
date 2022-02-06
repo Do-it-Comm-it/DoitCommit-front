@@ -1,12 +1,12 @@
 import ContentBox from '@src/components/Molecules/ContentBox';
 import AddTodoBox from '@src/components/Molecules/Todo/AddTodoBox';
 import TodoBox from '@src/components/Molecules/Todo/TodoBox';
-import { userAtom } from '@src/recoil/atom/user';
 import React from 'react';
 import { devices } from '@src/utils/theme';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useTodos } from '@src/hooks/useTodo';
+import { useUser } from '@src/hooks/useAuthentication';
 
 export type TodoType = {
   id: number;
@@ -19,7 +19,7 @@ export type TodoType = {
 };
 
 const HomeTodoList = () => {
-  const user = useRecoilValue(userAtom);
+  const { data: user } = useUser();
   const { data: todos, refetch: onRefetch } = useTodos();
 
   return (

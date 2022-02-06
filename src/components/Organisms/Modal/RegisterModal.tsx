@@ -1,8 +1,6 @@
 import DIButton from '@src/components/Atoms/DIButton';
 import DIText from '@src/components/Atoms/DIText';
 import UserProfile from '@src/components/Molecules/UserProfile';
-import { userAtom, userFormState } from '@src/recoil/atom/user';
-import { IUser } from '@src/typings/User';
 import CloseIcon from '@src/assets/close_button.svg';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -18,6 +16,8 @@ import { updateUserInfo } from '@src/service/api';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 import { Tech } from '@src/typings/Tech';
 import { fileAtom } from '@src/recoil/atom/file';
+import { useUser } from '@src/hooks/useAuthentication';
+import { useMutation, useQueryClient } from 'react-query';
 
 type RegisterModalProps = {
   onFinish: () => void;
@@ -32,11 +32,11 @@ type RegisterModalProps = {
 //2. Upload Profile Image.
 //3. techList is hardcoded, it should go in DB i think.
 const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: RegisterModalProps) => {
+  const { data: user } = useUser();
   const theme = useTheme();
   const [page, setPage] = useState<number>(0);
-  const [user, setUser] = useRecoilState(userAtom);
-  const [nickname, setNickname] = useRecoilState(userFormState('nickname'));
-  const [interestTechSet, setInterestTechSet] = useRecoilState(userFormState('interestTechSet'));
+  const [nickname, setNickname] = useState('');
+  const [interestTechSet, setInterestTechSet] = useState<Tech[]>([]);
   const [file, setFile] = useRecoilState(fileAtom);
 
   // const [image, setImage] = useState<string>();
@@ -63,12 +63,6 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
     [setFile],
   );
 
-  useEffect(() => {
-    if (true) {
-      setCheckName(true);
-    }
-  }, []);
-
   const onChangePage = useCallback((page: number) => {
     setPage(page);
   }, []);
@@ -80,16 +74,23 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
     [setNickname],
   );
 
-  const onCompleteSignUp = useCallback(async () => {
-    const input = {
-      nickname,
-      interestTechSet,
-      file: file.image,
-    };
-    console.log(input);
-    const result = await updateUserInfo(user!, input);
-    if (result === 1) onFinish();
-  }, [user, onFinish, file, interestTechSet, nickname]);
+  const queryClient = useQueryClient();
+  const onCompleteSignUp = useMutation(
+    (newInfo: any) => {
+      return updateUserInfo(user!, { ...newInfo, file: file.image });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('user');
+        onFinish();
+      },
+    },
+  );
+  useEffect(() => {
+    if (true) {
+      setCheckName(true);
+    }
+  }, []);
 
   const NickNameContent = useCallback(() => {
     return (
@@ -129,14 +130,13 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             disabled={nickname === null || nickname.trim().length === 0}
             value={'다음'}
             onClick={() => {
-              setUser({ ...(user as IUser), nickname });
               onChangePage(1);
             }}
           />
         </CardBottom>
       </CardStyle>
     );
-  }, [checkName, nickname, onChangeName, onChangePage, setUser, theme, user]);
+  }, [checkName, nickname, onChangeName, onChangePage, theme]);
 
   const TechContent = useCallback(() => {
     return (
@@ -155,10 +155,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <SelectInput
-            onChange={(value) => setInterestTechSet((value as Tech[]).map((tech: Tech) => tech.value))}
-            width={100}
-          />
+          <SelectInput onChange={(value) => setInterestTechSet(value as Tech[])} width={100} />
         </CardContent>
         <CardBottom>
           <DIButton
@@ -191,7 +188,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardContent>
           <ProfileContent>
             <ProfilePicture>
-              <UserProfile user={user} src={file.previewUrl} width={72} height={72} />
+              <UserProfile user={user!} src={file.previewUrl} width={72} height={72} />
               <EditIcon
                 size={24}
                 color={theme.colors.background}
@@ -239,11 +236,20 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           </HeaderDescription>
         </CardContent>
         <CardBottom>
-          <DIButton value={'시작하기'} onClick={onCompleteSignUp} />
+          <DIButton
+            value={'시작하기'}
+            onClick={() =>
+              onCompleteSignUp.mutate({
+                nickname,
+                interestTechSet,
+                file,
+              })
+            }
+          />
         </CardBottom>
       </CardStyle>
     );
-  }, [onCompleteSignUp, theme, user]);
+  }, [onCompleteSignUp, theme, user, file, interestTechSet, nickname]);
 
   return (
     <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>

@@ -1,4 +1,3 @@
-import { userAtom } from '@src/recoil/atom/user';
 import { AiOutlineBell } from 'react-icons/ai';
 import React from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -13,8 +12,11 @@ import ExpandIconSVG from '@src/assets/expand.svg';
 import { devices } from '@src/utils/theme';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
 import { logoutUser } from '@src/service/api';
+import { useUser } from '@src/hooks/useAuthentication';
+import { useQueryClient } from 'react-query';
 const HeaderNavigation = () => {
-  const [user, setUser] = useRecoilState(userAtom);
+  const { data: user } = useUser();
+  const queryClient = useQueryClient();
   const setModal = useSetRecoilState(modalAtom);
   const [open, setOpen] = useRecoilState(sidebarAtom);
   const onClickLogin = useCallback(() => {
@@ -22,12 +24,17 @@ const HeaderNavigation = () => {
   }, [setModal]);
   const onClickLogout = useCallback(async () => {
     try {
-      // if returned value of logoutUser() === 1 -> logout success
-      if (await logoutUser()) setUser(null);
+      if (await logoutUser()) {
+        queryClient
+          .getQueryCache()
+          .findAll('user')
+          .forEach((query) => query.setData(null));
+        queryClient.invalidateQueries('user');
+      }
     } catch (err) {
       console.log(err);
     }
-  }, [setUser]);
+  }, [queryClient]);
 
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);

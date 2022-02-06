@@ -1,14 +1,14 @@
-import { userAtom } from '@src/recoil/atom/user';
 import React, { useRef, useCallback } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import EditIconSVG from '@src/assets/edit.svg';
 import ProfileIconSVG from '@src/assets/user.svg';
 import DIText from '@src/components/Atoms/DIText';
 import { devices } from '@src/utils/theme';
 import { fileAtom } from '@src/recoil/atom/file';
+import { useUser } from '@src/hooks/useAuthentication';
 const ProfileImageArea = () => {
-  const user = useRecoilValue(userAtom);
+  const { data: user } = useUser();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [file, setFile] = useRecoilState(fileAtom);
   const onUpload = useCallback(() => {

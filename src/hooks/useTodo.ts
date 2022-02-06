@@ -1,11 +1,11 @@
-import { userAtom } from '@src/recoil/atom/user';
 import { getTodo, getTodoData } from '@src/service/api';
 import { ITodos } from '@src/typings/Todos';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
+import { useUser } from './useAuthentication';
 
 const useTodos = () => {
-  const user = useRecoilValue(userAtom);
+  const { data: user } = useUser();
 
   const result = useQuery<ITodos[]>(
     'todo',
@@ -21,7 +21,7 @@ const useTodos = () => {
 };
 
 const useTodoItem = (id: number) => {
-  const user = useRecoilValue(userAtom);
+  const { data: user } = useUser();
 
   const result = useQuery<ITodos>(
     `todo-item-${id}`,
