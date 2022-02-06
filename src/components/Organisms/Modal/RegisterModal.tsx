@@ -56,7 +56,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
       const file = event.target.files[0];
       reader.onload = () => {
         setFile({
-          file,
+          image: file,
           previewUrl: reader.result,
         });
       };
