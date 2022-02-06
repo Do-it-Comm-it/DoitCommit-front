@@ -18,6 +18,7 @@ import { Tech } from '@src/typings/Tech';
 import { fileAtom } from '@src/recoil/atom/file';
 import { useUser } from '@src/hooks/useAuthentication';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useDebounce } from '@src/hooks/useDebounce';
 
 type RegisterModalProps = {
   onFinish: () => void;
@@ -38,12 +39,10 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const [nickname, setNickname] = useState('');
   const [interestTechSet, setInterestTechSet] = useState<Tech[]>([]);
   const [file, setFile] = useRecoilState(fileAtom);
-
-  // const [image, setImage] = useState<string>();
+  const debounceInput = useDebounce(nickname, 200);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
-  const { data: check } = useQuery('nicknameCheck', () => checkNickname(nickname), {
+  const { data: check } = useQuery(['nicknameCheck', debounceInput], () => checkNickname(debounceInput as string), {
     enabled: user && nickname.trim().length && page === 0 ? true : false,
-    refetchInterval: 100,
   });
 
   const onUpload = useCallback(() => {
