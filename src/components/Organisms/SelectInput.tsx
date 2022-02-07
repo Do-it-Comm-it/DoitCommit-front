@@ -64,4 +64,4 @@ const TechSelect = styled(Select)<{ width?: number }>`
   width: ${({ width }) => width}%;
 `;
 
-export default SelectInput;
+export default React.memo(SelectInput, (prev, next) => prev.value === next.value);

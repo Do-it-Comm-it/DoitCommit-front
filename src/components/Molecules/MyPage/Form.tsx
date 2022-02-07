@@ -17,4 +17,4 @@ const Form = ({ name, label, user, onChangeInput }: Props) => {
   );
 };
 
-export default Form;
+export default React.memo(Form, (prev, next) => prev.name === next.name);
