@@ -23,7 +23,7 @@ export default GoogleLogin;
 
 const GoogleButton = styled.a`
   display: inline-flex;
-  width: 383px;
+  width: 80%;
   height: 68px;
   background-color: ${({ theme }) => theme.colors.background};
   border: 1px solid #dadada;

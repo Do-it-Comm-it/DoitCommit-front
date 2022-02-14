@@ -43,7 +43,7 @@ INFO: font-weight information
   normal : 400
   bold: 700
 */
-const Text = styled.pre<{
+const Text = styled.span<{
   fontSize: number;
   fontColor: string;
   fontWeight: number;

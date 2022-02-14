@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import CloseButton from '@src/assets/close_button.svg';
+import { devices } from '@src/utils/theme';
 
 export const CreateModal = styled.div<{ width?: number; height?: number }>`
   display: flex;
@@ -20,6 +21,9 @@ export const CreateModal = styled.div<{ width?: number; height?: number }>`
     opacity: 1 !important;
     margin: 0 auto;
     width: ${({ width }) => width ?? 600}px;
+    @media ${devices.tablet} {
+      width: 80%;
+    }
     height: ${({ height }) => height ?? 440}px;
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);

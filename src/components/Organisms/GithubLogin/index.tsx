@@ -18,7 +18,7 @@ const GithubLogin = () => {
 
 const GithubButton = styled.a`
   display: inline-flex;
-  width: 383px;
+  width: 80%;
   height: 68px;
   background-color: ${({ theme }) => theme.colors.dark.a5};
   border: none;

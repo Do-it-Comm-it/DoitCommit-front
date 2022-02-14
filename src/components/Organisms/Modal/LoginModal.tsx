@@ -6,6 +6,7 @@ import CloseIcon from '@src/assets/close_button.svg';
 import DIText from '@src/components/Atoms/DIText';
 import Divider from '@src/components/Atoms/Divider';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
+import { devices } from '@src/utils/theme';
 type LoginModalProps = {
   onClose: () => void;
   stopPropagation: (e: any) => void;
@@ -15,7 +16,6 @@ type LoginModalProps = {
 
 const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps) => {
   const theme = useTheme();
-
   return (
     <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
       <Container>
@@ -29,7 +29,8 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
             안녕하세요!
           </HeaderTitle>
           <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight}>
-            오늘도 두잇커밋과 함께 목표에 한발짝 가까워졌습니다.
+            오늘도 두잇커밋과 함께 목표에
+            <Line>한발짝 가까워졌습니다.</Line>
           </HeaderDescription>
           <GoogleLogin />
           <GithubLogin />
@@ -91,5 +92,11 @@ const HelpContent = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+`;
+
+const Line = styled.span`
+  @media ${devices.tablet} {
+    display: block;
+  }
 `;
 export default LoginModal;
