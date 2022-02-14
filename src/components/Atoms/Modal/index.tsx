@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import CloseButton from '@src/assets/close_button.svg';
+import { devices } from '@src/utils/theme';
 
-export const CreateModal = styled.div<{ width?: number; height?: number }>`
+export const CreateModal = styled.div<{ width?: string; height?: string }>`
   display: flex;
   align-items: center;
   position: fixed;
@@ -19,8 +20,11 @@ export const CreateModal = styled.div<{ width?: number; height?: number }>`
     flex-direction: column;
     opacity: 1 !important;
     margin: 0 auto;
-    width: ${({ width }) => width ?? 600}px;
-    height: ${({ height }) => height ?? 440}px;
+    width: ${({ width }) => width ?? '600px'};
+    @media ${devices.tablet} {
+      width: 80%;
+    }
+    height: ${({ height }) => height ?? '440px'};
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
     background-color: #ffffff;

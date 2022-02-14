@@ -2,8 +2,8 @@ import React from 'react';
 import { CreateModal } from '../Atoms/Modal';
 
 interface Props {
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   onClose: () => void;
   stopPropagation: (e: any) => void;
 }

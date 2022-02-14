@@ -9,8 +9,8 @@ import ModalContainer from '@src/components/Molecules/ModalContainer';
 type LoginModalProps = {
   onClose: () => void;
   stopPropagation: (e: any) => void;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
 };
 
 const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps) => {

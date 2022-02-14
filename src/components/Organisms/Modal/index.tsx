@@ -23,12 +23,12 @@ const Modal = () => {
 
   return (
     <>
-      {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} stopPropagation={stopPropagation} />}
+      {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} stopPropagation={stopPropagation} width='600px'/>}
       {modal.id === 'register' && modal.visible && (
         <RegisterModal onFinish={closeModal} onClose={closeModal} stopPropagation={stopPropagation} />
       )}
       {modal.id === 'todo' && modal.visible && (
-        <TodoModal onClose={closeModal} stopPropagation={stopPropagation} width={772} height={647} />
+        <TodoModal onClose={closeModal} stopPropagation={stopPropagation} width={'772px'} height={'647px'} />
       )}
     </>
   );

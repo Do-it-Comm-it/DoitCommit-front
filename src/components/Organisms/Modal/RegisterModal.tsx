@@ -23,8 +23,8 @@ type RegisterModalProps = {
   onFinish: () => void;
   onClose: () => void;
   stopPropagation: (e: any) => void;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
 };
 
 //TODO:

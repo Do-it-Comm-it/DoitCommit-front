@@ -17,8 +17,8 @@ import { TodoType } from '@src/typings/Todos';
 interface Props {
   onClose: () => void;
   stopPropagation: (e: any) => void;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
 }
 
 const TodoModal = ({ onClose, stopPropagation, width, height }: Props) => {
