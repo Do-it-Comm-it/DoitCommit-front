@@ -123,6 +123,7 @@ const LoginHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 `;
 const ContentWrapper = styled.div<{
   requiredLogin?: boolean;
