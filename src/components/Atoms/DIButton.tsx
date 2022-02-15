@@ -22,13 +22,13 @@ const DIButton = ({
   height = 52,
   value = 'Click',
   borderRadius = 5,
-  backgroundColor = '#AACD06',
+  backgroundColor = '#476CFF',
   hoverColor,
   children,
   onClick = () => {},
   style,
   color = '#fff',
-  borderColor = '#AACD06',
+  borderColor = '#476CFF',
 }: DIButtonProps) => {
   return (
     <Button

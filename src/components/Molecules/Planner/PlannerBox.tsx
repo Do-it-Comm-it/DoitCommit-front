@@ -49,7 +49,7 @@ const Title = styled.span`
 
   /* #18171C */
 
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.dark.a7};
 `;
 
 const Participants = styled.span`
@@ -59,7 +59,7 @@ const Participants = styled.span`
   font-size: 14px;
   line-height: 20px;
 
-  color: ${({ theme }) => theme.colors.dark.a2};
+  color: ${({ theme }) => theme.colors.dark.a3};
 `;
 
 export default PlannerBox;

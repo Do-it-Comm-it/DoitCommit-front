@@ -38,7 +38,7 @@ const Container = styled.div<{ selected: boolean }>`
   align-items: center;
   justify-content: center;
 
-  color: ${({ selected, theme }) => (selected ? theme.colors.background : theme.colors.dark.a2)};
+  color: ${({ selected, theme }) => (selected ? '#ffffff' : theme.colors.dark.a3)};
 
   &:hover {
     cursor: pointer;

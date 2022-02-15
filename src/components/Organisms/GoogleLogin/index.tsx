@@ -8,7 +8,7 @@ const GoogleLogin = () => {
   return (
     <GoogleButton href={`${process.env.API_URL}/oauth2/authorization/google`}>
       <GoogleLogo size={30} />
-      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold}>
+      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold} fontColor="#353535">
         Google로 계속
       </DIText>
     </GoogleButton>
@@ -25,8 +25,8 @@ const GoogleButton = styled.a`
   display: inline-flex;
   width: 80%;
   height: 68px;
-  background-color: ${({ theme }) => theme.colors.background};
-  border: 1px solid #dadada;
+  background-color: #ffffff;
+  border: 1px solid #cecece;
   border-radius: 6px;
   text-decoration: none;
   font-size: 20px;

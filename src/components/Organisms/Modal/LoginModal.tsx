@@ -25,10 +25,15 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
         <Divider />
 
         <Content>
-          <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
+          <HeaderTitle
+            style={{ paddingBottom: 14 }}
+            fontSize={28}
+            fontFamily={theme.font.NotoSansKRBold}
+            fontColor="#0f0f0f"
+          >
             안녕하세요!
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight}>
+          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor="#282828">
             오늘도 두잇커밋과 함께 목표에
             <Line>한발짝 가까워졌습니다.</Line>
           </HeaderDescription>

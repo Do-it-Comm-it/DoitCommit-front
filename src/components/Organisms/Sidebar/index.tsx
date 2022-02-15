@@ -35,14 +35,13 @@ const SidebarContainer = styled.div<{ open: boolean }>`
   min-width: ${({ open }) => (open ? 308 : 83)}px;
   flex-direction: column;
   position: fixed;
-
   left: 0;
   top: 0;
   min-height: 100vh;
   z-index: 1;
   transition: 0.5s;
   overflow-x: hidden;
-  background-color: #353535;
+  background-color: ${({ theme }) => theme.colors.sidebar};
   &::-webkit-scrollbar {
     display: none;
   }

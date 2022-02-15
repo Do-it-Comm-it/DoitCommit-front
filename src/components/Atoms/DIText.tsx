@@ -14,7 +14,7 @@ type DITextProps = {
 
 //TO DO: Add font-family , Linkable Text(Optional)
 const DIText = ({
-  fontColor = "'#fff'",
+  fontColor = '#fff',
   fontSize = 16,
   fontWeight = 400,
   children,

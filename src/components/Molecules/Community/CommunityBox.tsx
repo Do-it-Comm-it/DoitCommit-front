@@ -62,7 +62,6 @@ const Title = styled.span`
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
-
   color: ${({ theme }) => theme.colors.dark.a3};
 `;
 const Content = styled.div`
@@ -75,8 +74,12 @@ const Content = styled.div`
   margin-right: 20px;
   margin-bottom: 18px;
 `;
-const BookMark = styled(BsBookmark)``;
-const BookMarkFill = styled(BsFillBookmarkFill)``;
+const BookMark = styled(BsBookmark)`
+  color: ${({ theme }) => theme.colors.dark.a3};
+`;
+const BookMarkFill = styled(BsFillBookmarkFill)`
+  color: ${({ theme }) => theme.colors.main};
+`;
 const TechBox = styled.div`
   position: relative;
   display: flex;
@@ -85,12 +88,12 @@ const TechBox = styled.div`
   width: 70px;
   height: 70px;
 
-  background: ${({ theme }) => theme.colors.main};
+  background: ${({ theme }) => theme.colors.sub};
 
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
 
-  color: ${({ theme }) => theme.colors.background};
+  color: #ffffff;
 `;
 const ContentBox = styled.div`
   display: flex;
@@ -105,12 +108,13 @@ const SubTitle = styled.span`
   font-size: 16px;
   line-height: 23px;
   margin-bottom: 8px;
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.dark.a7};
 `;
 const Body = styled.span`
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
   font-weight: normal;
+  color: ${({ theme }) => theme.colors.dark.a3};
   font-size: 14px;
   line-height: 20px;
 

@@ -11,30 +11,16 @@ import { modalAtom } from '@src/recoil/atom/modal';
 import ExpandIconSVG from '@src/assets/expand.svg';
 import { devices } from '@src/utils/theme';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
-import { logoutUser } from '@src/service/api';
 import { useUser } from '@src/hooks/useAuthentication';
-import { useQueryClient } from 'react-query';
+import { BsBookmark } from 'react-icons/bs';
+
 const HeaderNavigation = () => {
   const { data: user } = useUser();
-  const queryClient = useQueryClient();
   const setModal = useSetRecoilState(modalAtom);
   const [open, setOpen] = useRecoilState(sidebarAtom);
   const onClickLogin = useCallback(() => {
     setModal({ id: 'login', visible: true });
   }, [setModal]);
-  const onClickLogout = useCallback(async () => {
-    try {
-      if (await logoutUser()) {
-        queryClient
-          .getQueryCache()
-          .findAll('user')
-          .forEach((query) => query.setData(null));
-        queryClient.invalidateQueries('user');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }, [queryClient]);
 
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);
@@ -56,8 +42,8 @@ const HeaderNavigation = () => {
         )}
         {user && (
           <Content>
-            <AiOutlineBell size={20} />
-            <span onClick={onClickLogout}>Logout</span>
+            <Bell size={20} />
+            <BookMark size={15} />
             <UserProfile user={user} isMenuEnable />
           </Content>
         )}
@@ -82,17 +68,19 @@ const SearchBarWrapper = styled.div`
   align-items: center;
   padding: 0 20px;
   height: 70%;
-  border-right: 1px solid #eaeaea;
 `;
 const Content = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  & > * {
+    margin-right: 20px;
+  }
 
   & > span {
     font-size: 16px;
-    color: #18171c;
+    color: ${({ theme }) => theme.colors.dark.a7};
     margin-right: auto;
     padding: 0 20px;
     cursor: pointer;
@@ -102,9 +90,18 @@ const Content = styled.div`
 const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
   display: none;
   margin-right: auto;
+
   cursor: pointer;
   @media ${devices.laptop} {
     display: flex;
   }
+`;
+
+const Bell = styled(AiOutlineBell)`
+  color: ${({ theme }) => theme.colors.dark.a7};
+`;
+
+const BookMark = styled(BsBookmark)`
+  color: ${({ theme }) => theme.colors.dark.a7};
 `;
 export default HeaderNavigation;

@@ -21,7 +21,7 @@ const Container = styled.div`
   min-height: 330px;
   width: 100%;
 
-  background: #f9f9f9;
+  background: ${({ theme }) => theme.colors.background};
 
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
@@ -40,6 +40,7 @@ const Container = styled.div`
   }
 `;
 const PlusIcon = styled(HiOutlinePlus)`
+  color: ${({ theme }) => theme.colors.dark.a7};
   &:hover {
     cursor: pointer;
     opacity: 0.8;

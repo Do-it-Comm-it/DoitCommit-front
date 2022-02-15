@@ -36,7 +36,12 @@ const ContentBox: React.FC<Props> = ({
     <Container contentWidth={contentWidth} contentHeight={contentHeight}>
       {requiredHeader && (
         <HeaderWrapper>
-          <Title fontFamily={theme.font.NotoSansKRRegular} fontSize={20} lineHeight={29}>
+          <Title
+            fontFamily={theme.font.NotoSansKRRegular}
+            fontSize={20}
+            lineHeight={29}
+            fontColor={theme.colors.dark.a7}
+          >
             {title}
           </Title>
           <PlusIcon size={16} onClick={onClick} />
@@ -51,8 +56,10 @@ const ContentBox: React.FC<Props> = ({
           <Content>
             <LoginHeader>
               <LockIcon />
-              <Title fontSize={20}>로그인 후 이용가능합니다.</Title>
-              <SubTitle fontSize={14} fontColor={theme.colors.sub2}>
+              <Title fontSize={20} fontColor={theme.colors.dark.a7}>
+                로그인 후 이용가능합니다.
+              </Title>
+              <SubTitle fontSize={14} fontColor={theme.colors.dark.a3}>
                 회원가입 후 더 많은 서비스를 이용 해 보세요
               </SubTitle>
             </LoginHeader>

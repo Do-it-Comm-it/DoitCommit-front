@@ -15,7 +15,7 @@ export default Navigation;
 const Container = styled.nav<{ position: string }>`
   padding: 15px 20px;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.header};
   display: flex;
   flex-direction: row;
   align-items: center;

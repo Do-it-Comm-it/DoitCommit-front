@@ -11,11 +11,14 @@ declare module 'styled-components' {
     };
     colors: {
       background: string;
+      body: string;
       main: string;
       sub: string;
       sub2: string;
       sub3: string;
       warning: string;
+      header: string;
+      sidebar: string;
       dark: {
         a1: string;
         a2: string;
@@ -38,20 +41,23 @@ export const light: DefaultTheme = {
     NotoSansKRLight: 'NotoSansKR Light',
   },
   colors: {
-    background: '#FFFFFF',
-    main: '#AACD06',
-    sub: '#D8F0C5',
+    background: '#FEFEFE',
+    body: '#F2F3F9',
+    main: '#476CFF',
+    sub: '#001361',
     sub2: '#A2D79F',
     sub3: '#9ED2BA',
     warning: '#FF4B4B',
+    header: '#FFFFFF',
+    sidebar: '#353535',
     dark: {
       a1: '#ECECEC',
       a2: '#DADADA',
-      a3: '#8F9294',
+      a3: '#818181',
       a4: '#616161',
       a5: '#353535',
       a6: '#2D2D2D',
-      a7: '18171C',
+      a7: '#0F0F0F',
     },
   },
 };
@@ -65,20 +71,23 @@ export const dark: DefaultTheme = {
     NotoSansKRLight: 'NotoSansKR Light',
   },
   colors: {
-    background: '#293144',
-    main: '#AACD06',
-    sub: '#D8F0C5',
+    background: '#282828',
+    body: '#131313',
+    main: '#476CFF',
+    sub: '#708DFF',
     sub2: '#A2D79F',
     sub3: '#9ED2BA',
     warning: '#FF4B4B',
+    header: '#000000',
+    sidebar: '#1B1B1B',
     dark: {
       a1: '#ECECEC',
       a2: '#DADADA',
-      a3: '#8F9294',
+      a3: '#CECECE',
       a4: '#616161',
       a5: '#353535',
       a6: '#2D2D2D',
-      a7: '#18171C',
+      a7: '#F5F5F5',
     },
   },
 };

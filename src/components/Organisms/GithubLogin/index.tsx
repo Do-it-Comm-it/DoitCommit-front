@@ -20,7 +20,7 @@ const GithubButton = styled.a`
   display: inline-flex;
   width: 80%;
   height: 68px;
-  background-color: ${({ theme }) => theme.colors.dark.a5};
+  background-color: #353535;
   border: none;
   border-radius: 6px;
   font-size: 20px;
