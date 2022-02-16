@@ -93,7 +93,12 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
     return (
       <CardStyle>
         <CardHeader>
-          <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
+          <HeaderTitle
+            style={{ paddingBottom: 14 }}
+            fontSize={28}
+            fontFamily={theme.font.NotoSansKRBold}
+            fontColor={theme.colors.dark.a7}
+          >
             두잇커밋에 처음 오셨군요?
           </HeaderTitle>
           <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
@@ -126,6 +131,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
+            backgroundColor={theme.colors.main}
             disabled={!check || nickname.trim().length === 0}
             value={'다음'}
             onClick={() => {
@@ -147,7 +153,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             fontFamily={theme.font.NotoSansKRBold}
             fontColor={theme.colors.dark.a6}
           >
-            반갑습니다. {user?.nickname} 님
+            반갑습니다. {nickname} 님
           </HeaderTitle>
           <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
             사용중인 기술이나 관심있는 태그를 설정해주세요.
@@ -158,6 +164,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
+            backgroundColor={theme.colors.main}
             value={'다음'}
             onClick={() => {
               onChangePage(2);
@@ -166,7 +173,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardBottom>
       </CardStyle>
     );
-  }, [onChangePage, theme, user, setInterestTechSet]);
+  }, [onChangePage, theme, setInterestTechSet, nickname]);
 
   const ImageContent = useCallback(() => {
     return (
@@ -209,6 +216,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <FileInput ref={hiddenFileInput} onChange={onFileChange} type="file" style={{ display: 'none' }} />
         <CardBottom>
           <DIButton
+            backgroundColor={theme.colors.main}
             value={'다음'}
             onClick={() => {
               onChangePage(3);
@@ -226,7 +234,12 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           <CheckIcon />
         </CardHeader>
         <CardContent>
-          <HeaderTitle style={{ paddingBottom: 14 }} fontSize={28} fontFamily={theme.font.NotoSansKRBold}>
+          <HeaderTitle
+            style={{ paddingBottom: 14 }}
+            fontSize={28}
+            fontFamily={theme.font.NotoSansKRBold}
+            fontColor={theme.colors.dark.a7}
+          >
             축하드려요! 가입되셨습니다!
           </HeaderTitle>
 
@@ -236,6 +249,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
+            backgroundColor={theme.colors.main}
             value={'시작하기'}
             onClick={() =>
               onCompleteSignUp.mutate({

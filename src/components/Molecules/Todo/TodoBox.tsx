@@ -65,7 +65,7 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
             <DeleteIcon onClick={onDelete} />
             <Left>
               <EditIcon onClick={onEdit} />
-              <CheckIcon onClick={onFinish} />
+              {todo.isFinished ? <CheckFinishedIcon onClick={onFinish} /> : <CheckIcon onClick={onFinish} />}
             </Left>
           </Footer>
         </Container>
@@ -115,7 +115,9 @@ const Labels = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const Pin = styled(AiOutlinePushpin)``;
+const Pin = styled(AiOutlinePushpin)`
+  color: ${({ theme }) => theme.colors.dark.a3};
+`;
 const FillPin = styled(AiFillPushpin)`
   color: ${({ theme }) => theme.colors.main};
 `;
@@ -137,6 +139,10 @@ const EditIcon = styled(MdModeEdit)`
 const CheckIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.dark.a3};
 `;
+const CheckFinishedIcon = styled(BsCheckCircle)`
+  color: ${({ theme }) => theme.colors.dark.a3};
+  fill: ${({ theme }) => theme.colors.main};
+`;
 const Content = styled.div`
   height: 80%;
   display: flex;
@@ -148,8 +154,7 @@ const Title = styled.span`
   font-weight: normal;
   font-size: 20px;
   line-height: 29px;
-
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.dark.a7};
 `;
 const DateRow = styled.span`
   margin-top: 12px;
@@ -158,8 +163,7 @@ const DateRow = styled.span`
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.dark.a3};
 `;
 const Body = styled.span`
   margin-top: 25px;
@@ -169,7 +173,7 @@ const Body = styled.span`
   font-size: 16px;
   line-height: 23px;
 
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.dark.a3};
 `;
 const Footer = styled.div`
   align-self: flex-end;

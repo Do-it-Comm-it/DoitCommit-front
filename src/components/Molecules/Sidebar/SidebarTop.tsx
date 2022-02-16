@@ -9,7 +9,6 @@ type Props = {
 };
 
 const SidebarTop = ({ open, onToggle }: Props) => {
-  const theme = useTheme();
   return (
     <SidebarTopWrapper open={open}>
       <IconWrapper open={open} onClick={onToggle}>
@@ -17,6 +16,7 @@ const SidebarTop = ({ open, onToggle }: Props) => {
       </IconWrapper>
       <Container>
         <DIText
+          fontColor="#ffffff"
           fontWeight={700}
           fontSize={22}
           style={{ letterSpacing: 0.2, whiteSpace: 'initial', textAlign: 'center', userSelect: 'none' }}

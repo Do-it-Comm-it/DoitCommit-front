@@ -30,7 +30,7 @@ const PlannerLabel = ({ level, name }: PlannerLabelProps) => {
         };
       default:
         return {
-          color: '#8F9294',
+          color: '#FFFFFF',
           backgroundColor: '#476CFF',
           label: name ?? 'Study',
         };

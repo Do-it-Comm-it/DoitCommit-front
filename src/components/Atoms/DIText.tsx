@@ -14,7 +14,7 @@ type DITextProps = {
 
 //TO DO: Add font-family , Linkable Text(Optional)
 const DIText = ({
-  fontColor = '#fff',
+  fontColor,
   fontSize = 16,
   fontWeight = 400,
   children,
@@ -45,14 +45,14 @@ INFO: font-weight information
 */
 const Text = styled.span<{
   fontSize: number;
-  fontColor: string;
+  fontColor?: string;
   fontWeight: number;
   lineHeight?: number;
   fontFamily?: string;
 }>`
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
-  color: ${({ fontColor }) => fontColor};
+  color: ${({ fontColor, theme }) => fontColor ?? theme.colors.dark.a7};
   font-family: ${({ theme, fontFamily }) => (fontFamily ? fontFamily : theme.font.NotoSansKRRegular)};
   line-height: ${({ lineHeight }) => lineHeight}px;
 `;

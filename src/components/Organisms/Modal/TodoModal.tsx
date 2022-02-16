@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import NotiIconSVG from '@src/assets/notification.svg';
-import NotiIconFixedSVG from '@src/assets/notification-fixed.svg';
 import { Container, ContentRow, Header } from '@src/components/Atoms/Modal';
 import TagContainer from '@src/components/Molecules/TodoModal/TagContainer';
 import TextAreaContainer from '@src/components/Molecules/TodoModal/TextAreaContainer';
@@ -127,11 +126,15 @@ const NotiIcon = styled(NotiIconSVG)`
   right: 30px;
   cursor: pointer;
 `;
-const NotiFixedIcon = styled(NotiIconFixedSVG)`
+const NotiFixedIcon = styled(NotiIconSVG)`
   position: absolute;
   top: 30px;
   right: 30px;
   cursor: pointer;
+
+  & > path {
+    fill: ${({ theme }) => theme.colors.main};
+  }
 `;
 const Input = styled.input`
   width: 100%;
