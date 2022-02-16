@@ -43,8 +43,11 @@ const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
 };
 const SearchIcon = styled(Search)`
   position: absolute;
-  top: 8px;
+  top: 10px;
   left: 10px;
+  & > path {
+    fill: ${({ theme }) => theme.colors.dark.a7};
+  }
 `;
 const Contanier = styled.div`
   position: relative;

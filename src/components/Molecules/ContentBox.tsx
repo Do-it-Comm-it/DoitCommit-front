@@ -64,7 +64,13 @@ const ContentBox: React.FC<Props> = ({
               </SubTitle>
             </LoginHeader>
 
-            <LoginButton value={'로그인 하기'} borderRadius={60} onClick={onClickLogin} />
+            <LoginButton
+              value={'로그인 하기'}
+              borderRadius={60}
+              onClick={onClickLogin}
+              backgroundColor={theme.colors.main}
+              borderColor={theme.colors.main}
+            />
           </Content>
         </LoginWrapper>
       )}
@@ -94,8 +100,9 @@ const LoginWrapper = styled.div`
   width: 50%;
   height: 50%;
   min-height: 200px;
-  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
-  background: transparent;
+  border-radius: 5px;
+  box-shadow: ${({ theme }) => theme.boxShadow};
+  background: ${({ theme }) => theme.colors.sub2};
 `;
 const OpacityBox = styled.div`
   opacity: 0.2;

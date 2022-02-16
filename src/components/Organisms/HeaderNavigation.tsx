@@ -18,26 +18,24 @@ const HeaderNavigation = () => {
   const { data: user } = useUser();
   const setModal = useSetRecoilState(modalAtom);
   const [open, setOpen] = useRecoilState(sidebarAtom);
-  const onClickLogin = useCallback(() => {
-    setModal({ id: 'login', visible: true });
-  }, [setModal]);
 
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);
   }, [setOpen]);
   return (
     <Navigation position={'top'}>
-      <RightArea></RightArea>
-
       <ExpandIcon open={open} onClick={onToggle} />
+
       <LeftArea>
         <SearchBarWrapper>
           <SearchBar />
         </SearchBarWrapper>
+      </LeftArea>
+
+      <RightArea>
         {!user && (
           <Content>
-            <span onClick={onClickLogin}>Login</span>
-            <UserIcon width={54} height={54} />
+            <UserIcon width={54} height={54} onClick={() => setModal({ id: 'login', visible: true })} />
           </Content>
         )}
         {user && (
@@ -47,33 +45,40 @@ const HeaderNavigation = () => {
             <UserProfile user={user} isMenuEnable />
           </Content>
         )}
-      </LeftArea>
+      </RightArea>
     </Navigation>
   );
 };
 
-const RightArea = styled.div`
-  justify-self: flex-start;
-`;
 const LeftArea = styled.div`
-  width: 430px;
+  justify-self: flex-start;
+  margin-right: auto;
+  margin-left: 40px;
+`;
+const RightArea = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  margin-left: auto;
+  justify-content: space-evenly;
 `;
 const SearchBarWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px;
   height: 70%;
+  @media ${devices.tablet} {
+    display: none;
+  }
 `;
 const Content = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+
+  @media ${devices.tablet} {
+    margin-left: auto;
+  }
   & > * {
     margin-right: 20px;
   }
@@ -89,7 +94,9 @@ const Content = styled.div`
 
 const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
   display: none;
-  margin-right: auto;
+  & > path {
+    fill: ${({ theme }) => theme.colors.dark.a7};
+  }
 
   cursor: pointer;
   @media ${devices.laptop} {

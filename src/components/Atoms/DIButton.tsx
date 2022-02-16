@@ -22,13 +22,13 @@ const DIButton = ({
   height = 52,
   value = 'Click',
   borderRadius = 5,
-  backgroundColor = '#476CFF',
+  backgroundColor,
   hoverColor,
   children,
   onClick = () => {},
   style,
   color = '#fff',
-  borderColor = '#476CFF',
+  borderColor,
 }: DIButtonProps) => {
   return (
     <Button
@@ -54,14 +54,14 @@ const Button = styled.button<{
   width: number;
   height: number;
   borderRadius: number;
-  backgroundColor: string;
+  backgroundColor?: string;
   hoverColor?: string;
   disabled: boolean;
   borderColor?: string;
   color?: string;
 }>`
   background-color: ${({ backgroundColor }) => backgroundColor};
-  font-weight: ${({ backgroundColor }) => backgroundColor};
+  font-weight: ${({ backgroundColor, theme }) => backgroundColor ?? theme.colors.main};
   border-radius: ${({ borderRadius }) => borderRadius}px;
   border: 0;
   outline: 0;
@@ -71,7 +71,7 @@ const Button = styled.button<{
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-size: 20px;
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  border: 1px solid ${({ borderColor }) => borderColor};
+  border: 1px solid ${({ borderColor, theme }) => borderColor ?? theme.colors.main};
 
   &:hover {
     cursor: pointer;

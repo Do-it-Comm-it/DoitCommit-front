@@ -8,8 +8,17 @@ interface Props {
   fontWeight?: number;
   to: string;
   style?: React.CSSProperties;
+  activeStyle?: React.CSSProperties;
 }
-const DILink: React.FC<Props> = ({ children, fontColor = '#000', fontWeight = 500, fontSize = 28, to, style }) => {
+const DILink: React.FC<Props> = ({
+  children,
+  fontColor = '#000',
+  fontWeight = 500,
+  fontSize = 28,
+  to,
+  style,
+  activeStyle,
+}) => {
   return (
     <StyledLink
       to={to}
@@ -18,9 +27,7 @@ const DILink: React.FC<Props> = ({ children, fontColor = '#000', fontWeight = 50
       fontWeight={fontWeight}
       style={style}
       exact
-      activeStyle={{
-        color: '#18171c',
-      }}
+      activeStyle={activeStyle}
     >
       {children}
     </StyledLink>
@@ -33,6 +40,6 @@ const StyledLink = styled(NavLink)<{ fontSize: number; fontWeight: number; fontC
   text-decoration: none;
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
-  color: ${({ fontColor }) => fontColor};
+  color: ${({ theme }) => theme.colors.dark.a7};
   white-space: nowrap;
 `;

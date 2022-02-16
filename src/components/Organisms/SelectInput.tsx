@@ -44,7 +44,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
           backgroundColor: theme.colors.main,
-          color: theme.colors.background,
+          color: '#ffffff',
         }),
         multiValueRemove: (defaultStyles) => ({
           ...defaultStyles,

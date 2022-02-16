@@ -10,12 +10,13 @@ import { IUser } from '@src/typings/User';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import AddInput from './AddInput';
 import Form from './Form';
 
 const ProfileInfoArea = () => {
   const { data: user, status } = useUser();
+  const theme = useTheme();
   const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
   const queryClient = useQueryClient();
   const file = useRecoilValue(fileAtom);
@@ -81,11 +82,12 @@ const ProfileInfoArea = () => {
             <AddInput onClick={addForm} />
           </div>
           <DIButton
-            color="#fff"
+            color={`${theme.colors.dark.a8}`}
+            backgroundColor={`${theme.colors.main}`}
+            borderColor={`${theme.colors.main}`}
             onClick={() => {
               onSubmit.mutate(input as any);
             }}
-            backgroundColor="#AACD06"
             borderRadius={51}
           >
             내 프로필 저장

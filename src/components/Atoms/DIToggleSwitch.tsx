@@ -50,7 +50,7 @@ const CheckBox = styled.input`
   width: 50px;
   height: 25px;
   &:checked + ${CheckboxLabel} {
-    background: #aacd06;
+    background: ${({ theme }) => theme.colors.main};
     &::after {
       content: '';
       display: block;

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { Container, ContentCol, ContentRow } from '@src/components/Atoms/Modal';
 import { TodoType } from '@src/typings/Todos';
 
@@ -10,6 +10,7 @@ interface Props {
   onChangeType: (type: TodoType) => void;
 }
 const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Props) => {
+  const theme = useTheme();
   return (
     <Container>
       <ContentCol alignItems="center" padding="20px" widthFull>
@@ -43,7 +44,7 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
         <ContentRow alignItems="center" padding="10px 0" widthFull>
           <Label>분류</Label>
           <CheckButton
-            backgroundColor="#AACD06"
+            backgroundColor={`${theme.colors.main}`}
             color="#ffffff"
             checked={type === TodoType.STUDY}
             onClick={() => onChangeType(TodoType.STUDY)}
@@ -51,7 +52,7 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
             스터디
           </CheckButton>
           <CheckButton
-            backgroundColor="#AACD06"
+            backgroundColor={`${theme.colors.main}`}
             color="#ffffff"
             checked={type === TodoType.DAILY}
             onClick={() => onChangeType(TodoType.DAILY)}
@@ -59,7 +60,7 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
             데일리
           </CheckButton>
           <CheckButton
-            backgroundColor="#AACD06"
+            backgroundColor={`${theme.colors.main}`}
             color="#ffffff"
             checked={type === TodoType.WORK}
             onClick={() => onChangeType(TodoType.WORK)}

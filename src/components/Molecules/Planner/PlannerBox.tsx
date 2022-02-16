@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.background};
   flex-direction: column;
 
-  box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
+  box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;
 
   @media (max-width: ${1295}px) {

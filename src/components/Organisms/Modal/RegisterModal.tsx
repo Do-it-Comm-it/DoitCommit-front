@@ -103,6 +103,8 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardContent>
           <InputPlace>
             <DIInput
+              backgroundColor="#ffffff"
+              fontColor="#000"
               defaultValue={nickname ?? ''}
               width={285}
               height={65}

@@ -5,10 +5,10 @@ import ShareIconSVG from '@src/assets/share.svg';
 const Header = () => {
   return (
     <Container>
-      <DILink to="/mypage" fontColor="#8F9294" fontSize={28} fontWeight={500}>
+      <DILink to="/mypage" fontSize={28} fontWeight={500} activeStyle={{ color: '#476CFF' }}>
         마이페이지
       </DILink>
-      <DILink to="/mypage/setting" fontColor="#8F9294" fontSize={28} fontWeight={500}>
+      <DILink to="/mypage/setting" fontSize={28} fontWeight={500} activeStyle={{ color: '#476CFF' }}>
         환경 설정
       </DILink>
       <ShareIcon />
@@ -23,7 +23,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #e0e1e4;
   padding: 30px 0;
 
   & > a {
@@ -34,4 +34,7 @@ const Container = styled.div`
 const ShareIcon = styled(ShareIconSVG)`
   margin-left: auto;
   cursor: pointer;
+  & > path {
+    fill: ${({ theme }) => theme.colors.dark.a7};
+  }
 `;
