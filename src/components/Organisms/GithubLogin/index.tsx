@@ -9,7 +9,7 @@ const GithubLogin = () => {
   return (
     <GithubButton href={`${process.env.API_URL}/oauth2/authorization/github`}>
       <GithubLogo size={30} />
-      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold}>
+      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold} fontColor="#FEFEFE">
         Github로 계속
       </DIText>
     </GithubButton>

@@ -13,7 +13,7 @@ const Container = styled.hr`
   border-width: 1px;
   border-style: solid;
   color: ${({ theme }) => theme.colors.dark.a1};
-  border-color: ${({ theme }) => theme.colors.dark.a1};
+  border-color: ${({ theme }) => theme.colors.dark.a2};
 `;
 
 export default Divider;

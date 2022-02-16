@@ -108,8 +108,8 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardContent>
           <InputPlace>
             <DIInput
-              backgroundColor="#ffffff"
-              fontColor="#000"
+              backgroundColor={theme.colors.dark.a9}
+              fontColor={theme.colors.dark.a7}
               defaultValue={nickname ?? ''}
               width={285}
               height={65}
@@ -418,7 +418,7 @@ const PageLabel = styled.div<{ active: boolean }>`
   border-radius: 100px;
   width: ${({ active }) => (active ? 18 : 9)}px;
   height: ${({ active }) => (active ? 18 : 9)}px;
-  color: ${({ theme }) => theme.colors.background};
+  color: #ffffff;
   background-color: ${({ theme, active }) => (active ? theme.colors.main : theme.colors.dark.a2)};
 `;
 export default RegisterModal;

@@ -82,12 +82,13 @@ const Label = styled.label`
   width: 25%;
   text-align: start;
   padding-left: 15px;
+  color: ${({ theme }) => theme.colors.dark.a7};
 `;
 
 const CheckButton = styled.div<{ backgroundColor?: string; color?: string; checked?: boolean }>`
   border-radius: 50px;
   padding: 6px 22px;
-  background-color: ${({ checked, backgroundColor }) => (checked ? backgroundColor : '#ffffff')};
+  background-color: ${({ checked, backgroundColor, theme }) => (checked ? backgroundColor : 'transparent')};
   color: ${({ checked, color }) => (checked ? color : '#DADADA')};
   border: ${({ checked }) => (checked ? 'none' : '1px solid #dadada')};
   font-size: 18px;

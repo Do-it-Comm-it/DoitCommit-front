@@ -82,7 +82,7 @@ const ProfileInfoArea = () => {
             <AddInput onClick={addForm} />
           </div>
           <DIButton
-            color={`${theme.colors.dark.a8}`}
+            color={`${theme.colors.dark.a9}`}
             backgroundColor={`${theme.colors.main}`}
             borderColor={`${theme.colors.main}`}
             onClick={() => {

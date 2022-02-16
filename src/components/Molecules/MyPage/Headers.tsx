@@ -23,7 +23,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #e0e1e4;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.dark.a2};
   padding: 30px 0;
 
   & > a {

@@ -30,6 +30,7 @@ declare module 'styled-components' {
         a6: string;
         a7: string;
         a8: string;
+        a9: string;
       };
     };
   }
@@ -57,13 +58,14 @@ export const light: DefaultTheme = {
     searchBar: '#FFFFFF',
     dark: {
       a1: '#ECECEC',
-      a2: '#DADADA',
+      a2: '#CECECE',
       a3: '#818181',
       a4: '#616161',
       a5: '#353535',
       a6: '#282828',
       a7: '#0F0F0F',
-      a8: '#FFFFFF',
+      a8: '#FBFBFB',
+      a9: '#FFFFFF',
     },
   },
 };
@@ -83,20 +85,21 @@ export const dark: DefaultTheme = {
     main: '#476CFF',
     sub: '#708DFF',
     sub2: '#0F0F0F',
-    sub3: '#E1E7FF',
+    sub3: '#99ADFF',
     warning: '#FF4B4B',
     header: '#000000',
     sidebar: '#1B1B1B',
     searchBar: '#131313',
     dark: {
       a1: '#ECECEC',
-      a2: '#DADADA',
+      a2: '#818181',
       a3: '#CECECE',
       a4: '#616161',
       a5: '#1B1B1B',
       a6: '#FEFEFE',
       a7: '#F5F5F5',
-      a8: '#000000',
+      a8: '#0C0C0C',
+      a9: '#000000',
     },
   },
 };

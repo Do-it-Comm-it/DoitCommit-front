@@ -30,7 +30,7 @@ export default TextAreaContainer;
 const Label = styled.label`
   font-size: 20px;
   font-weight: 500;
-  color: #18171c;
+  color: ${({ theme }) => theme.colors.dark.a7};
   width: 25%;
   text-align: start;
   padding-left: 15px;
@@ -44,6 +44,8 @@ const TextArea = styled.textarea`
   font-size: 20px;
   font-weight: 500;
   resize: none;
+  color: ${({ theme }) => theme.colors.dark.a7};
+  background-color: ${({ theme }) => theme.colors.background};
   &:focus {
     outline: none;
   }

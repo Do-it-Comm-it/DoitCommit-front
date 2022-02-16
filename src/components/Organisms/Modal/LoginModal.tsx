@@ -17,7 +17,13 @@ type LoginModalProps = {
 const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps) => {
   const theme = useTheme();
   return (
-    <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
+    <ModalContainer
+      width={width}
+      height={height}
+      onClose={onClose}
+      stopPropagation={stopPropagation}
+      backgroundColor={theme.colors.dark.a8}
+    >
       <Container>
         <Header>
           <CloseModalButton onClick={onClose} />
@@ -29,17 +35,17 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
             style={{ paddingBottom: 14 }}
             fontSize={28}
             fontFamily={theme.font.NotoSansKRBold}
-            fontColor="#0f0f0f"
+            fontColor={theme.colors.dark.a7}
           >
             안녕하세요!
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor="#282828">
+          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a7}>
             오늘도 두잇커밋과 함께 목표에
-            <Line>한발짝 가까워졌습니다.</Line>
+            <Line> 한발짝 가까워졌습니다.</Line>
           </HeaderDescription>
           <GoogleLogin />
           <GithubLogin />
-          <HelpContent>
+          {/* <HelpContent>
             <HelpText fontColor={theme.colors.dark.a4} fontSize={14}>
               회원 정보를 잊으셧나요?
             </HelpText>
@@ -50,7 +56,7 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
             >
               계정찾기
             </Link>
-          </HelpContent>
+          </HelpContent> */}
         </Content>
       </Container>
     </ModalContainer>
@@ -100,6 +106,7 @@ const HelpContent = styled.div`
 `;
 
 const Line = styled.span`
+  color: ${({ theme }) => theme.colors.dark.a7};
   @media ${devices.tablet} {
     display: block;
   }

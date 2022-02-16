@@ -125,6 +125,9 @@ const NotiIcon = styled(NotiIconSVG)`
   top: 30px;
   right: 30px;
   cursor: pointer;
+  & > path {
+    fill: transparent;
+  }
 `;
 const NotiFixedIcon = styled(NotiIconSVG)`
   position: absolute;
@@ -133,7 +136,8 @@ const NotiFixedIcon = styled(NotiIconSVG)`
   cursor: pointer;
 
   & > path {
-    fill: ${({ theme }) => theme.colors.main};
+    stroke: ${({ theme }) => theme.colors.main};
+    fill: ${({ theme }) => theme.colors.sub3};
   }
 `;
 const Input = styled.input`
@@ -141,10 +145,12 @@ const Input = styled.input`
   height: 80px;
   outline: none;
   border: none;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.dark.a2};
   font-weight: 500;
   font-size: 28px;
   padding: 0 15px;
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.dark.a7};
   &:focus {
     outline: none;
   }

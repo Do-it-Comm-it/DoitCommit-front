@@ -144,7 +144,7 @@ const Setting = () => {
       </DIButton>
 
       <DIButton
-        color={`${theme.colors.dark.a8}`}
+        color={`${theme.colors.dark.a9}`}
         backgroundColor={`${theme.colors.main}`}
         borderColor={`${theme.colors.main}`}
         borderRadius={51}
@@ -173,7 +173,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  border-bottom: 1px solid #e0e1e4;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.dark.a2};
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import CloseButton from '@src/assets/close_button.svg';
 import { devices } from '@src/utils/theme';
 
-export const CreateModal = styled.div<{ width?: number; height?: number }>`
+export const CreateModal = styled.div<{ width?: number; height?: number; backgroundColor?: string }>`
   display: flex;
   align-items: center;
   position: fixed;
@@ -27,7 +27,7 @@ export const CreateModal = styled.div<{ width?: number; height?: number }>`
     height: ${({ height }) => height ?? 440}px;
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
-    background-color: #ffffff;
+    background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.background};
     border-radius: 5px;
     user-select: none;
     z-index: 1012;
@@ -39,6 +39,7 @@ export const CloseModalButton = styled(CloseButton)`
   right: 0%;
   bottom: 34rem;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.dark.a5};
 `;
 
 export const Container = styled.div`

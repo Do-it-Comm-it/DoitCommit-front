@@ -11,7 +11,7 @@ import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
 import { convertDayToName } from '../Planner/PlannerDate';
 import { ITodos } from '@src/typings/Todos';
-
+import PinSVG from '@src/assets/notification.svg';
 type TodoBoxProps = {
   todo: ITodos;
   onRefetch: () => void;
@@ -54,7 +54,7 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
               <PlannerLabel level={todo.importance} />
               <PlannerLabel name={todo.type} />
             </Labels>
-            {todo.isFixed ? <FillPin size={16} onClick={onFixed} /> : <Pin size={16} onClick={onFixed} />}
+            {todo.isFixed ? <FillPin onClick={onFixed} /> : <Pin onClick={onFixed} />}
           </Header>
           <Content>
             <Title>{todo.title}</Title>
@@ -115,11 +115,16 @@ const Labels = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const Pin = styled(AiOutlinePushpin)`
-  color: ${({ theme }) => theme.colors.dark.a3};
+const Pin = styled(PinSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.main};
+  }
 `;
-const FillPin = styled(AiFillPushpin)`
-  color: ${({ theme }) => theme.colors.main};
+const FillPin = styled(PinSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.main};
+    fill: ${({ theme }) => theme.colors.sub3};
+  }
 `;
 const DeleteIcon = styled(RiDeleteBin6Line)`
   color: ${({ theme }) => theme.colors.dark.a3};
@@ -141,7 +146,7 @@ const CheckIcon = styled(BsCheckCircle)`
 `;
 const CheckFinishedIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.dark.a3};
-  fill: ${({ theme }) => theme.colors.main};
+  fill: ${({ theme }) => theme.colors.sub3};
 `;
 const Content = styled.div`
   height: 80%;
