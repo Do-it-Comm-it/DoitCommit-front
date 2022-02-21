@@ -7,6 +7,7 @@ import GlobalStyle from './GlobalStyles';
 import '@src/assets/fonts/font.css';
 import MyPage from '@src/pages/MyPage';
 import Home from '@src/pages/Home';
+import Board from '@src/pages/Board';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import PrivateRoute from '@src/routes/PrivateRoute';
@@ -23,6 +24,7 @@ const App = () => {
             <CommonComponentWrapper>
               <PublicRoute exact path="/" component={Home} />
               <PrivateRoute path="/mypage" component={MyPage} />
+              <PublicRoute exact path="/community" component={Board} />
             </CommonComponentWrapper>
           </BrowserRouter>
         </ThemeProvider>
