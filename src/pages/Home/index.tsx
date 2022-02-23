@@ -9,10 +9,10 @@ import { devices } from '@src/utils/theme';
 const Home = () => {
   return (
     <Container>
-      <HomeTitle />
       <ContentWrapper>
         <Column>
           <Top>
+            <HomeTitle />
             <AdBanner />
           </Top>
           <Bottom>
@@ -70,6 +70,7 @@ const Row = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  margin-top: 10px;
   flex-direction: row;
   margin-left: 30px;
 
@@ -80,6 +81,7 @@ const Row = styled.div`
 `;
 const Top = styled.div`
   display: flex;
+  flex-direction: column;
   margin-bottom: 30px;
 `;
 const Bottom = styled.div`
