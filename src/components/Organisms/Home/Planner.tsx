@@ -1,6 +1,8 @@
 import ContentBox from '@src/components/Molecules/ContentBox';
+import AddPlannerBox from '@src/components/Molecules/Planner/AddPlannerBox';
 import PlannerBox from '@src/components/Molecules/Planner/PlannerBox';
 import PlannerDate from '@src/components/Molecules/Planner/PlannerDate';
+import { useUser } from '@src/hooks/useAuthentication';
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -16,8 +18,8 @@ const todayPlanners = [
 ];
 
 const Planner = () => {
+  const { data: user } = useUser();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
   const dateList = useMemo(
     () => [
       selectedDate.getDate() - 2,
@@ -45,9 +47,19 @@ const Planner = () => {
           ))}
         </Dates>
         <Planners>
-          {todayPlanners.map((planner, idx) => (
-            <PlannerBox participants={planner.participants} title={planner.title} key={idx} />
-          ))}
+          {todayPlanners.length === 0 || !user ? (
+            <>
+              <PlannerBox hasImage />
+              <AddPlannerBox />
+            </>
+          ) : (
+            <>
+              {todayPlanners.map((planner, idx) => (
+                <PlannerBox participants={planner.participants} title={planner.title} key={idx} />
+              ))}
+              {todayPlanners.length === 1 && <AddPlannerBox />}
+            </>
+          )}
         </Planners>
       </PlannerWrapper>
     </ContentBox>
