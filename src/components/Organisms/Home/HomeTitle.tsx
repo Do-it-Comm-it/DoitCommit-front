@@ -27,7 +27,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-bottom: 30px;
+  padding-bottom: 16px;
 
   @media ${devices.tablet} {
     width: 100%;
