@@ -1,18 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import PlannerPreview from '@src/assets/planner-preview.svg';
 type PlannerBoxProps = {
-  title: string;
-  participants: string[];
+  title?: string;
+  participants?: string[];
+  hasImage?: boolean;
 };
 
-const PlannerBox = ({ title, participants }: PlannerBoxProps) => {
+const PlannerBox = ({ title, participants, hasImage }: PlannerBoxProps) => {
   return (
     <Wrapper>
-      <Content>
-        <Title>{title}</Title>
-        <Participants>{participants.map((user) => user).toString()}</Participants>
-      </Content>
+      {hasImage ? (
+        <PreviewImage />
+      ) : (
+        <Content>
+          <Title>{title}</Title>
+          {participants && <Participants>{participants.map((user) => user).toString()}</Participants>}
+        </Content>
+      )}
     </Wrapper>
   );
 };
@@ -60,6 +65,13 @@ const Participants = styled.span`
   line-height: 20px;
 
   color: ${({ theme }) => theme.colors.dark.a3};
+`;
+
+const PreviewImage = styled(PlannerPreview)`
+  width: 100%;
+  border-radius: 10px;
+
+  min-width: 187px;
 `;
 
 export default PlannerBox;
