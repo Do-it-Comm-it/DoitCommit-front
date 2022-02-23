@@ -2,8 +2,13 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import Status from '@src/components/Atoms/Board/Status';
 import { BsBookmark } from 'react-icons/bs';
+import Highlighter from 'react-highlight-words';
+import { useRecoilValue } from 'recoil';
+import keywordState from '@src/recoil/selector/keyword';
+
 const BoardContent = () => {
   const theme = useTheme();
+  const keyword = useRecoilValue(keywordState);
   return (
     <Container>
       <Top>
@@ -16,9 +21,28 @@ const BoardContent = () => {
         />
       </Top>
       <Middle>
-        <Title>나는 개발자 입니다.</Title>
+        <Title>
+          <Highlighter
+            highlightStyle={{
+              color: theme.colors.main,
+            }}
+            highlightTag="strong"
+            searchWords={keyword}
+            autoEscape={true}
+            textToHighlight="나는 개발자 입니다."
+          />
+        </Title>
         <Content>
-          난 항상 궁금하게 생각했다 어떤 개발자가 더 성공하 고 어떤 개발자가 이도저도 아니게 되는지를 곰곰히 생각 해 ...
+          <Highlighter
+            highlightStyle={{
+              color: theme.colors.main,
+            }}
+            highlightTag="strong"
+            searchWords={keyword}
+            autoEscape={true}
+            textToHighlight="난 항상 궁금하게 생각했다 어떤 개발자가 더 성공하 고 어떤 개발자가 이도저도 아니게 되는지를 곰곰히 생각 해 ...
+            "
+          />
         </Content>
       </Middle>
 
