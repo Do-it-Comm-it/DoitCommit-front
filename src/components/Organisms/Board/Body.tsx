@@ -2,7 +2,7 @@ import Header from '@src/components/Organisms/Board/Header';
 import React from 'react';
 import { Route } from 'react-router';
 import styled from 'styled-components';
-import Announcement from './Announcement';
+import Notice from './Notice';
 import CardContainer from './CardContainer';
 import FloatingButton from './FloatingButton';
 const Body = () => {
@@ -13,7 +13,7 @@ const Body = () => {
         <CardContainer />
       </Route>
       <Route exact path="/community/notice">
-        <Announcement />
+        <Notice />
       </Route>
       <FloatingButton />
     </Container>
