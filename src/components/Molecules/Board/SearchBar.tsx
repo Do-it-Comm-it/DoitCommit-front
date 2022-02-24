@@ -27,6 +27,8 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   max-width: 656px;
+  display: flex;
+  align-items: center;
   @media ${devices.tablet} {
     width: 100%;
   }

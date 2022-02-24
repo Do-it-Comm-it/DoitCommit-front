@@ -21,9 +21,9 @@ const Container = styled.div`
   flex-direction: row;
   width: 50%;
   max-width: 656px;
-  justify-content: space-evenly;
   align-items: center;
-
+  justify-content: center;
+  flex-wrap: wrap;
   @media ${devices.laptop} {
     width: 100%;
   }
@@ -35,4 +35,9 @@ const Tag = styled.div`
   padding: 6px 22px;
   color: ${({ theme }) => theme.colors.dark.a3};
   cursor: pointer;
+  white-space: nowrap;
+  margin-right: 15px;
+  @media ${devices.laptop} {
+    margin-top: 10px;
+  }
 `;

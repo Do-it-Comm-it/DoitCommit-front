@@ -13,7 +13,7 @@ const Header = () => {
           fontSize={28}
           fontWeight={500}
           style={{
-            display: 'block',
+            marginRight: '40px',
           }}
           activeStyle={{
             color: theme.colors.main,
@@ -27,20 +27,16 @@ const Header = () => {
         <DILink
           fontSize={28}
           fontWeight={500}
-          style={{
-            display: 'block',
-          }}
           activeStyle={{
             color: theme.colors.main,
             borderBottom: `2px solid ${theme.colors.main}`,
             paddingBottom: '5px',
           }}
-          to="/community/announcement"
+          to="/community/notice"
         >
           공지사항
         </DILink>
       </div>
-
       <SearchBar />
       <Tags />
     </Container>
@@ -60,8 +56,5 @@ const Container = styled.div`
   & > div {
     display: flex;
     flex-direction: row;
-    & > * {
-      margin-right: 40px;
-    }
   }
 `;

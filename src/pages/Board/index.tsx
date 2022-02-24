@@ -21,8 +21,8 @@ const Container = styled.section`
   padding: 70px;
   padding-left: 153px;
   padding-bottom: 20px;
-
   @media ${devices.laptop} {
-    padding: 8%;
+    padding: 3%;
   }
+  align-items: center;
 `;

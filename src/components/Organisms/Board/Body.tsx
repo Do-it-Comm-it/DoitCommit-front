@@ -4,6 +4,7 @@ import { Route } from 'react-router';
 import styled from 'styled-components';
 import Announcement from './Announcement';
 import CardContainer from './CardContainer';
+import FloatingButton from './FloatingButton';
 const Body = () => {
   return (
     <Container>
@@ -11,9 +12,10 @@ const Body = () => {
       <Route exact path="/community">
         <CardContainer />
       </Route>
-      <Route exact path="/community/announcement">
+      <Route exact path="/community/notice">
         <Announcement />
       </Route>
+      <FloatingButton />
     </Container>
   );
 };
