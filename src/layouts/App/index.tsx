@@ -24,7 +24,7 @@ const App = () => {
             <CommonComponentWrapper>
               <PublicRoute exact path="/" component={Home} />
               <PrivateRoute path="/mypage" component={MyPage} />
-              <PublicRoute exact path="/community" component={Board} />
+              <PublicRoute path="/community" component={Board} />
             </CommonComponentWrapper>
           </BrowserRouter>
         </ThemeProvider>

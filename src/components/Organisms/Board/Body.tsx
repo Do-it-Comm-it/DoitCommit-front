@@ -1,12 +1,19 @@
 import Header from '@src/components/Organisms/Board/Header';
 import React from 'react';
+import { Route } from 'react-router';
 import styled from 'styled-components';
+import Announcement from './Announcement';
 import CardContainer from './CardContainer';
 const Body = () => {
   return (
     <Container>
       <Header />
-      <CardContainer />
+      <Route exact path="/community">
+        <CardContainer />
+      </Route>
+      <Route exact path="/community/announcement">
+        <Announcement />
+      </Route>
     </Container>
   );
 };

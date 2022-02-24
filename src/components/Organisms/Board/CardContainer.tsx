@@ -1,5 +1,4 @@
 import Card from '@src/components/Molecules/Board/Card';
-import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -30,15 +29,4 @@ const Container = styled.div`
   row-gap: 5ch;
   width: 100%;
   height: 100%;
-`;
-const Top = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`;
-
-const Title = styled.span`
-  font-size: 20px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.dark.a7};
 `;
