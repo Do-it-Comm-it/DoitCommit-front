@@ -26,7 +26,7 @@ const getUserInfo = async () => {
 };
 
 const updateUserInfo = async (user: IUser, input: any) => {
-  if (input.file !== '') {
+  if (input.imageFile !== '') {
     const formData = serialize({
       ...(user as IUser),
       ...input,
@@ -35,7 +35,7 @@ const updateUserInfo = async (user: IUser, input: any) => {
     const { code } = await requestAPI().put('/members/update', formData, 'multipart/form-data');
     return code;
   } else {
-    delete input.file;
+    delete input.imageFile;
     const formData = serialize({
       ...(user as IUser),
       ...input,
@@ -92,6 +92,11 @@ const editTodo = async (id: string, body: any) => {
   return code;
 };
 
+const getBoards = async () => {
+  const { data } = await requestAPI().get('/board/list');
+  return data;
+};
+
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -107,4 +112,5 @@ export {
   fixedTodo,
   finishTodo,
   editTodo,
+  getBoards,
 };

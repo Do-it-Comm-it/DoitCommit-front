@@ -36,6 +36,7 @@ const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
         }}
         onBlur={() => {
           setIsFocused(false);
+          setValue('');
         }}
       />
     </Contanier>

@@ -6,7 +6,10 @@ import Highlighter from 'react-highlight-words';
 import { useRecoilValue } from 'recoil';
 import keywordState from '@src/recoil/selector/keyword';
 
-const BoardContent = () => {
+interface Props {
+  board: any;
+}
+const BoardContent = ({ board }: Props) => {
   const theme = useTheme();
   const keyword = useRecoilValue(keywordState);
   return (
@@ -29,7 +32,7 @@ const BoardContent = () => {
             highlightTag="strong"
             searchWords={keyword}
             autoEscape={true}
-            textToHighlight="나는 개발자 입니다."
+            textToHighlight={board.boardTitle}
           />
         </Title>
         <Content>
@@ -40,14 +43,13 @@ const BoardContent = () => {
             highlightTag="strong"
             searchWords={keyword}
             autoEscape={true}
-            textToHighlight="난 항상 궁금하게 생각했다 어떤 개발자가 더 성공하 고 어떤 개발자가 이도저도 아니게 되는지를 곰곰히 생각 해 ...
-            "
+            textToHighlight={board.boardContent}
           />
         </Content>
       </Middle>
 
       <Bottom>
-        <Author>by. 월급루팡</Author>
+        <Author>by. {board.writer}</Author>
         <Status />
       </Bottom>
     </Container>

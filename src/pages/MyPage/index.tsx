@@ -1,4 +1,3 @@
-import Footer from '@src/components/Organisms/Footer';
 import Body from '@src/components/Organisms/MyPage/Body';
 import { devices } from '@src/utils/theme';
 import React from 'react';
@@ -9,7 +8,6 @@ const MyPage = () => {
       <Container>
         <Body />
       </Container>
-      <Footer />
     </>
   );
 };

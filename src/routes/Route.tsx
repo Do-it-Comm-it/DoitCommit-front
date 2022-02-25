@@ -4,17 +4,22 @@ import Sidebar from '@src/components/Organisms/Sidebar';
 import React from 'react';
 import { Route, RouteProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { useLocation } from 'react-router';
+import Footer from '@src/components/Organisms/Footer';
 export const CommonComponentWrapper: React.FC = ({ children }) => {
+  const location = useLocation();
   return (
-    <Container>
-      <Sidebar />
-      <Modal />
-      <Body>
-        <HeaderNavigation />
-        <Switch>{children}</Switch>
-      </Body>
-    </Container>
+    <>
+      <Container>
+        <Sidebar />
+        <Modal />
+        <Body>
+          <HeaderNavigation />
+          <Switch>{children}</Switch>
+        </Body>
+      </Container>
+      {location.pathname !== '/' && <Footer />}
+    </>
   );
 };
 

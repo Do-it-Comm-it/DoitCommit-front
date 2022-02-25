@@ -3,11 +3,14 @@ import Thumbnail from '@src/components/Atoms/Board/Thumbnail';
 import React from 'react';
 import styled from 'styled-components';
 
-const Card = () => {
+interface Props {
+  board: any;
+}
+const Card = ({ board }: Props) => {
   return (
     <Container>
       <Thumbnail />
-      <BoardContent />
+      <BoardContent board={board} />
     </Container>
   );
 };

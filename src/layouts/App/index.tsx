@@ -23,7 +23,7 @@ const App = () => {
             <GlobalStyle />
             <CommonComponentWrapper>
               <PublicRoute exact path="/" component={Home} />
-              <PrivateRoute path="/mypage" component={MyPage} />
+              <PublicRoute path="/mypage" component={MyPage} />
               <PublicRoute path="/community" component={Board} />
             </CommonComponentWrapper>
           </BrowserRouter>
