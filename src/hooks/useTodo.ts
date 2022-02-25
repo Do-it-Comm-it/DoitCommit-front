@@ -1,7 +1,6 @@
 import { getTodo, getTodoData } from '@src/service/api';
 import { ITodos } from '@src/typings/Todos';
 import { useQuery } from 'react-query';
-import { useRecoilValue } from 'recoil';
 import { useUser } from './useAuthentication';
 
 const useTodos = () => {

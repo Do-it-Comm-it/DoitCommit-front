@@ -30,7 +30,7 @@ export const sidebarItem = [
   {
     title: '커뮤니티',
     icon: <CommunityIcon />,
-    path: '#',
+    path: '/community',
   },
 
   {

@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import PlannerLabel from '../Planner/PlannerLabel';
-import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';

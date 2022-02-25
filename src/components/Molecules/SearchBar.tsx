@@ -24,7 +24,7 @@ const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
 
   return (
     <Contanier>
-      {!isFocused && <SearchIcon />}
+      {!isFocused && <SearchIcon width={24} height={24} />}
       <DIInput
         defaultValue={value}
         width={width}

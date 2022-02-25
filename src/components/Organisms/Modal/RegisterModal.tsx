@@ -79,7 +79,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const queryClient = useQueryClient();
   const onCompleteSignUp = useMutation(
     (newInfo: any) => {
-      return updateUserInfo(user!, { ...newInfo, file: file.image });
+      return updateUserInfo(user!, { ...newInfo, imageFile: file.image });
     },
     {
       onSuccess: () => {

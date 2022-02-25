@@ -45,7 +45,7 @@ const ProfileInfoArea = () => {
 
   const onSubmit = useMutation(
     (newInfo: any) => {
-      return updateUserInfo(user!, { ...newInfo, file: file.image });
+      return updateUserInfo(user!, { ...newInfo, imageFile: file.image });
     },
     {
       onSuccess: () => {
