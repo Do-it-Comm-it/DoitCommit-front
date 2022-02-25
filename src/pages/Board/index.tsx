@@ -1,5 +1,4 @@
 import Body from '@src/components/Organisms/Board/Body';
-import Footer from '@src/components/Organisms/Footer';
 import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';

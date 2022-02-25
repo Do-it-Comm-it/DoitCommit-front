@@ -3,7 +3,6 @@ import AddTodoBox from '@src/components/Molecules/Todo/AddTodoBox';
 import TodoBox from '@src/components/Molecules/Todo/TodoBox';
 import React from 'react';
 import { devices } from '@src/utils/theme';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useTodos } from '@src/hooks/useTodo';
 import { useUser } from '@src/hooks/useAuthentication';

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import ExpandIcon from '@src/assets/menu_extended.svg';
 import DIText from '@src/components/Atoms/DIText';
 
