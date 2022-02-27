@@ -9,7 +9,7 @@ interface Props {
 const Card = ({ board }: Props) => {
   return (
     <Container>
-      <Thumbnail />
+      <Thumbnail thumbnail={board.thumbnail} />
       <BoardContent board={board} />
     </Container>
   );

@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Thumbnail = () => {
+interface Props {
+  thumbnail: any;
+}
+const Thumbnail = ({ thumbnail }: Props) => {
   return (
     <Container>
-      <Image src="https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg" />
+      <Image src={thumbnail} />
     </Container>
   );
 };

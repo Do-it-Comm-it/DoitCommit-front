@@ -92,8 +92,8 @@ const editTodo = async (id: string, body: any) => {
   return code;
 };
 
-const getBoards = async () => {
-  const { data } = await requestAPI().get('/board/list');
+const getBoards = async (page: number) => {
+  const { data } = await requestAPI().get(`/board/list?pageNo=${page}&pageSize=16`);
   return data;
 };
 
