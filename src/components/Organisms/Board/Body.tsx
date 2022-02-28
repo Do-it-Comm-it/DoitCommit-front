@@ -5,15 +5,20 @@ import styled from 'styled-components';
 import Notice from './Notice';
 import CardContainer from './CardContainer';
 import FloatingButton from './FloatingButton';
+import BoardEditor from './BoardEditor';
 const Body = () => {
   return (
     <Container>
-      <Header />
       <Route exact path="/community">
+        <Header />
         <CardContainer />
       </Route>
       <Route exact path="/community/notice">
+        <Header />
         <Notice />
+      </Route>
+      <Route exact path="/community/edit">
+        <BoardEditor />
       </Route>
       <FloatingButton />
     </Container>
