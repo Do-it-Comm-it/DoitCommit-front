@@ -10,7 +10,7 @@ interface Props {
 const Card = ({ board }: Props) => {
   return (
     <Container>
-      <Link to={`/community/${board.boardId}`}>
+      <Link to={`/community/board/${board.boardId}`}>
         <Thumbnail thumbnail={board.thumbnail} />
       </Link>
       <BoardContent board={board} />
