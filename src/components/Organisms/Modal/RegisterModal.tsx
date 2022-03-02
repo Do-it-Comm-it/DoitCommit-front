@@ -114,7 +114,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
               width={285}
               height={65}
               onChange={onChangeName}
-              placholder={'최대 8글자'}
+              placeholder={'최대 8글자'}
             />
           </InputPlace>
           {check ? (

@@ -11,8 +11,9 @@ type DIInputProps = {
   onChange: (text: string) => void;
   backgroundColor?: string;
   fontColor?: string;
-  placholder?: string;
+  placeholder?: string;
   style?: React.CSSProperties;
+  hasBorder?: boolean;
 };
 
 const DIInput = ({
@@ -24,12 +25,13 @@ const DIInput = ({
   onFocus = () => {},
   onChange,
   onBlur,
-  placholder,
+  placeholder,
   style,
   fontColor,
+  hasBorder,
 }: DIInputProps) => {
   return (
-    <InputArea
+    <Input
       value={defaultValue}
       borderRadius={borderRadius}
       backgroundColor={backgroundColor}
@@ -41,18 +43,20 @@ const DIInput = ({
         onChange(event.target.value);
       }}
       onBlur={onBlur}
-      placeholder={placholder}
+      placeholder={placeholder}
       style={style}
+      hasBorder={hasBorder}
     />
   );
 };
 
-const InputArea = styled.input<{
+const Input = styled.input<{
   width: number;
   height: number;
   borderRadius: number;
   backgroundColor?: string;
   fontColor?: string;
+  hasBorder?: boolean;
 }>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
@@ -62,7 +66,7 @@ const InputArea = styled.input<{
   border-radius: ${({ borderRadius }) => borderRadius}px;
   background-color: ${({ backgroundColor, theme }) => backgroundColor ?? theme.colors.searchBar};
   text-indent: 8px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ hasBorder }) => (hasBorder ? '' : '0px 0px 12px rgba(0, 0, 0, 0.1)')};
   color: ${({ theme, fontColor }) => fontColor ?? theme.colors.dark.a7};
   &:focus {
     outline: none !important;
