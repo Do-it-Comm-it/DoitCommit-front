@@ -10,7 +10,7 @@ const Status = () => {
       <Counter>25</Counter>
       <ViewSVG />
       <Counter>103</Counter>
-      <HeartSVG />
+      <Heart width={20} height={20} />
       <Counter>103</Counter>
     </Container>
   );
@@ -31,4 +31,10 @@ const Counter = styled.span`
   color: ${({ theme }) => theme.colors.dark.a3};
   font-size: 16px;
   font-weight: 400;
+`;
+
+const Heart = styled(HeartSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.dark.a3};
+  }
 `;
