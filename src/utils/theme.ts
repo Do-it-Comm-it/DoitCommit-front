@@ -31,6 +31,7 @@ declare module 'styled-components' {
         a7: string;
         a8: string;
         a9: string;
+        a10: string;
       };
     };
   }
@@ -66,6 +67,7 @@ export const light: DefaultTheme = {
       a7: '#0F0F0F',
       a8: '#FBFBFB',
       a9: '#FFFFFF',
+      a10: '#5B5B5B',
     },
   },
 };
@@ -100,6 +102,7 @@ export const dark: DefaultTheme = {
       a7: '#F5F5F5',
       a8: '#0C0C0C',
       a9: '#000000',
+      a10: '#818181',
     },
   },
 };
