@@ -22,6 +22,6 @@ export default Board;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 44rem;
   width: 100%;
-  padding: 0 200px;
 `;
