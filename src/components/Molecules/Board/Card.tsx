@@ -1,4 +1,4 @@
-import BoardContent from '@src/components/Molecules/Board/BoardContent';
+import CardContent from './CardContent';
 import Thumbnail from '@src/components/Atoms/Board/Thumbnail';
 import React from 'react';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ const Card = ({ board }: Props) => {
       <Link to={`/community/board/${board.boardId}`}>
         <Thumbnail thumbnail={board.thumbnail} />
       </Link>
-      <BoardContent board={board} />
+      <CardContent board={board} />
     </Container>
   );
 };

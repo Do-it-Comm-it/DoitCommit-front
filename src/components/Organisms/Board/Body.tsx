@@ -6,7 +6,7 @@ import Notice from './Notice';
 import CardContainer from './CardContainer';
 import FloatingButton from './FloatingButton';
 import BoardEditor from './BoardEditor';
-import BoardContent from './BoardContent';
+import Board from './Board';
 
 type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 
@@ -41,9 +41,9 @@ const Body = () => {
         <BoardEditor />
       </Route>
       <Route exact path="/community/board/:id">
-        <BoardContent />
+        <Board />
       </Route>
-      {path !== 'edit' && <FloatingButton />}
+      {path !== 'edit' && path !== 'board' && <FloatingButton />}
     </Container>
   );
 };
