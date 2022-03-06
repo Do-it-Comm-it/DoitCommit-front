@@ -21,6 +21,7 @@ const Container = styled.div<{ thumbnail?: string }>`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: ${({ thumbnail }) => !thumbnail && '5%'};
+  padding-bottom: 0;
 `;
 
 const Image = styled.img<{ thumbnail?: string }>`
