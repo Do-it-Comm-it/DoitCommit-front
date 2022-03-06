@@ -5,9 +5,10 @@ import { BsBookmark } from 'react-icons/bs';
 import Highlighter from 'react-highlight-words';
 import { useRecoilValue } from 'recoil';
 import keywordState from '@src/recoil/selector/keyword';
+import { IBoard } from '@src/typings/Board';
 
 interface Props {
-  board: any;
+  board: IBoard;
 }
 const CardContent = ({ board }: Props) => {
   const theme = useTheme();
@@ -63,11 +64,12 @@ const Container = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  height: 194px;
+  height: 100%;
   background-color: inherit;
   padding: 5%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  gap: 10px;
 `;
 const Tags = styled.span`
   color: ${({ theme }) => theme.colors.dark.a3};
@@ -97,16 +99,14 @@ const Bottom = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-top: auto;
 `;
 
 const Middle = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  & > p {
-    margin-bottom: 10px;
-  }
+  gap: 10px;
 `;
 
 const Author = styled(Content)``;
