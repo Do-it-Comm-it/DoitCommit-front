@@ -7,7 +7,6 @@ export const useBoards = () => {
     return {
       data: result,
       nextPage: pageParam + 1,
-      totalPages: 100,
     };
   };
 
@@ -20,7 +19,7 @@ export const useBoards = () => {
     isFetchingNextPage,
   } = useInfiniteQuery('boards', fetchPosts, {
     getNextPageParam: (lastPage) => {
-      if (lastPage.nextPage < lastPage.totalPages) {
+      if (lastPage.data.length !== 0) {
         return lastPage.nextPage;
       }
       return undefined;
