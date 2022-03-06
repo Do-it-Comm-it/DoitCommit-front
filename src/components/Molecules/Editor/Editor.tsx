@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
+import { IUser } from '@src/typings/User';
 
 type Props = {
   width?: number;
@@ -25,7 +26,15 @@ const Module = {
   },
 };
 
+type EditorState = {
+  title: string;
+  tags?: any;
+  content: Array<{ insert: string; attributes: any }>;
+  user: IUser | null;
+};
+
 const Editor = ({ width, height, placeholder }: Props) => {
+  const [editorState, setEditorState] = useState<EditorState | null>(null);
   const quillRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
