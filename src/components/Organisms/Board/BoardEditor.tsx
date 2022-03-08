@@ -1,9 +1,11 @@
+import DIButton from '@src/components/Atoms/DIButton';
 import DIInput from '@src/components/Atoms/DIInput';
 import Editor from '@src/components/Molecules/Editor/Editor';
 import React, { ChangeEvent, useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const BoardEditor = () => {
+  const theme = useTheme();
   const [title, setTitle] = useState<string>('');
 
   const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +19,14 @@ const BoardEditor = () => {
         {/* <TagInput /> */}
       </Header>
       <Editor height={500} />
+      <BottomSection>
+        <DIButton onClick={() => {}} backgroundColor={theme.colors.dark.a5} width={134} height={51} borderRadius={50}>
+          저장하기
+        </DIButton>
+        <DIButton onClick={() => {}} backgroundColor={theme.colors.main} width={134} height={51} borderRadius={50}>
+          발행하기
+        </DIButton>
+      </BottomSection>
     </Container>
   );
 };
@@ -50,6 +60,13 @@ const TitleInput = styled.input`
   ::placeholder {
     color: ${({ theme }) => theme.colors.dark.a2};
   }
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  margin-top: 30px;
+  margin-left: auto;
+  gap: 10px;
 `;
 
 export default BoardEditor;

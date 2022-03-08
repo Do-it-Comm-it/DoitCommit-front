@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
+import { IUser } from '@src/typings/User';
 
 type Props = {
   width?: number;
@@ -25,7 +26,17 @@ const Module = {
   },
 };
 
+type EditorState = {
+  title: string;
+  tags?: any;
+  content: Array<{ insert: string; attributes: any }>;
+  user: IUser | null;
+};
+
 const Editor = ({ width, height, placeholder }: Props) => {
+  const [editorState, setEditorState] = useState<EditorState | null>(null);
+  const quillRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
 
@@ -79,9 +90,24 @@ const Editor = ({ width, height, placeholder }: Props) => {
       theme: 'snow',
     });
     quill.getModule('toolbar').addHandler('image', imageHandler);
+
+    quill.on('text-change', () => {
+      const { ops } = quill.getContents();
+      //content information.
+      console.log(JSON.stringify(ops));
+    });
   }, [placeholder]);
 
-  return <div id="editor" style={{ width, height }} />;
+  return (
+    <div
+      id="editor"
+      style={{ width, height }}
+      ref={quillRef}
+      onChange={() => {
+        console.log('test');
+      }}
+    />
+  );
 };
 
 // const Editor = styled.div<{ width?: number; height?: number }>`
