@@ -97,6 +97,11 @@ const getBoards = async (page: number) => {
   return data;
 };
 
+const getTags = async () => {
+  const { data } = await requestAPI().get('/popularTags');
+  return data;
+};
+
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -113,4 +118,5 @@ export {
   finishTodo,
   editTodo,
   getBoards,
+  getTags,
 };

@@ -1,17 +1,13 @@
+import { getTags } from '@src/service/api';
 import { devices } from '@src/utils/theme';
 import React from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
 const Tags = () => {
-  return (
-    <Container>
-      <Tag>개발자</Tag>
-      <Tag>학생</Tag>
-      <Tag>직장인</Tag>
-      <Tag>프리랜서</Tag>
-      <Tag>일상</Tag>
-    </Container>
-  );
+  const { data: tags, isLoading } = useQuery('tags', getTags);
+  if (isLoading) return <p>Loading..</p>;
+  return <Container>{tags.map(({ tag }: { tag: string }) => <Tag key={tag}>{tag}</Tag>).slice(0, 7)}</Container>;
 };
 
 export default Tags;
@@ -37,6 +33,8 @@ const Tag = styled.div`
   cursor: pointer;
   white-space: nowrap;
   margin-right: 15px;
+  margin-top: 7px;
+
   @media ${devices.laptop} {
     margin-top: 10px;
   }
