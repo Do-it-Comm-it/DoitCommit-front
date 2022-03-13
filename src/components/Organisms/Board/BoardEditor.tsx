@@ -1,9 +1,29 @@
 import DIButton from '@src/components/Atoms/DIButton';
-import DIInput from '@src/components/Atoms/DIInput';
 import Editor from '@src/components/Molecules/Editor/Editor';
+import TagInput from '@src/components/Molecules/TagInput';
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-
+// {
+//     "categoryId":2,
+//     "tag": [""]
+//     "boardTitle": "zzzzzzz",
+//     "boardContent" : "zzzzzzzz",
+//     "allImageArr": [
+//         {
+//             "fileNm": "a803a952-47cb-4429-b8e0-f522eb8d0597_등록.JPG",
+//             "filePath": "2022/03/10"
+//         },
+//         {
+//             "fileNm": "a803a952-47cb-4429-b8e0-f522eb8d0597_삭제.JPG",
+//             "filePath": "2022/03/10"
+//         }],
+//     "imageArr": [
+//         {
+//             "fileNm": "a803a952-47cb-4429-b8e0-f522eb8d0597_등록.JPG",
+//             "filePath": "2022/03/10"
+//         }
+//     ]
+// }
 const BoardEditor = () => {
   const theme = useTheme();
   const [title, setTitle] = useState<string>('');
@@ -16,7 +36,7 @@ const BoardEditor = () => {
     <Container>
       <Header>
         <TitleInput onChange={onChangeTitle} defaultValue={title} placeholder={'제목을 입력하세요.'} />
-        {/* <TagInput /> */}
+        <TagInput onChange={() => {}} value={['#개발자']} />
       </Header>
       <Editor height={500} />
       <BottomSection>

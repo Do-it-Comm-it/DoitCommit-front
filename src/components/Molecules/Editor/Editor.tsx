@@ -110,9 +110,4 @@ const Editor = ({ width, height, placeholder }: Props) => {
   );
 };
 
-// const Editor = styled.div<{ width?: number; height?: number }>`
-//   width: ${({ width }) => `${width}px` || '100%'};
-//   height: ${({ height }) => `${height}px` || '100%'};
-// `;
-
 export default Editor;
