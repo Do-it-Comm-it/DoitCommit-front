@@ -1,57 +1,44 @@
+import { IBoard } from '@src/typings/Board';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
-import Status from '@src/components/Atoms/Board/Status';
-import { BsBookmark } from 'react-icons/bs';
-import Highlighter from 'react-highlight-words';
-import { useRecoilValue } from 'recoil';
-import keywordState from '@src/recoil/selector/keyword';
+import styled from 'styled-components';
+import CommentBox from './CommentBox';
+import CommentEditor from './CommentEditor';
 
 interface Props {
-  board: any;
+  boardData: IBoard;
 }
-const BoardContent = ({ board }: Props) => {
-  const theme = useTheme();
-  const keyword = useRecoilValue(keywordState);
+const BoardContent = ({ boardData }: Props) => {
   return (
     <Container>
-      <Top>
-        <Tags>#직장인 #공대생 #취준생</Tags>
-        <BsBookmark
-          style={{
-            marginLeft: 'auto',
-            color: theme.colors.dark.a3,
-          }}
+      <Content>
+        {/* 지금은 샘플 html, 추후에 html 렌더링 */}
+        {/* <h2>What the CSS!!!</h2>
+        <p>
+          CSS는 쉽습니다. 처음에는 ‘너무 쉬운데’라는 생각이 들 정도로 간단해 보입니다. 특정 언어처럼 난해한 개념도
+          없습니다. 직관적이고 간결합니다. 하지만, 신기하게도 CSS는 어렵습니다. 조금이라도 복잡한 페이지를 만들어 봤다면
+          이해할 것입니다. Layout이 깨져 보이는데, 문제를 도통 알 수 없습니다. 이렇게도 해보고 저렇게도 해보지만 잘
+          해결되지 않습니다. 10분이면 끝날 줄 알았던 작업이 퇴근 시간을 훌쩍 넘겨 버립니다.
+        </p>
+        <img
+          src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlzaW9ufGVufDB8fDB8fA%3D%3D&w=1000&q=80"
+          alt="image123"
         />
-      </Top>
-      <Middle>
-        <Title>
-          <Highlighter
-            highlightStyle={{
-              color: theme.colors.main,
-            }}
-            highlightTag="strong"
-            searchWords={keyword}
-            autoEscape={true}
-            textToHighlight={board.boardTitle}
-          />
-        </Title>
-        <Content>
-          <Highlighter
-            highlightStyle={{
-              color: theme.colors.main,
-            }}
-            highlightTag="strong"
-            searchWords={keyword}
-            autoEscape={true}
-            textToHighlight={board.boardContent}
-          />
-        </Content>
-      </Middle>
-
-      <Bottom>
-        <Author>by. {board.writer}</Author>
-        <Status />
-      </Bottom>
+        <h2>What the CSS!!!</h2>
+        <p>
+          CSS는 쉽습니다. 처음에는 ‘너무 쉬운데’라는 생각이 들 정도로 간단해 보입니다. 특정 언어처럼 난해한 개념도
+          없습니다. 직관적이고 간결합니다. 하지만, 신기하게도 CSS는 어렵습니다. 조금이라도 복잡한 페이지를 만들어 봤다면
+          이해할 것입니다. Layout이 깨져 보이는데, 문제를 도통 알 수 없습니다. 이렇게도 해보고 저렇게도 해보지만 잘
+          해결되지 않습니다. 10분이면 끝날 줄 알았던 작업이 퇴근 시간을 훌쩍 넘겨 버립니다.
+        </p> */}
+        {boardData.boardContent}
+      </Content>
+      {/* 댓글이 5개가 넘었을 경우 더보기 */}
+      <CommentBox />
+      <CommentBox />
+      <CommentBox />
+      <CommentBox />
+      <CommentBox />
+      <CommentEditor />
     </Container>
   );
 };
@@ -59,55 +46,19 @@ const BoardContent = ({ board }: Props) => {
 export default BoardContent;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
   width: 100%;
-  height: 194px;
-  background-color: inherit;
-  padding: 5%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`;
-const Tags = styled.span`
-  color: ${({ theme }) => theme.colors.dark.a3};
-  font-weight: 400;
-  font-size: 14px;
+  height: 100%;
 `;
 
-const Title = styled.p`
-  color: ${({ theme }) => theme.colors.dark.a7};
-  font-weight: 500;
-  font-size: 18px;
-`;
-
-const Content = styled.span`
-  font-weight: 400;
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.dark.a3};
-`;
-
-const Top = styled.div`
-  display: flex;
-  flex-direction: row;
+const Content = styled.div`
   width: 100%;
-`;
-
-const Bottom = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`;
-
-const Middle = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  & > p {
-    margin-bottom: 10px;
+  height: 100%;
+  padding-bottom: 200px;
+  & > h2 {
+    margin: 1.2rem 0;
+  }
+  & > img {
+    width: 100%;
+    margin: 3rem 0;
   }
 `;
-
-const Author = styled(Content)``;

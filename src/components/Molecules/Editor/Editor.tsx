@@ -3,6 +3,7 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { IUser } from '@src/typings/User';
+import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 
 type Props = {
   width?: number;
@@ -94,7 +95,8 @@ const Editor = ({ width, height, placeholder }: Props) => {
     quill.on('text-change', () => {
       const { ops } = quill.getContents();
       //content information.
-      console.log(JSON.stringify(ops));
+      const converter = new QuillDeltaToHtmlConverter(ops, {});
+      console.log(converter.convert());
     });
   }, [placeholder]);
 

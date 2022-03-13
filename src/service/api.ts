@@ -97,6 +97,16 @@ const getBoards = async (page: number) => {
   return data;
 };
 
+const getPopularTags = async () => {
+  const { data } = await requestAPI().get('/popularTags');
+  return data;
+};
+
+const getBoardData = async (id: string) => {
+  const { data } = await requestAPI().get(`/board?boardId=${id}`);
+  return data;
+};
+
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -113,4 +123,6 @@ export {
   finishTodo,
   editTodo,
   getBoards,
+  getPopularTags,
+  getBoardData,
 };

@@ -6,8 +6,9 @@ import Notice from './Notice';
 import CardContainer from './CardContainer';
 import FloatingButton from './FloatingButton';
 import BoardEditor from './BoardEditor';
+import Board from './Board';
 
-type BoardPathType = 'notice' | 'edit' | 'index';
+type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 
 const Body = () => {
   const history = useHistory();
@@ -20,6 +21,8 @@ const Body = () => {
         return 'notice';
       case 'edit':
         return 'edit';
+      case 'board':
+        return 'board';
       default:
         return 'index';
     }
@@ -27,7 +30,7 @@ const Body = () => {
 
   return (
     <Container>
-      {path !== 'edit' && <Header />}
+      {path !== 'edit' && path !== 'board' && <Header />}
       <Route exact path="/community">
         <CardContainer />
       </Route>
@@ -37,7 +40,10 @@ const Body = () => {
       <Route exact path="/community/edit">
         <BoardEditor />
       </Route>
-      {path !== 'edit' && <FloatingButton />}
+      <Route exact path="/community/board/:id">
+        <Board />
+      </Route>
+      {path !== 'edit' && path !== 'board' && <FloatingButton />}
     </Container>
   );
 };
@@ -50,4 +56,5 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  gap: 20px;
 `;
