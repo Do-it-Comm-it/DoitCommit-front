@@ -2,14 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import Heart from '@src/assets/heart.svg';
 import Bookmark from '@src/assets/bookmark.svg';
-const BoardHeader = () => {
+import { IBoard } from '@src/typings/Board';
+import { format, parseISO } from 'date-fns';
+interface Props {
+  boardData: IBoard;
+}
+const BoardHeader = ({ boardData }: Props) => {
   return (
     <Container>
       <Left>
-        <Title>회사에서 개발자들과 소통하는 방법</Title>
+        <Title>{boardData.boardTitle}</Title>
         <Info>
-          <Tag>#직장인 #공대생 #개발자</Tag>
-          <Author>by. 월급루팡 Feb.17.2022</Author>
+          {boardData.tag?.map((tag) => (
+            <Tag>{tag}</Tag>
+          ))}
+          <Author>
+            by. {boardData.writer} {format(parseISO(boardData.regDate), 'PP')}
+          </Author>
         </Info>
       </Left>
       <Right>

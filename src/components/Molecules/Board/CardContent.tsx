@@ -50,7 +50,7 @@ const CardContent = ({ board }: Props) => {
       </Middle>
       <Bottom>
         <Author>by. {board.writer}</Author>
-        <Status />
+        <Status board={board} />
       </Bottom>
     </Container>
   );

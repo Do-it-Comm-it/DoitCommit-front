@@ -1,6 +1,8 @@
 import BoardContent from '@src/components/Molecules/Board/BoardContent';
 import BoardHeader from '@src/components/Molecules/Board/BoardHeader';
+import { getBoardData } from '@src/service/api';
 import React from 'react';
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 
@@ -9,10 +11,17 @@ interface ParamType {
 }
 const Board = () => {
   const { id }: ParamType = useParams();
+  const { data: boardData, isLoading } = useQuery('board', async () => await getBoardData(id), {
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+  if (isLoading) return <p>Loading..</p>;
   return (
     <Container>
-      <BoardHeader />
-      <BoardContent />
+      <BoardHeader boardData={boardData!} />
+      <BoardContent boardData={boardData!} />
     </Container>
   );
 };

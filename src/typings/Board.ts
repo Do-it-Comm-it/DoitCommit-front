@@ -3,8 +3,9 @@ export interface IBoard {
   boardTitle: string;
   boardContent: string;
   categoryId?: number;
-  regDate?: Date;
+  regDate: string;
   tag?: string[];
   thumbnail?: string | null;
   writer?: string;
+  boardCnt?: number;
 }

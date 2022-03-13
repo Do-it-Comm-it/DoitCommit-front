@@ -1,11 +1,11 @@
-import { getTags } from '@src/service/api';
+import { getPopularTags } from '@src/service/api';
 import { devices } from '@src/utils/theme';
 import React from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
 const Tags = () => {
-  const { data: tags, isLoading } = useQuery('tags', getTags);
+  const { data: tags, isLoading } = useQuery('tags', getPopularTags);
   if (isLoading) return <p>Loading..</p>;
   return <Container>{tags.map(({ tag }: { tag: string }) => <Tag key={tag}>{tag}</Tag>).slice(0, 7)}</Container>;
 };
