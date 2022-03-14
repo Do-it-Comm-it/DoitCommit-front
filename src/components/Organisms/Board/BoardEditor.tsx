@@ -5,10 +5,11 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useMutation } from 'react-query';
 import { saveBoardData } from '@src/service/api';
-import { RequestBoard } from '@src/typings/Board';
+import { BoardImage, RequestBoard } from '@src/typings/Board';
 import Quill from 'quill';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+import { useImage } from '@src/hooks/useImage';
 // {
 //     "categoryId":2,
 //     "tag": [""]
@@ -59,11 +60,13 @@ const defaultEditorState: RequestBoard = {
 const BoardEditor = () => {
   const theme = useTheme();
   const [html, setHtml] = useState<string | null>(null);
-  const [AllImages, setAllImages] = useState<string[]>([]);
-  const [saveImages, setImages] = useState<string[]>([]);
+  const [AllImages, setAllImages] = useState<BoardImage[]>([]);
+  const [saveImages, setImages] = useState<BoardImage[]>([]);
   const [editorState, setEditorState] = useState<RequestBoard>(defaultEditorState);
 
   const onSubmit = useMutation((boardData: RequestBoard) => saveBoardData(boardData));
+
+  const { mutate: saveImage } = useImage();
 
   useEffect(() => {
     Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
@@ -77,11 +80,15 @@ const BoardEditor = () => {
       // or just append the file
       formData.append('file', file);
       if (quill) {
-        let index = (quill.getSelection() || {}).index;
-        if (index === undefined || index < 0) index = quill.getLength();
-        const url = 'https://picsum.photos/200';
+        saveImage(formData, {
+          onSuccess: (data) => {
+            setAllImages((prev) => [...prev, data.fileMap]);
+            let index = (quill.getSelection() || {}).index;
+            if (index === undefined || index < 0) index = quill.getLength();
 
-        quill.insertEmbed(index, 'image', url);
+            quill.insertEmbed(index, 'image', data.url);
+          },
+        });
       }
     };
 
@@ -98,9 +105,16 @@ const BoardEditor = () => {
             formData.append('file', file);
             let index = (quill.getSelection() || {}).index;
             if (index === undefined || index < 0) index = quill.getLength();
-            const url = 'https://picsum.photos/200';
 
-            quill.insertEmbed(index, 'image', url);
+            saveImage(formData, {
+              onSuccess: (data) => {
+                setAllImages((prev) => [...prev, data.fileMap]);
+                let index = (quill.getSelection() || {}).index;
+                if (index === undefined || index < 0) index = quill.getLength();
+
+                quill.insertEmbed(index, 'image', data.url);
+              },
+            });
           }
         };
       }
@@ -125,18 +139,15 @@ const BoardEditor = () => {
       const converter = new QuillDeltaToHtmlConverter(ops, {});
       setHtml(converter.convert());
     });
-  }, []);
+  }, [saveImage]);
 
   const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEditorState((prev) => ({ ...prev, boardTitle: e.target.value }));
   }, []);
 
   const onChangeTag = useCallback((value) => {
-    console.log(value);
     setEditorState((prev) => ({ ...prev, tag: value }));
   }, []);
-
-  console.log(editorState);
 
   return (
     <Container>

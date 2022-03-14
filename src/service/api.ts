@@ -113,8 +113,13 @@ const saveBoardData = async (request: RequestBoard) => {
   return data;
 };
 
-const saveImageToS3 = async (request: string) => {
-  const { data } = await requestAPI().post(`/image`);
+const saveImageToS3 = async (request: FormData) => {
+  const { data } = await requestAPI().post(
+    `/image`,
+    serialize({ imageFile: request.get('file') }),
+    'multipart/form-data',
+  );
+
   return data;
 };
 
