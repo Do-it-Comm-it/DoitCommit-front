@@ -5,7 +5,7 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useMutation } from 'react-query';
 import { saveBoardData } from '@src/service/api';
-import { BoardImage, RequestBoard } from '@src/typings/Board';
+import { BoardImage, RequestBoard, Tag } from '@src/typings/Board';
 import Quill from 'quill';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
@@ -59,12 +59,11 @@ const defaultEditorState: RequestBoard = {
 
 const BoardEditor = () => {
   const theme = useTheme();
-  const [html, setHtml] = useState<string | null>(null);
-  const [AllImages, setAllImages] = useState<BoardImage[]>([]);
-  const [saveImages, setImages] = useState<BoardImage[]>([]);
+  const [allImages, setAllImages] = useState<BoardImage[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] = useState<RequestBoard>(defaultEditorState);
 
-  const onSubmit = useMutation((boardData: RequestBoard) => saveBoardData(boardData));
+  const { mutate: postBoard } = useMutation((boardData: RequestBoard) => saveBoardData(boardData));
 
   const { mutate: saveImage } = useImage();
 
@@ -82,7 +81,14 @@ const BoardEditor = () => {
       if (quill) {
         saveImage(formData, {
           onSuccess: (data) => {
-            setAllImages((prev) => [...prev, data.fileMap]);
+            setAllImages((prev) => [
+              ...prev,
+              {
+                fileNm: data.fileMap.fileNm,
+                filePath: data.fileMap.filePath,
+                url: data.url,
+              },
+            ]);
             let index = (quill.getSelection() || {}).index;
             if (index === undefined || index < 0) index = quill.getLength();
 
@@ -108,7 +114,14 @@ const BoardEditor = () => {
 
             saveImage(formData, {
               onSuccess: (data) => {
-                setAllImages((prev) => [...prev, data.fileMap]);
+                setAllImages((prev) => [
+                  ...prev,
+                  {
+                    fileNm: data.fileMap.fileNm,
+                    filePath: data.fileMap.filePath,
+                    url: data.url,
+                  },
+                ]);
                 let index = (quill.getSelection() || {}).index;
                 if (index === undefined || index < 0) index = quill.getLength();
 
@@ -137,7 +150,10 @@ const BoardEditor = () => {
       const { ops } = quill.getContents();
       //content information.
       const converter = new QuillDeltaToHtmlConverter(ops, {});
-      setHtml(converter.convert());
+      setEditorState((prev) => ({
+        ...prev,
+        boardContent: converter.convert(),
+      }));
     });
   }, [saveImage]);
 
@@ -146,21 +162,47 @@ const BoardEditor = () => {
   }, []);
 
   const onChangeTag = useCallback((value) => {
-    setEditorState((prev) => ({ ...prev, tag: value }));
+    setTags(value);
   }, []);
+
+  const onSubmit = useCallback(() => {
+    const images = allImages.filter((image) => image.url && editorState.boardContent.includes(image.url));
+
+    postBoard(
+      {
+        ...editorState,
+        tag: tags.map((t) => String(t.id)),
+        allImageArr: allImages.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
+        imageArr: images.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      },
+    );
+  }, [allImages, editorState, tags, postBoard]);
 
   return (
     <Container>
       <Header>
         <TitleInput onChange={onChangeTitle} defaultValue={editorState.boardTitle} placeholder={'제목을 입력하세요.'} />
-        <TagInput onChange={onChangeTag} value={editorState.tag} />
+        <TagInput onChange={onChangeTag} value={tags} />
       </Header>
       <Editor height={500} />
       <BottomSection>
-        <DIButton onClick={() => {}} backgroundColor={theme.colors.dark.a5} width={134} height={51} borderRadius={50}>
+        <DIButton
+          onClick={() => {
+            alert('아직 개발중입니다.');
+          }}
+          backgroundColor={theme.colors.dark.a5}
+          width={134}
+          height={51}
+          borderRadius={50}
+        >
           저장하기
         </DIButton>
-        <DIButton onClick={() => {}} backgroundColor={theme.colors.main} width={134} height={51} borderRadius={50}>
+        <DIButton onClick={onSubmit} backgroundColor={theme.colors.main} width={134} height={51} borderRadius={50}>
           발행하기
         </DIButton>
       </BottomSection>
@@ -168,7 +210,7 @@ const BoardEditor = () => {
   );
 };
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

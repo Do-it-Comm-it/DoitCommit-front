@@ -14,7 +14,7 @@ export interface RequestBoard {
   categoryId: number;
   boardTitle: string;
   boardContent: string;
-  tag: Tag[];
+  tag: string[];
   allImageArr: BoardImage[];
   imageArr: BoardImage[];
 }
@@ -23,4 +23,4 @@ export type Tag = {
   id: number;
   label: string;
 };
-export type BoardImage = { fileNm: string; filePath: string };
+export type BoardImage = { fileNm: string; filePath: string; url?: string };
