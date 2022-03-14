@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { Tag } from '@src/typings/Board';
+import React, { useCallback, useState } from 'react';
 import Select, { InputActionMeta, components, MenuProps } from 'react-select';
-import styled, { useTheme } from 'styled-components';
-
-type Tag = string;
+import { useTheme } from 'styled-components';
 
 interface Props {
   onChange: (value: unknown) => void;
@@ -12,11 +11,11 @@ interface Props {
 
 const defaultTags = [
   {
-    value: 1,
+    id: 1,
     label: '개발자',
   },
   {
-    value: 2,
+    id: 2,
     label: '학생',
   },
 ];
@@ -24,29 +23,36 @@ const defaultTags = [
 const TagInput = ({ onChange, width, value }: Props) => {
   const theme = useTheme();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [tags, setTags] = useState<Array<{ value: number; label: string }>>(defaultTags);
-  const handleInputChange = (query: string, { action }: InputActionMeta) => {
+  const [tags, setTags] = useState<Array<Tag>>(defaultTags);
+
+  const handleInputChange = useCallback((query: string, { action }: InputActionMeta) => {
     if (action === 'input-change') {
       setOpenMenu(true);
     }
-  };
+  }, []);
 
-  const hideMenu = () => {
+  const hideMenu = useCallback(() => {
     setOpenMenu(false);
-  };
+  }, []);
 
-  const Menu = ({ innerProps, ...props }: MenuProps) => {
+  const Menu = useCallback(({ innerProps, ...props }: any) => {
     // const onMouseDown = (e) => e.target.type !== 'input' && innerProps.onMouseDown(e);
-    return <components.Menu {...props} innerProps={{ ...innerProps }} />;
-  };
+    return (
+      <components.Menu {...props} innerProps={{ ...innerProps }}>
+        인기 태그
+        {props.children}
+      </components.Menu>
+    );
+  }, []);
 
   return (
     <Select
-      value={null}
+      value={value}
       onInputChange={handleInputChange}
-      onChange={hideMenu}
+      onChange={onChange}
       onBlur={hideMenu}
       options={tags}
+      isMulti
       placeholder={'태그를 입력하세요 (최대 4개)'}
       menuIsOpen={openMenu}
       components={{ Menu }}
@@ -116,4 +122,4 @@ const TagInput = ({ onChange, width, value }: Props) => {
   );
 };
 
-export default TagInput;
+export default React.memo(TagInput);

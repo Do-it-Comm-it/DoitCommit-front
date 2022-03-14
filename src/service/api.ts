@@ -1,3 +1,4 @@
+import { RequestBoard } from '@src/typings/Board';
 import { Tech } from '@src/typings/Tech';
 import { AddTodo } from '@src/typings/Todos';
 import { IUser } from '@src/typings/User';
@@ -107,6 +108,16 @@ const getBoardData = async (id: string) => {
   return data;
 };
 
+const saveBoardData = async (request: RequestBoard) => {
+  const { data } = await requestAPI().post(`/board`, request);
+  return data;
+};
+
+const saveImageToS3 = async (request: string) => {
+  const { data } = await requestAPI().post(`/image`);
+  return data;
+};
+
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -125,4 +136,6 @@ export {
   getBoards,
   getPopularTags,
   getBoardData,
+  saveBoardData,
+  saveImageToS3,
 };
