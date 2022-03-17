@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 
 interface Props {
-  chat: any;
+  content: string;
 }
-const useCommentRegex = ({ chat }: Props) => {
+const useCommentRegex = ({ content }: Props) => {
   const [text, setText] = useState('');
   useEffect(() => {
-    if (chat !== '') {
+    if (content !== '') {
       let regex = /@\[.+?\]\{.+?\}/gm;
       let displayRegex = /@\[.+?\]/g;
       let idRegex = /\{.+?\}/g;
-      let matches: any = chat.match(regex);
+      let matches = content.match(regex);
       let arr: { id: string; display: string }[] = [];
       matches &&
         matches.forEach((m: any) => {
@@ -19,7 +19,7 @@ const useCommentRegex = ({ chat }: Props) => {
 
           arr.push({ id, display });
         });
-      let newComment = chat.split(regex);
+      let newComment = content.split(regex);
       let output = '';
       for (let i = 0; i < newComment.length; i++) {
         const c = newComment[i];
@@ -33,7 +33,7 @@ const useCommentRegex = ({ chat }: Props) => {
       }
       setText(output);
     }
-  }, [chat]);
+  }, [content]);
 
   return text;
 };
