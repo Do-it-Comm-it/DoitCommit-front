@@ -8,18 +8,52 @@ interface Props {
   boardData: IBoard;
 }
 const BoardContent = ({ boardData }: Props) => {
+  const commentExample = [
+    {
+      content: '안녕하세요',
+      mentions: [],
+    },
+    {
+      content: '@[장준민]{1} 반갑습니다 ',
+      mentions: ['1'],
+    },
+    {
+      content: '@[조수권]{2} @[김정규]{3} ㅎㅇㅎㅇ',
+      mentions: ['2', '3'],
+    },
+  ];
+  const mentionsExample = [
+    {
+      id: '1',
+      display: '장준민',
+    },
+    {
+      id: '2',
+      display: '조수권',
+    },
+    {
+      id: '3',
+      display: '김정규',
+    },
+    {
+      id: '4',
+      display: '유태선',
+    },
+    {
+      id: '5',
+      display: '김진영',
+    },
+  ];
   return (
     <Container>
       <Content>
         <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }}></div>
       </Content>
       {/* 댓글이 5개가 넘었을 경우 더보기 */}
-      <CommentBox />
-      <CommentBox />
-      <CommentBox />
-      <CommentBox />
-      <CommentBox />
-      <CommentEditor boardId={boardData.boardId!} />
+      {commentExample.map((comment, i) => (
+        <CommentBox key={i} boardId={boardData.boardId!} mentionData={mentionsExample} commentData={comment} />
+      ))}
+      <CommentEditor boardId={boardData.boardId!} mentionData={mentionsExample} />
     </Container>
   );
 };
