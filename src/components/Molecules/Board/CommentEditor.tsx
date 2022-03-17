@@ -2,47 +2,69 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions';
 import autosize from 'autosize';
-const CommentEditor = () => {
-  const [chat, setChat] = useState('');
-  const onChangeChat = useCallback((e: any) => {
-    setChat(e.target.value);
-  }, []);
+import { addComment } from '@src/service/api';
+
+interface Props {
+  boardId: number;
+}
+const CommentEditor = ({ boardId }: Props) => {
+  const [input, setInput] = useState({
+    chat: '',
+    mentions: [],
+  });
+  const onChangeChat = useCallback(
+    (e: any) => {
+      const value = e.target.value;
+      // regex for mentions markup in chat string
+      const regex = /[^{}]+(?=})/g;
+      const mentions = value.match(regex);
+      setInput({
+        mentions,
+        chat: value,
+      });
+      console.log(input);
+    },
+    [input],
+  );
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // memberData -> 댓글 작성한 사람들 목록 { id: memberId, display: memberNickname }
   const testData = [
     {
       id: '1',
-      display: 'junmin',
+      display: '장준민',
     },
     {
       id: '2',
-      display: 'junmin2',
+      display: '박수진',
     },
     {
       id: '3',
-      display: 'junmin3',
+      display: '안효진',
     },
     {
       id: '4',
-      display: 'junmin4',
+      display: '전예진',
     },
     {
-      id: '4',
-      display: 'junmin4',
-    },
-    {
-      id: '4',
-      display: 'junmin4',
-    },
-    {
-      id: '4',
-      display: 'junmin4',
+      id: '5',
+      display: '이형우',
     },
   ];
-  const onSubmit = useCallback(() => {
-    console.log(chat);
-  }, [chat]);
+  const onSubmit = useCallback(async () => {
+    const result = await addComment({
+      boardId,
+      content: input.chat,
+      memberIdSet: input.mentions,
+    });
+
+    if (result === 1) {
+      alert('댓글 등록 완료');
+    }
+  }, [input, boardId]);
+
+  // render fn for suggestion list
   const renderUserSuggestion: (
     suggestion: SuggestionDataItem,
     search: string,
@@ -67,13 +89,14 @@ const CommentEditor = () => {
     <Container>
       <Input
         allowSuggestionsAboveCursor
-        value={chat}
+        value={input.chat}
         onChange={onChangeChat}
         placeholder="멋진 글에 대한 소감을 입력해보세요!"
         inputRef={textareaRef}
       >
         <Mention
           appendSpaceOnAdd
+          markup="[__display__]{__id__}"
           trigger="@"
           data={testData}
           renderSuggestion={renderUserSuggestion}

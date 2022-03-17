@@ -107,6 +107,10 @@ const getBoardData = async (id: string) => {
   return data;
 };
 
+const addComment = async (body: { boardId: number; content: string; memberIdSet?: any[] }) => {
+  const { code } = await requestAPI().post('/comments', body);
+  return code;
+};
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -125,4 +129,5 @@ export {
   getBoards,
   getPopularTags,
   getBoardData,
+  addComment,
 };
