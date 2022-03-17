@@ -6,56 +6,39 @@ import { addComment } from '@src/service/api';
 
 interface Props {
   boardId: number;
+  mentionData: any;
+  defaultValue?: {
+    content: string;
+    mentions: string[];
+  };
 }
-const CommentEditor = ({ boardId }: Props) => {
+const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
   const [input, setInput] = useState({
-    chat: '',
-    mentions: [],
+    content: defaultValue?.content ?? '',
+    mentions: defaultValue?.mentions ?? [],
   });
-  const onChangeChat = useCallback(
-    (e: any) => {
-      const value = e.target.value;
-      // regex for mentions markup in chat string
-      const regex = /[^{}]+(?=})/g;
-      const mentions = value.match(regex);
-      setInput({
-        mentions,
-        chat: value,
-      });
-      console.log(input);
-    },
-    [input],
-  );
+  const onChangeChat = useCallback((e: any) => {
+    const value = e.target.value;
+    // regex for mentions markup in chat string
+    const regex = /[^{}]+(?=})/g;
+    const mentions = value.match(regex);
+    setInput({
+      mentions,
+      content: value,
+    });
+  }, []);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // memberData -> 댓글 작성한 사람들 목록 { id: memberId, display: memberNickname }
-  const testData = [
-    {
-      id: '1',
-      display: '장준민',
-    },
-    {
-      id: '2',
-      display: '박수진',
-    },
-    {
-      id: '3',
-      display: '안효진',
-    },
-    {
-      id: '4',
-      display: '전예진',
-    },
-    {
-      id: '5',
-      display: '이형우',
-    },
-  ];
   const onSubmit = useCallback(async () => {
+    //defaultValue가 존재하면 즉 수정할 때는 수정 api 아니면 생성 api 호출 (분기)
+    // if (defaultValue) {
+    // } else {
+
+    // }
     const result = await addComment({
       boardId,
-      content: input.chat,
+      content: input.content,
       memberIdSet: input.mentions,
     });
 
@@ -83,22 +66,22 @@ const CommentEditor = ({ boardId }: Props) => {
     if (textareaRef.current) {
       autosize(textareaRef.current);
     }
-  }, []);
+  }, [input]);
 
   return (
     <Container>
       <Input
         allowSuggestionsAboveCursor
-        value={input.chat}
+        value={input.content}
         onChange={onChangeChat}
         placeholder="멋진 글에 대한 소감을 입력해보세요!"
         inputRef={textareaRef}
       >
         <Mention
           appendSpaceOnAdd
-          markup="[__display__]{__id__}"
+          markup="@[__display__]{__id__}"
           trigger="@"
-          data={testData}
+          data={mentionData}
           renderSuggestion={renderUserSuggestion}
           displayTransform={(id, display) => `@${display}`}
         />
