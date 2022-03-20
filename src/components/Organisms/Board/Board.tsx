@@ -11,7 +11,7 @@ interface ParamType {
 }
 const Board = () => {
   const { id }: ParamType = useParams();
-  const { data: boardData, isLoading } = useQuery('board', async () => await getBoardData(id), {
+  const { data: boardData, isLoading } = useQuery(`board/${id}`, async () => await getBoardData(id), {
     retry: 1,
     refetchOnMount: true,
     refetchOnReconnect: false,
