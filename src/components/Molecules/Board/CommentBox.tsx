@@ -1,28 +1,54 @@
 import DIText from '@src/components/Atoms/DIText';
-import React from 'react';
+import useCommentRegex from '@src/hooks/useCommentRegex';
+import { IComment, IMemberTagResDto } from '@src/typings/Comment';
+import React, { useCallback, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
+import CommentEditor from './CommentEditor';
 
-const CommentBox = () => {
+interface Props {
+  boardId: number;
+  mentionData: IMemberTagResDto[];
+  commentData: IComment;
+}
+const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const theme = useTheme();
+  const [edit, setEdit] = useState(false);
+
+  const [input, setInput] = useState({
+    content: commentData.content,
+    mentions: commentData.memberIdSet,
+  });
+  const text = useCommentRegex(input);
+  const onToggle = useCallback(() => {
+    setEdit((value) => !value);
+  }, []);
+
   return (
     <Container>
-      <Left>
-        <Profile src="https://avatars.githubusercontent.com/u/65433256?v=4" alt="user_profile" />
-      </Left>
-      <Right>
-        <Header>
-          <DIText fontColor={theme.colors.dark.a7} fontWeight={350} fontSize={20}>
-            월급루팡
-          </DIText>
-          <DIText fontColor={theme.colors.dark.a10} fontWeight={400} fontSize={16}>
-            Feb.17.2022
-          </DIText>
-        </Header>
-        <DIText fontColor={theme.colors.dark.a10} fontWeight={350} fontSize={20}>
-          사업 전략을 충분히 고민하지 않고 생산성에만 집중하는 디자이너가 되지 않도록 주의 합니다. 생각 없이 디자인 하는
-          경험이 쌓인 경력자가 되지 않도록.
-        </DIText>
-      </Right>
+      {edit ? (
+        <>
+          <button onClick={onToggle}>취소</button>
+          <CommentEditor boardId={boardId} mentionData={mentionData} defaultValue={input} />
+        </>
+      ) : (
+        <>
+          <Left>
+            <Profile src={commentData.imageResDto.fileNm} alt="user_profile" />
+          </Left>
+          <Right>
+            <Header>
+              <DIText fontColor={theme.colors.dark.a7} fontWeight={350} fontSize={20}>
+                {commentData.nickname}
+              </DIText>
+              <DIText fontColor={theme.colors.dark.a10} fontWeight={400} fontSize={16}>
+                {commentData.regDateTime}
+              </DIText>
+              <button onClick={onToggle}>수정</button>
+            </Header>
+            <p dangerouslySetInnerHTML={{ __html: text }}></p>
+          </Right>
+        </>
+      )}
     </Container>
   );
 };

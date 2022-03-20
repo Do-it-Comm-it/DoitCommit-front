@@ -123,6 +123,14 @@ const saveImageToS3 = async (request: FormData) => {
   return data;
 };
 
+const getComments = async (boardId: number) => {
+  const { data } = await requestAPI().get(`/boards/${boardId}/comments`);
+  return data;
+};
+const addComment = async (body: { boardId: number; content: string; memberIdSet?: any[] }) => {
+  const { code } = await requestAPI().post('/comments', body);
+  return code;
+};
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -143,4 +151,6 @@ export {
   getBoardData,
   saveBoardData,
   saveImageToS3,
+  addComment,
+  getComments,
 };
