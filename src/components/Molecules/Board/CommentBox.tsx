@@ -1,13 +1,14 @@
 import DIText from '@src/components/Atoms/DIText';
 import useCommentRegex from '@src/hooks/useCommentRegex';
+import { IComment, IMemberTagResDto } from '@src/typings/Comment';
 import React, { useCallback, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import CommentEditor from './CommentEditor';
 
 interface Props {
   boardId: number;
-  mentionData: { id: string; display: string }[];
-  commentData: any; // 아직 필드를 정확히 모름
+  mentionData: IMemberTagResDto[];
+  commentData: IComment;
 }
 const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const theme = useTheme();
@@ -15,7 +16,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
 
   const [input, setInput] = useState({
     content: commentData.content,
-    mentions: commentData.mentions,
+    mentions: commentData.memberIdSet,
   });
   const text = useCommentRegex(input);
   const onToggle = useCallback(() => {
@@ -32,15 +33,15 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
       ) : (
         <>
           <Left>
-            <Profile src="https://avatars.githubusercontent.com/u/65433256?v=4" alt="user_profile" />
+            <Profile src={commentData.imageResDto.fileNm} alt="user_profile" />
           </Left>
           <Right>
             <Header>
               <DIText fontColor={theme.colors.dark.a7} fontWeight={350} fontSize={20}>
-                월급루팡
+                {commentData.nickname}
               </DIText>
               <DIText fontColor={theme.colors.dark.a10} fontWeight={400} fontSize={16}>
-                Feb.17.2022
+                {commentData.regDateTime}
               </DIText>
               <button onClick={onToggle}>수정</button>
             </Header>

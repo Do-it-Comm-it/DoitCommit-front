@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions';
 import autosize from 'autosize';
 import { addComment } from '@src/service/api';
+import { IMemberTagResDto } from '@src/typings/Comment';
 
 interface Props {
   boardId: number;
-  mentionData: any;
+  mentionData: IMemberTagResDto[];
   defaultValue?: {
     content: string;
     mentions: string[];
@@ -39,7 +40,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
     const result = await addComment({
       boardId,
       content: input.content,
-      memberIdSet: input.mentions,
+      memberIdSet: input.mentions ?? [],
     });
 
     if (result === 1) {
