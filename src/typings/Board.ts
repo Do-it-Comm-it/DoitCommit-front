@@ -20,7 +20,7 @@ export interface RequestBoard {
 }
 
 export type Tag = {
-  id: number;
+  value: number;
   label: string;
 };
 export type BoardImage = { fileNm: string; filePath: string; url?: string };

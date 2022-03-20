@@ -1,7 +1,7 @@
 import { Tag } from '@src/typings/Board';
 import React, { useCallback, useState } from 'react';
 import Select, { InputActionMeta, components, MenuProps } from 'react-select';
-import { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface Props {
   onChange: (value: unknown) => void;
@@ -11,12 +11,28 @@ interface Props {
 
 const defaultTags = [
   {
-    id: 1,
+    value: 1,
     label: '개발자',
   },
   {
-    id: 2,
+    value: 2,
     label: '학생',
+  },
+  {
+    value: 3,
+    label: '공모전',
+  },
+  {
+    value: 4,
+    label: '프로젝트',
+  },
+  {
+    value: 5,
+    label: '직장인',
+  },
+  {
+    value: 6,
+    label: '프리랜서',
   },
 ];
 
@@ -35,11 +51,10 @@ const TagInput = ({ onChange, width, value }: Props) => {
     setOpenMenu(false);
   }, []);
 
-  const Menu = useCallback(({ innerProps, ...props }: any) => {
-    // const onMouseDown = (e) => e.target.type !== 'input' && innerProps.onMouseDown(e);
+  const CustomMenu = useCallback(({ innerProps, ...props }: MenuProps<any>) => {
     return (
       <components.Menu {...props} innerProps={{ ...innerProps }}>
-        인기 태그
+        <PopularTagText>인기 태그</PopularTagText>
         {props.children}
       </components.Menu>
     );
@@ -51,11 +66,11 @@ const TagInput = ({ onChange, width, value }: Props) => {
       onInputChange={handleInputChange}
       onChange={onChange}
       onBlur={hideMenu}
-      options={tags}
+      options={tags.map((tag) => ({ ...tag, label: `#${tag.label}` }))}
       isMulti
       placeholder={'태그를 입력하세요 (최대 4개)'}
       menuIsOpen={openMenu}
-      components={{ Menu }}
+      components={{ Menu: CustomMenu }}
       isOptionDisabled={(option) => value.length >= 4}
       styles={{
         dropdownIndicator: (defaultStyles) => ({
@@ -97,14 +112,16 @@ const TagInput = ({ onChange, width, value }: Props) => {
           boxShadow: '0px 0px 20px rgba(143, 146, 148, 0.2)',
           borderRadius: '5px',
           left: '15px',
-          height: '175px',
-          display: 'grid',
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingTop: 10,
+          paddingBottom: 10,
         }),
         menuList: (defaultStyles) => ({
           ...defaultStyles,
           padding: 0,
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateColumns: 'repeat(4, auto)',
           gridGap: '20px',
         }),
         option: (defaultStyles) => ({
@@ -112,14 +129,36 @@ const TagInput = ({ onChange, width, value }: Props) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '105px',
+
           height: '35px',
           background: '#F2F3F9',
           borderRadius: '50px',
+
+          ':hover': {
+            cursor: 'pointer',
+            backgroundColor: theme.colors.sub3,
+          },
         }),
       }}
     />
   );
 };
+
+const PopularTagText = styled.div`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  color: ${({ theme }) => theme.colors.main};
+
+  height: 30px;
+  margin-bottom: 10px;
+`;
 
 export default React.memo(TagInput);

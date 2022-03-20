@@ -10,27 +10,6 @@ import Quill from 'quill';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
-// {
-//     "categoryId":2,
-//     "tag": [""]
-//     "boardTitle": "zzzzzzz",
-//     "boardContent" : "zzzzzzzz",
-//     "allImageArr": [
-//         {
-//             "fileNm": "a803a952-47cb-4429-b8e0-f522eb8d0597_등록.JPG",
-//             "filePath": "2022/03/10"
-//         },
-//         {
-//             "fileNm": "a803a952-47cb-4429-b8e0-f522eb8d0597_삭제.JPG",
-//             "filePath": "2022/03/10"
-//         }],
-//     "imageArr": [
-//         {
-//             "fileNm": "a803a952-47cb-4429-b8e0-f522eb8d0597_등록.JPG",
-//             "filePath": "2022/03/10"
-//         }
-//     ]
-// }
 
 const Module = {
   toolbar: {
@@ -171,7 +150,7 @@ const BoardEditor = () => {
     postBoard(
       {
         ...editorState,
-        tag: tags.map((t) => String(t.id)),
+        tag: tags.map((t) => String(t.value)),
         allImageArr: allImages.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
         imageArr: images.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
       },

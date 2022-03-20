@@ -84,7 +84,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
           trigger="@"
           data={mentionData}
           renderSuggestion={renderUserSuggestion}
-          displayTransform={(id, display) => `@${display}`}
+          displayTransform={(id: any, display: any) => `@${display}`}
         />
       </Input>
       <Button onClick={onSubmit}>확인</Button>
