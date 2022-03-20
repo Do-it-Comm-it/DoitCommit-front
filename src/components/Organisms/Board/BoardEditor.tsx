@@ -121,8 +121,9 @@ const BoardEditor = () => {
       },
       placeholder: '내용을 입력하세요.',
       readOnly: false,
-      theme: 'snow',
+      theme: 'bubble',
     });
+
     quill.getModule('toolbar').addHandler('image', imageHandler);
 
     quill.on('text-change', () => {

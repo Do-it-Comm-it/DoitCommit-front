@@ -1,5 +1,5 @@
 import React from 'react';
-import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
 type Props = {
   width?: number;
@@ -7,15 +7,7 @@ type Props = {
 };
 
 const Editor = ({ width, height }: Props) => {
-  return (
-    <div
-      id="editor"
-      style={{ width, height }}
-      onChange={() => {
-        console.log('test');
-      }}
-    />
-  );
+  return <div id="editor" style={{ width, height }} />;
 };
 
 export default React.memo(Editor);
