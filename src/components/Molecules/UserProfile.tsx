@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DIButton from '../Atoms/DIButton';
 import { useSetRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
-import { logoutUser } from '@src/service/api';
+import { user as userAPI } from '@src/service/api';
 import { useQueryClient } from 'react-query';
 type UserProfileProps = {
   width?: number;
@@ -29,7 +29,7 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src 
   }, [setModal]);
   const onClickLogout = useCallback(async () => {
     try {
-      if (await logoutUser()) {
+      if (await userAPI.logoutUser()) {
         queryClient
           .getQueryCache()
           .findAll('user')

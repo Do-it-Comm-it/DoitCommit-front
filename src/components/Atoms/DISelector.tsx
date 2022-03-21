@@ -16,7 +16,7 @@ type DISelectorProps = {
 
 const defaultList = [
   { id: '1', label: 'Java' },
-  { id: '2', label: 'Javscript' },
+  { id: '2', label: 'Javascript' },
   { id: '3', label: 'Typescript' },
 ];
 

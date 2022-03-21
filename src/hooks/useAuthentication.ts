@@ -1,12 +1,12 @@
 import { IUser } from '@src/typings/User';
-import { getUserInfo } from '@src/service/api';
+import { user as userAPI } from '@src/service/api';
 import { useQuery } from 'react-query';
 
 export const useUser = () => {
   const user = useQuery<IUser | null>(
     'user',
     async () => {
-      return await getUserInfo().catch(() => {
+      return await userAPI.getUserInfo().catch(() => {
         return null;
       });
     },

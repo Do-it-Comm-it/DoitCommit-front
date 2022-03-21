@@ -4,7 +4,7 @@ import SelectInput from '@src/components/Organisms/SelectInput';
 import infoFormData from '@src/data/formData';
 import { useUser } from '@src/hooks/useAuthentication';
 import { fileAtom } from '@src/recoil/atom/file';
-import { updateUserInfo } from '@src/service/api';
+import { user as userAPI } from '@src/service/api';
 import { Tech } from '@src/typings/Tech';
 import { IUser } from '@src/typings/User';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
@@ -45,7 +45,7 @@ const ProfileInfoArea = () => {
 
   const onSubmit = useMutation(
     (newInfo: any) => {
-      return updateUserInfo(user!, { ...newInfo, imageFile: file.image });
+      return userAPI.updateUserInfo(user!, { ...newInfo, imageFile: file.image });
     },
     {
       onSuccess: () => {

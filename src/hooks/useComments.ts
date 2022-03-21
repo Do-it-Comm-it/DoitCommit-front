@@ -1,4 +1,4 @@
-import { getComments } from '@src/service/api';
+import { board } from '@src/service/api';
 import { ICommentRes } from '@src/typings/Comment';
 import { useQuery } from 'react-query';
 
@@ -6,7 +6,7 @@ const useComments = (boardId: number) => {
   const result = useQuery<ICommentRes>(
     `comments/${boardId}`,
     async () => {
-      return await getComments(boardId);
+      return await board.getCommentList(boardId);
     },
     {
       refetchOnWindowFocus: true,

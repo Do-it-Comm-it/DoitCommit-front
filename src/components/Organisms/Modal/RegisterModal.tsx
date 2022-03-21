@@ -12,7 +12,7 @@ import { RiErrorWarningLine } from 'react-icons/ri';
 import SelectInput from '../SelectInput';
 import { MdEdit } from 'react-icons/md';
 import CheckIcon from '@src/assets/check.svg';
-import { checkNickname, updateUserInfo } from '@src/service/api';
+import { user as userAPI } from '@src/service/api';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 import { Tech } from '@src/typings/Tech';
 import { fileAtom } from '@src/recoil/atom/file';
@@ -41,9 +41,13 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const [file, setFile] = useRecoilState(fileAtom);
   const debounceInput = useDebounce(nickname, 200);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
-  const { data: check } = useQuery(['nicknameCheck', debounceInput], () => checkNickname(debounceInput as string), {
-    enabled: user && nickname.trim().length && page === 0 ? true : false,
-  });
+  const { data: check } = useQuery(
+    ['nicknameCheck', debounceInput],
+    () => userAPI.checkNickname(debounceInput as string),
+    {
+      enabled: user && nickname.trim().length && page === 0 ? true : false,
+    },
+  );
 
   const onUpload = useCallback(() => {
     if (hiddenFileInput.current) {
@@ -79,7 +83,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   const queryClient = useQueryClient();
   const onCompleteSignUp = useMutation(
     (newInfo: any) => {
-      return updateUserInfo(user!, { ...newInfo, imageFile: file.image });
+      return userAPI.updateUserInfo(user!, { ...newInfo, imageFile: file.image });
     },
     {
       onSuccess: () => {

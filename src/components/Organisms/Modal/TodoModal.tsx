@@ -10,9 +10,9 @@ import { useRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 
-import { addTodo, editTodo } from '@src/service/api';
+import { todo as todoAPI } from '@src/service/api';
 import { ITodos, TodoType } from '@src/typings/Todos';
-import { useTodoItem, useTodos } from '@src/hooks/useTodo';
+import useTodo from '@src/hooks/useTodo';
 
 interface Props {
   onClose: () => void;
@@ -24,7 +24,8 @@ interface Props {
 
 const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Props) => {
   const theme = useTheme();
-  const { refetch } = useTodos();
+  const { useTodoItem, useTodoList } = useTodo();
+  const { refetch } = useTodoList();
   const [modal, setModal] = useRecoilState(modalAtom);
   const [todo, setTodo] = useState<ITodos>({
     title: '',
@@ -43,13 +44,13 @@ const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Pro
   }, [todoId, todoItem]);
 
   const submitTodo = useCallback(async () => {
-    await addTodo(todo);
+    await todoAPI.addTodo(todo);
     setModal({ id: 'todo', visible: false });
     refetch();
   }, [refetch, setModal, todo]);
 
   const onEdit = useCallback(async () => {
-    const result = await editTodo(String(todoId), todo);
+    const result = await todoAPI.editTodo(String(todoId), todo);
     if (result === 1) {
       setModal({ id: 'todo/edit', visible: false });
       refetch();

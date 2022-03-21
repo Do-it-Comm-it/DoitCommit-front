@@ -5,7 +5,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdModeEdit } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
 import { useSetRecoilState } from 'recoil';
-import { deleteTodo, finishTodo, fixedTodo } from '@src/service/api';
+import { todo as todoAPI } from '@src/service/api';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
 import { convertDayToName } from '../Planner/PlannerDate';
@@ -20,21 +20,21 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
   const setModal = useSetRecoilState(modalAtom);
 
   const onDelete = useCallback(async () => {
-    const result = await deleteTodo(String(todo.todoId));
+    const result = await todoAPI.deleteTodo(String(todo.todoId));
     if (result) {
       onRefetch();
     }
   }, [todo.todoId, onRefetch]);
 
   const onFixed = useCallback(async () => {
-    const result = await fixedTodo(String(todo.todoId));
+    const result = await todoAPI.fixTodo(String(todo.todoId));
     if (result === 1) {
       onRefetch();
     }
   }, [todo.todoId, onRefetch]);
 
   const onFinish = useCallback(async () => {
-    const result = await finishTodo(String(todo.todoId));
+    const result = await todoAPI.finishTodo(String(todo.todoId));
     if (result === 1) {
       onRefetch();
     }

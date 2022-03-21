@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions';
 import autosize from 'autosize';
-import { addComment } from '@src/service/api';
+import { board } from '@src/service/api';
 import { IMemberTagResDto } from '@src/typings/Comment';
 
 interface Props {
@@ -37,7 +37,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
     // } else {
 
     // }
-    const result = await addComment({
+    const result = await board.addComment({
       boardId,
       content: input.content,
       memberIdSet: input.mentions ?? [],
@@ -87,7 +87,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
           trigger="@"
           data={mentionData}
           renderSuggestion={renderUserSuggestion}
-          displayTransform={(id, display) => `@${display}`}
+          displayTransform={(id: any, display: any) => `@${display}`}
         />
       </Input>
       <Button onClick={onSubmit}>확인</Button>

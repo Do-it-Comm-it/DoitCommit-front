@@ -1,13 +1,13 @@
-import { getPopularTags } from '@src/service/api';
+import useTag from '@src/hooks/useTag';
 import { devices } from '@src/utils/theme';
 import React from 'react';
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
 const Tags = () => {
-  const { data: tags, isLoading } = useQuery('tags', getPopularTags);
+  const { usePopularTag } = useTag();
+  const { data: tags, isLoading } = usePopularTag();
   if (isLoading) return <p>Loading..</p>;
-  return <Container>{tags.map(({ tag }: { tag: string }) => <Tag key={tag}>{tag}</Tag>).slice(0, 7)}</Container>;
+  return <Container>{tags && tags.map((tag) => <Tag key={tag.tagId}>{tag.tagName}</Tag>).slice(0, 7)}</Container>;
 };
 
 export default Tags;
