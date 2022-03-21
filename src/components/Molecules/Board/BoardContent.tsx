@@ -4,13 +4,26 @@ import styled from 'styled-components';
 import CommentBox from './CommentBox';
 import CommentEditor from './CommentEditor';
 import useComments from '@src/hooks/useComments';
-import { IComment } from '@src/typings/Comment';
+import { IComment, ICommentRes } from '@src/typings/Comment';
+import ExpandIconSVG from '@src/assets/expand_comment.svg';
 
 interface Props {
   boardData: IBoard;
 }
 const BoardContent = ({ boardData }: Props) => {
   const { comments, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useComments(boardData.boardId!);
+
+  const getComputedExtraPage = (
+    page: {
+      commentsData: ICommentRes;
+      nextPage: number;
+    }[],
+  ) => {
+    if (page[0].commentsData.commentCount >= 5 * (page.length + 1)) {
+      return 5;
+    }
+    return page[0].commentsData.commentCount % 5;
+  };
   return (
     <Container>
       <Content>
@@ -28,7 +41,14 @@ const BoardContent = ({ boardData }: Props) => {
             />
           )),
         )}
-      {hasNextPage && <button onClick={() => fetchNextPage()}>Load more</button>}
+      {hasNextPage && (
+        <LoadMoreWrapper>
+          <div onClick={() => fetchNextPage()}>
+            <span>{getComputedExtraPage(comments?.pages!)}개의 댓글 더 보기</span>
+            <ExpandIconSVG />
+          </div>
+        </LoadMoreWrapper>
+      )}
       {!isLoading && (
         <CommentEditor
           mentionData={comments?.pages[0].commentsData.memberTagResDtoList || []}
@@ -56,5 +76,31 @@ const Content = styled.div`
   & > img {
     width: 100%;
     margin: 3rem 0;
+  }
+`;
+
+const LoadMoreWrapper = styled.div`
+  display: flex;
+  flex-basis: content;
+  flex-direction: row;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 1.75rem;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    & > span {
+      color: ${({ theme }) => theme.colors.main};
+      font-weight: 500;
+      font-size: 20px;
+    }
+
+    & > svg {
+      & > path {
+        fill: ${({ theme }) => theme.colors.main};
+      }
+    }
   }
 `;
