@@ -7,6 +7,8 @@ import CommentEditor from './CommentEditor';
 import EditIconSVG from '@src/assets/filled_edit_icon.svg';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import { useUser } from '@src/hooks/useAuthentication';
+import { deleteComment } from '@src/service/api';
+import { useQueryClient } from 'react-query';
 
 interface Props {
   boardId: number;
@@ -15,13 +17,22 @@ interface Props {
 }
 const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const { data: user } = useUser();
+  const queryClient = useQueryClient();
   const theme = useTheme();
   const [edit, setEdit] = useState(false);
-
   const [input, setInput] = useState({
     content: commentData.content,
     mentions: commentData.memberIdSet,
   });
+
+  const onDeleteComment = useCallback(
+    async (commentId: number) => {
+      await deleteComment(commentId);
+      queryClient.invalidateQueries(`comments/${boardId}`);
+    },
+    [boardId, queryClient],
+  );
+
   const text = useCommentRegex(input);
   const onToggle = useCallback(() => {
     setEdit((value) => !value);
@@ -50,11 +61,11 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
               {user?.nickname === commentData.nickname && (
                 <IconWrapper>
                   <EditIconSVG onClick={() => setEdit(true)} />
-                  <DeleteIconSVG />
+                  <DeleteIconSVG onClick={() => onDeleteComment(commentData.commentId)} />
                 </IconWrapper>
               )}
             </Header>
-            <p dangerouslySetInnerHTML={{ __html: text }}></p>
+            {!commentData.isExist ? <p>삭제된 댓글입니다.</p> : <p dangerouslySetInnerHTML={{ __html: text }}></p>}
           </Right>
         </>
       )}

@@ -115,6 +115,10 @@ const addComment = async (body: { boardId: number; content: string; memberIdSet?
   const { code } = await requestAPI().post('/comments', body);
   return code;
 };
+const deleteComment = async (commentId: number) => {
+  const { code } = await requestAPI().patch(`/comments/${commentId}/isExist`);
+  return code;
+};
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -135,4 +139,5 @@ export {
   getBoardData,
   addComment,
   getComments,
+  deleteComment,
 };
