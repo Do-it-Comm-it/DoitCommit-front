@@ -58,7 +58,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
   ) => React.ReactNode = useCallback((member, search, highlightedDisplay, index, focus) => {
     return (
       <EachMention focus={focus}>
-        <img src="https://avatars.githubusercontent.com/u/65433256?v=4" alt="user" />
+        <img src={mentionData[index].imageUrl} alt="user" />
         <span>{highlightedDisplay}</span>
       </EachMention>
     );

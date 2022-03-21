@@ -33,7 +33,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
       ) : (
         <>
           <Left>
-            <Profile src={commentData.imageResDto.fileNm} alt="user_profile" />
+            <Profile src={commentData.imageUrl} alt="user_profile" />
           </Left>
           <Right>
             <Header>
