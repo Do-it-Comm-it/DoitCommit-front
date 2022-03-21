@@ -9,7 +9,7 @@ const FloatingButton = () => {
   }, []);
   return (
     <Container onMouseLeave={() => onToggle(false)}>
-      <WriteLink to="#" hover={hover}>
+      <WriteLink to="/community/edit" hover={hover}>
         {hover && (
           <>
             <WriteSVG />

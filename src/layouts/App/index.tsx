@@ -10,7 +10,6 @@ import Home from '@src/pages/Home';
 import Board from '@src/pages/Board';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import PrivateRoute from '@src/routes/PrivateRoute';
 
 const App = () => {
   const { theme } = useDarkMode();

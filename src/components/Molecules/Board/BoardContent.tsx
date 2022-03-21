@@ -1,57 +1,35 @@
+import { IBoard } from '@src/typings/Board';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
-import Status from '@src/components/Atoms/Board/Status';
-import { BsBookmark } from 'react-icons/bs';
-import Highlighter from 'react-highlight-words';
-import { useRecoilValue } from 'recoil';
-import keywordState from '@src/recoil/selector/keyword';
+import styled from 'styled-components';
+import CommentBox from './CommentBox';
+import CommentEditor from './CommentEditor';
+import useComments from '@src/hooks/useComments';
+import { IComment } from '@src/typings/Comment';
 
 interface Props {
-  board: any;
+  boardData: IBoard;
 }
-const BoardContent = ({ board }: Props) => {
-  const theme = useTheme();
-  const keyword = useRecoilValue(keywordState);
+const BoardContent = ({ boardData }: Props) => {
+  const { data: commentsData, isLoading } = useComments(boardData.boardId!);
   return (
     <Container>
-      <Top>
-        <Tags>#직장인 #공대생 #취준생</Tags>
-        <BsBookmark
-          style={{
-            marginLeft: 'auto',
-            color: theme.colors.dark.a3,
-          }}
-        />
-      </Top>
-      <Middle>
-        <Title>
-          <Highlighter
-            highlightStyle={{
-              color: theme.colors.main,
-            }}
-            highlightTag="strong"
-            searchWords={keyword}
-            autoEscape={true}
-            textToHighlight={board.boardTitle}
-          />
-        </Title>
-        <Content>
-          <Highlighter
-            highlightStyle={{
-              color: theme.colors.main,
-            }}
-            highlightTag="strong"
-            searchWords={keyword}
-            autoEscape={true}
-            textToHighlight={board.boardContent}
-          />
-        </Content>
-      </Middle>
+      <Content>
+        <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }}></div>
+      </Content>
+      {/* 댓글이 5개가 넘었을 경우 더보기 */}
 
-      <Bottom>
-        <Author>by. {board.writer}</Author>
-        <Status />
-      </Bottom>
+      {!isLoading &&
+        commentsData?.commentResDtoList?.dtoList.map((c: IComment) => (
+          <CommentBox
+            key={c.commentId}
+            boardId={boardData.boardId!}
+            mentionData={commentsData.memberTagResDtoList}
+            commentData={c}
+          />
+        ))}
+      {!isLoading && (
+        <CommentEditor boardId={boardData.boardId!} mentionData={commentsData?.memberTagResDtoList || []} />
+      )}
     </Container>
   );
 };
@@ -59,55 +37,19 @@ const BoardContent = ({ board }: Props) => {
 export default BoardContent;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
   width: 100%;
-  height: 194px;
-  background-color: inherit;
-  padding: 5%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`;
-const Tags = styled.span`
-  color: ${({ theme }) => theme.colors.dark.a3};
-  font-weight: 400;
-  font-size: 14px;
+  height: 100%;
 `;
 
-const Title = styled.p`
-  color: ${({ theme }) => theme.colors.dark.a7};
-  font-weight: 500;
-  font-size: 18px;
-`;
-
-const Content = styled.span`
-  font-weight: 400;
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.dark.a3};
-`;
-
-const Top = styled.div`
-  display: flex;
-  flex-direction: row;
+const Content = styled.div`
   width: 100%;
-`;
-
-const Bottom = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`;
-
-const Middle = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  & > p {
-    margin-bottom: 10px;
+  height: 100%;
+  padding-bottom: 200px;
+  & > h2 {
+    margin: 1.2rem 0;
+  }
+  & > img {
+    width: 100%;
+    margin: 3rem 0;
   }
 `;
-
-const Author = styled(Content)``;

@@ -1,20 +1,20 @@
 import Card from '@src/components/Molecules/Board/Card';
-import { useBoards } from '@src/hooks/useBoards';
 import React from 'react';
 import styled from 'styled-components';
-
+import InfiniteScroll from 'react-infinite-scroller';
+import { useBoards } from '@src/hooks/useBoards';
 const CardContainer = () => {
-  const { data: boards, isLoading } = useBoards();
+  const { boards, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage } = useBoards();
 
   if (isLoading) return <div>Loading..</div>;
+  if (isError) return <h2>Error!</h2>;
   return (
-    <React.Suspense fallback={<div>Boards...</div>}>
+    <InfiniteScroll hasMore={hasNextPage} loadMore={fetchNextPage as any} style={{ width: '100%', height: '100%' }}>
       <Container>
-        {boards.map((b: any, i: number) => (
-          <Card board={b} key={i} />
-        ))}
+        {boards?.pages.map((page) => page.data.map((b: any, i: number) => <Card board={b} key={i} />))}
+        {isFetchingNextPage && <p>Loading..</p>}
       </Container>
-    </React.Suspense>
+    </InfiniteScroll>
   );
 };
 

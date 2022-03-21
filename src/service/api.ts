@@ -92,11 +92,33 @@ const editTodo = async (id: string, body: any) => {
   return code;
 };
 
-const getBoards = async () => {
-  const { data } = await requestAPI().get('/board/list');
+const getBoards = async (page: number) => {
+  const { data } = await requestAPI().get(`/board/list?pageNo=${page}&pageSize=16`);
   return data;
 };
 
+const getPopularTags = async () => {
+  const { data } = await requestAPI().get('/popularTags');
+  return data;
+};
+
+const getBoardData = async (id: string) => {
+  const { data } = await requestAPI().get(`/board?boardId=${id}`);
+  return data;
+};
+
+const getComments = async (boardId: number) => {
+  const { data } = await requestAPI().get(`/boards/${boardId}/comments`);
+  return data;
+};
+const addComment = async (body: { boardId: number; content: string; memberIdSet?: any[] }) => {
+  const { code } = await requestAPI().post('/comments', body);
+  return code;
+};
+const deleteComment = async (commentId: number) => {
+  const { code } = await requestAPI().patch(`/comments/${commentId}/isExist`);
+  return code;
+};
 export {
   getAuthUser,
   saveExtendedUserInfo,
@@ -113,4 +135,9 @@ export {
   finishTodo,
   editTodo,
   getBoards,
+  getPopularTags,
+  getBoardData,
+  addComment,
+  getComments,
+  deleteComment,
 };

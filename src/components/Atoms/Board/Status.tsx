@@ -3,14 +3,19 @@ import ViewSVG from '@src/assets/view.svg';
 import HeartSVG from '@src/assets/heart.svg';
 import CommentSVG from '@src/assets/comment.svg';
 import styled from 'styled-components';
-const Status = () => {
+import { IBoard } from '@src/typings/Board';
+
+interface Props {
+  board: IBoard;
+}
+const Status = ({ board }: Props) => {
   return (
     <Container>
       <CommentSVG />
       <Counter>25</Counter>
       <ViewSVG />
-      <Counter>103</Counter>
-      <HeartSVG />
+      <Counter>{board.boardCnt}</Counter>
+      <Heart width={20} height={20} />
       <Counter>103</Counter>
     </Container>
   );
@@ -31,4 +36,10 @@ const Counter = styled.span`
   color: ${({ theme }) => theme.colors.dark.a3};
   font-size: 16px;
   font-weight: 400;
+`;
+
+const Heart = styled(HeartSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.dark.a3};
+  }
 `;
