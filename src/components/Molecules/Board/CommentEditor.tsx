@@ -55,14 +55,17 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
     highlightedDisplay: React.ReactNode,
     index: number,
     focused: boolean,
-  ) => React.ReactNode = useCallback((member, search, highlightedDisplay, index, focus) => {
-    return (
-      <EachMention focus={focus}>
-        <img src={mentionData[index].imageUrl} alt="user" />
-        <span>{highlightedDisplay}</span>
-      </EachMention>
-    );
-  }, []);
+  ) => React.ReactNode = useCallback(
+    (member, search, highlightedDisplay, index, focus) => {
+      return (
+        <EachMention focus={focus}>
+          <img src={mentionData[index].imageUrl} alt="user" />
+          <span>{highlightedDisplay}</span>
+        </EachMention>
+      );
+    },
+    [mentionData],
+  );
   useEffect(() => {
     if (textareaRef.current) {
       autosize(textareaRef.current);
