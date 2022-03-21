@@ -1,5 +1,7 @@
+import { useDebounce } from '@src/hooks/useDebounce';
+import useTag from '@src/hooks/useTag';
 import { Tag } from '@src/typings/Board';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Select, { InputActionMeta, components, MenuProps } from 'react-select';
 import styled, { useTheme } from 'styled-components';
 
@@ -9,64 +11,32 @@ interface Props {
   value: Tag[];
 }
 
-const defaultTags = [
-  {
-    value: 1,
-    label: '개발자',
-  },
-  {
-    value: 2,
-    label: '학생',
-  },
-  {
-    value: 3,
-    label: '공모전',
-  },
-  {
-    value: 4,
-    label: '프로젝트',
-  },
-  {
-    value: 5,
-    label: '직장인',
-  },
-  {
-    value: 6,
-    label: '프리랜서',
-  },
-  {
-    value: 7,
-    label: '호호',
-  },
-  {
-    value: 8,
-    label: '하하',
-  },
-];
-
-const TagInput = ({ onChange, width, value }: Props) => {
+const TagInput = ({ onChange, value }: Props) => {
   const theme = useTheme();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [tags, setTags] = useState<Array<Tag>>([]);
+  const [search, setSearch] = useState<string>('');
+  const debouncedSearch = useDebounce(search, 400);
+  const { useTagList, usePopularTag } = useTag();
+  const { data: tagList } = useTagList();
+  const { data: popularTagList } = usePopularTag();
 
   const handleInputChange = useCallback((query: string, { action }: InputActionMeta) => {
     if (action === 'input-change') {
-      if (query.startsWith('#') && query.length === 1) {
-        //show top 8 tag list.
-        // setTags()
-        setTags(defaultTags);
-      } else if (query.length > 1) {
-        //get all tag list from API.
-        console.log(query);
-        //set limit 8 and filter by search text.
-        setTags(defaultTags.filter((tags) => tags.label.includes(query)).slice(0, 8));
-      } else {
-        setTags([]);
-      }
+      setSearch(query);
 
       setOpenMenu(true);
     }
   }, []);
+
+  const filteredOption = useMemo(() => {
+    if (debouncedSearch) {
+      if (debouncedSearch.startsWith('#') && debouncedSearch.length === 1 && popularTagList) {
+        return popularTagList;
+      } else if (debouncedSearch.length > 0 && tagList) {
+        return tagList.filter((tag) => tag.tagName.includes(debouncedSearch)).slice(0, 8);
+      }
+    }
+  }, [debouncedSearch, popularTagList, tagList]);
 
   const hideMenu = useCallback(() => {
     setOpenMenu(false);
@@ -87,12 +57,14 @@ const TagInput = ({ onChange, width, value }: Props) => {
       onInputChange={handleInputChange}
       onChange={onChange}
       onBlur={hideMenu}
-      options={tags.map((tag) => ({ ...tag, label: `#${tag.label}` }))}
+      options={
+        filteredOption ? filteredOption.map((tag) => ({ ...tag, value: tag.tagId, label: `#${tag.tagName}` })) : []
+      }
       isMulti
       placeholder={'태그를 입력하세요 (최대 4개)'}
       menuIsOpen={openMenu}
       components={{ Menu: CustomMenu }}
-      isOptionDisabled={(option) => value.length >= 4}
+      isOptionDisabled={() => value.length >= 4}
       styles={{
         dropdownIndicator: (defaultStyles) => ({
           ...defaultStyles,
