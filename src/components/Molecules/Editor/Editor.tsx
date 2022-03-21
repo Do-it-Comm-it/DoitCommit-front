@@ -1,5 +1,4 @@
 import React from 'react';
-import 'quill/dist/quill.bubble.css';
 
 type Props = {
   width?: number;

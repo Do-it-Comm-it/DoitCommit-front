@@ -11,7 +11,7 @@ import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
 import { useHistory } from 'react-router';
-
+import './bubble.css';
 const Module = {
   toolbar: {
     container: [
