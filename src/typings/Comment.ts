@@ -13,10 +13,7 @@ export interface ICommentResDto {
 export interface IComment {
   commentId: number;
   content: string;
-  imageResDto: {
-    filePath: string;
-    fileNm: string;
-  };
+  imageUrl: string;
   isExist: boolean;
   memberIdSet: string[];
   nickname: string;
@@ -27,4 +24,5 @@ export interface IComment {
 export interface IMemberTagResDto {
   id: string;
   display: string;
+  imageUrl: string;
 }
