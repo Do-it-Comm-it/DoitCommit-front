@@ -4,6 +4,11 @@ import { IComment, IMemberTagResDto } from '@src/typings/Comment';
 import React, { useCallback, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import CommentEditor from './CommentEditor';
+import EditIconSVG from '@src/assets/filled_edit_icon.svg';
+import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
+import { useUser } from '@src/hooks/useAuthentication';
+import { deleteComment } from '@src/service/api';
+import { useQueryClient } from 'react-query';
 
 interface Props {
   boardId: number;
@@ -11,13 +16,23 @@ interface Props {
   commentData: IComment;
 }
 const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
+  const { data: user } = useUser();
+  const queryClient = useQueryClient();
   const theme = useTheme();
   const [edit, setEdit] = useState(false);
-
   const [input, setInput] = useState({
     content: commentData.content,
     mentions: commentData.memberIdSet,
   });
+
+  const onDeleteComment = useCallback(
+    async (commentId: number) => {
+      await deleteComment(commentId);
+      queryClient.invalidateQueries(`comments/${boardId}`);
+    },
+    [boardId, queryClient],
+  );
+
   const text = useCommentRegex(input);
   const onToggle = useCallback(() => {
     setEdit((value) => !value);
@@ -33,7 +48,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
       ) : (
         <>
           <Left>
-            <Profile src={commentData.imageResDto.fileNm} alt="user_profile" />
+            <Profile src={commentData.imageUrl} alt="user_profile" />
           </Left>
           <Right>
             <Header>
@@ -43,9 +58,14 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
               <DIText fontColor={theme.colors.dark.a10} fontWeight={400} fontSize={16}>
                 {commentData.regDateTime}
               </DIText>
-              <button onClick={onToggle}>수정</button>
+              {user?.nickname === commentData.nickname && (
+                <IconWrapper>
+                  <EditIconSVG onClick={() => setEdit(true)} />
+                  <DeleteIconSVG onClick={() => onDeleteComment(commentData.commentId)} />
+                </IconWrapper>
+              )}
             </Header>
-            <p dangerouslySetInnerHTML={{ __html: text }}></p>
+            {!commentData.isExist ? <p>삭제된 댓글입니다.</p> : <p dangerouslySetInnerHTML={{ __html: text }}></p>}
           </Right>
         </>
       )}
@@ -69,6 +89,7 @@ const Profile = styled.img`
   border-radius: 10px;
 `;
 const Right = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -86,4 +107,11 @@ const Header = styled.div`
   flex-direction: row;
   width: 100%;
   gap: 16px;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: auto;
 `;
