@@ -10,25 +10,30 @@ interface Props {
   boardData: IBoard;
 }
 const BoardContent = ({ boardData }: Props) => {
-  const { data: commentsData, isLoading } = useComments(boardData.boardId!);
+  const { comments, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useComments(boardData.boardId!);
   return (
     <Container>
       <Content>
         <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }}></div>
       </Content>
       {/* 댓글이 5개가 넘었을 경우 더보기 */}
-
       {!isLoading &&
-        commentsData?.commentResDtoList?.dtoList.map((c: IComment) => (
-          <CommentBox
-            key={c.commentId}
-            boardId={boardData.boardId!}
-            mentionData={commentsData.memberTagResDtoList}
-            commentData={c}
-          />
-        ))}
+        comments?.pages.map(({ commentsData }) =>
+          commentsData.commentResDtoList.dtoList.map((c: IComment) => (
+            <CommentBox
+              key={c.commentId}
+              boardId={boardData.boardId!}
+              mentionData={commentsData.memberTagResDtoList}
+              commentData={c}
+            />
+          )),
+        )}
+      {hasNextPage && <button onClick={() => fetchNextPage()}>Load more</button>}
       {!isLoading && (
-        <CommentEditor boardId={boardData.boardId!} mentionData={commentsData?.memberTagResDtoList || []} />
+        <CommentEditor
+          mentionData={comments?.pages[0].commentsData.memberTagResDtoList || []}
+          boardId={boardData.boardId!}
+        />
       )}
     </Container>
   );
