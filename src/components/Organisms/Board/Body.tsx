@@ -7,10 +7,13 @@ import CardContainer from './CardContainer';
 import FloatingButton from './FloatingButton';
 import BoardEditor from './BoardEditor';
 import Board from './Board';
+import { useUser } from '@src/hooks/useAuthentication';
+import PrivateRoute from '@src/routes/PrivateRoute';
 
 type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 
 const Body = () => {
+  const { data: user } = useUser();
   const history = useHistory();
 
   const path: BoardPathType = useMemo(() => {
@@ -37,13 +40,11 @@ const Body = () => {
       <Route exact path="/community/notice">
         <Notice />
       </Route>
-      <Route exact path="/community/edit">
-        <BoardEditor />
-      </Route>
+      {user && <Route exact path="/community/edit" component={BoardEditor} />}
       <Route exact path="/community/board/:id">
         <Board />
       </Route>
-      {path !== 'edit' && path !== 'board' && <FloatingButton />}
+      {user && path !== 'edit' && path !== 'board' && <FloatingButton />}
     </Container>
   );
 };
