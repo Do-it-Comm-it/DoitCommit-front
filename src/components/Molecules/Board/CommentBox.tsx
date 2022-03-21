@@ -7,7 +7,7 @@ import CommentEditor from './CommentEditor';
 import EditIconSVG from '@src/assets/filled_edit_icon.svg';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import { useUser } from '@src/hooks/useAuthentication';
-import { deleteComment } from '@src/service/api';
+import { board } from '@src/service/api';
 import { useQueryClient } from 'react-query';
 
 interface Props {
@@ -27,7 +27,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
 
   const onDeleteComment = useCallback(
     async (commentId: number) => {
-      await deleteComment(commentId);
+      await board.deleteComment(commentId);
       queryClient.invalidateQueries(`comments/${boardId}`);
     },
     [boardId, queryClient],

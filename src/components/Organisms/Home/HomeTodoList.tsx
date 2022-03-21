@@ -4,7 +4,7 @@ import TodoBox from '@src/components/Molecules/Todo/TodoBox';
 import React from 'react';
 import { devices } from '@src/utils/theme';
 import styled from 'styled-components';
-import { useTodos } from '@src/hooks/useTodo';
+import useTodo from '@src/hooks/useTodo';
 import { useUser } from '@src/hooks/useAuthentication';
 
 export type TodoType = {
@@ -19,7 +19,8 @@ export type TodoType = {
 
 const HomeTodoList = () => {
   const { data: user } = useUser();
-  const { data: todos, refetch: onRefetch } = useTodos();
+  const { useTodoList } = useTodo();
+  const { data: todos, refetch: onRefetch } = useTodoList();
 
   return (
     <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>

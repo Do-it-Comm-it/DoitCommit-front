@@ -1,9 +1,9 @@
-import { getBoards } from '@src/service/api';
+import { board } from '@src/service/api';
 import { useInfiniteQuery } from 'react-query';
 
 export const useBoards = () => {
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const result = await getBoards(pageParam);
+    const result = await board.getBoardListByPage(pageParam);
     return {
       data: result,
       nextPage: pageParam + 1,

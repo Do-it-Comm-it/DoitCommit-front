@@ -4,7 +4,7 @@ import TagInput from '@src/components/Molecules/TagInput';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useMutation } from 'react-query';
-import { saveBoardData } from '@src/service/api';
+import { board as boardAPI } from '@src/service/api';
 import { BoardImage, RequestBoard, Tag } from '@src/typings/Board';
 import Quill from 'quill';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
@@ -44,7 +44,7 @@ const BoardEditor = () => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] = useState<RequestBoard>(defaultEditorState);
 
-  const { mutate: postBoard } = useMutation((boardData: RequestBoard) => saveBoardData(boardData));
+  const { mutate: postBoard } = useMutation((boardData: RequestBoard) => boardAPI.saveBoard(boardData));
 
   const { mutate: saveImage } = useImage();
 

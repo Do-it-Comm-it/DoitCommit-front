@@ -1,7 +1,8 @@
-import { saveImageToS3 } from '@src/service/api';
+import { util } from '@src/service/api';
 import { useMutation } from 'react-query';
+
 const useImage = () => {
-  return useMutation((file: FormData) => saveImageToS3(file));
+  return useMutation((file: FormData) => util.saveImageToS3(file));
 };
 
 export { useImage };

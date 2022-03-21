@@ -34,15 +34,36 @@ const defaultTags = [
     value: 6,
     label: '프리랜서',
   },
+  {
+    value: 7,
+    label: '호호',
+  },
+  {
+    value: 8,
+    label: '하하',
+  },
 ];
 
 const TagInput = ({ onChange, width, value }: Props) => {
   const theme = useTheme();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [tags, setTags] = useState<Array<Tag>>(defaultTags);
+  const [tags, setTags] = useState<Array<Tag>>([]);
 
   const handleInputChange = useCallback((query: string, { action }: InputActionMeta) => {
     if (action === 'input-change') {
+      if (query.startsWith('#') && query.length === 1) {
+        //show top 8 tag list.
+        // setTags()
+        setTags(defaultTags);
+      } else if (query.length > 1) {
+        //get all tag list from API.
+        console.log(query);
+        //set limit 8 and filter by search text.
+        setTags(defaultTags.filter((tags) => tags.label.includes(query)).slice(0, 8));
+      } else {
+        setTags([]);
+      }
+
       setOpenMenu(true);
     }
   }, []);
