@@ -23,6 +23,8 @@ const useComments = (boardId: number) => {
       }
       return undefined;
     },
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   return {
