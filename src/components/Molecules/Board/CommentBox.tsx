@@ -21,6 +21,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const theme = useTheme();
   const [edit, setEdit] = useState(false);
   const [input, setInput] = useState({
+    profileImage: commentData.imageUrl,
     content: commentData.content,
     mentions: commentData.memberIdSet,
   });
@@ -32,18 +33,16 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
     },
     [boardId, queryClient],
   );
-
-  const text = useCommentRegex(input);
-  const onToggle = useCallback(() => {
-    setEdit((value) => !value);
+  const onToggle = useCallback((value) => {
+    setEdit(value);
   }, []);
+  const text = useCommentRegex(input);
 
   return (
     <Container>
       {edit ? (
         <>
-          <button onClick={onToggle}>취소</button>
-          <CommentEditor boardId={boardId} mentionData={mentionData} defaultValue={input} />
+          <CommentEditor boardId={boardId} mentionData={mentionData} defaultValue={input} onToggle={onToggle} />
         </>
       ) : (
         <>

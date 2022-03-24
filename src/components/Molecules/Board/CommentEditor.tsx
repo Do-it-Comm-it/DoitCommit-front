@@ -4,16 +4,21 @@ import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions';
 import autosize from 'autosize';
 import { board } from '@src/service/api';
 import { IMemberTagResDto } from '@src/typings/Comment';
+import { useQueryClient } from 'react-query';
 
 interface Props {
   boardId: number;
   mentionData: IMemberTagResDto[];
   defaultValue?: {
+    profileImage: string;
     content: string;
     mentions: string[];
   };
+
+  onToggle?: (value: boolean) => void;
 }
-const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
+const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle }: Props) => {
+  const queryClient = useQueryClient();
   const [input, setInput] = useState({
     content: defaultValue?.content ?? '',
     mentions: defaultValue?.mentions ?? [],
@@ -45,8 +50,9 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
 
     if (result === 1) {
       alert('댓글 등록 완료');
+      queryClient.invalidateQueries(`comments/${boardId}`);
     }
-  }, [input, boardId]);
+  }, [input, boardId, queryClient]);
 
   // render fn for suggestion list
   const renderUserSuggestion: (
@@ -74,6 +80,11 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
 
   return (
     <Container>
+      {onToggle && (
+        <ImageContainer>
+          <img src={defaultValue?.profileImage} alt="profile_user" />
+        </ImageContainer>
+      )}
       <Input
         allowSuggestionsAboveCursor
         value={input.content}
@@ -90,7 +101,14 @@ const CommentEditor = ({ defaultValue, boardId, mentionData }: Props) => {
           displayTransform={(id: any, display: any) => `@${display}`}
         />
       </Input>
-      <Button onClick={onSubmit}>확인</Button>
+      <ButtonWrapper>
+        {onToggle && (
+          <Button backgroundColor="#CECECE" onClick={() => onToggle(false)}>
+            취소
+          </Button>
+        )}
+        <Button onClick={onSubmit}>확인</Button>
+      </ButtonWrapper>
     </Container>
   );
 };
@@ -99,6 +117,8 @@ export default CommentEditor;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: row;
+  background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
   min-height: 200px;
   border-radius: 10px;
@@ -111,7 +131,6 @@ const Input = styled(MentionsInput)`
   outline: none;
   border: none;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.background};
 
   font-weight: 350;
   font-size: 20px;
@@ -149,16 +168,21 @@ const Input = styled(MentionsInput)`
   }
 `;
 
-const Button = styled.button`
+const ButtonWrapper = styled.div`
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  bottom: 30px;
+  right: 37px;
+`;
+const Button = styled.button<{ backgroundColor?: string }>`
   padding: 11px 30px;
   border-radius: 51px;
-  background-color: ${({ theme }) => theme.colors.main};
+  background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.main};
   color: #ffffff;
   font-size: 20px;
   font-weight: 500;
-  bottom: 30px;
-  right: 37px;
   border: none;
 `;
 
@@ -177,4 +201,16 @@ export const EachMention = styled.button<{ focus: boolean }>`
   }
   background-color: ${({ focus, theme }) => focus && theme.colors.main};
   color: ${({ focus, theme }) => focus && '#FFFFFF'};
+`;
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 1.75rem;
+  width: 30%;
+  height: 100%;
+  & > img {
+    width: 69px;
+    height: 69px;
+    border-radius: 10px;
+  }
 `;
