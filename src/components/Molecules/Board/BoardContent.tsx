@@ -6,6 +6,7 @@ import CommentEditor from './CommentEditor';
 import useComments from '@src/hooks/useComments';
 import { IComment, ICommentRes } from '@src/typings/Comment';
 import ExpandIconSVG from '@src/assets/expand_comment.svg';
+import CommentIconSVG from '@src/assets/comment.svg';
 
 interface Props {
   boardData: IBoard;
@@ -30,6 +31,11 @@ const BoardContent = ({ boardData }: Props) => {
         <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }}></div>
       </Content>
       {/* 댓글이 5개가 넘었을 경우 더보기 */}
+      <CommentCountWrapepr>
+        <CommentIconSVG />
+        <span>{comments?.pages[0].commentsData.commentCount}</span>
+      </CommentCountWrapepr>
+
       {!isLoading &&
         comments?.pages.map(({ commentsData }) =>
           commentsData.commentResDtoList.dtoList.map((c: IComment) => (
@@ -102,5 +108,17 @@ const LoadMoreWrapper = styled.div`
         fill: ${({ theme }) => theme.colors.main};
       }
     }
+  }
+`;
+const CommentCountWrapepr = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+  gap: 5px;
+
+  & > span {
+    color: ${({ theme }) => theme.colors.main};
+    font-weight: 400;
+    font-size: 16px;
   }
 `;
