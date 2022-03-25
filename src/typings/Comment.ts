@@ -26,3 +26,11 @@ export interface IMemberTagResDto {
   display: string;
   imageUrl: string;
 }
+
+export interface IUpdateCommentDto {
+  body: {
+    content: string;
+    commentId: number;
+    memberIdSet: string[];
+  };
+}
