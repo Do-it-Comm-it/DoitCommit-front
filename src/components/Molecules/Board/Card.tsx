@@ -24,7 +24,7 @@ const Card = ({ board }: Props) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);
 
 const Container = styled.div`
   display: flex;
