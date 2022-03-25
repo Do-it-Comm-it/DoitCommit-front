@@ -31,10 +31,10 @@ const BoardContent = ({ boardData }: Props) => {
         <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }}></div>
       </Content>
       {/* 댓글이 5개가 넘었을 경우 더보기 */}
-      <CommentCountWrapepr>
+      <CommentCountWrapper>
         <CommentIconSVG />
         <span>{comments?.pages[0].commentsData.commentCount}</span>
-      </CommentCountWrapepr>
+      </CommentCountWrapper>
 
       {!isLoading &&
         comments?.pages.map(({ commentsData }) =>
@@ -110,7 +110,7 @@ const LoadMoreWrapper = styled.div`
     }
   }
 `;
-const CommentCountWrapepr = styled.div`
+const CommentCountWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 15px;
