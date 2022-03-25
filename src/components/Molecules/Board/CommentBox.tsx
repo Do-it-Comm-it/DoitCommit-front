@@ -73,7 +73,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   );
 };
 
-export default CommentBox;
+export default React.memo(CommentBox);
 
 const Container = styled.div`
   display: flex;
