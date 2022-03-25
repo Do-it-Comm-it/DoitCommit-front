@@ -13,7 +13,7 @@ export const useUser = () => {
     {
       refetchOnMount: false,
       refetchOnWindowFocus: true,
-      staleTime: 10000,
+      staleTime: 1000000,
       suspense: true,
     },
   );
