@@ -3,25 +3,22 @@ import styled from 'styled-components';
 import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions';
 import autosize from 'autosize';
 import { board } from '@src/service/api';
-import { IMemberTagResDto } from '@src/typings/Comment';
+import { IComment, IMemberTagResDto } from '@src/typings/Comment';
 import { useQueryClient } from 'react-query';
 
 interface Props {
   boardId: number;
+  commentId?: number;
   mentionData: IMemberTagResDto[];
-  defaultValue?: {
-    profileImage: string;
-    content: string;
-    mentions: string[];
-  };
+  defaultValue?: IComment;
 
   onToggle?: (value: boolean) => void;
 }
-const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle }: Props) => {
+const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle, commentId }: Props) => {
   const queryClient = useQueryClient();
   const [input, setInput] = useState({
     content: defaultValue?.content ?? '',
-    mentions: defaultValue?.mentions ?? [],
+    mentions: defaultValue?.memberIdSet ?? [],
   });
   const onChangeChat = useCallback((e: any) => {
     const value = e.target.value;
@@ -38,21 +35,30 @@ const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle }: Props) 
 
   const onSubmit = useCallback(async () => {
     //defaultValue가 존재하면 즉 수정할 때는 수정 api 아니면 생성 api 호출 (분기)
-    // if (defaultValue) {
-    // } else {
+    if (onToggle && commentId) {
+      const result = await board.updateComment({
+        body: {
+          commentId,
+          content: input.content,
+          memberIdSet: input.mentions,
+        },
+      });
+      if (result === 1) {
+        onToggle(false);
+        queryClient.invalidateQueries(`comments/${boardId}`);
+      }
+    } else {
+      const result = await board.addComment({
+        boardId,
+        content: input.content,
+        memberIdSet: input.mentions ?? [],
+      });
 
-    // }
-    const result = await board.addComment({
-      boardId,
-      content: input.content,
-      memberIdSet: input.mentions ?? [],
-    });
-
-    if (result === 1) {
-      alert('댓글 등록 완료');
-      queryClient.invalidateQueries(`comments/${boardId}`);
+      if (result === 1) {
+        queryClient.invalidateQueries(`comments/${boardId}`);
+      }
     }
-  }, [input, boardId, queryClient]);
+  }, [input, boardId, queryClient, onToggle, commentId]);
 
   // render fn for suggestion list
   const renderUserSuggestion: (
@@ -82,7 +88,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle }: Props) 
     <Container>
       {onToggle && (
         <ImageContainer>
-          <img src={defaultValue?.profileImage} alt="profile_user" />
+          <img src={defaultValue?.imageUrl} alt="profile_user" />
         </ImageContainer>
       )}
       <Input

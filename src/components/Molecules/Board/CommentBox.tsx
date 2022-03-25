@@ -20,11 +20,6 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const queryClient = useQueryClient();
   const theme = useTheme();
   const [edit, setEdit] = useState(false);
-  const [input, setInput] = useState({
-    profileImage: commentData.imageUrl,
-    content: commentData.content,
-    mentions: commentData.memberIdSet,
-  });
 
   const onDeleteComment = useCallback(
     async (commentId: number) => {
@@ -36,13 +31,19 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const onToggle = useCallback((value) => {
     setEdit(value);
   }, []);
-  const text = useCommentRegex(input);
+  const text = useCommentRegex(commentData);
 
   return (
     <Container>
       {edit ? (
         <>
-          <CommentEditor boardId={boardId} mentionData={mentionData} defaultValue={input} onToggle={onToggle} />
+          <CommentEditor
+            boardId={boardId}
+            mentionData={mentionData}
+            defaultValue={commentData}
+            onToggle={onToggle}
+            commentId={commentData.commentId}
+          />
         </>
       ) : (
         <>
