@@ -4,16 +4,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IBoard } from '@src/typings/Board';
+import Status from '@src/components/Atoms/Board/Status';
+
 interface Props {
   board: IBoard;
 }
 const Card = ({ board }: Props) => {
   return (
     <Container>
-      <Link to={`/community/board/${board.boardId}`}>
+      <Link to={`/community/board/${board.boardId}`} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
         <Thumbnail thumbnail={board.thumbnail} />
+        <CardContent board={board} />
       </Link>
-      <CardContent board={board} />
+      <Bottom>
+        <Author>by. {board.writer}</Author>
+        <Status board={board} />
+      </Bottom>
     </Container>
   );
 };
@@ -33,4 +39,18 @@ const Container = styled.div`
   @media (max-width: 500px) {
     width: 90%;
   }
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0 5%;
+  padding-bottom: 5%;
+`;
+
+const Author = styled.span`
+  font-weight: 400;
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.dark.a3};
 `;

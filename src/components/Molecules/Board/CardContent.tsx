@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import Status from '@src/components/Atoms/Board/Status';
 import { BsBookmark } from 'react-icons/bs';
 import Highlighter from 'react-highlight-words';
 import { useRecoilValue } from 'recoil';
@@ -48,10 +47,6 @@ const CardContent = ({ board }: Props) => {
           />
         </Content>
       </Middle>
-      <Bottom>
-        <Author>by. {board.writer}</Author>
-        <Status board={board} />
-      </Bottom>
     </Container>
   );
 };
@@ -64,7 +59,6 @@ const Container = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
   background-color: inherit;
   padding: 5%;
   border-bottom-left-radius: 10px;
@@ -95,18 +89,9 @@ const Top = styled.div`
   width: 100%;
 `;
 
-const Bottom = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin-top: auto;
-`;
-
 const Middle = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 10px;
 `;
-
-const Author = styled(Content)``;
