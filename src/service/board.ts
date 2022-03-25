@@ -1,4 +1,5 @@
 import { RequestBoard } from '@src/typings/Board';
+import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
 const getBoardListByPage = async (page: number) => {
@@ -30,6 +31,10 @@ const deleteComment = async (commentId: number) => {
   const { code } = await requestAPI().patch(`/comments/${commentId}/isExist`);
   return code;
 };
+const updateComment = async ({ body }: IUpdateCommentDto) => {
+  const { code } = await requestAPI().put(`/comments/${body.commentId}`, body);
+  return code;
+};
 
 const boardApiList = {
   getBoardListByPage,
@@ -38,6 +43,7 @@ const boardApiList = {
   getCommentList,
   addComment,
   deleteComment,
+  updateComment,
 };
 
 export default boardApiList;
