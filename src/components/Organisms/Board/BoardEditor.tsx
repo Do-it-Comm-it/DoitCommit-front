@@ -34,7 +34,7 @@ const defaultEditorState: RequestBoard = {
   boardTitle: '',
   boardContent: '',
   categoryId: 2,
-  tag: [],
+  boardHashtag: [],
 };
 
 const BoardEditor = () => {
@@ -153,7 +153,7 @@ const BoardEditor = () => {
     postBoard(
       {
         ...editorState,
-        tag: tags.map((t) => String(t.tagId)),
+        boardHashtag: tags.map((t) => String(t.tagId)),
         allImageArr: allImages.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
         imageArr: images.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
       },

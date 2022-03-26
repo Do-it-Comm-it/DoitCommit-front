@@ -13,9 +13,9 @@ const BoardHeader = ({ boardData }: Props) => {
       <Left>
         <Title>{boardData.boardTitle}</Title>
         <Info>
-          {boardData.tag?.map((tag) => (
-            <Tag>{tag}</Tag>
-          ))}
+          {boardData.boardHashtag?.map((tag: any) => {
+            return Object.keys(tag).map((key) => <Tag key={key}>#{tag[key]}</Tag>);
+          })}
           <Author>
             by. {boardData.writer} {format(parseISO(boardData.regDate), 'PP')}
           </Author>
@@ -60,7 +60,7 @@ const Title = styled.span`
 const Info = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 22px;
+  gap: 5px;
 `;
 const Tag = styled.span`
   font-size: 25px;
@@ -73,6 +73,7 @@ const Author = styled.span`
   font-weight: 400;
   color: ${({ theme }) => theme.colors.dark.a3};
   line-height: 40px;
+  padding-left: 1.75rem;
 `;
 const IconWrapper = styled.div`
   display: flex;
