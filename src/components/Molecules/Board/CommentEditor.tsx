@@ -190,6 +190,7 @@ const Button = styled.button<{ backgroundColor?: string }>`
   font-size: 20px;
   font-weight: 500;
   border: none;
+  cursor: pointer;
 `;
 
 export const EachMention = styled.button<{ focus: boolean }>`

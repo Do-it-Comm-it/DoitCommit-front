@@ -15,7 +15,7 @@ const Status = ({ board }: Props) => {
       <Counter>25</Counter>
       <ViewSVG />
       <Counter>{board.boardCnt}</Counter>
-      <Heart width={20} height={20} />
+      <Heart width={20} height={20} style={{ cursor: 'pointer' }} />
       <Counter>103</Counter>
     </Container>
   );

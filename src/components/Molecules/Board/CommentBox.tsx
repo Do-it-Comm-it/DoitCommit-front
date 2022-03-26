@@ -110,6 +110,9 @@ const Header = styled.div`
 `;
 
 const IconWrapper = styled.div`
+  & > svg {
+    cursor: pointer;
+  }
   display: flex;
   flex-direction: row;
   gap: 5px;
