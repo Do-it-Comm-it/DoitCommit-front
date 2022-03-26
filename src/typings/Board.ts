@@ -4,7 +4,7 @@ export interface IBoard {
   boardContent: string;
   categoryId?: number;
   regDate: string;
-  tag?: string[];
+  boardHashtag?: string[];
   thumbnail?: string | null;
   writer?: string;
   boardCnt?: number;
@@ -14,7 +14,7 @@ export interface RequestBoard {
   categoryId: number;
   boardTitle: string;
   boardContent: string;
-  tag: string[];
+  boardHashtag: string[];
   allImageArr: BoardImage[];
   imageArr: BoardImage[];
 }
