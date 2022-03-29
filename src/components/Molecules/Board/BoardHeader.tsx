@@ -1,13 +1,38 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import Heart from '@src/assets/heart.svg';
+import HeartIconSVG from '@src/assets/heart.svg';
 import Bookmark from '@src/assets/bookmark.svg';
 import { IBoard } from '@src/typings/Board';
 import { format, parseISO } from 'date-fns';
+import { useMutation, useQueryClient } from 'react-query';
+import { board } from '@src/service/api';
 interface Props {
   boardData: IBoard;
 }
 const BoardHeader = ({ boardData }: Props) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(board.toggleHeart, {
+    onMutate: async (selectedBoard) => {
+      await queryClient.cancelQueries(`board/${boardData.boardId}`);
+      const snapshot = queryClient.getQueryData(`board/${boardData.boardId}`);
+      queryClient.setQueryData(`board/${boardData.boardId}`, (old: any) => {
+        return {
+          ...old,
+          myHeart: !boardData.myHeart,
+        };
+      });
+
+      return {
+        snapshot,
+      };
+    },
+    onSuccess() {
+      queryClient.invalidateQueries(`board/${boardData.boardId}`);
+    },
+  });
+  const onClickHeart = useCallback(async () => {
+    mutation.mutate(boardData);
+  }, [mutation, boardData]);
   return (
     <Container>
       <Left>
@@ -23,7 +48,11 @@ const BoardHeader = ({ boardData }: Props) => {
       </Left>
       <Right>
         <IconWrapper>
-          <Heart width={24} height={24} />
+          {boardData.myHeart ? (
+            <HeartFill onClick={onClickHeart} width={24} height={24} />
+          ) : (
+            <Heart onClick={onClickHeart} width={24} height={24} />
+          )}
           <Bookmark width={24} height={24} />
         </IconWrapper>
       </Right>
@@ -83,5 +112,13 @@ const IconWrapper = styled.div`
     & > path {
       stroke: ${({ theme }) => theme.colors.dark.a3};
     }
+  }
+`;
+
+const Heart = styled(HeartIconSVG)``;
+
+const HeartFill = styled(HeartIconSVG)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.warning};
   }
 `;
