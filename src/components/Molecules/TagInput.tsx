@@ -2,7 +2,7 @@ import { useDebounce } from '@src/hooks/useDebounce';
 import useTag from '@src/hooks/useTag';
 import { Tag } from '@src/typings/Board';
 import React, { useCallback, useMemo, useState } from 'react';
-import Select, { InputActionMeta, components, MenuProps } from 'react-select';
+import Select, { InputActionMeta, components, MenuProps, MultiValueProps, InputProps } from 'react-select';
 import styled, { useTheme } from 'styled-components';
 
 interface Props {
@@ -30,7 +30,7 @@ const TagInput = ({ onChange, value }: Props) => {
 
   const filteredOption = useMemo(() => {
     if (debouncedSearch) {
-      if (debouncedSearch.startsWith('#') && debouncedSearch.length === 1 && popularTagList) {
+      if (debouncedSearch.length === 0 && popularTagList) {
         return popularTagList;
       } else if (debouncedSearch.length > 0 && tagList) {
         return tagList.filter((tag) => tag.tagName.includes(debouncedSearch)).slice(0, 8);
@@ -40,20 +40,27 @@ const TagInput = ({ onChange, value }: Props) => {
 
   const hideMenu = useCallback(() => {
     setOpenMenu(false);
+    setSearch('');
   }, []);
 
-  const CustomMenu = useCallback(({ innerProps, ...props }: MenuProps<any>) => {
-    return (
-      <components.Menu {...props} innerProps={{ ...innerProps }}>
-        <PopularTagText>인기 태그</PopularTagText>
-        {props.children}
-      </components.Menu>
-    );
-  }, []);
+  const CustomMenu = useCallback(
+    ({ innerProps, ...props }: MenuProps<any>) => {
+      return (
+        <components.Menu {...props} innerProps={{ ...innerProps }}>
+          <PopularTagText>{search.length === 0 ? `인기 태그` : `검색 태그`}</PopularTagText>
+          {props.children}
+        </components.Menu>
+      );
+    },
+    [search],
+  );
 
   return (
     <Select
       value={value}
+      onFocus={() => {
+        setOpenMenu(true);
+      }}
       onInputChange={handleInputChange}
       onChange={onChange}
       onBlur={hideMenu}
@@ -74,12 +81,30 @@ const TagInput = ({ onChange, value }: Props) => {
           ...defaultStyles,
           width: 500,
         }),
+        multiValue: (defaultStyles) => ({
+          background: 'none',
+          fontSize: '25px',
+          lineHeight: '36px',
+          color: `${theme.colors.main}`,
+          fontFamily: theme.font.NotoSansKRRegular,
+          paddingRight: 10,
+        }),
+        multiValueLabel: (defaultStyles) => ({
+          background: 'none',
+          fontSize: '25px',
+          lineHeight: '36px',
+          color: `${theme.colors.main}`,
+          fontFamily: theme.font.NotoSansKRRegular,
+        }),
         control: (defaultStyles, { isFocused }) => ({
           ...defaultStyles,
           border: 'none',
           width: 500,
           backgroundColor: 'transparent',
           boxShadow: 'none',
+        }),
+        multiValueRemove: () => ({
+          display: 'none',
         }),
         input: (defaultStyles) => ({
           ...defaultStyles,
