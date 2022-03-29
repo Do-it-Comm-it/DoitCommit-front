@@ -1,4 +1,4 @@
-import { RequestBoard } from '@src/typings/Board';
+import { IBoard, RequestBoard } from '@src/typings/Board';
 import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
@@ -36,6 +36,26 @@ const updateComment = async ({ body }: IUpdateCommentDto) => {
   return code;
 };
 
+const toggleHeart = async (selectedBoard: IBoard) => {
+  switch (selectedBoard.myHeart) {
+    case false:
+      requestAPI().post(`/boards/${selectedBoard.boardId}/hearts`);
+      break;
+    case true:
+      await requestAPI().delete(`/boards/${selectedBoard.boardId}/hearts`);
+      break;
+  }
+};
+const toggleBookmark = async (selectedBoard: IBoard) => {
+  switch (selectedBoard.myBookmark) {
+    case false:
+      await requestAPI().post(`/boards/${selectedBoard.boardId}/bookmarks`);
+      break;
+    case true:
+      await requestAPI().delete(`/boards/${selectedBoard.boardId}/bookmarks`);
+      break;
+  }
+};
 const boardApiList = {
   getBoardListByPage,
   getBoardById,
@@ -44,6 +64,8 @@ const boardApiList = {
   addComment,
   deleteComment,
   updateComment,
+  toggleHeart,
+  toggleBookmark,
 };
 
 export default boardApiList;
