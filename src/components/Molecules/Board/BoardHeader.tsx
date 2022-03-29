@@ -13,12 +13,12 @@ const BoardHeader = ({ boardData }: Props) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(board.toggleHeart, {
     onMutate: async (selectedBoard) => {
-      await queryClient.cancelQueries(`board/${boardData.boardId}`);
-      const snapshot = queryClient.getQueryData(`board/${boardData.boardId}`);
-      queryClient.setQueryData(`board/${boardData.boardId}`, (old: any) => {
+      await queryClient.cancelQueries(`board/${selectedBoard.boardId}`);
+      const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
+      queryClient.setQueryData(`board/${selectedBoard.boardId}`, (old: any) => {
         return {
-          ...old,
-          myHeart: !boardData.myHeart,
+          ...selectedBoard,
+          myHeart: !selectedBoard.myHeart,
         };
       });
 
