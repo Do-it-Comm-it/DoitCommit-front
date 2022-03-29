@@ -1,17 +1,19 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import HeartIconSVG from '@src/assets/heart.svg';
-import Bookmark from '@src/assets/bookmark.svg';
 import { IBoard } from '@src/typings/Board';
 import { format, parseISO } from 'date-fns';
 import { useMutation, useQueryClient } from 'react-query';
 import { board } from '@src/service/api';
+
+import BookmarkIconSVG from '@src/assets/bookmark.svg';
+import BookmarkIconFillSVG from '@src/assets/bookmark_fill.svg';
 interface Props {
   boardData: IBoard;
 }
 const BoardHeader = ({ boardData }: Props) => {
   const queryClient = useQueryClient();
-  const mutation = useMutation(board.toggleHeart, {
+  const mutationHeart = useMutation(board.toggleHeart, {
     onMutate: async (selectedBoard) => {
       await queryClient.cancelQueries(`board/${selectedBoard.boardId}`);
       const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
@@ -30,9 +32,31 @@ const BoardHeader = ({ boardData }: Props) => {
       queryClient.invalidateQueries(`board/${boardData.boardId}`);
     },
   });
+  const mutationBookmark = useMutation(board.toggleBookmark, {
+    onMutate: async (selectedBoard) => {
+      await queryClient.cancelQueries(`board/${selectedBoard.boardId}`);
+      const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
+      queryClient.setQueryData(`board/${selectedBoard.boardId}`, (old: any) => {
+        return {
+          ...old,
+          myBookmark: !selectedBoard.myBookmark,
+        };
+      });
+
+      return {
+        snapshot,
+      };
+    },
+    onSuccess() {
+      queryClient.invalidateQueries(`board/${boardData.boardId}`);
+    },
+  });
   const onClickHeart = useCallback(async () => {
-    mutation.mutate(boardData);
-  }, [mutation, boardData]);
+    mutationHeart.mutate(boardData);
+  }, [mutationHeart, boardData]);
+  const onClickBookmark = useCallback(async () => {
+    mutationBookmark.mutate(boardData);
+  }, [mutationBookmark, boardData]);
   return (
     <Container>
       <Left>
@@ -53,7 +77,11 @@ const BoardHeader = ({ boardData }: Props) => {
           ) : (
             <Heart onClick={onClickHeart} width={24} height={24} />
           )}
-          <Bookmark width={24} height={24} />
+          {boardData.myBookmark ? (
+            <BookmarkFill onClick={onClickBookmark} width={24} height={24} />
+          ) : (
+            <Bookmark onClick={onClickBookmark} width={24} height={24} />
+          )}
         </IconWrapper>
       </Right>
     </Container>
@@ -108,17 +136,24 @@ const IconWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10 px;
-  & > svg {
-    & > path {
-      stroke: ${({ theme }) => theme.colors.dark.a3};
-    }
-  }
 `;
 
-const Heart = styled(HeartIconSVG)``;
+const Heart = styled(HeartIconSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.dark.a3};
+  }
+`;
 
 const HeartFill = styled(HeartIconSVG)`
   & > path {
     fill: ${({ theme }) => theme.colors.warning};
+    stroke: none;
   }
 `;
+
+const Bookmark = styled(BookmarkIconSVG)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.dark.a3};
+  }
+`;
+const BookmarkFill = styled(BookmarkIconFillSVG)``;
