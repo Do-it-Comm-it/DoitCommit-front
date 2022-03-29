@@ -17,7 +17,7 @@ const BoardHeader = ({ boardData }: Props) => {
       const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
       queryClient.setQueryData(`board/${selectedBoard.boardId}`, (old: any) => {
         return {
-          ...selectedBoard,
+          ...old,
           myHeart: !selectedBoard.myHeart,
         };
       });

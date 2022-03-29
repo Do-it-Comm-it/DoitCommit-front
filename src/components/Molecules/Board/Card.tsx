@@ -12,10 +12,11 @@ interface Props {
 const Card = ({ board }: Props) => {
   return (
     <Container>
-      <Link to={`/community/board/${board.boardId}`} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
+      <Link to={`/community/board/${board.boardId}`} style={{ width: '100%', textDecoration: 'none' }}>
         <Thumbnail thumbnail={board.thumbnail} />
-        <CardContent board={board} />
       </Link>
+      <CardContent board={board} />
+
       <Bottom>
         <Author>by. {board.writer}</Author>
         <Status board={board} />
@@ -47,6 +48,7 @@ const Bottom = styled.div`
   width: 100%;
   padding: 0 5%;
   padding-bottom: 5%;
+  margin-top: auto;
 `;
 
 const Author = styled.span`
