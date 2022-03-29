@@ -39,7 +39,7 @@ const updateComment = async ({ body }: IUpdateCommentDto) => {
 const toggleHeart = async (selectedBoard: IBoard) => {
   switch (selectedBoard.myHeart) {
     case false:
-      requestAPI().post(`/boards/${selectedBoard.boardId}/hearts`);
+      await requestAPI().post(`/boards/${selectedBoard.boardId}/hearts`);
       break;
     case true:
       await requestAPI().delete(`/boards/${selectedBoard.boardId}/hearts`);
