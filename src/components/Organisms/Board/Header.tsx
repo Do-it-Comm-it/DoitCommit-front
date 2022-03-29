@@ -12,9 +12,6 @@ const Header = () => {
         <DILink
           fontSize={28}
           fontWeight={500}
-          style={{
-            marginRight: '40px',
-          }}
           activeStyle={{
             color: theme.colors.main,
             borderBottom: `2px solid ${theme.colors.main}`,
@@ -52,9 +49,10 @@ const Container = styled.div`
   height: 250px;
   align-items: center;
   justify-content: space-evenly;
-
+  gap: 30px;
   & > div {
     display: flex;
     flex-direction: row;
+    gap: 37px;
   }
 `;
