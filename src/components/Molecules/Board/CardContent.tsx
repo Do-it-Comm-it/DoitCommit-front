@@ -28,12 +28,17 @@ const CardContent = ({ board }: Props) => {
       <Top>
         <Tags>#직장인 #공대생 #취준생</Tags>
         {board.myBookmark ? (
-          <BsBookmarkFill onClick={onClickBookmark} color={theme.colors.main} style={{ marginLeft: 'auto' }} />
+          <BsBookmarkFill
+            onClick={onClickBookmark}
+            color={theme.colors.main}
+            style={{ marginLeft: 'auto', cursor: 'pointer' }}
+          />
         ) : (
           <BsBookmark
             onClick={onClickBookmark}
             style={{
               marginLeft: 'auto',
+              cursor: 'pointer',
               color: theme.colors.dark.a3,
             }}
           />

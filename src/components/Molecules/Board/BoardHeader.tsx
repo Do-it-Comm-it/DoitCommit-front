@@ -110,7 +110,10 @@ const Author = styled.span`
 const IconWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10 px;
+  gap: 10px;
+  & > svg {
+    cursor: pointer;
+  }
 `;
 
 const Heart = styled(HeartIconSVG)`
