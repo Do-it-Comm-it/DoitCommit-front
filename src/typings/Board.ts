@@ -1,3 +1,8 @@
+export interface IBoardList {
+  pages: Array<{ data: Array<IBoard>; nextPage: number }>;
+  pageParams: Array<any>;
+}
+
 export interface IBoard {
   boardId?: number;
   boardTitle: string;

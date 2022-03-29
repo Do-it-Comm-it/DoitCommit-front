@@ -1,5 +1,5 @@
 import { board } from '@src/service/api';
-import { IBoard } from '@src/typings/Board';
+import { IBoard, IBoardList } from '@src/typings/Board';
 import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
 
 export const useBoards = () => {
@@ -41,17 +41,16 @@ export const useBoards = () => {
   };
 };
 
-export const useBoardListMutation = (fieldToEdit: Partial<IBoard>, api: any) => {
+export const useBoardListMutation = (fieldToEdit: Partial<IBoard>, api: (selectedBoard: IBoard) => Promise<void>) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
       await queryClient.cancelQueries('boards');
       const snapshot = queryClient.getQueryData('boards');
-      queryClient.setQueryData('boards', (old: any) => {
-        return {
-          ...old,
-          pages: old.pages.map((page: any) => {
-            return {
+
+      queryClient.setQueryData<IBoardList>('boards', (old) => ({
+        pages: old
+          ? old.pages.map((page) => ({
               ...page,
               data: page.data.map((board: IBoard) => {
                 if (board.boardId === selectedBoard.boardId) {
@@ -60,15 +59,13 @@ export const useBoardListMutation = (fieldToEdit: Partial<IBoard>, api: any) => 
                     ...fieldToEdit,
                   };
                 } else {
-                  return {
-                    ...board,
-                  };
+                  return board;
                 }
               }),
-            };
-          }),
-        };
-      });
+            }))
+          : [],
+        pageParams: old ? old.pageParams : [],
+      }));
 
       // Return a snapshot so we can rollback in case of failure
       return {
