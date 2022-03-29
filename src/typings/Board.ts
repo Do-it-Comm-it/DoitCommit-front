@@ -8,6 +8,9 @@ export interface IBoard {
   thumbnail?: string | null;
   writer?: string;
   boardCnt?: number;
+  heartCnt?: number;
+  myHeart?: boolean;
+  myBookmark?: boolean;
 }
 
 export interface RequestBoard {
