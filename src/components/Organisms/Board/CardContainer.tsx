@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useBoards } from '@src/hooks/useBoards';
+import { IBoard } from '@src/typings/Board';
 const CardContainer = () => {
   const { boards, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage } = useBoards();
 
@@ -11,7 +12,7 @@ const CardContainer = () => {
   return (
     <InfiniteScroll hasMore={hasNextPage} loadMore={fetchNextPage as any} style={{ width: '100%', height: '100%' }}>
       <Container>
-        {boards?.pages.map((page) => page.data.map((b: any, i: number) => <Card board={b} key={i} />))}
+        {boards?.pages.map((page) => page.data.map((b: IBoard, i: number) => <Card board={b} key={i} />))}
         {isFetchingNextPage && <p>Loading..</p>}
       </Container>
     </InfiniteScroll>
