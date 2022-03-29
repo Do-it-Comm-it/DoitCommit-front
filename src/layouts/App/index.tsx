@@ -10,12 +10,13 @@ import Home from '@src/pages/Home';
 import Board from '@src/pages/Board';
 import { CommonComponentWrapper, PublicRoute } from '@src/routes/Route';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
+import { ReactQueryDevtools } from 'react-query/devtools';
 const App = () => {
   const { theme } = useDarkMode();
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <React.Suspense fallback={<h2>Loading</h2>}>
         <ThemeProvider theme={theme === 'light' ? light : dark}>
           <BrowserRouter>

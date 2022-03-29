@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import Heart from '@src/assets/heart.svg';
-import Bookmark from '@src/assets/bookmark.svg';
+import HeartIconSVG from '@src/assets/heart.svg';
 import { IBoard } from '@src/typings/Board';
 import { format, parseISO } from 'date-fns';
+import { board } from '@src/service/api';
+import BookmarkIconSVG from '@src/assets/bookmark.svg';
+import BookmarkIconFillSVG from '@src/assets/bookmark_fill.svg';
+import { useSingleBoardMutation } from '@src/hooks/useBoards';
 interface Props {
   boardData: IBoard;
 }
 const BoardHeader = ({ boardData }: Props) => {
+  const mutationHeart = useSingleBoardMutation(
+    {
+      myHeart: !boardData.myHeart,
+      boardId: boardData.boardId,
+    },
+    board.toggleHeart,
+  );
+
+  const mutationBookmark = useSingleBoardMutation(
+    {
+      myBookmark: !boardData.myBookmark,
+      boardId: boardData.boardId,
+    },
+    board.toggleBookmark,
+  );
+  const onClickHeart = useCallback(async () => {
+    mutationHeart.mutate(boardData);
+  }, [mutationHeart, boardData]);
+  const onClickBookmark = useCallback(async () => {
+    mutationBookmark.mutate(boardData);
+  }, [mutationBookmark, boardData]);
   return (
     <Container>
       <Left>
@@ -23,8 +47,16 @@ const BoardHeader = ({ boardData }: Props) => {
       </Left>
       <Right>
         <IconWrapper>
-          <Heart width={24} height={24} />
-          <Bookmark width={24} height={24} />
+          {boardData.myHeart ? (
+            <HeartFill onClick={onClickHeart} width={24} height={24} />
+          ) : (
+            <Heart onClick={onClickHeart} width={24} height={24} />
+          )}
+          {boardData.myBookmark ? (
+            <BookmarkFill onClick={onClickBookmark} width={24} height={24} />
+          ) : (
+            <Bookmark onClick={onClickBookmark} width={24} height={24} />
+          )}
         </IconWrapper>
       </Right>
     </Container>
@@ -78,10 +110,28 @@ const Author = styled.span`
 const IconWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10 px;
+  gap: 10px;
   & > svg {
-    & > path {
-      stroke: ${({ theme }) => theme.colors.dark.a3};
-    }
+    cursor: pointer;
   }
 `;
+
+const Heart = styled(HeartIconSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.dark.a3};
+  }
+`;
+
+const HeartFill = styled(HeartIconSVG)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.warning};
+    stroke: none;
+  }
+`;
+
+const Bookmark = styled(BookmarkIconSVG)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.dark.a3};
+  }
+`;
+const BookmarkFill = styled(BookmarkIconFillSVG)``;
