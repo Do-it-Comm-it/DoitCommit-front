@@ -3,54 +3,29 @@ import styled from 'styled-components';
 import HeartIconSVG from '@src/assets/heart.svg';
 import { IBoard } from '@src/typings/Board';
 import { format, parseISO } from 'date-fns';
-import { useMutation, useQueryClient } from 'react-query';
 import { board } from '@src/service/api';
-
 import BookmarkIconSVG from '@src/assets/bookmark.svg';
 import BookmarkIconFillSVG from '@src/assets/bookmark_fill.svg';
+import { useSingleBoardMutation } from '@src/hooks/useBoards';
 interface Props {
   boardData: IBoard;
 }
 const BoardHeader = ({ boardData }: Props) => {
-  const queryClient = useQueryClient();
-  const mutationHeart = useMutation(board.toggleHeart, {
-    onMutate: async (selectedBoard) => {
-      await queryClient.cancelQueries(`board/${selectedBoard.boardId}`);
-      const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
-      queryClient.setQueryData(`board/${selectedBoard.boardId}`, (old: any) => {
-        return {
-          ...old,
-          myHeart: !selectedBoard.myHeart,
-        };
-      });
+  const mutationHeart = useSingleBoardMutation(
+    {
+      myHeart: !boardData.myHeart,
+      boardId: boardData.boardId,
+    },
+    board.toggleHeart,
+  );
 
-      return {
-        snapshot,
-      };
+  const mutationBookmark = useSingleBoardMutation(
+    {
+      myBookmark: !boardData.myBookmark,
+      boardId: boardData.boardId,
     },
-    onSuccess() {
-      queryClient.invalidateQueries(`board/${boardData.boardId}`);
-    },
-  });
-  const mutationBookmark = useMutation(board.toggleBookmark, {
-    onMutate: async (selectedBoard) => {
-      await queryClient.cancelQueries(`board/${selectedBoard.boardId}`);
-      const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
-      queryClient.setQueryData(`board/${selectedBoard.boardId}`, (old: any) => {
-        return {
-          ...old,
-          myBookmark: !selectedBoard.myBookmark,
-        };
-      });
-
-      return {
-        snapshot,
-      };
-    },
-    onSuccess() {
-      queryClient.invalidateQueries(`board/${boardData.boardId}`);
-    },
-  });
+    board.toggleBookmark,
+  );
   const onClickHeart = useCallback(async () => {
     mutationHeart.mutate(boardData);
   }, [mutationHeart, boardData]);

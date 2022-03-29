@@ -5,50 +5,21 @@ import Highlighter from 'react-highlight-words';
 import { useRecoilValue } from 'recoil';
 import keywordState from '@src/recoil/selector/keyword';
 import { IBoard } from '@src/typings/Board';
-import { useMutation, useQueryClient } from 'react-query';
 import { board as boardApi } from '@src/service/api';
 import { Link } from 'react-router-dom';
+import { useBoardListMutation } from '@src/hooks/useBoards';
 interface Props {
   board: IBoard;
 }
 const CardContent = ({ board }: Props) => {
   const theme = useTheme();
   const keyword = useRecoilValue(keywordState);
-  const queryClient = useQueryClient();
-  const mutation = useMutation(boardApi.toggleBookmark, {
-    onMutate: async (selectedBoard) => {
-      await queryClient.cancelQueries('boards');
-      const snapshot = queryClient.getQueryData('boards');
-      queryClient.setQueryData('boards', (old: any) => {
-        return {
-          ...old,
-          pages: old.pages.map((page: any) => {
-            return {
-              ...page,
-              data: page.data.map((board: IBoard) => {
-                if (board.boardId === selectedBoard.boardId) {
-                  return {
-                    ...board,
-                    myBookmark: !board.myBookmark,
-                  };
-                } else {
-                  return {
-                    ...board,
-                  };
-                }
-              }),
-            };
-          }),
-        };
-      });
-      return {
-        snapshot,
-      };
+  const mutation = useBoardListMutation(
+    {
+      myBookmark: !board.myBookmark,
     },
-    onSuccess() {
-      queryClient.invalidateQueries('boards');
-    },
-  });
+    boardApi.toggleBookmark,
+  );
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);
   }, [mutation, board]);
