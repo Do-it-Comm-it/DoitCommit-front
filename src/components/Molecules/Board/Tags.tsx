@@ -7,7 +7,12 @@ const Tags = () => {
   const { usePopularTag } = useTag();
   const { data: tags, isLoading } = usePopularTag();
   if (isLoading) return <p>Loading..</p>;
-  return <Container>{tags && tags.map((tag) => <Tag key={tag.tagId}>{tag.tagName}</Tag>).slice(0, 7)}</Container>;
+  return (
+    <Container>
+      <Text>인기태그</Text>
+      {tags && tags.map((tag) => <Tag key={tag.tagId}>{tag.tagName}</Tag>).slice(0, 7)}
+    </Container>
+  );
 };
 
 export default Tags;
@@ -16,9 +21,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   width: 50%;
-  max-width: 656px;
+  min-width: 100%;
   align-items: center;
   justify-content: center;
+  gap: 20px;
   flex-wrap: wrap;
   @media ${devices.laptop} {
     width: 100%;
@@ -32,10 +38,13 @@ const Tag = styled.div`
   color: ${({ theme }) => theme.colors.dark.a3};
   cursor: pointer;
   white-space: nowrap;
-  margin-right: 15px;
-  margin-top: 7px;
 
   @media ${devices.laptop} {
-    margin-top: 10px;
   }
+`;
+const Text = styled.span`
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: 1rem;
+  color: ${({ theme }) => theme.colors.main};
 `;
