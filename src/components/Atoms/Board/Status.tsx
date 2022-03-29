@@ -14,8 +14,8 @@ const Status = ({ board }: Props) => {
   const mutation = useMutation(boardApi.toggleHeart, {
     onMutate: async (selectedBoard) => {
       await queryClient.cancelQueries('boards');
-      const snapshotOfPreviousTweets = queryClient.getQueryData('boards');
-      await queryClient.setQueryData('boards', (old: any) => {
+      const snapshot = queryClient.getQueryData('boards');
+      queryClient.setQueryData('boards', (old: any) => {
         return {
           ...old,
           pages: old.pages.map((page: any) => {
@@ -41,7 +41,7 @@ const Status = ({ board }: Props) => {
 
       // Return a snapshot so we can rollback in case of failure
       return {
-        snapshotOfPreviousTweets,
+        snapshot,
       };
     },
     onSuccess() {
