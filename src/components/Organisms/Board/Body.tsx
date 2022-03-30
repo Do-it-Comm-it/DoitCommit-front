@@ -8,7 +8,6 @@ import FloatingButton from './FloatingButton';
 import BoardEditor from './BoardEditor';
 import Board from './Board';
 import { useUser } from '@src/hooks/useAuthentication';
-import PrivateRoute from '@src/routes/PrivateRoute';
 
 type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 

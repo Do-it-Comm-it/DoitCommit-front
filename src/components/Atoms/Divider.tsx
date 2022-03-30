@@ -12,8 +12,8 @@ const Container = styled.hr`
   width: 95%;
   border-width: 1px;
   border-style: solid;
-  color: ${({ theme }) => theme.colors.dark.a1};
-  border-color: ${({ theme }) => theme.colors.dark.a2};
+  color: ${({ theme }) => theme.colors.gray.gray300};
+  border-color: ${({ theme }) => theme.colors.gray.gray300};
 `;
 
 export default Divider;

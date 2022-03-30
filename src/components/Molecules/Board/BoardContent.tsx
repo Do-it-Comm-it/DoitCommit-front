@@ -78,11 +78,11 @@ const Content = styled.div`
   padding-bottom: 200px;
   & > div {
     & > * {
-      color: ${({ theme }) => theme.colors.dark.a10};
+      color: ${({ theme }) => theme.colors.gray.gray500};
       font-weight: 400;
     }
     & > p {
-      color: ${({ theme }) => theme.colors.dark.a10};
+      color: ${({ theme }) => theme.colors.gray.gray500};
       font-weight: 400;
     }
     h1,
@@ -91,7 +91,7 @@ const Content = styled.div`
     h4,
     h5,
     h6 {
-      color: ${({ theme }) => theme.colors.dark.a7};
+      color: ${({ theme }) => theme.colors.gray.gray950};
       margin: 1.2rem 0;
     }
     img {
@@ -115,14 +115,14 @@ const LoadMoreWrapper = styled.div`
     align-items: center;
     cursor: pointer;
     & > span {
-      color: ${({ theme }) => theme.colors.main};
+      color: ${({ theme }) => theme.colors.primary.default};
       font-weight: 500;
       font-size: 20px;
     }
 
     & > svg {
       & > path {
-        fill: ${({ theme }) => theme.colors.main};
+        fill: ${({ theme }) => theme.colors.primary.default};
       }
     }
   }
@@ -134,7 +134,7 @@ const CommentCountWrapper = styled.div`
   gap: 5px;
 
   & > span {
-    color: ${({ theme }) => theme.colors.main};
+    color: ${({ theme }) => theme.colors.primary.default};
     font-weight: 400;
     font-size: 16px;
   }

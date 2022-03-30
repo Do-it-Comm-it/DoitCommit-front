@@ -52,7 +52,7 @@ const Text = styled.span<{
 }>`
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
-  color: ${({ fontColor, theme }) => fontColor ?? theme.colors.dark.a7};
+  color: ${({ fontColor, theme }) => fontColor ?? theme.colors.gray.gray950};
   font-family: ${({ theme, fontFamily }) => (fontFamily ? fontFamily : theme.font.NotoSansKRRegular)};
   line-height: ${({ lineHeight }) => lineHeight}px;
 `;

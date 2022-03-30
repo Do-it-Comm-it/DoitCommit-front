@@ -44,7 +44,7 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
         <ContentRow alignItems="center" padding="10px 0" widthFull>
           <Label>분류</Label>
           <CheckButton
-            backgroundColor={`${theme.colors.main}`}
+            backgroundColor={theme.colors.primary.default}
             color="#ffffff"
             checked={type === TodoType.STUDY}
             onClick={() => onChangeType(TodoType.STUDY)}
@@ -52,7 +52,7 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
             스터디
           </CheckButton>
           <CheckButton
-            backgroundColor={`${theme.colors.main}`}
+            backgroundColor={theme.colors.primary.default}
             color="#ffffff"
             checked={type === TodoType.DAILY}
             onClick={() => onChangeType(TodoType.DAILY)}
@@ -60,7 +60,7 @@ const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Pr
             데일리
           </CheckButton>
           <CheckButton
-            backgroundColor={`${theme.colors.main}`}
+            backgroundColor={theme.colors.primary.default}
             color="#ffffff"
             checked={type === TodoType.WORK}
             onClick={() => onChangeType(TodoType.WORK)}
@@ -82,7 +82,7 @@ const Label = styled.label`
   width: 25%;
   text-align: start;
   padding-left: 15px;
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray200};
 `;
 
 const CheckButton = styled.div<{ backgroundColor?: string; color?: string; checked?: boolean }>`

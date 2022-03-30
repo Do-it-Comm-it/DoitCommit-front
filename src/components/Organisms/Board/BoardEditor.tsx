@@ -180,14 +180,20 @@ const BoardEditor = () => {
           onClick={() => {
             alert('아직 개발중입니다.');
           }}
-          backgroundColor={theme.colors.dark.a5}
+          backgroundColor={theme.colors.gray.gray600}
           width={134}
           height={51}
           borderRadius={50}
         >
           저장하기
         </DIButton>
-        <DIButton onClick={onSubmit} backgroundColor={theme.colors.main} width={134} height={51} borderRadius={50}>
+        <DIButton
+          onClick={onSubmit}
+          backgroundColor={theme.colors.primary.default}
+          width={134}
+          height={51}
+          borderRadius={50}
+        >
           발행하기
         </DIButton>
       </BottomSection>
@@ -213,7 +219,7 @@ const TitleInput = styled.input`
   border: none;
   outline: none;
 
-  background-color: ${({ theme }) => theme.colors.body};
+  background-color: ${({ theme }) => theme.colors.primary.light500};
 
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
@@ -222,7 +228,7 @@ const TitleInput = styled.input`
   line-height: 51px;
 
   ::placeholder {
-    color: ${({ theme }) => theme.colors.dark.a2};
+    color: ${({ theme }) => theme.colors.gray.gray300};
   }
 `;
 

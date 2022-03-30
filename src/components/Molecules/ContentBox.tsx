@@ -40,11 +40,11 @@ const ContentBox: React.FC<Props> = ({
             fontFamily={theme.font.NotoSansKRRegular}
             fontSize={20}
             lineHeight={29}
-            fontColor={theme.colors.dark.a7}
+            fontColor={theme.colors.gray.gray950}
           >
             {title}
           </Title>
-          <PlusIcon size={16} onClick={onClick} />
+          <PlusIcon size={16} onClick={onClick} color={theme.colors.gray.gray950} />
         </HeaderWrapper>
       )}
 
@@ -56,10 +56,10 @@ const ContentBox: React.FC<Props> = ({
           <Content>
             <LoginHeader>
               <LockIcon />
-              <Title fontSize={20} fontColor={theme.colors.dark.a7}>
+              <Title fontSize={20} fontColor={theme.colors.gray.gray950}>
                 로그인 후 이용가능합니다.
               </Title>
-              <SubTitle fontSize={14} fontColor={theme.colors.dark.a3}>
+              <SubTitle fontSize={14} fontColor={theme.colors.gray.gray400}>
                 회원가입 후 더 많은 서비스를 이용 해 보세요
               </SubTitle>
             </LoginHeader>
@@ -68,8 +68,8 @@ const ContentBox: React.FC<Props> = ({
               value={'로그인 하기'}
               borderRadius={60}
               onClick={onClickLogin}
-              backgroundColor={theme.colors.main}
-              borderColor={theme.colors.main}
+              backgroundColor={theme.colors.primary.default}
+              borderColor={theme.colors.primary.default}
             />
           </Content>
         </LoginWrapper>
@@ -97,12 +97,13 @@ const LoginWrapper = styled.div`
   left: 0;
   margin: auto;
   min-width: 80px;
-  width: 50%;
+  max-width: 500px;
+  width: 70%;
   height: 50%;
   min-height: 200px;
   border-radius: 5px;
   box-shadow: ${({ theme }) => theme.boxShadow};
-  background: ${({ theme }) => theme.colors.sub2};
+  background: ${({ theme }) => theme.colors.gray.gray155};
 `;
 const OpacityBox = styled.div`
   opacity: 0.2;

@@ -23,7 +23,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.dark.a2};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray300};
   padding: 30px 0;
 
   & > a {
@@ -35,6 +35,6 @@ const ShareIcon = styled(ShareIconSVG)`
   margin-left: auto;
   cursor: pointer;
   & > path {
-    fill: ${({ theme }) => theme.colors.dark.a7};
+    fill: ${({ theme }) => theme.colors.gray.gray950};
   }
 `;

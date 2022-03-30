@@ -13,8 +13,8 @@ const Header = () => {
           fontSize={28}
           fontWeight={500}
           activeStyle={{
-            color: theme.colors.main,
-            borderBottom: `2px solid ${theme.colors.main}`,
+            color: theme.colors.primary.default,
+            borderBottom: `2px solid ${theme.colors.primary.default}`,
             paddingBottom: '5px',
           }}
           to="/community"
@@ -25,8 +25,8 @@ const Header = () => {
           fontSize={28}
           fontWeight={500}
           activeStyle={{
-            color: theme.colors.main,
-            borderBottom: `2px solid ${theme.colors.main}`,
+            color: theme.colors.primary.default,
+            borderBottom: `2px solid ${theme.colors.primary.default}`,
             paddingBottom: '5px',
           }}
           to="/community/notice"

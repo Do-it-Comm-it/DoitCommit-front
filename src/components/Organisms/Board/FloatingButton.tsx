@@ -46,7 +46,7 @@ const Button = styled.div`
   width: 52px;
   height: 52px;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.colors.main};
+  background-color: ${({ theme }) => theme.colors.primary.default};
 `;
 
 const WriteLink = styled(Link)<{ hover: boolean }>`
@@ -61,7 +61,7 @@ const WriteLink = styled(Link)<{ hover: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.colors.main};
+  background-color: ${({ theme }) => theme.colors.primary.default};
   & > * {
     margin-right: 10px;
   }

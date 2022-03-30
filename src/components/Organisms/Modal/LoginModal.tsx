@@ -22,7 +22,7 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
       height={height}
       onClose={onClose}
       stopPropagation={stopPropagation}
-      backgroundColor={theme.colors.dark.a8}
+      backgroundColor={theme.colors.gray.gray150}
     >
       <Container>
         <Header>
@@ -35,11 +35,15 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
             style={{ paddingBottom: 14 }}
             fontSize={28}
             fontFamily={theme.font.NotoSansKRBold}
-            fontColor={theme.colors.dark.a7}
+            fontColor={theme.colors.gray.gray950}
           >
             안녕하세요!
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a7}>
+          <HeaderDescription
+            fontSize={16}
+            fontFamily={theme.font.NotoSansKRLight}
+            fontColor={theme.colors.gray.gray950}
+          >
             오늘도 두잇커밋과 함께 목표에
             <Line> 한발짝 가까워졌습니다.</Line>
           </HeaderDescription>
@@ -94,7 +98,7 @@ const Content = styled.div`
 const CloseModalButton = styled(CloseIcon)`
   width: 25px;
   margin-left: auto;
-  color: ${({ theme }) => theme.colors.dark};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   cursor: pointer;
 `;
 const HelpContent = styled.div`
@@ -106,7 +110,7 @@ const HelpContent = styled.div`
 `;
 
 const Line = styled.span`
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   @media ${devices.tablet} {
     display: block;
   }

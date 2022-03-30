@@ -40,6 +40,6 @@ const StyledLink = styled(NavLink)<{ fontSize: number; fontWeight: number; fontC
   text-decoration: none;
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   white-space: nowrap;
 `;

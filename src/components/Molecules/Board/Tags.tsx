@@ -32,10 +32,10 @@ const Container = styled.div`
 `;
 
 const Tag = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
   border-radius: 50px;
   padding: 6px 22px;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   cursor: pointer;
   white-space: nowrap;
 
@@ -46,5 +46,5 @@ const Text = styled.span`
   font-size: 18px;
   font-weight: 500;
   margin-right: 1rem;
-  color: ${({ theme }) => theme.colors.main};
+  color: ${({ theme }) => theme.colors.primary.default};
 `;

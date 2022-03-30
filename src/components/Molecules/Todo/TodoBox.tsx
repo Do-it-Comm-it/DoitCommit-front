@@ -84,7 +84,7 @@ const Wrapper = styled.div`
   min-width: 286px;
   min-height: 330px;
   width: 100%;
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.gray.gray200};
   flex-direction: column;
 
   box-shadow: ${({ theme }) => theme.boxShadow};
@@ -116,24 +116,24 @@ const Labels = styled.div`
 `;
 const Pin = styled(PinSVG)`
   & > path {
-    stroke: ${({ theme }) => theme.colors.main};
+    stroke: ${({ theme }) => theme.colors.primary.default};
   }
 `;
 const FillPin = styled(PinSVG)`
   & > path {
-    stroke: ${({ theme }) => theme.colors.main};
-    fill: ${({ theme }) => theme.colors.sub3};
+    stroke: ${({ theme }) => theme.colors.primary.default};
+    fill: ${({ theme }) => theme.colors.primary.light400};
   }
 `;
 const DeleteIcon = styled(RiDeleteBin6Line)`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 
   &:hover {
     cursor: pointer;
   }
 `;
 const EditIcon = styled(MdModeEdit)`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   margin-right: 10px;
 
   &:hover {
@@ -141,11 +141,11 @@ const EditIcon = styled(MdModeEdit)`
   }
 `;
 const CheckIcon = styled(BsCheckCircle)`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 const CheckFinishedIcon = styled(BsCheckCircle)`
-  color: ${({ theme }) => theme.colors.dark.a3};
-  fill: ${({ theme }) => theme.colors.sub3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
+  fill: ${({ theme }) => theme.colors.primary.light400};
 `;
 const Content = styled.div`
   height: 80%;
@@ -158,7 +158,7 @@ const Title = styled.span`
   font-weight: normal;
   font-size: 20px;
   line-height: 29px;
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 const DateRow = styled.span`
   margin-top: 12px;
@@ -167,7 +167,7 @@ const DateRow = styled.span`
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 const Body = styled.span`
   margin-top: 25px;
@@ -177,7 +177,7 @@ const Body = styled.span`
   font-size: 16px;
   line-height: 23px;
 
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 const Footer = styled.div`
   align-self: flex-end;

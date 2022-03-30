@@ -49,14 +49,14 @@ const Container = styled.div`
   }
 `;
 const Counter = styled.span`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   font-size: 16px;
   font-weight: 400;
 `;
 
 const Heart = styled(HeartSVG)`
   & > path {
-    stroke: ${({ theme }) => theme.colors.dark.a3};
+    stroke: ${({ theme }) => theme.colors.gray.gray400};
   }
 `;
 

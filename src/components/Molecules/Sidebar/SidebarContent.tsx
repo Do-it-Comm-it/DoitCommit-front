@@ -65,7 +65,7 @@ const SidebarLink = styled(Link)`
     margin-right: 30px;
   }
   &:hover {
-    background-color: ${({ theme }) => theme.colors.main};
+    background-color: ${({ theme }) => theme.colors.primary.default};
   }
 `;
 export default React.memo(SidebarContent);

@@ -39,7 +39,7 @@ export const CloseModalButton = styled(CloseButton)`
   right: 0%;
   bottom: 34rem;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.gray.gray600};
 `;
 
 export const Container = styled.div`

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 type PlannerLabelProps = {
   level?: string;
@@ -8,6 +8,7 @@ type PlannerLabelProps = {
 };
 
 const PlannerLabel = ({ level, name }: PlannerLabelProps) => {
+  const theme = useTheme();
   const label = useMemo(() => {
     switch (level) {
       case 'LOW':
@@ -30,12 +31,12 @@ const PlannerLabel = ({ level, name }: PlannerLabelProps) => {
         };
       default:
         return {
-          color: '#FFFFFF',
+          color: theme.colors.white,
           backgroundColor: '#476CFF',
           label: name ?? 'Study',
         };
     }
-  }, [level, name]);
+  }, [level, theme, name]);
 
   return (
     <Container background={label.backgroundColor} color={label.color}>
@@ -52,7 +53,7 @@ const Container = styled.div<{ background: string; color: string }>`
 
   position: static;
 
-  background: ${({ background }) => background ?? '#ffffff'};
+  background: ${({ background, theme }) => background ?? theme.colors.white};
   color: ${({ color }) => color};
   border-radius: 50px;
 

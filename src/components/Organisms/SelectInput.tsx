@@ -26,7 +26,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
         }),
         placeholder: (defaultStyles) => ({
           ...defaultStyles,
-          color: theme.colors.dark.a2,
+          color: theme.colors.gray.gray300,
         }),
         multiValue: (defaultStyles) => ({
           ...defaultStyles,
@@ -36,15 +36,15 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           paddingRight: 6,
           paddingTop: 5,
           paddingBottom: 5,
-          backgroundColor: theme.colors.main,
+          backgroundColor: theme.colors.primary.default,
         }),
         multiValueLabel: (defaultStyles) => ({
           ...defaultStyles,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: theme.colors.main,
-          color: '#ffffff',
+          backgroundColor: theme.colors.primary.default,
+          color: theme.colors.white,
         }),
         multiValueRemove: (defaultStyles) => ({
           ...defaultStyles,
@@ -52,11 +52,11 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           alignItems: 'center',
           borderTopRightRadius: 30,
           borderBottomRightRadius: 30,
-          backgroundColor: theme.colors.main,
+          backgroundColor: theme.colors.primary.default,
           marginRight: -6,
           marginTop: -5,
           marginBottom: -5,
-          color: '#FFFFFF',
+          color: theme.colors.white,
         }),
       }}
     />

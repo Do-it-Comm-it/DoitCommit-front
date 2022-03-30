@@ -143,17 +143,17 @@ const Input = styled(MentionsInput)`
   font-size: 20px;
   padding: 8px 9px;
   &::placeholder {
-    color: ${({ theme }) => theme.colors.dark.a3};
+    color: ${({ theme }) => theme.colors.gray.gray400};
     font-weight: 350;
     font-size: 20px;
   }
   & strong {
-    color: ${({ theme }) => theme.colors.main};
+    color: ${({ theme }) => theme.colors.primary.default};
     z-index: 1;
     position: relative;
   }
   & textarea {
-    color: ${({ theme }) => theme.colors.dark.a7};
+    color: ${({ theme }) => theme.colors.gray.gray950};
     height: 44px;
     padding: 9px 10px !important;
     outline: none !important;
@@ -186,7 +186,7 @@ const ButtonWrapper = styled.div`
 const Button = styled.button<{ backgroundColor?: string }>`
   padding: 11px 30px;
   border-radius: 51px;
-  background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.main};
+  background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.primary.default};
   color: #ffffff;
   font-size: 20px;
   font-weight: 500;
@@ -207,8 +207,8 @@ export const EachMention = styled.button<{ focus: boolean }>`
     width: 30px;
     height: 30px;
   }
-  background-color: ${({ focus, theme }) => focus && theme.colors.main};
-  color: ${({ focus, theme }) => focus && '#FFFFFF'};
+  background-color: ${({ focus, theme }) => focus && theme.colors.primary.default};
+  color: ${({ focus, theme }) => focus && theme.colors.white};
 `;
 const ImageContainer = styled.div`
   display: flex;

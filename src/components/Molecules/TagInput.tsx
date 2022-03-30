@@ -2,7 +2,7 @@ import { useDebounce } from '@src/hooks/useDebounce';
 import useTag from '@src/hooks/useTag';
 import { Tag } from '@src/typings/Board';
 import React, { useCallback, useMemo, useState } from 'react';
-import Select, { InputActionMeta, components, MenuProps, MultiValueProps, InputProps } from 'react-select';
+import Select, { InputActionMeta, components, MenuProps } from 'react-select';
 import styled, { useTheme } from 'styled-components';
 
 interface Props {
@@ -85,7 +85,7 @@ const TagInput = ({ onChange, value }: Props) => {
           background: 'none',
           fontSize: '25px',
           lineHeight: '36px',
-          color: `${theme.colors.main}`,
+          color: `${theme.colors.primary.default}`,
           fontFamily: theme.font.NotoSansKRRegular,
           paddingRight: 10,
         }),
@@ -93,7 +93,7 @@ const TagInput = ({ onChange, value }: Props) => {
           background: 'none',
           fontSize: '25px',
           lineHeight: '36px',
-          color: `${theme.colors.main}`,
+          color: `${theme.colors.primary.default}`,
           fontFamily: theme.font.NotoSansKRRegular,
         }),
         control: (defaultStyles, { isFocused }) => ({
@@ -115,7 +115,7 @@ const TagInput = ({ onChange, value }: Props) => {
         }),
         placeholder: (defaultStyles) => ({
           ...defaultStyles,
-          color: theme.colors.dark.a2,
+          color: theme.colors.gray.gray300,
           fontFamily: theme.font.NotoSansKRRegular,
           fontSize: '25px',
           lineHeight: '36px',
@@ -126,7 +126,7 @@ const TagInput = ({ onChange, value }: Props) => {
         }),
         menu: (defaultStyles) => ({
           ...defaultStyles,
-          background: '#FFFFFF',
+          background: theme.colors.white,
           boxShadow: '0px 0px 20px rgba(143, 146, 148, 0.2)',
           borderRadius: '5px',
           left: '15px',
@@ -154,7 +154,7 @@ const TagInput = ({ onChange, value }: Props) => {
 
           ':hover': {
             cursor: 'pointer',
-            backgroundColor: theme.colors.sub3,
+            backgroundColor: theme.colors.primary.light400,
           },
         }),
       }}
@@ -173,7 +173,7 @@ const PopularTagText = styled.div`
   display: flex;
   align-items: center;
 
-  color: ${({ theme }) => theme.colors.main};
+  color: ${({ theme }) => theme.colors.primary.default};
 
   height: 30px;
   margin-bottom: 10px;

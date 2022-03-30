@@ -85,7 +85,7 @@ const Content = styled.div`
 
   & > span {
     font-size: 16px;
-    color: ${({ theme }) => theme.colors.dark.a7};
+    color: ${({ theme }) => theme.colors.gray.gray950};
     margin-right: auto;
     padding: 0 20px;
     cursor: pointer;
@@ -95,7 +95,7 @@ const Content = styled.div`
 const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
   display: none;
   & > path {
-    fill: ${({ theme }) => theme.colors.dark.a7};
+    fill: ${({ theme }) => theme.colors.gray.gray950};
   }
 
   cursor: pointer;
@@ -105,10 +105,10 @@ const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
 `;
 
 const Bell = styled(AiOutlineBell)`
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 
 const BookMark = styled(BsBookmark)`
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 export default HeaderNavigation;

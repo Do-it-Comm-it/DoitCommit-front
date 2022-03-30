@@ -54,7 +54,7 @@ const Title = styled.span`
 
   /* #18171C */
 
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 
 const Participants = styled.span`
@@ -64,7 +64,7 @@ const Participants = styled.span`
   font-size: 14px;
   line-height: 20px;
 
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 
 const PreviewImage = styled(PlannerPreview)`

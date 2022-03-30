@@ -7,7 +7,7 @@ export const Content = styled.div`
 `;
 
 export const Label = styled.label`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   font-size: 20px;
   font-weight: 500;
   white-space: nowrap;

@@ -41,14 +41,14 @@ const Input = styled.input`
   width: 100%;
   border: none;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray155};
   box-shadow: ${({ theme }) => theme.boxShadow};
-  color: ${({ theme }) => theme.colors.main};
+  color: ${({ theme }) => theme.colors.primary.default};
   padding-left: 5%;
   font-size: 25px;
   font-weight: 400;
   &::placeholder {
-    color: ${({ theme }) => theme.colors.dark.a3};
+    color: ${({ theme }) => theme.colors.gray.gray400};
     font-size: 25px;
     font-weight: 400;
   }
@@ -59,6 +59,6 @@ const SearchIcon = styled(Search)`
   right: 35px;
   cursor: pointer;
   & > path {
-    fill: ${({ theme }) => theme.colors.dark.a7};
+    fill: ${({ theme }) => theme.colors.gray.gray950};
   }
 `;

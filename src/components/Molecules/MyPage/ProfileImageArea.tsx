@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import EditIconSVG from '@src/assets/edit.svg';
 import ProfileIconSVG from '@src/assets/user.svg';
 import DIText from '@src/components/Atoms/DIText';
@@ -8,6 +8,7 @@ import { devices } from '@src/utils/theme';
 import { fileAtom } from '@src/recoil/atom/file';
 import { useUser } from '@src/hooks/useAuthentication';
 const ProfileImageArea = () => {
+  const theme = useTheme();
   const { data: user } = useUser();
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [file, setFile] = useRecoilState(fileAtom);
@@ -33,7 +34,7 @@ const ProfileImageArea = () => {
 
   return (
     <Container>
-      <DIText fontColor="#18171c" fontWeight={500} fontSize={25} style={{ marginBottom: '20px' }}>
+      <DIText fontColor={theme.colors.gray.gray200} fontWeight={500} fontSize={25} style={{ marginBottom: '20px' }}>
         프로필 설정
       </DIText>
       <input type="file" ref={hiddenFileInput} onChange={onFileChange} style={{ display: 'none' }} />

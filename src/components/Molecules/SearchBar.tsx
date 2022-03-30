@@ -23,7 +23,7 @@ const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
   );
 
   return (
-    <Contanier>
+    <Container>
       {!isFocused && <SearchIcon width={24} height={24} />}
       <DIInput
         defaultValue={value}
@@ -39,7 +39,7 @@ const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
           setValue('');
         }}
       />
-    </Contanier>
+    </Container>
   );
 };
 const SearchIcon = styled(Search)`
@@ -47,10 +47,10 @@ const SearchIcon = styled(Search)`
   top: 10px;
   left: 10px;
   & > path {
-    fill: ${({ theme }) => theme.colors.dark.a7};
+    fill: ${({ theme }) => theme.colors.gray.gray950};
   }
 `;
-const Contanier = styled.div`
+const Container = styled.div`
   position: relative;
 `;
 

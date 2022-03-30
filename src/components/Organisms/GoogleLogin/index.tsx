@@ -30,7 +30,7 @@ const GoogleButton = styled.a`
   border-radius: 6px;
   text-decoration: none;
   font-size: 20px;
-  color: ${({ theme }) => theme.colors.dark.a5};
+  color: ${({ theme }) => theme.colors.gray.gray600};
   margin-top: 44px;
   align-items: center;
   justify-content: center;

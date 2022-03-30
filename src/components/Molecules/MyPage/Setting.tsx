@@ -32,15 +32,15 @@ const Setting = () => {
   );
   return (
     <Container>
-      <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={25}>
+      <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={25}>
         알림 설정
       </DIText>
       <Content>
         <TextContainer>
-          <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={20}>
+          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
             게시물 알림
           </DIText>
-          <DIText fontColor={`${theme.colors.dark.a3}`} fontSize={16} fontWeight={400}>
+          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
             멘션과 댓글에 대한 푸시 알림을 받으세요.
           </DIText>
         </TextContainer>
@@ -48,10 +48,10 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={20}>
+          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
             일정 알림
           </DIText>
-          <DIText fontColor={`${theme.colors.dark.a3}`} fontSize={16} fontWeight={400}>
+          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
             다가오는 일정, 투두리스트의 알림을 받으세요.
           </DIText>
         </TextContainer>
@@ -59,10 +59,10 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={20}>
+          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
             이메일 알림
           </DIText>
-          <DIText fontColor={`${theme.colors.dark.a3}`} fontSize={16} fontWeight={400}>
+          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
             모든 페이지의 멘션, 댓글 및 편집에 대한 업데이트를 이메일로 받으세요.
           </DIText>
         </TextContainer>
@@ -70,42 +70,42 @@ const Setting = () => {
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={20}>
+          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
             모든 알림 비활성화
           </DIText>
-          <DIText fontColor={`${theme.colors.dark.a3}`} fontSize={16} fontWeight={400}>
+          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
             모든 알림을 받지 않습니다.
           </DIText>
         </TextContainer>
         <ToggleSwitch name="notification" value={toggle.notification} onChange={onChangeToggle} />
       </Content>
 
-      <DIText fontColor={`${theme.colors.dark.a7}`} fontSize={25} fontWeight={400}>
+      <DIText fontColor={theme.colors.gray.gray950} fontSize={25} fontWeight={400}>
         계정 설정
       </DIText>
 
       <Content>
         <TextContainer>
-          <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={20}>
+          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
             테마 설정
           </DIText>
-          <DIText fontColor={`${theme.colors.dark.a3}`} fontSize={16} fontWeight={400}>
+          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
             라이트모드, 다크모드
           </DIText>
         </TextContainer>
         <span>
           <DIButton
             borderRadius={51}
-            backgroundColor={`${theme.colors.main}`}
+            backgroundColor={theme.colors.primary.default}
             onClick={() => {}}
-            borderColor={`${theme.colors.main}`}
+            borderColor={theme.colors.primary.default}
           >
             라이트모드
           </DIButton>
           <DIButton
             borderRadius={51}
-            backgroundColor={`${theme.colors.dark.a5}`}
-            borderColor={`${theme.colors.dark.a5}`}
+            backgroundColor={theme.colors.gray.gray600}
+            borderColor={theme.colors.gray.gray600}
             onClick={() => {}}
           >
             다크모드
@@ -115,18 +115,18 @@ const Setting = () => {
 
       <Content>
         <TextContainer>
-          <DIText fontColor={`${theme.colors.dark.a7}`} fontWeight={400} fontSize={20}>
+          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
             내 계정 삭제
           </DIText>
-          <DIText fontColor={`${theme.colors.dark.a3}`} fontSize={16} fontWeight={400}>
+          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
             현재 세션을 제외한 모든 활성 세션에서 로그아웃되면 다시 로그인 해야합니다.
           </DIText>
         </TextContainer>
         <DIButton
           borderRadius={51}
           backgroundColor="transparent"
-          borderColor={`${theme.colors.warning}`}
-          color={`${theme.colors.warning}`}
+          borderColor={theme.colors.warning}
+          color={theme.colors.warning}
           onClick={() => {}}
         >
           내 계정 삭제
@@ -135,18 +135,18 @@ const Setting = () => {
 
       <DIButton
         borderRadius={51}
-        backgroundColor={`${theme.colors.background}`}
-        borderColor={`${theme.colors.background}`}
-        color={`${theme.colors.dark.a3}`}
+        backgroundColor={theme.colors.background}
+        borderColor={theme.colors.background}
+        color={theme.colors.gray.gray400}
         onClick={() => {}}
       >
         로그아웃
       </DIButton>
 
       <DIButton
-        color={`${theme.colors.dark.a9}`}
-        backgroundColor={`${theme.colors.main}`}
-        borderColor={`${theme.colors.main}`}
+        color={theme.colors.white}
+        backgroundColor={theme.colors.primary.default}
+        borderColor={theme.colors.primary.default}
         borderRadius={51}
         onClick={() => {}}
       >
@@ -173,7 +173,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.dark.a2};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray300};
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;

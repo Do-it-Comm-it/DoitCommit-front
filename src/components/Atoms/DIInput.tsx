@@ -64,19 +64,19 @@ const Input = styled.input<{
   margin: 0 auto;
   font-size: 18px;
   border-radius: ${({ borderRadius }) => borderRadius}px;
-  background-color: ${({ backgroundColor, theme }) => backgroundColor ?? theme.colors.searchBar};
+  background-color: ${({ backgroundColor, theme }) => backgroundColor ?? theme.colors.gray.gray155};
   text-indent: 8px;
   box-shadow: ${({ hasBorder }) => (hasBorder ? '' : '0px 0px 12px rgba(0, 0, 0, 0.1)')};
-  color: ${({ theme, fontColor }) => fontColor ?? theme.colors.dark.a7};
+  color: ${({ theme, fontColor }) => fontColor ?? theme.colors.gray.gray950};
   &:focus {
     outline: none !important;
     border: 1px solid red;
-    box-shadow: 0 0 4px ${({ theme }) => theme.colors.main};
-    border-color: ${({ theme }) => theme.colors.main};
+    box-shadow: 0 0 4px ${({ theme }) => theme.colors.primary.default};
+    border-color: ${({ theme }) => theme.colors.primary.default};
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.dark.a2};
+    color: ${({ theme }) => theme.colors.gray.gray300};
     text-align: center;
   }
 `;

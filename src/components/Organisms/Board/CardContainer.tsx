@@ -22,7 +22,7 @@ const CardContainer = () => {
       style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <FilterContainer>
-        <DIText fontColor={theme.colors.dark.a7} fontWeight={500} fontSize={20}>
+        <DIText fontColor={theme.colors.gray.gray950} fontWeight={500} fontSize={20}>
           최신 아티클을 둘러보세요
         </DIText>
         <ButtonWrapper>
@@ -77,9 +77,9 @@ const ButtonWrapper = styled.ul`
 
 const FilterButton = styled.li<{ active: boolean }>`
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   list-style: ${({ active }) => !active && 'none'};
   &::marker {
-    color: ${({ theme }) => theme.colors.main};
+    color: ${({ theme }) => theme.colors.primary.default};
   }
 `;

@@ -41,7 +41,7 @@ const SidebarContainer = styled.div<{ open: boolean }>`
   z-index: 1;
   transition: 0.5s;
   overflow-x: hidden;
-  background-color: ${({ theme }) => theme.colors.sidebar};
+  background-color: ${({ theme }) => theme.colors.gray.gray600};
   &::-webkit-scrollbar {
     display: none;
   }

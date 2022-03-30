@@ -6,15 +6,17 @@ import DarkModeIcon from '@src/assets/darkmode.svg';
 
 const SidebarFooter = () => {
   const { theme, toggleTheme } = useDarkMode();
+
+  console.log(theme);
   return (
     <Container>
       {theme === 'light' ? (
-        <div>
-          <DarkModeIcon onClick={toggleTheme} /> 다크모드로 전환하기
+        <div onClick={toggleTheme}>
+          <DarkModeIcon /> 다크모드로 전환하기
         </div>
       ) : (
-        <div>
-          <LightModeIcon onClick={toggleTheme} /> 라이트모드로 전환하기
+        <div onClick={toggleTheme}>
+          <LightModeIcon /> 라이트모드로 전환하기
         </div>
       )}
     </Container>
@@ -25,7 +27,7 @@ const Container = styled.div`
   margin-top: auto;
   width: 100%;
   padding: 25px 25px 25px 32px;
-  background-color: #18171c;
+  background-color: ${({ theme }) => theme.colors.gray.gray900};
   color: #ffffff;
   & > div {
     &:hover {

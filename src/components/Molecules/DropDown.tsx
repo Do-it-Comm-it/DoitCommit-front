@@ -115,7 +115,7 @@ const Menu = styled.div<{ width: number; isActive: boolean }>`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.main};
+    background-color: ${({ theme }) => theme.colors.primary.default};
     border-radius: 6px;
   }
 `;

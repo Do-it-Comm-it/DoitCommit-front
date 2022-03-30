@@ -8,7 +8,9 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.div`
+  clear: both;
+  position: relative;
   width: 100%;
-  height: 259px;
-  background-color: #18171c;
+  height: 260px;
+  background-color: ${({ theme }) => theme.colors.gray.gray900};
 `;

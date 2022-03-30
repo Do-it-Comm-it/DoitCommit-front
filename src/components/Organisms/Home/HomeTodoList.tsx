@@ -6,16 +6,31 @@ import { devices } from '@src/utils/theme';
 import styled from 'styled-components';
 import useTodo from '@src/hooks/useTodo';
 import { useUser } from '@src/hooks/useAuthentication';
+import { ITodos, TodoType } from '@src/typings/Todos';
 
-export type TodoType = {
-  id: number;
-  level: number;
-  title: string;
-  date: Date;
-  body: string | null;
-  type: string;
-  isPinned: boolean;
-};
+const emptyTodo: Array<ITodos> = [
+  {
+    type: TodoType.DAILY,
+    content: '',
+    importance: 'LOW',
+    isFixed: false,
+    title: '',
+  },
+  {
+    type: TodoType.DAILY,
+    content: '',
+    importance: 'LOW',
+    isFixed: false,
+    title: '',
+  },
+  {
+    type: TodoType.DAILY,
+    content: '',
+    importance: 'LOW',
+    isFixed: false,
+    title: '',
+  },
+];
 
 const HomeTodoList = () => {
   const { data: user } = useUser();
@@ -25,7 +40,9 @@ const HomeTodoList = () => {
   return (
     <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>
       <TodoWrapper>
-        {todos && todos.slice(0, 4).map((todo) => <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />)}
+        {user
+          ? todos && todos.slice(0, 4).map((todo) => <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />)
+          : emptyTodo.map((todo, index) => <TodoBox key={index} todo={todo} onRefetch={onRefetch} />)}
         <AddTodoBox />
       </TodoWrapper>
     </ContentBox>

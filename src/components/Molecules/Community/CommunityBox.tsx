@@ -34,7 +34,7 @@ const Container = styled.div`
   display: flex;
   width: 386px;
   height: 136px;
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.gray.gray200};
   flex-direction: column;
 
   box-shadow: ${({ theme }) => theme.boxShadow};
@@ -62,7 +62,7 @@ const Title = styled.span`
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 const Content = styled.div`
   height: 70px;
@@ -75,10 +75,10 @@ const Content = styled.div`
   margin-bottom: 18px;
 `;
 const BookMark = styled(BsBookmark)`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 const BookMarkFill = styled(BsFillBookmarkFill)`
-  color: ${({ theme }) => theme.colors.main};
+  color: ${({ theme }) => theme.colors.primary.default};
 `;
 const TechBox = styled.div`
   position: relative;
@@ -108,17 +108,17 @@ const SubTitle = styled.span`
   font-size: 16px;
   line-height: 23px;
   margin-bottom: 8px;
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 const Body = styled.span`
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
   font-weight: normal;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   font-size: 14px;
   line-height: 20px;
 
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 const Circle = styled.div`
   position: absolute;

@@ -101,19 +101,23 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             style={{ paddingBottom: 14 }}
             fontSize={28}
             fontFamily={theme.font.NotoSansKRBold}
-            fontColor={theme.colors.dark.a7}
+            fontColor={theme.colors.gray.gray950}
           >
             두잇커밋에 처음 오셨군요?
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
+          <HeaderDescription
+            fontSize={16}
+            fontFamily={theme.font.NotoSansKRLight}
+            fontColor={theme.colors.gray.gray700}
+          >
             앞으로 사용하실 닉네임을 정해주세요.
           </HeaderDescription>
         </CardHeader>
         <CardContent>
           <InputPlace>
             <DIInput
-              backgroundColor={theme.colors.dark.a9}
-              fontColor={theme.colors.dark.a7}
+              backgroundColor={theme.colors.white}
+              fontColor={theme.colors.gray.gray950}
               defaultValue={nickname ?? ''}
               width={285}
               height={65}
@@ -122,7 +126,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             />
           </InputPlace>
           {check ? (
-            <DIText fontColor={theme.colors.main}>
+            <DIText fontColor={theme.colors.primary.default}>
               <AiOutlineCheck />
               사용가능한 닉네임입니다.
             </DIText>
@@ -135,7 +139,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
-            backgroundColor={theme.colors.main}
+            backgroundColor={theme.colors.primary.default}
             disabled={!check || nickname.trim().length === 0}
             value={'다음'}
             onClick={() => {
@@ -155,11 +159,15 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             style={{ paddingBottom: 14 }}
             fontSize={28}
             fontFamily={theme.font.NotoSansKRBold}
-            fontColor={theme.colors.dark.a6}
+            fontColor={theme.colors.gray.gray700}
           >
             반갑습니다. {nickname} 님
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
+          <HeaderDescription
+            fontSize={16}
+            fontFamily={theme.font.NotoSansKRLight}
+            fontColor={theme.colors.gray.gray700}
+          >
             사용중인 기술이나 관심있는 태그를 설정해주세요.
           </HeaderDescription>
         </CardHeader>
@@ -168,7 +176,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
-            backgroundColor={theme.colors.main}
+            backgroundColor={theme.colors.primary.default}
             value={'다음'}
             onClick={() => {
               onChangePage(2);
@@ -187,11 +195,15 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             style={{ paddingBottom: 14 }}
             fontSize={28}
             fontFamily={theme.font.NotoSansKRBold}
-            fontColor={theme.colors.dark.a6}
+            fontColor={theme.colors.gray.gray700}
           >
             프로필 이미지를 설정하세요
           </HeaderTitle>
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
+          <HeaderDescription
+            fontSize={16}
+            fontFamily={theme.font.NotoSansKRLight}
+            fontColor={theme.colors.gray.gray700}
+          >
             미 업로드 시, 기본 프로필 이미지로 설정됩니다.
           </HeaderDescription>
         </CardHeader>
@@ -211,7 +223,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
 
             <ProfileText>
               <DIText style={{ paddingBottom: 20 }}>{user?.nickname}</DIText>
-              <DIText style={{ textDecoration: 'underline' }} fontColor={theme.colors.dark.a3} onClick={() => {}}>
+              <DIText style={{ textDecoration: 'underline' }} fontColor={theme.colors.gray.gray400} onClick={() => {}}>
                 기본 이미지로 변경
               </DIText>
             </ProfileText>
@@ -220,7 +232,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <FileInput ref={hiddenFileInput} onChange={onFileChange} type="file" style={{ display: 'none' }} />
         <CardBottom>
           <DIButton
-            backgroundColor={theme.colors.main}
+            backgroundColor={theme.colors.primary.default}
             value={'다음'}
             onClick={() => {
               onChangePage(3);
@@ -242,18 +254,22 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             style={{ paddingBottom: 14 }}
             fontSize={28}
             fontFamily={theme.font.NotoSansKRBold}
-            fontColor={theme.colors.dark.a7}
+            fontColor={theme.colors.gray.gray950}
           >
             축하드려요! 가입되셨습니다!
           </HeaderTitle>
 
-          <HeaderDescription fontSize={16} fontFamily={theme.font.NotoSansKRLight} fontColor={theme.colors.dark.a6}>
+          <HeaderDescription
+            fontSize={16}
+            fontFamily={theme.font.NotoSansKRLight}
+            fontColor={theme.colors.gray.gray700}
+          >
             앞으로 {user?.nickname} 님의 멋진 활동 응원할게요!
           </HeaderDescription>
         </CardContent>
         <CardBottom>
           <DIButton
-            backgroundColor={theme.colors.main}
+            backgroundColor={theme.colors.primary.default}
             value={'시작하기'}
             onClick={() =>
               onCompleteSignUp.mutate({
@@ -274,7 +290,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <Header>
           {page !== 0 && (
             <BackIcon
-              color={theme.colors.dark.a3}
+              color={theme.colors.gray.gray400}
               size={24}
               onClick={() => {
                 setPage((prev) => prev - 1);
@@ -367,7 +383,7 @@ const CloseModalButton = styled(CloseIcon)`
   width: 25px;
   margin-left: auto;
   align-items: center;
-  color: ${({ theme }) => theme.colors.dark};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   cursor: pointer;
 `;
 
@@ -389,7 +405,7 @@ const ProfilePicture = styled.div`
 `;
 
 const EditIcon = styled(MdEdit)`
-  background-color: ${({ theme }) => theme.colors.dark.a3};
+  background-color: ${({ theme }) => theme.colors.gray.gray400};
   border-radius: 40px;
   border-width: 2px;
   border-style: solid;
@@ -423,6 +439,6 @@ const PageLabel = styled.div<{ active: boolean }>`
   width: ${({ active }) => (active ? 18 : 9)}px;
   height: ${({ active }) => (active ? 18 : 9)}px;
   color: #ffffff;
-  background-color: ${({ theme, active }) => (active ? theme.colors.main : theme.colors.dark.a2)};
+  background-color: ${({ theme, active }) => (active ? theme.colors.primary.default : theme.colors.gray.gray300)};
 `;
 export default RegisterModal;

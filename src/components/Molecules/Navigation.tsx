@@ -16,7 +16,7 @@ const Container = styled.nav<{ position: string }>`
   padding: 15px 20px;
   padding-left: 83px;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.header};
+  background-color: ${({ theme }) => theme.colors.white};
   display: flex;
   flex-direction: row;
   align-items: center;

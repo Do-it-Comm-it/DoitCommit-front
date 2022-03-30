@@ -84,7 +84,7 @@ const Right = styled.div`
 `;
 
 const Title = styled.span`
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   font-size: 35px;
   font-weight: 700;
 `;
@@ -97,13 +97,13 @@ const Info = styled.div`
 const Tag = styled.span`
   font-size: 25px;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 
 const Author = styled.span`
   font-size: 16px;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   line-height: 40px;
   padding-left: 1.75rem;
 `;
@@ -118,7 +118,7 @@ const IconWrapper = styled.div`
 
 const Heart = styled(HeartIconSVG)`
   & > path {
-    stroke: ${({ theme }) => theme.colors.dark.a3};
+    stroke: ${({ theme }) => theme.colors.gray.gray400};
   }
 `;
 
@@ -131,7 +131,7 @@ const HeartFill = styled(HeartIconSVG)`
 
 const Bookmark = styled(BookmarkIconSVG)`
   & > path {
-    fill: ${({ theme }) => theme.colors.dark.a3};
+    fill: ${({ theme }) => theme.colors.gray.gray400};
   }
 `;
 const BookmarkFill = styled(BookmarkIconFillSVG)``;

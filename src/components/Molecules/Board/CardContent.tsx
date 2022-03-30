@@ -32,7 +32,7 @@ const CardContent = ({ board }: Props) => {
         {board.myBookmark ? (
           <BsBookmarkFill
             onClick={onClickBookmark}
-            color={theme.colors.main}
+            color={theme.colors.primary.default}
             style={{ marginLeft: 'auto', cursor: 'pointer' }}
           />
         ) : (
@@ -41,7 +41,7 @@ const CardContent = ({ board }: Props) => {
             style={{
               marginLeft: 'auto',
               cursor: 'pointer',
-              color: theme.colors.dark.a3,
+              color: theme.colors.gray.gray400,
             }}
           />
         )}
@@ -51,7 +51,7 @@ const CardContent = ({ board }: Props) => {
           <Title>
             <Highlighter
               highlightStyle={{
-                color: theme.colors.main,
+                color: theme.colors.primary.default,
               }}
               highlightTag="strong"
               searchWords={keyword}
@@ -62,7 +62,7 @@ const CardContent = ({ board }: Props) => {
           <Content>
             <Highlighter
               highlightStyle={{
-                color: theme.colors.main,
+                color: theme.colors.primary.default,
               }}
               highlightTag="strong"
               searchWords={keyword}
@@ -91,13 +91,13 @@ const Container = styled.div`
   gap: 10px;
 `;
 const Tags = styled.span`
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
   font-weight: 400;
   font-size: 14px;
 `;
 
 const Title = styled.p`
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   font-weight: 500;
   font-size: 18px;
 `;
@@ -105,7 +105,7 @@ const Title = styled.p`
 const Content = styled.span`
   font-weight: 400;
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;
 
 const Top = styled.div`

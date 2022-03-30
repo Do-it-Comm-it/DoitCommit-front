@@ -54,5 +54,5 @@ const Bottom = styled.div`
 const Author = styled.span`
   font-weight: 400;
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.dark.a3};
+  color: ${({ theme }) => theme.colors.gray.gray400};
 `;

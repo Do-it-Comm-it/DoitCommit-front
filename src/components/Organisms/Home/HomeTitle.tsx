@@ -13,10 +13,10 @@ const HomeTitle = () => {
 
   return (
     <Container>
-      <Title fontSize={30} fontFamily={theme.font.NotoSansKRBold} fontColor={theme.colors.dark.a7}>
+      <Title fontSize={30} fontFamily={theme.font.NotoSansKRBold} fontColor={theme.colors.gray.gray950}>
         {user?.nickname ?? `Stranger`}님!{'  '}
       </Title>
-      <Name fontSize={30} fontFamily={theme.font.NotoSansKRRegular} fontColor={theme.colors.dark.a7}>
+      <Name fontSize={30} fontFamily={theme.font.NotoSansKRRegular} fontColor={theme.colors.gray.gray950}>
         {user?.nickname ? `두잇커밋과 함께한지, ${diffDate}일째 입니다.` : `두잇커밋에 어서오세요!`}
       </Name>
     </Container>

@@ -57,10 +57,10 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
           </Left>
           <Right>
             <Header>
-              <DIText fontColor={theme.colors.dark.a7} fontWeight={350} fontSize={20}>
+              <DIText fontColor={theme.colors.gray.gray950} fontWeight={350} fontSize={20}>
                 {commentData.nickname}
               </DIText>
-              <DIText fontColor={theme.colors.dark.a10} fontWeight={400} fontSize={16}>
+              <DIText fontColor={theme.colors.gray.gray500} fontWeight={400} fontSize={16}>
                 {commentData.regDateTime}
               </DIText>
               {user?.nickname === commentData.nickname && (
@@ -75,9 +75,9 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
               )}
             </Header>
             {!commentData.isExist ? (
-              <p style={{ color: theme.colors.dark.a10 }}>삭제된 댓글입니다.</p>
+              <p style={{ color: theme.colors.gray.gray500 }}>삭제된 댓글입니다.</p>
             ) : (
-              <p dangerouslySetInnerHTML={{ __html: text }} style={{ color: theme.colors.dark.a10 }}></p>
+              <p dangerouslySetInnerHTML={{ __html: text }} style={{ color: theme.colors.gray.gray500 }}></p>
             )}
           </Right>
         </>

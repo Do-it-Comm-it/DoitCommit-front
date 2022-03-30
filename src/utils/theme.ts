@@ -12,26 +12,46 @@ declare module 'styled-components' {
     boxShadow: string;
     colors: {
       background: string;
-      body: string;
-      main: string;
-      sub: string;
-      sub2: string;
-      sub3: string;
       warning: string;
-      header: string;
-      sidebar: string;
-      searchBar: string;
-      dark: {
-        a1: string;
-        a2: string;
-        a3: string;
-        a4: string;
-        a5: string;
-        a6: string;
-        a7: string;
-        a8: string;
-        a9: string;
-        a10: string;
+      success: string;
+      white: string;
+      black: string;
+      primary: {
+        dark400: string;
+        dark300: string;
+        dark200: string;
+        dark100: string;
+        default: string;
+        light100: string;
+        light200: string;
+        light300: string;
+        light400: string;
+        light500: string;
+      };
+      gray: {
+        gray100: string;
+        gray150: string;
+        gray155: string;
+        gray200: string;
+        gray300: string;
+        gray400: string;
+        gray500: string;
+        gray600: string;
+        gray700: string;
+        gray800: string;
+        gray850: string;
+        gray900: string;
+        gray950: string;
+        gray955: string;
+      };
+      sub: {
+        blue100: string;
+        blue200: string;
+        green100: string;
+        green200: string;
+        pink100: string;
+        pink200: string;
+        gary100: string;
       };
     };
   }
@@ -48,26 +68,46 @@ export const light: DefaultTheme = {
   boxShadow: '0px 0px 20px rgba(143, 146, 148, 0.3);',
   colors: {
     background: '#FEFEFE',
-    body: '#F2F3F9',
-    main: '#476CFF',
-    sub: '#001361',
-    sub2: '#F5F5F5',
-    sub3: '#E1E7FF',
     warning: '#FF4B4B',
-    header: '#FFFFFF',
-    sidebar: '#353535',
-    searchBar: '#FFFFFF',
-    dark: {
-      a1: '#ECECEC',
-      a2: '#CECECE',
-      a3: '#818181',
-      a4: '#616161',
-      a5: '#353535',
-      a6: '#282828',
-      a7: '#0F0F0F',
-      a8: '#FBFBFB',
-      a9: '#FFFFFF',
-      a10: '#5B5B5B',
+    success: '#00C73C',
+    white: '#FFFFFF',
+    black: '#000000',
+    primary: {
+      dark400: '#000414',
+      dark300: '#001361',
+      dark200: '#0028C7',
+      dark100: '#1443FF',
+      default: '#476CFF',
+      light100: '#708DFF',
+      light200: '#99ADFF',
+      light300: '#C1CEFF',
+      light400: '#E1E7FF',
+      light500: '#F2F3F9',
+    },
+    gray: {
+      gray100: '#FEFEFE',
+      gray150: '#FBFBFB',
+      gray155: '#F9F9F9',
+      gray200: '#F5F5F5',
+      gray300: '#CECECE',
+      gray400: '#818181',
+      gray500: '#5B5B5B',
+      gray600: '#353535',
+      gray700: '#282828',
+      gray800: '#1B1B1B',
+      gray850: '#131313',
+      gray900: '#111111',
+      gray950: '#0F0F0F',
+      gray955: '#0C0C0C',
+    },
+    sub: {
+      blue100: '#E6F3F3',
+      blue200: '#5872CF',
+      green100: '#E3F4E4',
+      green200: '#4F8234',
+      pink100: '#FDECF2',
+      pink200: '#E24781',
+      gary100: '#E0E1E4',
     },
   },
 };
@@ -82,27 +122,47 @@ export const dark: DefaultTheme = {
   },
   boxShadow: 'none',
   colors: {
-    background: '#282828',
-    body: '#131313',
-    main: '#476CFF',
-    sub: '#708DFF',
-    sub2: '#0F0F0F',
-    sub3: '#99ADFF',
+    background: '#FEFEFE',
     warning: '#FF4B4B',
-    header: '#000000',
-    sidebar: '#1B1B1B',
-    searchBar: '#131313',
-    dark: {
-      a1: '#ECECEC',
-      a2: '#818181',
-      a3: '#CECECE',
-      a4: '#616161',
-      a5: '#1B1B1B',
-      a6: '#FEFEFE',
-      a7: '#F5F5F5',
-      a8: '#0C0C0C',
-      a9: '#000000',
-      a10: '#818181',
+    success: '#00C73C',
+    white: '#000000',
+    black: '#FFFFFF',
+    primary: {
+      dark400: '#000414',
+      dark300: '#708DFF',
+      dark200: '#0028C7',
+      dark100: '#1443FF',
+      default: '#476CFF',
+      light100: '#708DFF',
+      light200: '#99ADFF',
+      light300: '#C1CEFF',
+      light400: '#99ADFF',
+      light500: '#111111',
+    },
+    gray: {
+      gray100: '#282828',
+      gray150: '#0C0C0C',
+      gray155: '#131313',
+      gray200: '#282828',
+      gray300: '#818181',
+      gray400: '#CECECE',
+      gray500: '#818181',
+      gray600: '#1B1B1B',
+      gray700: '#282828',
+      gray800: '#1B1B1B',
+      gray850: '#131313',
+      gray900: '#0C0C0C',
+      gray950: '#F5F5F5',
+      gray955: '#0C0C0C',
+    },
+    sub: {
+      blue100: '#E6F3F3',
+      blue200: '#5872CF',
+      green100: '#E3F4E4',
+      green200: '#4F8234',
+      pink100: '#FDECF2',
+      pink200: '#E24781',
+      gary100: '#E0E1E4',
     },
   },
 };

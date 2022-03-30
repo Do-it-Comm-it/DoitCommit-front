@@ -108,7 +108,7 @@ const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Pro
             onClick={() => {
               todoId === -1 ? submitTodo() : onEdit();
             }}
-            backgroundColor={theme.colors.main}
+            backgroundColor={theme.colors.primary.default}
             borderRadius={51}
           >
             저장 하기
@@ -137,8 +137,8 @@ const NotiFixedIcon = styled(NotiIconSVG)`
   cursor: pointer;
 
   & > path {
-    stroke: ${({ theme }) => theme.colors.main};
-    fill: ${({ theme }) => theme.colors.sub3};
+    stroke: ${({ theme }) => theme.colors.primary.default};
+    fill: ${({ theme }) => theme.colors.primary.light400};
   }
 `;
 const Input = styled.input`
@@ -146,12 +146,12 @@ const Input = styled.input`
   height: 80px;
   outline: none;
   border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.dark.a2};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray300};
   font-weight: 500;
   font-size: 28px;
   padding: 0 15px;
   background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.dark.a7};
+  color: ${({ theme }) => theme.colors.gray.gray950};
   &:focus {
     outline: none;
   }
