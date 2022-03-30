@@ -70,7 +70,7 @@ const CardContent = ({ board }: Props) => {
               highlightTag="strong"
               searchWords={keyword}
               autoEscape={true}
-              textToHighlight={board.boardContent.replace(/<\/?[^>]+(>|$)/g, '')}
+              textToHighlight={board.boardContent.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 80) + '...'}
             />
           </Content>
         </Link>
