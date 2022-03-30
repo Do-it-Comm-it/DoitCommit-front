@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   display: flex;
   width: 187px;
   height: 161px;
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.gray.gray100};
   flex-direction: column;
 
   box-shadow: ${({ theme }) => theme.boxShadow};

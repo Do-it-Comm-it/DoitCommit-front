@@ -150,7 +150,7 @@ const Input = styled.input`
   font-weight: 500;
   font-size: 28px;
   padding: 0 15px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
   color: ${({ theme }) => theme.colors.gray.gray950};
   &:focus {
     outline: none;

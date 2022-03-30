@@ -213,7 +213,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
               <UserProfile user={user!} src={file.previewUrl} width={72} height={72} />
               <EditIcon
                 size={24}
-                color={theme.colors.background}
+                color={theme.colors.gray.gray100}
                 onClick={() => {
                   onUpload();
                 }}
@@ -409,7 +409,7 @@ const EditIcon = styled(MdEdit)`
   border-radius: 40px;
   border-width: 2px;
   border-style: solid;
-  border-color: ${({ theme }) => theme.colors.background};
+  border-color: ${({ theme }) => theme.colors.gray.gray100};
   position: absolute;
   bottom: 0;
   right: -5px;

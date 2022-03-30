@@ -27,7 +27,7 @@ export const CreateModal = styled.div<{ width?: number; height?: number; backgro
     height: ${({ height }) => height ?? 440}px;
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
-    background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.background};
+    background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.gray.gray100};
     border-radius: 5px;
     user-select: none;
     z-index: 1012;

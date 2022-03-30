@@ -45,7 +45,7 @@ const TextArea = styled.textarea`
   font-weight: 500;
   resize: none;
   color: ${({ theme }) => theme.colors.gray.gray950};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
   &:focus {
     outline: none;
   }

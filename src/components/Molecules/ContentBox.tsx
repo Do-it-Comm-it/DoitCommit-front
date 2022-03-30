@@ -107,7 +107,7 @@ const LoginWrapper = styled.div`
 `;
 const OpacityBox = styled.div`
   opacity: 0.2;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
 `;
 const Content = styled.div`
   height: 200px;

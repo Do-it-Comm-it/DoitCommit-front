@@ -17,7 +17,7 @@ export const Label = styled.label`
 export const Input = styled.input`
   width: 100%;
   height: 59px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
   border-radius: 10px;
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   outline: none;

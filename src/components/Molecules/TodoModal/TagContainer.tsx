@@ -82,7 +82,7 @@ const Label = styled.label`
   width: 25%;
   text-align: start;
   padding-left: 15px;
-  color: ${({ theme }) => theme.colors.gray.gray200};
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 const CheckButton = styled.div<{ backgroundColor?: string; color?: string; checked?: boolean }>`

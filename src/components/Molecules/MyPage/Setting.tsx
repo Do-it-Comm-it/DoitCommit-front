@@ -135,8 +135,8 @@ const Setting = () => {
 
       <DIButton
         borderRadius={51}
-        backgroundColor={theme.colors.background}
-        borderColor={theme.colors.background}
+        backgroundColor={theme.colors.gray.gray100}
+        borderColor={theme.colors.gray.gray100}
         color={theme.colors.gray.gray400}
         onClick={() => {}}
       >
