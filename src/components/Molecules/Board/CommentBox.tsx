@@ -1,14 +1,16 @@
 import DIText from '@src/components/Atoms/DIText';
 import useCommentRegex from '@src/hooks/useCommentRegex';
 import { IComment, IMemberTagResDto } from '@src/typings/Comment';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import CommentEditor from './CommentEditor';
 import EditIconSVG from '@src/assets/filled_edit_icon.svg';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
+import DeleteConfirmIconSVG from '@src/assets/delete_confirm.svg';
 import { useUser } from '@src/hooks/useAuthentication';
 import { board } from '@src/service/api';
 import { useQueryClient } from 'react-query';
+import useOutsideClick from '@src/hooks/useOutsideClick';
 
 interface Props {
   boardId: number;
@@ -20,6 +22,8 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
   const queryClient = useQueryClient();
   const theme = useTheme();
   const [edit, setEdit] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const iconRef = useRef<HTMLDivElement>(null);
 
   const onDeleteComment = useCallback(
     async (commentId: number) => {
@@ -32,6 +36,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
     setEdit(value);
   }, []);
   const text = useCommentRegex(commentData);
+  useOutsideClick(iconRef, () => setConfirm(false));
 
   return (
     <Container>
@@ -59,9 +64,13 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
                 {commentData.regDateTime}
               </DIText>
               {user?.nickname === commentData.nickname && (
-                <IconWrapper>
+                <IconWrapper ref={iconRef}>
                   <EditIconSVG onClick={() => setEdit(true)} />
-                  <DeleteIconSVG onClick={() => onDeleteComment(commentData.commentId)} />
+                  {confirm ? (
+                    <DeleteConfirmIconSVG onClick={() => onDeleteComment(commentData.commentId)} />
+                  ) : (
+                    <DeleteIconSVG onClick={() => setConfirm(true)} />
+                  )}
                 </IconWrapper>
               )}
             </Header>
