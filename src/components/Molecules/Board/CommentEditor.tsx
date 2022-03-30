@@ -56,6 +56,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle, commentId
 
       if (result === 1) {
         queryClient.invalidateQueries(`comments/${boardId}`);
+        setInput({ content: '', mentions: [] });
       }
     }
   }, [input, boardId, queryClient, onToggle, commentId]);
