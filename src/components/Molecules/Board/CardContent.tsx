@@ -46,11 +46,8 @@ const CardContent = ({ board }: Props) => {
           />
         )}
       </Top>
-      <Middle>
-        <Link
-          to={`/community/board/${board.boardId}`}
-          style={{ width: '100%', height: '100%', textDecoration: 'none' }}
-        >
+      <Link to={`/community/board/${board.boardId}`} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
+        <Middle>
           <Title>
             <Highlighter
               highlightStyle={{
@@ -73,8 +70,8 @@ const CardContent = ({ board }: Props) => {
               textToHighlight={board.boardContent.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 80) + '...'}
             />
           </Content>
-        </Link>
-      </Middle>
+        </Middle>
+      </Link>
     </Container>
   );
 };
