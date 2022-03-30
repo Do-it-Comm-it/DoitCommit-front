@@ -94,9 +94,10 @@ const Content = styled.div`
       color: ${({ theme }) => theme.colors.dark.a7};
       margin: 1.2rem 0;
     }
-    & > img {
-      width: 100%;
-      margin: 3rem 0;
+    img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
     }
   }
 `;
