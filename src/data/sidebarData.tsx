@@ -4,7 +4,6 @@ import CalendarIcon from '@src/assets/calander.svg';
 import CommunityIcon from '@src/assets/community.svg';
 import MypageIcon from '@src/assets/profile.svg';
 import DoitIcon from '@src/assets/doit.svg';
-import TutorialIcon from '@src/assets/board.svg';
 import ChallengeIcon from '@src/assets/hire.svg';
 export const sidebarItem = [
   {
@@ -20,11 +19,6 @@ export const sidebarItem = [
   {
     title: '두잇챌린지',
     icon: <ChallengeIcon />,
-    path: '#',
-  },
-  {
-    title: '튜토리얼',
-    icon: <TutorialIcon />,
     path: '#',
   },
   {

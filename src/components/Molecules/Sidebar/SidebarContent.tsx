@@ -36,7 +36,7 @@ const SidebarUl = styled.ul`
 
   & > div {
     & > li {
-      :nth-child(5) {
+      :nth-child(4) {
         margin-bottom: 15px;
         ::after {
           content: '';
