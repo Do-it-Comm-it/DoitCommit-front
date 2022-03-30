@@ -65,7 +65,11 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
                 </IconWrapper>
               )}
             </Header>
-            {!commentData.isExist ? <p>삭제된 댓글입니다.</p> : <p dangerouslySetInnerHTML={{ __html: text }}></p>}
+            {!commentData.isExist ? (
+              <p style={{ color: theme.colors.dark.a10 }}>삭제된 댓글입니다.</p>
+            ) : (
+              <p dangerouslySetInnerHTML={{ __html: text }} style={{ color: theme.colors.dark.a10 }}></p>
+            )}
           </Right>
         </>
       )}
