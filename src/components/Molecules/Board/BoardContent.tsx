@@ -76,12 +76,28 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   padding-bottom: 200px;
-  & > h2 {
-    margin: 1.2rem 0;
-  }
-  & > img {
-    width: 100%;
-    margin: 3rem 0;
+  & > div {
+    & > * {
+      color: ${({ theme }) => theme.colors.dark.a10};
+      font-weight: 400;
+    }
+    & > p {
+      color: ${({ theme }) => theme.colors.dark.a10};
+      font-weight: 400;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: ${({ theme }) => theme.colors.dark.a7};
+      margin: 1.2rem 0;
+    }
+    & > img {
+      width: 100%;
+      margin: 3rem 0;
+    }
   }
 `;
 

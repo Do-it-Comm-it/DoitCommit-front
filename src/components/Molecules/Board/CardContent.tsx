@@ -26,7 +26,9 @@ const CardContent = ({ board }: Props) => {
   return (
     <Container>
       <Top>
-        <Tags>#직장인 #공대생 #취준생</Tags>
+        {board.boardHashtag?.map((tag) => {
+          return Object.keys(tag).map((key: any) => <Tags key={key}>#{tag[key]}</Tags>);
+        })}
         {board.myBookmark ? (
           <BsBookmarkFill
             onClick={onClickBookmark}

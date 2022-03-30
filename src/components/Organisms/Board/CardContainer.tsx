@@ -1,5 +1,5 @@
 import Card from '@src/components/Molecules/Board/Card';
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useBoards } from '@src/hooks/useBoards';
@@ -7,6 +7,10 @@ import { IBoard } from '@src/typings/Board';
 import DIText from '@src/components/Atoms/DIText';
 const CardContainer = () => {
   const theme = useTheme();
+  const [active, setActive] = useState({
+    newest: true,
+    bookmark: false,
+  });
   const { boards, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage } = useBoards();
 
   if (isLoading) return <div>Loading..</div>;
@@ -22,8 +26,12 @@ const CardContainer = () => {
           최신 아티클을 둘러보세요
         </DIText>
         <ButtonWrapper>
-          <span>최신</span>
-          <span>북마크</span>
+          <FilterButton active={active.newest} onClick={() => setActive({ bookmark: false, newest: true })}>
+            최신
+          </FilterButton>
+          <FilterButton active={active.bookmark} onClick={() => setActive({ newest: false, bookmark: true })}>
+            북마크
+          </FilterButton>
         </ButtonWrapper>
       </FilterContainer>
       <Container>
@@ -50,8 +58,9 @@ const Container = styled.div`
 `;
 const FilterContainer = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: space-around;
+  width: 90%;
+  justify-content: space-between;
+  max-width: 800px;
   flex-direction: row;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -60,13 +69,17 @@ const FilterContainer = styled.div`
     line-height: 15px;
   }
 `;
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   gap: 30px;
+`;
 
-  & > span {
-    cursor: pointer;
-    color: ${({ theme }) => theme.colors.dark.a7};
+const FilterButton = styled.li<{ active: boolean }>`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.dark.a7};
+  list-style: ${({ active }) => !active && 'none'};
+  &::marker {
+    color: ${({ theme }) => theme.colors.main};
   }
 `;
