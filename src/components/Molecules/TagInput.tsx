@@ -17,8 +17,8 @@ const TagInput = ({ onChange, value }: Props) => {
   const [search, setSearch] = useState<string>('');
   const debouncedSearch = useDebounce(search, 400);
   const { useTagList, usePopularTag } = useTag();
-  const { data: tagList } = useTagList();
-  const { data: popularTagList } = usePopularTag();
+  const { data: tagList, isLoading: isLoadingTag } = useTagList();
+  const { data: popularTagList, isLoading: isLoadingPopularTag } = usePopularTag();
 
   const handleInputChange = useCallback((query: string, { action }: InputActionMeta) => {
     if (action === 'input-change') {
@@ -29,14 +29,10 @@ const TagInput = ({ onChange, value }: Props) => {
   }, []);
 
   const filteredOption = useMemo(() => {
-    if (debouncedSearch) {
-      if (debouncedSearch.length === 0 && popularTagList) {
-        return popularTagList;
-      } else if (debouncedSearch.length > 0 && tagList) {
-        return tagList.filter((tag) => tag.tagName.includes(debouncedSearch)).slice(0, 8);
-      }
+    if (debouncedSearch && tagList) {
+      return tagList.filter((tag) => tag.tagName.includes(debouncedSearch)).slice(0, 8);
     }
-  }, [debouncedSearch, popularTagList, tagList]);
+  }, [debouncedSearch, tagList]);
 
   const hideMenu = useCallback(() => {
     setOpenMenu(false);
@@ -65,13 +61,21 @@ const TagInput = ({ onChange, value }: Props) => {
       onChange={onChange}
       onBlur={hideMenu}
       options={
-        filteredOption ? filteredOption.map((tag) => ({ ...tag, value: tag.tagId, label: `#${tag.tagName}` })) : []
+        !debouncedSearch
+          ? popularTagList
+            ? popularTagList.map((tag) => ({ ...tag, value: tag.tagId, label: `#${tag.tagName}` }))
+            : []
+          : filteredOption
+          ? filteredOption.map((tag) => ({ ...tag, value: tag.tagId, label: `#${tag.tagName}` }))
+          : []
       }
       isMulti
       placeholder={'태그를 입력하세요 (최대 4개)'}
       menuIsOpen={openMenu}
+      noOptionsMessage={() => '태그가 없습니다.'}
       components={{ Menu: CustomMenu }}
       isOptionDisabled={() => value.length >= 4}
+      isLoading={isLoadingTag || isLoadingPopularTag}
       styles={{
         dropdownIndicator: (defaultStyles) => ({
           ...defaultStyles,
@@ -108,6 +112,7 @@ const TagInput = ({ onChange, value }: Props) => {
         }),
         input: (defaultStyles) => ({
           ...defaultStyles,
+          color: theme.colors.black,
           outline: 'none !important',
           ':focus': {
             outline: 'none !important',
@@ -147,9 +152,9 @@ const TagInput = ({ onChange, value }: Props) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-
+          color: theme.colors.black,
           height: '35px',
-          background: '#F2F3F9',
+          background: theme.colors.primary.light500,
           borderRadius: '50px',
 
           ':hover': {

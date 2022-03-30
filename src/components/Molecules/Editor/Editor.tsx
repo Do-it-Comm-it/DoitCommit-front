@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 
 type Props = {
   width?: number;
@@ -6,7 +7,8 @@ type Props = {
 };
 
 const Editor = ({ width, height }: Props) => {
-  return <div id="editor" style={{ width, height }} />;
+  const theme = useTheme();
+  return <div id="editor" style={{ width, height, color: theme.colors.black }} />;
 };
 
 export default React.memo(Editor);

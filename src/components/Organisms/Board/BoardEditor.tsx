@@ -227,6 +227,8 @@ const TitleInput = styled.input`
   font-size: 35px;
   line-height: 51px;
 
+  color: ${({ theme }) => theme.colors.black};
+
   ::placeholder {
     color: ${({ theme }) => theme.colors.gray.gray300};
   }

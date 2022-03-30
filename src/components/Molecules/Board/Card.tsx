@@ -33,7 +33,7 @@ const Container = styled.div`
   width: 386px;
   max-width: 386px;
   height: 451px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;
   justify-self: center;

@@ -125,7 +125,7 @@ export default CommentEditor;
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
   width: 100%;
   min-height: 200px;
   border-radius: 10px;
