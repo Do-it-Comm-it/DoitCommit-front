@@ -37,7 +37,7 @@ const SidebarContainer = styled.div<{ open: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
-  min-height: 100vh;
+  min-height: 100%;
   z-index: 1;
   transition: 0.5s;
   overflow-x: hidden;
