@@ -7,8 +7,8 @@ const GoogleLogin = () => {
   const theme = useTheme();
   return (
     <GoogleButton href={`${process.env.API_URL}/oauth2/authorization/google`}>
-      <GoogleLogo size={30} />
-      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold} fontColor="#353535">
+      <GoogleLogo size={32} />
+      <DIText fontSize={20} fontFamily={theme.font.NotoSansKRRegular} fontColor="#353535">
         Google로 계속
       </DIText>
     </GoogleButton>
@@ -23,7 +23,7 @@ export default GoogleLogin;
 
 const GoogleButton = styled.a`
   display: inline-flex;
-  width: 80%;
+  width: 60%;
   height: 68px;
   background-color: #ffffff;
   border: 1px solid #cecece;

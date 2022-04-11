@@ -8,8 +8,8 @@ const GithubLogin = () => {
 
   return (
     <GithubButton href={`${process.env.API_URL}/oauth2/authorization/github`}>
-      <GithubLogo size={30} />
-      <DIText fontSize={20} fontFamily={theme.font.EliceDigitalBaeumBold} fontColor="#FEFEFE">
+      <GithubLogo size={32} />
+      <DIText fontSize={20} fontFamily={theme.font.NotoSansKRRegular} fontColor="#FEFEFE">
         Github로 계속
       </DIText>
     </GithubButton>
@@ -18,7 +18,7 @@ const GithubLogin = () => {
 
 const GithubButton = styled.a`
   display: inline-flex;
-  width: 80%;
+  width: 60%;
   height: 68px;
   background-color: #353535;
   border: none;

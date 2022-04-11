@@ -49,18 +49,6 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
           </HeaderDescription>
           <GoogleLogin />
           <GithubLogin />
-          {/* <HelpContent>
-            <HelpText fontColor={theme.colors.dark.a4} fontSize={14}>
-              회원 정보를 잊으셧나요?
-            </HelpText>
-            <Link
-              fontColor={theme.colors.dark.a4}
-              fontSize={14}
-              style={{ textDecoration: 'underline', cursor: 'pointer' }}
-            >
-              계정찾기
-            </Link>
-          </HelpContent> */}
         </Content>
       </Container>
     </ModalContainer>
@@ -68,8 +56,7 @@ const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps
 };
 const HeaderTitle = styled(DIText)``;
 const HeaderDescription = styled(DIText)``;
-const HelpText = styled(DIText)``;
-const Link = styled(DIText)``;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;

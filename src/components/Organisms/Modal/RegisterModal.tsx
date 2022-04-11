@@ -99,7 +99,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardHeader>
           <HeaderTitle
             style={{ paddingBottom: 14 }}
-            fontSize={28}
+            fontSize={25}
             fontFamily={theme.font.NotoSansKRBold}
             fontColor={theme.colors.gray.gray950}
           >
@@ -107,7 +107,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           </HeaderTitle>
           <HeaderDescription
             fontSize={16}
-            fontFamily={theme.font.NotoSansKRLight}
+            fontFamily={theme.font.NotoSansKRRegular}
             fontColor={theme.colors.gray.gray700}
           >
             앞으로 사용하실 닉네임을 정해주세요.
@@ -126,12 +126,12 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             />
           </InputPlace>
           {check ? (
-            <DIText fontColor={theme.colors.primary.default}>
+            <DIText fontColor={theme.colors.primary.default} style={{ paddingTop: 13 }}>
               <AiOutlineCheck />
               사용가능한 닉네임입니다.
             </DIText>
           ) : (
-            <DIText fontColor={theme.colors.warning}>
+            <DIText fontColor={theme.colors.warning} style={{ paddingTop: 13 }}>
               <RiErrorWarningLine />
               이미 사용중인 닉네임입니다.
             </DIText>
@@ -139,6 +139,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
+            borderRadius={60}
             backgroundColor={theme.colors.primary.default}
             disabled={!check || nickname.trim().length === 0}
             value={'다음'}
@@ -161,21 +162,22 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             fontFamily={theme.font.NotoSansKRBold}
             fontColor={theme.colors.gray.gray700}
           >
-            반갑습니다. {nickname} 님
+            반갑습니다. {nickname} 님!
           </HeaderTitle>
           <HeaderDescription
             fontSize={16}
             fontFamily={theme.font.NotoSansKRLight}
             fontColor={theme.colors.gray.gray700}
           >
-            사용중인 기술이나 관심있는 태그를 설정해주세요.
+            사용 중인 기술이나 관심있는 기술 태그를 선택해주세요.
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <SelectInput onChange={(value) => setInterestTechSet(value as Tech[])} width={100} />
+          <SelectInput onChange={(value) => setInterestTechSet(value as Tech[])} width={200} />
         </CardContent>
         <CardBottom>
           <DIButton
+            borderRadius={60}
             backgroundColor={theme.colors.primary.default}
             value={'다음'}
             onClick={() => {
@@ -232,6 +234,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <FileInput ref={hiddenFileInput} onChange={onFileChange} type="file" style={{ display: 'none' }} />
         <CardBottom>
           <DIButton
+            borderRadius={60}
             backgroundColor={theme.colors.primary.default}
             value={'다음'}
             onClick={() => {
@@ -269,6 +272,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         </CardContent>
         <CardBottom>
           <DIButton
+            borderRadius={60}
             backgroundColor={theme.colors.primary.default}
             value={'시작하기'}
             onClick={() =>
@@ -342,7 +346,7 @@ const CardHeader = styled.div`
   align-items: center;
 `;
 const CardContent = styled.div`
-  padding-top: 20px;
+  padding-top: 27px;
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;

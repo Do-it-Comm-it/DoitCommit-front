@@ -11,11 +11,13 @@ const Footer = () => {
   const theme = useTheme();
 
   const MenuItem: Array<Menus> = useMemo(() => {
+    // theme.colors.white;
+    //#ffffff
     return [
-      { name: '이용약관', color: theme.colors.white },
-      { name: '개인정보처리방침', color: theme.colors.white },
+      { name: '이용약관', color: '#ffffff' },
+      { name: '개인정보처리방침', color: '#ffffff' },
       { name: '제휴/투자문의', color: theme.colors.primary.light100 },
-      { name: '기타문의', color: theme.colors.white },
+      { name: '기타문의', color: '#ffffff' },
     ];
   }, [theme]);
 
@@ -55,7 +57,7 @@ const FooterTitle = styled.div`
   font-size: 28px;
   line-height: 41px;
 
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => '#ffffff'};
 `;
 
 const FooterMenu = styled.div`
