@@ -2,11 +2,11 @@ import { board } from '@src/service/api';
 import { IBoard, IBoardList } from '@src/typings/Board';
 import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
 
-export const useBoards = () => {
+export const useBoards = (boardType: number) => {
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const result = await board.getBoardListByPage(pageParam);
+    const result = await board.getBoardListByPage(pageParam, boardType);
     return {
-      data: result,
+      data: result.dtoList,
       nextPage: pageParam + 1,
     };
   };

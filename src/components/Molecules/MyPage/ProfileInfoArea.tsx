@@ -105,6 +105,8 @@ const Container = styled.div`
   height: 100%;
   padding: 15px;
 
+  padding-bottom: 200px;
+
   & > button {
     margin: 20px 0;
     margin-left: auto;

@@ -2,8 +2,8 @@ import { IBoard, RequestBoard } from '@src/typings/Board';
 import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
-const getBoardListByPage = async (page: number) => {
-  const { data } = await requestAPI().get(`/board/list?pageNo=${page}&pageSize=16`);
+const getBoardListByPage = async (page: number, boardCategoryId: number) => {
+  const { data } = await requestAPI().get(`/board/list?page=${page + 1}&size=16&boardCategoryId=${boardCategoryId}`);
   return data;
 };
 

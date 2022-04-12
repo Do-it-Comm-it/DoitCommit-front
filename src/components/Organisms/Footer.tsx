@@ -40,10 +40,10 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.div`
+  position: relative;
   margin-top: auto;
-  display: absolute;
   flex-direction: column;
-  bottom: 0;
+  bottom: 0px;
   width: 100%;
   height: 260px;
   padding: 50px 130px;

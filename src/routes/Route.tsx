@@ -10,7 +10,8 @@ export const CommonComponentWrapper: React.FC = ({ children }) => {
   const location = useLocation();
 
   const isIndexPage = useMemo(() => {
-    return location.pathname !== '/' ? false : true;
+    const check = location.pathname !== '/' && location.pathname !== '/mypage';
+    return check ? false : true;
   }, [location]);
 
   return (
@@ -32,7 +33,7 @@ export const PublicRoute: React.FC<RouteProps> = (props) => {
 
 const Container = styled.div<{ isIndexPage?: boolean }>`
   width: 100%;
-  height: ${({ isIndexPage }) => (isIndexPage ? `100%` : `100vh`)};
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -43,4 +44,5 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 200px;
 `;

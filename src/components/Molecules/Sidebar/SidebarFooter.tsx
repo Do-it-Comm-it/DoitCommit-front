@@ -7,7 +7,6 @@ import DarkModeIcon from '@src/assets/darkmode.svg';
 const SidebarFooter = () => {
   const { theme, toggleTheme } = useDarkMode();
 
-  console.log(theme);
   return (
     <Container>
       {theme === 'light' ? (
