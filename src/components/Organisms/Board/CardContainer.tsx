@@ -11,7 +11,7 @@ const CardContainer = () => {
     newest: true,
     bookmark: false,
   });
-  const { boards, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage } = useBoards(1);
+  const { boards, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage } = useBoards(2);
 
   if (isLoading) return <div>Loading..</div>;
   if (isError) return <h2>Error!</h2>;

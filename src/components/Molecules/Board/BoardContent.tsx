@@ -77,6 +77,7 @@ const Content = styled.div`
   height: 100%;
   padding-bottom: 200px;
   & > div {
+    color: ${({ theme }) => theme.colors.black};
     & > * {
       color: ${({ theme }) => theme.colors.gray.gray500};
       font-weight: 400;
