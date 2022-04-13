@@ -6,17 +6,22 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 
-interface ParamType {
-  id: string;
-}
 const Board = () => {
-  const { id }: ParamType = useParams();
-  const { data: boardData, isLoading } = useQuery(`board/${id}`, async () => await boardAPI.getBoardById(id), {
-    retry: 1,
-    refetchOnMount: true,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-  });
+  const { id } = useParams();
+  const { data: boardData, isLoading } = useQuery(
+    `board/${id}`,
+    async () => {
+      if (id) {
+        return await boardAPI.getBoardById(id);
+      }
+    },
+    {
+      retry: 1,
+      refetchOnMount: true,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
+  );
   useEffect(() => {
     window.scroll({
       top: 0,

@@ -9,28 +9,10 @@ const Header = () => {
   return (
     <Container>
       <div>
-        <DILink
-          fontSize={28}
-          fontWeight={500}
-          activeStyle={{
-            color: theme.colors.primary.default,
-            borderBottom: `2px solid ${theme.colors.primary.default}`,
-            paddingBottom: '5px',
-          }}
-          to="/community"
-        >
+        <DILink fontSize={28} fontWeight={500} to="/community">
           커뮤니티
         </DILink>
-        <DILink
-          fontSize={28}
-          fontWeight={500}
-          activeStyle={{
-            color: theme.colors.primary.default,
-            borderBottom: `2px solid ${theme.colors.primary.default}`,
-            paddingBottom: '5px',
-          }}
-          to="/community/notice"
-        >
+        <DILink fontSize={28} fontWeight={500} to="/community/notice">
           공지사항
         </DILink>
       </div>

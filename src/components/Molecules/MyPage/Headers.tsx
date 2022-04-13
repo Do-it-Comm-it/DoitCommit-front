@@ -5,10 +5,10 @@ import ShareIconSVG from '@src/assets/share.svg';
 const Header = () => {
   return (
     <Container>
-      <DILink to="/mypage" fontSize={28} fontWeight={500} activeStyle={{ color: '#476CFF' }}>
+      <DILink to="/mypage" fontSize={28}>
         마이페이지
       </DILink>
-      <DILink to="/mypage/setting" fontSize={28} fontWeight={500} activeStyle={{ color: '#476CFF' }}>
+      <DILink to="/mypage/setting" fontSize={28}>
         환경 설정
       </DILink>
       <ShareIcon />

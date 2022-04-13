@@ -3,32 +3,14 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 interface Props {
-  fontColor?: string;
   fontSize?: number;
   fontWeight?: number;
   to: string;
   style?: React.CSSProperties;
-  activeStyle?: React.CSSProperties;
 }
-const DILink: React.FC<Props> = ({
-  children,
-  fontColor = '#000',
-  fontWeight = 500,
-  fontSize = 28,
-  to,
-  style,
-  activeStyle,
-}) => {
+const DILink: React.FC<Props> = ({ children, fontWeight = 500, fontSize = 28, to, style }) => {
   return (
-    <StyledLink
-      to={to}
-      fontColor={fontColor}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
-      style={style}
-      exact
-      activeStyle={activeStyle}
-    >
+    <StyledLink to={to} fontSize={fontSize} fontWeight={fontWeight} style={style}>
       {children}
     </StyledLink>
   );
@@ -36,10 +18,10 @@ const DILink: React.FC<Props> = ({
 
 export default DILink;
 
-const StyledLink = styled(NavLink)<{ fontSize: number; fontWeight: number; fontColor: string }>`
+const StyledLink = styled(NavLink)<{ fontSize?: number; fontWeight?: number }>`
   text-decoration: none;
-  font-size: ${({ fontSize }) => fontSize}px;
-  font-weight: ${({ fontWeight }) => fontWeight};
+  font-size: ${({ fontSize }) => fontSize || 16}px;
+  font-weight: ${({ fontWeight }) => fontWeight || 400};
   color: ${({ theme }) => theme.colors.gray.gray950};
   white-space: nowrap;
 `;

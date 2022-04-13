@@ -2,9 +2,8 @@ import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 import Modal from '@src/components/Organisms/Modal';
 import Sidebar from '@src/components/Organisms/Sidebar';
 import React, { useMemo } from 'react';
-import { Route, RouteProps, Switch } from 'react-router-dom';
+import { Routes, Route, RouteProps, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useLocation } from 'react-router';
 import Footer from '@src/components/Organisms/Footer';
 export const CommonComponentWrapper: React.FC = ({ children }) => {
   const location = useLocation();
@@ -20,15 +19,11 @@ export const CommonComponentWrapper: React.FC = ({ children }) => {
       <Modal />
       <Body>
         <HeaderNavigation />
-        <Switch>{children}</Switch>
+        <Routes>{children}</Routes>
       </Body>
       <Footer />
     </Container>
   );
-};
-
-export const PublicRoute: React.FC<RouteProps> = (props) => {
-  return <Route {...props}>{props.children}</Route>;
 };
 
 const Container = styled.div<{ isIndexPage?: boolean }>`

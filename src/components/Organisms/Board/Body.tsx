@@ -1,6 +1,6 @@
 import Header from '@src/components/Organisms/Board/Header';
 import React, { useMemo } from 'react';
-import { Route, useHistory } from 'react-router';
+
 import styled from 'styled-components';
 import Notice from './Notice';
 import CardContainer from './CardContainer';
@@ -8,15 +8,16 @@ import FloatingButton from './FloatingButton';
 import BoardEditor from './BoardEditor';
 import Board from './Board';
 import { useUser } from '@src/hooks/useAuthentication';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 
 const Body = () => {
   const { data: user } = useUser();
-  const history = useHistory();
+  const location = useLocation();
 
   const path: BoardPathType = useMemo(() => {
-    const name = history.location.pathname.split('/')[2];
+    const name = location.pathname.split('/')[2];
 
     switch (name) {
       case 'notice':
@@ -28,21 +29,18 @@ const Body = () => {
       default:
         return 'index';
     }
-  }, [history.location.pathname]);
+  }, [location.pathname]);
 
   return (
     <Container>
       {path !== 'edit' && path !== 'board' && <Header />}
-      <Route exact path="/community">
-        <CardContainer />
-      </Route>
-      <Route exact path="/community/notice">
-        <Notice />
-      </Route>
-      {user && <Route exact path="/community/edit" component={BoardEditor} />}
-      <Route exact path="/community/board/:id">
-        <Board />
-      </Route>
+      <Routes>
+        <Route path="" element={<CardContainer />} />
+        <Route path="/notice" element={<Notice />} />
+        {user && <Route path="/edit" element={<BoardEditor />} />}
+        <Route path="/board/:id" element={<Board />} />
+      </Routes>
+
       {user && path !== 'edit' && path !== 'board' && <FloatingButton />}
     </Container>
   );

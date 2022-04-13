@@ -10,7 +10,7 @@ import Quill from 'quill';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import './bubble.css';
 const Module = {
   toolbar: {
@@ -38,7 +38,7 @@ const defaultEditorState: RequestBoard = {
 };
 
 const BoardEditor = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const theme = useTheme();
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -159,14 +159,14 @@ const BoardEditor = () => {
       },
       {
         onSuccess: (data) => {
-          history.goBack();
+          navigate(-1);
         },
         onError: () => {
           alert('등록에 실패했습니다.');
         },
       },
     );
-  }, [allImages, editorState, tags, postBoard, history]);
+  }, [allImages, editorState, tags, postBoard, navigate]);
 
   return (
     <Container>

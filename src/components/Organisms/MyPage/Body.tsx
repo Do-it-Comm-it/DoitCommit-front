@@ -3,24 +3,32 @@ import styled from 'styled-components';
 import Header from '@src/components/Molecules/MyPage/Headers';
 import ProfileImageArea from '@src/components/Molecules/MyPage/ProfileImageArea';
 import ProfileInfoArea from '@src/components/Molecules/MyPage/ProfileInfoArea';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Setting from '@src/components/Molecules/MyPage/Setting';
 import { devices } from '@src/utils/theme';
 const Body = () => {
   return (
     <Container>
       <Header />
-      <ProfileContent>
-        <Route exact path="/mypage">
-          <ProfileImageArea />
-          <ProfileInfoArea />
-        </Route>
-      </ProfileContent>
-      <SettingContent>
-        <Route exact path="/mypage/setting">
-          <Setting />
-        </Route>
-      </SettingContent>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProfileContent>
+              <ProfileImageArea />
+              <ProfileInfoArea />
+            </ProfileContent>
+          }
+        />
+        <Route
+          path="/setting"
+          element={
+            <SettingContent>
+              <Setting />
+            </SettingContent>
+          }
+        />
+      </Routes>
     </Container>
   );
 };
