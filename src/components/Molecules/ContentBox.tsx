@@ -152,6 +152,7 @@ const ContentWrapper = styled.div<{
   align-items: center;
 
   ${({ requiredLogin }) => requiredLogin && 'pointer-events : none'};
+  ${({ requiredLogin }) => requiredLogin && 'user-select: none'};
 `;
 
 export default ContentBox;
