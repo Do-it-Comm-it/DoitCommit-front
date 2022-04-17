@@ -16,7 +16,10 @@ const Card = ({ board }: Props) => {
         to={`/community/board/${board.boardId}`}
         style={{ width: '100%', textDecoration: 'none' }}
       >
-        <Thumbnail thumbnail={board.thumbnail} />
+        <Thumbnail
+          thumbnail={board.thumbnailUrl}
+          writerImageUrl={board.writerImageUrl}
+        />
       </Link>
       <CardContent board={board} />
 

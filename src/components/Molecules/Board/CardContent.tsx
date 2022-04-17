@@ -23,14 +23,13 @@ const CardContent = ({ board }: Props) => {
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);
   }, [mutation, board]);
+
   return (
     <Container>
       <Top>
-        {board.boardHashtag?.map((tag) => {
-          return Object.keys(tag).map((key: any) => (
-            <Tags key={key}>#{tag[key]}</Tags>
-          ));
-        })}
+        {board.boardHashtagNameList?.map((tag, id) => (
+          <Tags key={id}>#{tag}</Tags>
+        ))}
         {board.myBookmark ? (
           <BsBookmarkFill
             onClick={onClickBookmark}

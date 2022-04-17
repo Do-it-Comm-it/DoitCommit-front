@@ -1,12 +1,13 @@
+import LottieLoading from '@src/components/Atoms/LottieLoading';
 import useTag from '@src/hooks/useTag';
 import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';
 
 const Tags = () => {
-  const { usePopularTag } = useTag();
-  const { data: tags, isLoading } = usePopularTag();
-  if (isLoading) return <p>Loading..</p>;
+  const { useLimitPopularTag } = useTag();
+  const { data: tags, isLoading } = useLimitPopularTag();
+  if (isLoading) return <LottieLoading width={50} height={30} />;
   return (
     <Container>
       <Text>인기태그</Text>

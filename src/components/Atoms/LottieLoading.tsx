@@ -3,7 +3,12 @@ import lottie from 'lottie-web';
 import React, { useEffect, useRef } from 'react';
 import LottieLoadingJson from '@src/assets/lottie/loading-spinner.json';
 
-const LottieLoading = () => {
+type Props = {
+  width?: number;
+  height?: number;
+};
+
+const LottieLoading = ({ width, height }: Props) => {
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -18,12 +23,12 @@ const LottieLoading = () => {
     }
   }, []);
 
-  return <Container ref={loadingRef}></Container>;
+  return <Container width={width} height={height} ref={loadingRef}></Container>;
 };
 
-const Container = styled.div`
-  width: 300px;
-  height: 300px;
+const Container = styled.div<{ width?: number; height?: number }>`
+  width: ${({ width }) => width || 300}px;
+  height: ${({ height }) => height || 300}px;
 `;
 
 export default LottieLoading;

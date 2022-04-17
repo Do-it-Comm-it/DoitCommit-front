@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { IBoard } from '@src/typings/Board';
 import { useBoardListMutation } from '@src/hooks/useBoards';
 import { board as boardApi } from '@src/service/api';
+
 interface Props {
   board: IBoard;
 }
@@ -23,7 +24,7 @@ const Status = ({ board }: Props) => {
   return (
     <Container>
       <CommentSVG />
-      <Counter>25</Counter>
+      <Counter>{board.commentCnt}</Counter>
       <ViewSVG />
       <Counter>{board.boardCnt}</Counter>
       {board.myHeart ? (

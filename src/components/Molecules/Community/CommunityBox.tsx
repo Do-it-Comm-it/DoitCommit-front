@@ -1,35 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { IBoard } from '@src/typings/Board';
 type CommunityBoxProps = {
-  title: string;
-  subTitle: string;
-  body: string;
-  tech: string;
-  isMarked: boolean;
+  item: IBoard;
 };
 
-const CommunityBox = ({
-  title,
-  subTitle,
-  body,
-  tech,
-  isMarked,
-}: CommunityBoxProps) => {
+const CommunityBox = ({ item }: CommunityBoxProps) => {
   return (
     <Container>
       <Header>
-        <Title>{title}</Title>
-        {isMarked ? <BookMark /> : <BookMarkFill />}
+        <Title>{item.boardHashtagNameList?.map((tag) => `#${tag}`)}</Title>
+        {item.myBookmark ? <BookMarkFill /> : <BookMark />}
       </Header>
       <Content>
         <TechBox>
           <Circle />
-          {tech}
         </TechBox>
         <ContentBox>
-          <SubTitle>{subTitle}</SubTitle>
-          <Body>{body}</Body>
+          <SubTitle>{item.boardTitle}</SubTitle>
+          <Body>{item.boardContent.substring(0, 20)}</Body>
         </ContentBox>
       </Content>
     </Container>

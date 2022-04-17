@@ -9,13 +9,17 @@ export interface IBoard {
   boardContent: string;
   categoryId?: number;
   regDate: string;
-  boardHashtag?: string[];
-  thumbnail?: string | null;
+  boardHashtagNameList?: string[];
+  thumbnailUrl?: string | null;
   writer?: string;
+  writerId?: number;
+  writerImageUrl?: string;
   boardCnt?: number;
   heartCnt?: number;
   myHeart?: boolean;
   myBookmark?: boolean;
+  commentCnt?: number;
+  modDate?: string;
 }
 
 export interface RequestBoard {

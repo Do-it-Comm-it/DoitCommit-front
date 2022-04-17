@@ -12,13 +12,19 @@ const useTag = () => {
     });
   };
 
+  const useLimitPopularTag = () => {
+    return useQuery<Array<Tag>>(popularTagKey, async () => {
+      return await tag.getLimitPopularTags();
+    });
+  };
+
   const useTagList = () => {
     return useQuery<Array<Tag>>(tagListKey, async () => {
       return await tag.getTags();
     });
   };
 
-  return { usePopularTag, useTagList };
+  return { usePopularTag, useTagList, useLimitPopularTag };
 };
 
 export default useTag;

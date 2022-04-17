@@ -9,6 +9,11 @@ const getBoardListByPage = async (page: number, boardCategoryId: number) => {
   return data;
 };
 
+const getMainPageBoard = async () => {
+  const { data } = await requestAPI().get(`/board/list/main`);
+  return data;
+};
+
 const getBoardById = async (id: string) => {
   const { data } = await requestAPI().get(`/board?boardId=${id}`);
   return data;
@@ -66,6 +71,7 @@ const toggleBookmark = async (selectedBoard: IBoard) => {
 };
 const boardApiList = {
   getBoardListByPage,
+  getMainPageBoard,
   getBoardById,
   saveBoard,
   getCommentList,

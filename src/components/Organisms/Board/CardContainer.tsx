@@ -22,6 +22,7 @@ const CardContainer = () => {
     isFetchingNextPage,
   } = useBoards(2);
 
+  console.log(boards);
   if (isLoading) return <LottieLoading />;
   if (isError)
     return <LottieError errorMessage={'게시글을 불러오는데 실패했습니다!'} />;

@@ -5,6 +5,11 @@ const getPopularTags = async () => {
   return data;
 };
 
+const getLimitPopularTags = async () => {
+  const { data } = await requestAPI().get('/popularTags/limit');
+  return data;
+};
+
 const getTags = async () => {
   const { data } = await requestAPI().get('/board/tag');
   return data;
@@ -12,6 +17,7 @@ const getTags = async () => {
 
 const tagApiList = {
   getPopularTags,
+  getLimitPopularTags,
   getTags,
 };
 

@@ -2,26 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  thumbnail: any;
+  thumbnail?: string | null;
+  writerImageUrl?: string | null;
 }
-const Thumbnail = ({ thumbnail }: Props) => {
+const Thumbnail = ({ thumbnail, writerImageUrl }: Props) => {
   return (
     <Container thumbnail={thumbnail}>
-      {
-        <Image
-          thumbnail={thumbnail}
-          src={
-            thumbnail ?? 'https://avatars.githubusercontent.com/u/65433256?v=4'
-          }
-        />
-      }
+      {<Image thumbnail={thumbnail} src={thumbnail || writerImageUrl || ''} />}
     </Container>
   );
 };
 
 export default Thumbnail;
 
-const Container = styled.div<{ thumbnail?: string }>`
+const Container = styled.div<{ thumbnail?: string | null }>`
   display: flex;
   width: 100%;
   height: ${({ thumbnail }) => thumbnail && '257px'};
@@ -31,7 +25,7 @@ const Container = styled.div<{ thumbnail?: string }>`
   padding-bottom: 0;
 `;
 
-const Image = styled.img<{ thumbnail?: string }>`
+const Image = styled.img<{ thumbnail?: string | null }>`
   width: ${({ thumbnail }) => (thumbnail ? '100%' : '40px')};
   height: ${({ thumbnail }) => (thumbnail ? '100%' : '40px')};
   border-top-left-radius: 10px;

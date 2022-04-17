@@ -1,6 +1,12 @@
-import { board } from '@src/service/api';
+import { board, user } from '@src/service/api';
 import { IBoard, IBoardList } from '@src/typings/Board';
-import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
+import { useUser } from './useAuthentication';
 
 export const useBoards = (boardType: number) => {
   const fetchPosts = async ({ pageParam = 0 }) => {
@@ -110,4 +116,18 @@ export const useSingleBoardMutation = (
     },
   });
   return mutation;
+};
+
+export const useMainPageBoard = () => {
+  const { data: user } = useUser();
+
+  return useQuery<Array<IBoard>>(
+    'main-board',
+    async () => {
+      return await board.getMainPageBoard();
+    },
+    {
+      enabled: user !== null,
+    }
+  );
 };

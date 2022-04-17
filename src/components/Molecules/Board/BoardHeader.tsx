@@ -37,11 +37,9 @@ const BoardHeader = ({ boardData }: Props) => {
       <Left>
         <Title>{boardData.boardTitle}</Title>
         <Info>
-          {boardData.boardHashtag?.map((tag: any) => {
-            return Object.keys(tag).map((key) => (
-              <Tag key={key}>#{tag[key]}</Tag>
-            ));
-          })}
+          {boardData.boardHashtagNameList?.map((tag, id) => (
+            <Tag key={id}>#{tag}</Tag>
+          ))}
           <Author>
             by. {boardData.writer} {format(parseISO(boardData.regDate), 'PP')}
           </Author>
