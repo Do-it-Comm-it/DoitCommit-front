@@ -64,9 +64,11 @@ const Input = styled.input<{
   margin: 0 auto;
   font-size: 18px;
   border-radius: ${({ borderRadius }) => borderRadius}px;
-  background-color: ${({ backgroundColor, theme }) => backgroundColor ?? theme.colors.gray.gray155};
+  background-color: ${({ backgroundColor, theme }) =>
+    backgroundColor ?? theme.colors.gray.gray155};
   text-indent: 8px;
-  box-shadow: ${({ hasBorder }) => (hasBorder ? '' : '0px 0px 12px rgba(0, 0, 0, 0.1)')};
+  box-shadow: ${({ hasBorder }) =>
+    hasBorder ? '' : '0px 0px 12px rgba(0, 0, 0, 0.1)'};
   color: ${({ theme, fontColor }) => fontColor ?? theme.colors.gray.gray950};
   &:focus {
     outline: none !important;

@@ -61,7 +61,8 @@ const Button = styled.button<{
   color?: string;
 }>`
   background-color: ${({ backgroundColor }) => backgroundColor};
-  font-weight: ${({ backgroundColor, theme }) => backgroundColor ?? theme.colors.primary.default};
+  font-weight: ${({ backgroundColor, theme }) =>
+    backgroundColor ?? theme.colors.primary.default};
   border-radius: ${({ borderRadius }) => borderRadius}px;
   border: 0;
   outline: 0;
@@ -71,7 +72,8 @@ const Button = styled.button<{
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-size: 20px;
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  border: 1px solid ${({ borderColor, theme }) => borderColor ?? theme.colors.primary.default};
+  border: 1px solid
+    ${({ borderColor, theme }) => borderColor ?? theme.colors.primary.default};
 
   &:hover {
     cursor: pointer;

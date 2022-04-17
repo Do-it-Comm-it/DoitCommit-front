@@ -15,7 +15,7 @@ const Status = ({ board }: Props) => {
       myHeart: !board.myHeart,
       heartCnt: board.myHeart ? board.heartCnt! - 1 : board.heartCnt! + 1,
     },
-    boardApi.toggleHeart,
+    boardApi.toggleHeart
   );
   const onClickHeart = useCallback(async () => {
     mutation.mutate(board);
@@ -27,9 +27,19 @@ const Status = ({ board }: Props) => {
       <ViewSVG />
       <Counter>{board.boardCnt}</Counter>
       {board.myHeart ? (
-        <HeartFill onClick={onClickHeart} width={20} height={20} style={{ cursor: 'pointer' }} />
+        <HeartFill
+          onClick={onClickHeart}
+          width={20}
+          height={20}
+          style={{ cursor: 'pointer' }}
+        />
       ) : (
-        <Heart onClick={onClickHeart} width={20} height={20} style={{ cursor: 'pointer' }} />
+        <Heart
+          onClick={onClickHeart}
+          width={20}
+          height={20}
+          style={{ cursor: 'pointer' }}
+        />
       )}
 
       <Counter>{board.heartCnt}</Counter>

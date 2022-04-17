@@ -1,11 +1,10 @@
 import DILink from '@src/components/Atoms/DILink';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import SearchBar from '../../Molecules/Board/SearchBar';
 import Tags from '../../Molecules/Board/Tags';
 
 const Header = () => {
-  const theme = useTheme();
   return (
     <Container>
       <div>

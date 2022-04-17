@@ -8,9 +8,20 @@ interface Props {
   to: string;
   style?: React.CSSProperties;
 }
-const DILink: React.FC<Props> = ({ children, fontWeight = 500, fontSize = 28, to, style }) => {
+const DILink: React.FC<Props> = ({
+  children,
+  fontWeight = 500,
+  fontSize = 28,
+  to,
+  style,
+}) => {
   return (
-    <StyledLink to={to} fontSize={fontSize} fontWeight={fontWeight} style={style}>
+    <StyledLink
+      to={to}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      style={style}
+    >
       {children}
     </StyledLink>
   );

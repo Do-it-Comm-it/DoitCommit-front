@@ -19,6 +19,7 @@ const todayPlanners = [
 
 const Planner = () => {
   const { data: user } = useUser();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const dateList = useMemo(
     () => [

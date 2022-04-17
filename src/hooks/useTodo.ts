@@ -1,4 +1,3 @@
-import TodoBox from '@src/components/Molecules/Todo/TodoBox';
 import { todo as todoAPI } from '@src/service/api';
 import { ITodos } from '@src/typings/Todos';
 import { useQuery } from 'react-query';

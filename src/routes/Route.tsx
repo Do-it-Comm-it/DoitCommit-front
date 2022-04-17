@@ -2,7 +2,7 @@ import HeaderNavigation from '@src/components/Organisms/HeaderNavigation';
 import Modal from '@src/components/Organisms/Modal';
 import Sidebar from '@src/components/Organisms/Sidebar';
 import React, { useMemo } from 'react';
-import { Routes, Route, RouteProps, useLocation } from 'react-router-dom';
+import { Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '@src/components/Organisms/Footer';
 export const CommonComponentWrapper: React.FC = ({ children }) => {

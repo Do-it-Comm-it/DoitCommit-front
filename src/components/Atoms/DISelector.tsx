@@ -20,7 +20,12 @@ const defaultList = [
   { id: '3', label: 'Typescript' },
 ];
 
-const DISelector = ({ ItemList = defaultList, onChange, width = 200, height = 40 }: DISelectorProps) => {
+const DISelector = ({
+  ItemList = defaultList,
+  onChange,
+  width = 200,
+  height = 40,
+}: DISelectorProps) => {
   return (
     <Selector width={width} height={height} onChange={onChange}>
       {ItemList.map((item) => (

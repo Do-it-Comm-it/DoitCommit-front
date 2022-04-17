@@ -10,7 +10,13 @@ interface Props {
 const ToggleSwitch = ({ value = false, onChange, name }: Props) => {
   return (
     <CheckboxContainer>
-      <CheckBox id="checkbox" type="checkbox" checked={value} onChange={onChange} name={name} />
+      <CheckBox
+        id="checkbox"
+        type="checkbox"
+        checked={value}
+        onChange={onChange}
+        name={name}
+      />
       <CheckboxLabel htmlFor="checkbox" />
     </CheckboxContainer>
   );

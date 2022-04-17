@@ -12,13 +12,9 @@ interface Props {
   boardData: IBoard;
 }
 const BoardContent = ({ boardData }: Props) => {
-  const {
-    comments,
-    isLoading,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useComments(boardData.boardId!);
+  const { comments, isLoading, fetchNextPage, hasNextPage } = useComments(
+    boardData.boardId!
+  );
 
   const getComputedExtraPage = (
     page: {

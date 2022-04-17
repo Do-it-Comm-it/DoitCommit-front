@@ -93,13 +93,6 @@ const CloseModalButton = styled(CloseIcon)`
   color: ${({ theme }) => theme.colors.gray.gray950};
   cursor: pointer;
 `;
-const HelpContent = styled.div`
-  padding-top: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
 
 const Line = styled.span`
   color: ${({ theme }) => theme.colors.gray.gray950};

@@ -7,7 +7,11 @@ type DILabelProps = {
   onDelete?: () => void;
 };
 
-const DILabel = ({ backgroundColor = "'#b4b4b4'", children, onDelete }: DILabelProps) => {
+const DILabel = ({
+  backgroundColor = "'#b4b4b4'",
+  children,
+  onDelete,
+}: DILabelProps) => {
   return (
     <Container>
       <Label backgroundColor={backgroundColor}>{children}</Label>

@@ -7,7 +7,14 @@ interface Props {
 const Thumbnail = ({ thumbnail }: Props) => {
   return (
     <Container thumbnail={thumbnail}>
-      {<Image thumbnail={thumbnail} src={thumbnail ?? 'https://avatars.githubusercontent.com/u/65433256?v=4'} />}
+      {
+        <Image
+          thumbnail={thumbnail}
+          src={
+            thumbnail ?? 'https://avatars.githubusercontent.com/u/65433256?v=4'
+          }
+        />
+      }
     </Container>
   );
 };
