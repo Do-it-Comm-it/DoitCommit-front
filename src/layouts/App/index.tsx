@@ -11,6 +11,7 @@ import Board from '@src/pages/Board';
 import { CommonComponentWrapper } from '@src/routes/Route';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import ProtectedRoute from '@src/routes/ProtectedRoute';
 const App = () => {
   const { theme } = useDarkMode();
   const queryClient = new QueryClient();
@@ -23,7 +24,14 @@ const App = () => {
             <GlobalStyle />
             <CommonComponentWrapper>
               <Route path="/*" element={<Home />} />
-              <Route path="/mypage/*" element={<MyPage />} />
+              <Route
+                path="/mypage/*"
+                element={
+                  <ProtectedRoute>
+                    <MyPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/community/*" element={<Board />} />
             </CommonComponentWrapper>
           </BrowserRouter>

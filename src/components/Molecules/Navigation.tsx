@@ -23,5 +23,7 @@ const Container = styled.nav<{ position: string }>`
   justify-content: space-between;
   width: 100%;
   box-shadow: ${({ position }) =>
-    position === 'top' ? `0px 4px 4px rgba(0, 0, 0, 0.08)` : `0px 4px 4px rgba(0, 0, 0, 0.08)`};
+    position === 'top'
+      ? `0px 4px 4px rgba(0, 0, 0, 0.08)`
+      : `0px 4px 4px rgba(0, 0, 0, 0.08)`};
 `;

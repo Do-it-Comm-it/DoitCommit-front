@@ -16,7 +16,7 @@ const BoardHeader = ({ boardData }: Props) => {
       myHeart: !boardData.myHeart,
       boardId: boardData.boardId,
     },
-    board.toggleHeart,
+    board.toggleHeart
   );
 
   const mutationBookmark = useSingleBoardMutation(
@@ -24,7 +24,7 @@ const BoardHeader = ({ boardData }: Props) => {
       myBookmark: !boardData.myBookmark,
       boardId: boardData.boardId,
     },
-    board.toggleBookmark,
+    board.toggleBookmark
   );
   const onClickHeart = useCallback(async () => {
     mutationHeart.mutate(boardData);
@@ -38,7 +38,9 @@ const BoardHeader = ({ boardData }: Props) => {
         <Title>{boardData.boardTitle}</Title>
         <Info>
           {boardData.boardHashtag?.map((tag: any) => {
-            return Object.keys(tag).map((key) => <Tag key={key}>#{tag[key]}</Tag>);
+            return Object.keys(tag).map((key) => (
+              <Tag key={key}>#{tag[key]}</Tag>
+            ));
           })}
           <Author>
             by. {boardData.writer} {format(parseISO(boardData.regDate), 'PP')}

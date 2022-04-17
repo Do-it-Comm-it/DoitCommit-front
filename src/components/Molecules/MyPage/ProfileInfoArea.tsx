@@ -17,7 +17,8 @@ import Form from './Form';
 const ProfileInfoArea = () => {
   const { data: user, status } = useUser();
   const theme = useTheme();
-  const [formData, setFormData] = useState<{ name: string; label: string }[]>(infoFormData);
+  const [formData, setFormData] =
+    useState<{ name: string; label: string }[]>(infoFormData);
   const queryClient = useQueryClient();
   const file = useRecoilValue(fileAtom);
   const [input, setInput] = useState<IUser>({
@@ -31,7 +32,7 @@ const ProfileInfoArea = () => {
         [e.target.name]: e.target.value,
       });
     },
-    [input],
+    [input]
   );
   const addForm = useCallback(() => {
     setFormData([
@@ -45,13 +46,16 @@ const ProfileInfoArea = () => {
 
   const onSubmit = useMutation(
     (newInfo: any) => {
-      return userAPI.updateUserInfo(user!, { ...newInfo, imageFile: file.image });
+      return userAPI.updateUserInfo(user!, {
+        ...newInfo,
+        imageFile: file.image,
+      });
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
       },
-    },
+    }
   );
   useEffect(() => {
     if (status === 'success') {
@@ -64,7 +68,13 @@ const ProfileInfoArea = () => {
       {user && (
         <Container>
           {formData.map((item, i) => (
-            <Form name={item.name} label={item.label} key={i} user={user!} onChangeInput={onChangeInput} />
+            <Form
+              name={item.name}
+              label={item.label}
+              key={i}
+              user={user!}
+              onChangeInput={onChangeInput}
+            />
           ))}
           <Content>
             <Label>관심기술</Label>

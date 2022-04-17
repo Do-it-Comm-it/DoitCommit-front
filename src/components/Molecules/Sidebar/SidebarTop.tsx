@@ -19,7 +19,12 @@ const SidebarTop = ({ open, onToggle }: Props) => {
           fontColor="#ffffff"
           fontWeight={700}
           fontSize={22}
-          style={{ letterSpacing: 0.2, whiteSpace: 'initial', textAlign: 'center', userSelect: 'none' }}
+          style={{
+            letterSpacing: 0.2,
+            whiteSpace: 'initial',
+            textAlign: 'center',
+            userSelect: 'none',
+          }}
         >
           두잇커밋
         </DIText>

@@ -28,7 +28,7 @@ const Planner = () => {
       selectedDate.getDate() + 1,
       selectedDate.getDate() + 2,
     ],
-    [selectedDate],
+    [selectedDate]
   );
 
   return (
@@ -55,7 +55,11 @@ const Planner = () => {
           ) : (
             <>
               {todayPlanners.map((planner, idx) => (
-                <PlannerBox participants={planner.participants} title={planner.title} key={idx} />
+                <PlannerBox
+                  participants={planner.participants}
+                  title={planner.title}
+                  key={idx}
+                />
               ))}
               {todayPlanners.length === 1 && <AddPlannerBox />}
             </>

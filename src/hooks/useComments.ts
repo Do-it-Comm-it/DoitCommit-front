@@ -18,7 +18,9 @@ const useComments = (boardId: number) => {
     hasNextPage,
   } = useInfiniteQuery(`comments/${boardId}`, fetchComments, {
     getNextPageParam: (lastPage) => {
-      if (lastPage.nextPage <= lastPage.commentsData.commentResDtoList.totalPage) {
+      if (
+        lastPage.nextPage <= lastPage.commentsData.commentResDtoList.totalPage
+      ) {
         return lastPage.nextPage;
       }
       return undefined;

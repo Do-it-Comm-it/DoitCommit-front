@@ -7,5 +7,5 @@ render(
   <RecoilRoot>
     <App />
   </RecoilRoot>,
-  document.querySelector('#app'),
+  document.querySelector('#app')
 );

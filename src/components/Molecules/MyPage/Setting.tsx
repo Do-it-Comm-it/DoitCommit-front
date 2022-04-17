@@ -28,68 +28,133 @@ const Setting = () => {
       });
       console.log([name], checked);
     },
-    [toggle],
+    [toggle]
   );
   return (
     <Container>
-      <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={25}>
+      <DIText
+        fontColor={theme.colors.gray.gray950}
+        fontWeight={400}
+        fontSize={25}
+      >
         알림 설정
       </DIText>
       <Content>
         <TextContainer>
-          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
+          <DIText
+            fontColor={theme.colors.gray.gray950}
+            fontWeight={400}
+            fontSize={20}
+          >
             게시물 알림
           </DIText>
-          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
+          <DIText
+            fontColor={theme.colors.gray.gray400}
+            fontSize={16}
+            fontWeight={400}
+          >
             멘션과 댓글에 대한 푸시 알림을 받으세요.
           </DIText>
         </TextContainer>
-        <ToggleSwitch name="mention" value={toggle.mention} onChange={onChangeToggle} />
+        <ToggleSwitch
+          name="mention"
+          value={toggle.mention}
+          onChange={onChangeToggle}
+        />
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
+          <DIText
+            fontColor={theme.colors.gray.gray950}
+            fontWeight={400}
+            fontSize={20}
+          >
             일정 알림
           </DIText>
-          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
+          <DIText
+            fontColor={theme.colors.gray.gray400}
+            fontSize={16}
+            fontWeight={400}
+          >
             다가오는 일정, 투두리스트의 알림을 받으세요.
           </DIText>
         </TextContainer>
-        <ToggleSwitch name="schedule" value={toggle.schedule} onChange={onChangeToggle} />
+        <ToggleSwitch
+          name="schedule"
+          value={toggle.schedule}
+          onChange={onChangeToggle}
+        />
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
+          <DIText
+            fontColor={theme.colors.gray.gray950}
+            fontWeight={400}
+            fontSize={20}
+          >
             이메일 알림
           </DIText>
-          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
-            모든 페이지의 멘션, 댓글 및 편집에 대한 업데이트를 이메일로 받으세요.
+          <DIText
+            fontColor={theme.colors.gray.gray400}
+            fontSize={16}
+            fontWeight={400}
+          >
+            모든 페이지의 멘션, 댓글 및 편집에 대한 업데이트를 이메일로
+            받으세요.
           </DIText>
         </TextContainer>
-        <ToggleSwitch name="email" value={toggle.email} onChange={onChangeToggle} />
+        <ToggleSwitch
+          name="email"
+          value={toggle.email}
+          onChange={onChangeToggle}
+        />
       </Content>
       <Content>
         <TextContainer>
-          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
+          <DIText
+            fontColor={theme.colors.gray.gray950}
+            fontWeight={400}
+            fontSize={20}
+          >
             모든 알림 비활성화
           </DIText>
-          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
+          <DIText
+            fontColor={theme.colors.gray.gray400}
+            fontSize={16}
+            fontWeight={400}
+          >
             모든 알림을 받지 않습니다.
           </DIText>
         </TextContainer>
-        <ToggleSwitch name="notification" value={toggle.notification} onChange={onChangeToggle} />
+        <ToggleSwitch
+          name="notification"
+          value={toggle.notification}
+          onChange={onChangeToggle}
+        />
       </Content>
 
-      <DIText fontColor={theme.colors.gray.gray950} fontSize={25} fontWeight={400}>
+      <DIText
+        fontColor={theme.colors.gray.gray950}
+        fontSize={25}
+        fontWeight={400}
+      >
         계정 설정
       </DIText>
 
       <Content>
         <TextContainer>
-          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
+          <DIText
+            fontColor={theme.colors.gray.gray950}
+            fontWeight={400}
+            fontSize={20}
+          >
             테마 설정
           </DIText>
-          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
+          <DIText
+            fontColor={theme.colors.gray.gray400}
+            fontSize={16}
+            fontWeight={400}
+          >
             라이트모드, 다크모드
           </DIText>
         </TextContainer>
@@ -115,11 +180,20 @@ const Setting = () => {
 
       <Content>
         <TextContainer>
-          <DIText fontColor={theme.colors.gray.gray950} fontWeight={400} fontSize={20}>
+          <DIText
+            fontColor={theme.colors.gray.gray950}
+            fontWeight={400}
+            fontSize={20}
+          >
             내 계정 삭제
           </DIText>
-          <DIText fontColor={theme.colors.gray.gray400} fontSize={16} fontWeight={400}>
-            현재 세션을 제외한 모든 활성 세션에서 로그아웃되면 다시 로그인 해야합니다.
+          <DIText
+            fontColor={theme.colors.gray.gray400}
+            fontSize={16}
+            fontWeight={400}
+          >
+            현재 세션을 제외한 모든 활성 세션에서 로그아웃되면 다시 로그인
+            해야합니다.
           </DIText>
         </TextContainer>
         <DIButton

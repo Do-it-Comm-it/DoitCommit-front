@@ -15,7 +15,7 @@ const useTodo = () => {
       },
       {
         enabled: user ? true : false,
-      },
+      }
     );
 
     return result;
@@ -31,7 +31,7 @@ const useTodo = () => {
       },
       {
         enabled: user && id !== -1 ? true : false,
-      },
+      }
     );
 
     return result;

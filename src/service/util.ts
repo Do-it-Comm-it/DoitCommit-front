@@ -5,7 +5,7 @@ const saveImageToS3 = async (request: FormData) => {
   const { data } = await requestAPI().post(
     `/image`,
     serialize({ imageFile: request.get('file') }),
-    'multipart/form-data',
+    'multipart/form-data'
   );
 
   return data;

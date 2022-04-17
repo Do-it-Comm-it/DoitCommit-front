@@ -11,7 +11,13 @@ type PlannerDateProps = {
 };
 const DayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const PlannerDate = ({ selected, year, month, day, onChangeDate }: PlannerDateProps) => {
+const PlannerDate = ({
+  selected,
+  year,
+  month,
+  day,
+  onChangeDate,
+}: PlannerDateProps) => {
   const startDayName = new Date(year, month).getDay();
 
   return (
@@ -30,7 +36,8 @@ const Container = styled.div<{ selected: boolean }>`
   display: flex;
   width: 61px;
   height: 77px;
-  background-color: ${({ theme, selected }) => (selected ? theme.colors.primary.default : theme.colors.gray.gray200)};
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.primary.default : theme.colors.gray.gray200};
   flex-direction: column;
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 59px;
@@ -38,7 +45,8 @@ const Container = styled.div<{ selected: boolean }>`
   align-items: center;
   justify-content: center;
 
-  color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.gray.gray400)};
+  color: ${({ selected, theme }) =>
+    selected ? theme.colors.white : theme.colors.gray.gray400};
 
   &:hover {
     cursor: pointer;

@@ -12,7 +12,14 @@ const Announcement = () => {
     newest: true,
     bookmark: false,
   });
-  const { boards, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage } = useBoards(1);
+  const {
+    boards,
+    isLoading,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useBoards(1);
 
   if (isLoading) return <div>Loading..</div>;
   if (isError) return <h2>Error!</h2>;
@@ -20,23 +27,41 @@ const Announcement = () => {
     <InfiniteScroll
       hasMore={hasNextPage}
       loadMore={fetchNextPage as any}
-      style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
     >
       <FilterContainer>
-        <DIText fontColor={theme.colors.gray.gray950} fontWeight={500} fontSize={20}>
+        <DIText
+          fontColor={theme.colors.gray.gray950}
+          fontWeight={500}
+          fontSize={20}
+        >
           최신 아티클을 둘러보세요
         </DIText>
         <ButtonWrapper>
-          <FilterButton active={active.newest} onClick={() => setActive({ bookmark: false, newest: true })}>
+          <FilterButton
+            active={active.newest}
+            onClick={() => setActive({ bookmark: false, newest: true })}
+          >
             최신
           </FilterButton>
-          <FilterButton active={active.bookmark} onClick={() => setActive({ newest: false, bookmark: true })}>
+          <FilterButton
+            active={active.bookmark}
+            onClick={() => setActive({ newest: false, bookmark: true })}
+          >
             북마크
           </FilterButton>
         </ButtonWrapper>
       </FilterContainer>
       <Container>
-        {boards?.pages.map((page) => page.data.map((b: IBoard, i: number) => <Card board={b} key={i} />))}
+        {boards?.pages.map((page) =>
+          page.data.map((b: IBoard, i: number) => <Card board={b} key={i} />)
+        )}
         {isFetchingNextPage && <p>Loading..</p>}
       </Container>
     </InfiniteScroll>

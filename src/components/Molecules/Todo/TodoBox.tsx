@@ -53,7 +53,11 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
               <PlannerLabel level={todo.importance} />
               <PlannerLabel name={todo.type} />
             </Labels>
-            {todo.isFixed ? <FillPin onClick={onFixed} /> : <Pin onClick={onFixed} />}
+            {todo.isFixed ? (
+              <FillPin onClick={onFixed} />
+            ) : (
+              <Pin onClick={onFixed} />
+            )}
           </Header>
           <Content>
             <Title>{todo.title}</Title>
@@ -64,7 +68,11 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
             <DeleteIcon onClick={onDelete} />
             <Left>
               <EditIcon onClick={onEdit} />
-              {todo.isFinished ? <CheckFinishedIcon onClick={onFinish} /> : <CheckIcon onClick={onFinish} />}
+              {todo.isFinished ? (
+                <CheckFinishedIcon onClick={onFinish} />
+              ) : (
+                <CheckIcon onClick={onFinish} />
+              )}
             </Left>
           </Footer>
         </Container>
@@ -76,7 +84,9 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
 const ConvertDate = (date: string) => {
   const d = new Date(date.replaceAll('/', '-'));
 
-  return `${convertDayToName(d.getDay())} ${d.getDay()} ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+  return `${convertDayToName(
+    d.getDay()
+  )} ${d.getDay()} ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
 };
 
 const Wrapper = styled.div`

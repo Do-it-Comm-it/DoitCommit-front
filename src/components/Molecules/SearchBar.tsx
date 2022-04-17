@@ -19,7 +19,7 @@ const SearchBar = ({ width = 230, height = 45, defaultValue = '' }) => {
     (text) => {
       setValue(text);
     },
-    [setValue],
+    [setValue]
   );
 
   return (

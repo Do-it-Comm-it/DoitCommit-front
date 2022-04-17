@@ -18,19 +18,25 @@ const TagInput = ({ onChange, value }: Props) => {
   const debouncedSearch = useDebounce(search, 400);
   const { useTagList, usePopularTag } = useTag();
   const { data: tagList, isLoading: isLoadingTag } = useTagList();
-  const { data: popularTagList, isLoading: isLoadingPopularTag } = usePopularTag();
+  const { data: popularTagList, isLoading: isLoadingPopularTag } =
+    usePopularTag();
 
-  const handleInputChange = useCallback((query: string, { action }: InputActionMeta) => {
-    if (action === 'input-change') {
-      setSearch(query);
+  const handleInputChange = useCallback(
+    (query: string, { action }: InputActionMeta) => {
+      if (action === 'input-change') {
+        setSearch(query);
 
-      setOpenMenu(true);
-    }
-  }, []);
+        setOpenMenu(true);
+      }
+    },
+    []
+  );
 
   const filteredOption = useMemo(() => {
     if (debouncedSearch && tagList) {
-      return tagList.filter((tag) => tag.tagName.includes(debouncedSearch)).slice(0, 8);
+      return tagList
+        .filter((tag) => tag.tagName.includes(debouncedSearch))
+        .slice(0, 8);
     }
   }, [debouncedSearch, tagList]);
 
@@ -43,12 +49,14 @@ const TagInput = ({ onChange, value }: Props) => {
     ({ innerProps, ...props }: MenuProps<any>) => {
       return (
         <components.Menu {...props} innerProps={{ ...innerProps }}>
-          <PopularTagText>{search.length === 0 ? `인기 태그` : `검색 태그`}</PopularTagText>
+          <PopularTagText>
+            {search.length === 0 ? `인기 태그` : `검색 태그`}
+          </PopularTagText>
           {props.children}
         </components.Menu>
       );
     },
-    [search],
+    [search]
   );
 
   return (
@@ -63,10 +71,18 @@ const TagInput = ({ onChange, value }: Props) => {
       options={
         !debouncedSearch
           ? popularTagList
-            ? popularTagList.map((tag) => ({ ...tag, value: tag.tagId, label: `#${tag.tagName}` }))
+            ? popularTagList.map((tag) => ({
+                ...tag,
+                value: tag.tagId,
+                label: `#${tag.tagName}`,
+              }))
             : []
           : filteredOption
-          ? filteredOption.map((tag) => ({ ...tag, value: tag.tagId, label: `#${tag.tagName}` }))
+          ? filteredOption.map((tag) => ({
+              ...tag,
+              value: tag.tagId,
+              label: `#${tag.tagName}`,
+            }))
           : []
       }
       isMulti

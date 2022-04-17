@@ -15,7 +15,11 @@ const PlannerBox = ({ title, participants, hasImage }: PlannerBoxProps) => {
       ) : (
         <Content>
           <Title>{title}</Title>
-          {participants && <Participants>{participants.map((user) => user).toString()}</Participants>}
+          {participants && (
+            <Participants>
+              {participants.map((user) => user).toString()}
+            </Participants>
+          )}
         </Content>
       )}
     </Wrapper>

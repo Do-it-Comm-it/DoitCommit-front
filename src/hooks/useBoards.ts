@@ -41,7 +41,10 @@ export const useBoards = (boardType: number) => {
   };
 };
 
-export const useBoardListMutation = (fieldToEdit: Partial<IBoard>, api: (selectedBoard: IBoard) => Promise<void>) => {
+export const useBoardListMutation = (
+  fieldToEdit: Partial<IBoard>,
+  api: (selectedBoard: IBoard) => Promise<void>
+) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
@@ -80,12 +83,17 @@ export const useBoardListMutation = (fieldToEdit: Partial<IBoard>, api: (selecte
   return mutation;
 };
 
-export const useSingleBoardMutation = (fieldToEdit: Partial<IBoard>, api: any) => {
+export const useSingleBoardMutation = (
+  fieldToEdit: Partial<IBoard>,
+  api: any
+) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
       await queryClient.cancelQueries(`board/${selectedBoard.boardId}`);
-      const snapshot = queryClient.getQueryData(`board/${selectedBoard.boardId}`);
+      const snapshot = queryClient.getQueryData(
+        `board/${selectedBoard.boardId}`
+      );
       queryClient.setQueryData(`board/${selectedBoard.boardId}`, (old: any) => {
         return {
           ...old,

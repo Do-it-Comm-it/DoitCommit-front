@@ -18,7 +18,7 @@ const CardContent = ({ board }: Props) => {
     {
       myBookmark: !board.myBookmark,
     },
-    boardApi.toggleBookmark,
+    boardApi.toggleBookmark
   );
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);
@@ -27,7 +27,9 @@ const CardContent = ({ board }: Props) => {
     <Container>
       <Top>
         {board.boardHashtag?.map((tag) => {
-          return Object.keys(tag).map((key: any) => <Tags key={key}>#{tag[key]}</Tags>);
+          return Object.keys(tag).map((key: any) => (
+            <Tags key={key}>#{tag[key]}</Tags>
+          ));
         })}
         {board.myBookmark ? (
           <BsBookmarkFill
@@ -46,7 +48,10 @@ const CardContent = ({ board }: Props) => {
           />
         )}
       </Top>
-      <Link to={`/community/board/${board.boardId}`} style={{ width: '100%', height: '100%', textDecoration: 'none' }}>
+      <Link
+        to={`/community/board/${board.boardId}`}
+        style={{ width: '100%', height: '100%', textDecoration: 'none' }}
+      >
         <Middle>
           <Title>
             <Highlighter
@@ -67,7 +72,11 @@ const CardContent = ({ board }: Props) => {
               highlightTag="strong"
               searchWords={keyword}
               autoEscape={true}
-              textToHighlight={board.boardContent.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 80) + '...'}
+              textToHighlight={
+                board.boardContent
+                  .replace(/<\/?[^>]+(>|$)/g, '')
+                  .substring(0, 80) + '...'
+              }
             />
           </Content>
         </Middle>

@@ -11,11 +11,14 @@ const SearchBar = () => {
     (e: ChangeEvent<HTMLInputElement>) => {
       setKeyword(e.target.value);
     },
-    [setKeyword],
+    [setKeyword]
   );
   return (
     <Container>
-      <Input placeholder="검색어를 입력 해 주세요." onChange={onChangeKeyword} />
+      <Input
+        placeholder="검색어를 입력 해 주세요."
+        onChange={onChangeKeyword}
+      />
       <SearchIcon width={38} height={38} />
     </Container>
   );

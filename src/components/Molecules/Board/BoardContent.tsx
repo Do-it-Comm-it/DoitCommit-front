@@ -12,13 +12,19 @@ interface Props {
   boardData: IBoard;
 }
 const BoardContent = ({ boardData }: Props) => {
-  const { comments, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useComments(boardData.boardId!);
+  const {
+    comments,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useComments(boardData.boardId!);
 
   const getComputedExtraPage = (
     page: {
       commentsData: ICommentRes;
       nextPage: number;
-    }[],
+    }[]
   ) => {
     if (page[0].commentsData.commentCount >= 5 * (page.length + 1)) {
       return 5;
@@ -45,19 +51,23 @@ const BoardContent = ({ boardData }: Props) => {
               mentionData={commentsData.memberTagResDtoList}
               commentData={c}
             />
-          )),
+          ))
         )}
       {hasNextPage && (
         <LoadMoreWrapper>
           <div onClick={() => fetchNextPage()}>
-            <span>{getComputedExtraPage(comments?.pages!)}개의 댓글 더 보기</span>
+            <span>
+              {getComputedExtraPage(comments?.pages!)}개의 댓글 더 보기
+            </span>
             <ExpandIconSVG />
           </div>
         </LoadMoreWrapper>
       )}
       {!isLoading && (
         <CommentEditor
-          mentionData={comments?.pages[0].commentsData.memberTagResDtoList || []}
+          mentionData={
+            comments?.pages[0].commentsData.memberTagResDtoList || []
+          }
           boardId={boardData.boardId!}
         />
       )}

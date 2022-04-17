@@ -12,7 +12,11 @@ const Form = ({ name, label, user, onChangeInput }: Props) => {
   return (
     <Content>
       <Label>{label}</Label>
-      <Input name={name} onChange={onChangeInput} defaultValue={(user as any)[name]} />
+      <Input
+        name={name}
+        onChange={onChangeInput}
+        defaultValue={(user as any)[name]}
+      />
     </Content>
   );
 };

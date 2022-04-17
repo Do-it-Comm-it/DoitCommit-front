@@ -8,7 +8,11 @@ const GoogleLogin = () => {
   return (
     <GoogleButton href={`${process.env.API_URL}/oauth2/authorization/google`}>
       <GoogleLogo size={32} />
-      <DIText fontSize={20} fontFamily={theme.font.NotoSansKRRegular} fontColor="#353535">
+      <DIText
+        fontSize={20}
+        fontFamily={theme.font.NotoSansKRRegular}
+        fontColor="#353535"
+      >
         Google로 계속
       </DIText>
     </GoogleButton>

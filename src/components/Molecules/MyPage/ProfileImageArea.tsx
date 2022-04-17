@@ -29,18 +29,31 @@ const ProfileImageArea = () => {
       };
       reader.readAsDataURL(file);
     },
-    [setFile],
+    [setFile]
   );
 
   return (
     <Container>
-      <DIText fontColor={theme.colors.gray.gray200} fontWeight={500} fontSize={25} style={{ marginBottom: '20px' }}>
+      <DIText
+        fontColor={theme.colors.gray.gray200}
+        fontWeight={500}
+        fontSize={25}
+        style={{ marginBottom: '20px' }}
+      >
         프로필 설정
       </DIText>
-      <input type="file" ref={hiddenFileInput} onChange={onFileChange} style={{ display: 'none' }} />
+      <input
+        type="file"
+        ref={hiddenFileInput}
+        onChange={onFileChange}
+        style={{ display: 'none' }}
+      />
       <ImageWrapper>
         {user?.pictureUrl ? (
-          <ProfileImage src={file.previewUrl || user?.pictureUrl} alt="Error!" />
+          <ProfileImage
+            src={file.previewUrl || user?.pictureUrl}
+            alt="Error!"
+          />
         ) : (
           <ProfileIconSVG width={238} height={238} />
         )}

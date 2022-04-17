@@ -15,7 +15,13 @@ type UserProfileProps = {
 };
 
 //TODO: It needs profile default image if user image is empty.
-const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src }: UserProfileProps) => {
+const UserProfile = ({
+  width = 40,
+  height = 40,
+  user,
+  isMenuEnable = false,
+  src,
+}: UserProfileProps) => {
   const [show, setShow] = useState<boolean>(false);
   const setModal = useSetRecoilState(modalAtom);
   const queryClient = useQueryClient();
@@ -61,7 +67,12 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src 
             }}
           >
             {user && (
-              <ProfileImage src={src || user.pictureUrl!} width={width} height={height} alt={'connection error'} />
+              <ProfileImage
+                src={src || user.pictureUrl!}
+                width={width}
+                height={height}
+                alt={'connection error'}
+              />
             )}
 
             {show && (
@@ -84,7 +95,14 @@ const UserProfile = ({ width = 40, height = 40, user, isMenuEnable = false, src 
   } else {
     return (
       <Circle tabIndex={0} width={width} height={height}>
-        {user && <ProfileImage src={src || user?.pictureUrl!} width={width} height={height} alt={'connection error'} />}
+        {user && (
+          <ProfileImage
+            src={src || user?.pictureUrl!}
+            width={width}
+            height={height}
+            alt={'connection error'}
+          />
+        )}
       </Circle>
     );
   }

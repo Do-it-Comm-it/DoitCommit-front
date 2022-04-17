@@ -32,7 +32,13 @@ type RegisterModalProps = {
 //1. Check user nickname is already taken or not.
 //2. Upload Profile Image.
 //3. techList is hardcoded, it should go in DB i think.
-const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: RegisterModalProps) => {
+const RegisterModal = ({
+  onFinish,
+  onClose,
+  stopPropagation,
+  width,
+  height,
+}: RegisterModalProps) => {
   const { data: user } = useUser();
   const theme = useTheme();
   const [page, setPage] = useState<number>(0);
@@ -46,7 +52,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
     () => userAPI.checkNickname(debounceInput as string),
     {
       enabled: user && nickname.trim().length && page === 0 ? true : false,
-    },
+    }
   );
 
   const onUpload = useCallback(() => {
@@ -66,7 +72,7 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
       };
       reader.readAsDataURL(file);
     },
-    [setFile],
+    [setFile]
   );
 
   const onChangePage = useCallback((page: number) => {
@@ -77,20 +83,23 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
     (text: string) => {
       setNickname(text);
     },
-    [setNickname],
+    [setNickname]
   );
 
   const queryClient = useQueryClient();
   const onCompleteSignUp = useMutation(
     (newInfo: any) => {
-      return userAPI.updateUserInfo(user!, { ...newInfo, imageFile: file.image });
+      return userAPI.updateUserInfo(user!, {
+        ...newInfo,
+        imageFile: file.image,
+      });
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
         onFinish();
       },
-    },
+    }
   );
 
   const NickNameContent = useCallback(() => {
@@ -126,7 +135,10 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
             />
           </InputPlace>
           {check ? (
-            <DIText fontColor={theme.colors.primary.default} style={{ paddingTop: 13 }}>
+            <DIText
+              fontColor={theme.colors.primary.default}
+              style={{ paddingTop: 13 }}
+            >
               <AiOutlineCheck />
               사용가능한 닉네임입니다.
             </DIText>
@@ -173,7 +185,10 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
           </HeaderDescription>
         </CardHeader>
         <CardContent>
-          <SelectInput onChange={(value) => setInterestTechSet(value as Tech[])} width={200} />
+          <SelectInput
+            onChange={(value) => setInterestTechSet(value as Tech[])}
+            width={200}
+          />
         </CardContent>
         <CardBottom>
           <DIButton
@@ -212,7 +227,12 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
         <CardContent>
           <ProfileContent>
             <ProfilePicture>
-              <UserProfile user={user!} src={file.previewUrl} width={72} height={72} />
+              <UserProfile
+                user={user!}
+                src={file.previewUrl}
+                width={72}
+                height={72}
+              />
               <EditIcon
                 size={24}
                 color={theme.colors.gray.gray100}
@@ -225,13 +245,22 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
 
             <ProfileText>
               <DIText style={{ paddingBottom: 20 }}>{user?.nickname}</DIText>
-              <DIText style={{ textDecoration: 'underline' }} fontColor={theme.colors.gray.gray400} onClick={() => {}}>
+              <DIText
+                style={{ textDecoration: 'underline' }}
+                fontColor={theme.colors.gray.gray400}
+                onClick={() => {}}
+              >
                 기본 이미지로 변경
               </DIText>
             </ProfileText>
           </ProfileContent>
         </CardContent>
-        <FileInput ref={hiddenFileInput} onChange={onFileChange} type="file" style={{ display: 'none' }} />
+        <FileInput
+          ref={hiddenFileInput}
+          onChange={onFileChange}
+          type="file"
+          style={{ display: 'none' }}
+        />
         <CardBottom>
           <DIButton
             borderRadius={60}
@@ -289,7 +318,12 @@ const RegisterModal = ({ onFinish, onClose, stopPropagation, width, height }: Re
   }, [onCompleteSignUp, theme, user, file, interestTechSet, nickname]);
 
   return (
-    <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
+    <ModalContainer
+      width={width}
+      height={height}
+      onClose={onClose}
+      stopPropagation={stopPropagation}
+    >
       <Container>
         <Header>
           {page !== 0 && (
@@ -443,6 +477,7 @@ const PageLabel = styled.div<{ active: boolean }>`
   width: ${({ active }) => (active ? 18 : 9)}px;
   height: ${({ active }) => (active ? 18 : 9)}px;
   color: #ffffff;
-  background-color: ${({ theme, active }) => (active ? theme.colors.primary.default : theme.colors.gray.gray300)};
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors.primary.default : theme.colors.gray.gray300};
 `;
 export default RegisterModal;

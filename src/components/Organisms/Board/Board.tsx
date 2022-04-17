@@ -1,3 +1,4 @@
+import LottieLoading from '@src/components/Atoms/LottieLoading';
 import BoardContent from '@src/components/Molecules/Board/BoardContent';
 import BoardHeader from '@src/components/Molecules/Board/BoardHeader';
 import { board as boardAPI } from '@src/service/api';
@@ -20,7 +21,7 @@ const Board = () => {
       refetchOnMount: true,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
-    },
+    }
   );
   useEffect(() => {
     window.scroll({
@@ -29,7 +30,8 @@ const Board = () => {
       behavior: 'smooth',
     });
   }, []);
-  if (isLoading) return <p>Loading..</p>;
+
+  if (isLoading) return <LottieLoading />;
   return (
     <Container>
       <BoardHeader boardData={boardData!} />

@@ -35,7 +35,11 @@ const HeaderNavigation = () => {
       <RightArea>
         {!user && (
           <Content>
-            <UserIcon width={54} height={54} onClick={() => setModal({ id: 'login', visible: true })} />
+            <UserIcon
+              width={54}
+              height={54}
+              onClick={() => setModal({ id: 'login', visible: true })}
+            />
           </Content>
         )}
         {user && (

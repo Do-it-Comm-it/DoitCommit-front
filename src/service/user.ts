@@ -31,7 +31,11 @@ const updateUserInfo = async (user: IUser, input: any) => {
       ...input,
       interestTechSet: input.interestTechSet.map((tech: Tech) => tech.value),
     });
-    const { code } = await requestAPI().put('/members/update', formData, 'multipart/form-data');
+    const { code } = await requestAPI().put(
+      '/members/update',
+      formData,
+      'multipart/form-data'
+    );
     return code;
   } else {
     delete input.imageFile;
@@ -40,7 +44,11 @@ const updateUserInfo = async (user: IUser, input: any) => {
       ...input,
       interestTechSet: input.interestTechSet.map((tech: Tech) => tech.value),
     });
-    const { code } = await requestAPI().put('/members/update', formData, 'multipart/form-data');
+    const { code } = await requestAPI().put(
+      '/members/update',
+      formData,
+      'multipart/form-data'
+    );
     return code;
   }
 };
@@ -56,7 +64,9 @@ const logoutUser = async () => {
 };
 
 const checkNickname = async (nickname: string) => {
-  const { data } = await requestAPI().get(`/members/check?nickname=${nickname}`);
+  const { data } = await requestAPI().get(
+    `/members/check?nickname=${nickname}`
+  );
   return data;
 };
 

@@ -18,7 +18,12 @@ const Module = {
       [{ header: [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
       [{ size: [] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+      ],
       ['link', 'image'],
       ['clean'],
       [{ align: [] }],
@@ -42,16 +47,23 @@ const BoardEditor = () => {
   const theme = useTheme();
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
-  const [editorState, setEditorState] = useState<RequestBoard>(defaultEditorState);
+  const [editorState, setEditorState] =
+    useState<RequestBoard>(defaultEditorState);
 
-  const { mutate: postBoard } = useMutation((boardData: RequestBoard) => boardAPI.saveBoard(boardData));
+  const { mutate: postBoard } = useMutation((boardData: RequestBoard) =>
+    boardAPI.saveBoard(boardData)
+  );
 
   const { mutate: saveImage } = useImage();
 
   useEffect(() => {
     Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
 
-    const imageDropHandler = (imageDataUrl: string, type: string, imageData: any) => {
+    const imageDropHandler = (
+      imageDataUrl: string,
+      type: string,
+      imageData: any
+    ) => {
       const file = imageData.toFile();
 
       // generate a form data
@@ -148,14 +160,22 @@ const BoardEditor = () => {
   }, []);
 
   const onSubmit = useCallback(() => {
-    const images = allImages.filter((image) => image.url && editorState.boardContent.includes(image.url));
+    const images = allImages.filter(
+      (image) => image.url && editorState.boardContent.includes(image.url)
+    );
 
     postBoard(
       {
         ...editorState,
         boardHashtag: tags.map((t) => String(t.tagId)),
-        allImageArr: allImages.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
-        imageArr: images.map((i) => ({ fileNm: i.fileNm, filePath: i.filePath })),
+        allImageArr: allImages.map((i) => ({
+          fileNm: i.fileNm,
+          filePath: i.filePath,
+        })),
+        imageArr: images.map((i) => ({
+          fileNm: i.fileNm,
+          filePath: i.filePath,
+        })),
       },
       {
         onSuccess: (data) => {
@@ -164,14 +184,18 @@ const BoardEditor = () => {
         onError: () => {
           alert('등록에 실패했습니다.');
         },
-      },
+      }
     );
   }, [allImages, editorState, tags, postBoard, navigate]);
 
   return (
     <Container>
       <Header>
-        <TitleInput onChange={onChangeTitle} defaultValue={editorState.boardTitle} placeholder={'제목을 입력하세요.'} />
+        <TitleInput
+          onChange={onChangeTitle}
+          defaultValue={editorState.boardTitle}
+          placeholder={'제목을 입력하세요.'}
+        />
         <TagInput onChange={onChangeTag} value={tags} />
       </Header>
       <Editor height={500} />

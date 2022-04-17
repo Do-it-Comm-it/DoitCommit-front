@@ -15,7 +15,7 @@ export const useUser = () => {
       refetchOnWindowFocus: true,
       staleTime: 1000000,
       suspense: true,
-    },
+    }
   );
 
   return user;

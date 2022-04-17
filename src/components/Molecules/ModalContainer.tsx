@@ -8,7 +8,14 @@ interface Props {
   stopPropagation: (e: any) => void;
   backgroundColor?: string;
 }
-const ModalContainer: React.FC<Props> = ({ width, height, onClose, stopPropagation, children, backgroundColor }) => {
+const ModalContainer: React.FC<Props> = ({
+  width,
+  height,
+  onClose,
+  stopPropagation,
+  children,
+  backgroundColor,
+}) => {
   const [target, setTarget] = useState<EventTarget>();
 
   const onSaveCurrentTarget = useCallback((event: MouseEvent) => {
@@ -30,7 +37,11 @@ const ModalContainer: React.FC<Props> = ({ width, height, onClose, stopPropagati
       backgroundColor={backgroundColor}
       onMouseDown={onSaveCurrentTarget}
     >
-      <div onClick={stopPropagation} onMouseDown={onSaveCurrentTarget} onMouseUp={onSaveCurrentTarget}>
+      <div
+        onClick={stopPropagation}
+        onMouseDown={onSaveCurrentTarget}
+        onMouseUp={onSaveCurrentTarget}
+      >
         {children}
       </div>
     </CreateModal>

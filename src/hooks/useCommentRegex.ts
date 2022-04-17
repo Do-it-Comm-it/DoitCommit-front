@@ -15,7 +15,10 @@ const useCommentRegex = ({ content }: Props) => {
       matches &&
         matches.forEach((m: any) => {
           let id = m.match(idRegex)[0].replace('{', '').replace('}', '');
-          let display = m.match(displayRegex)[0].replace('@[', '@').replace(']', '');
+          let display = m
+            .match(displayRegex)[0]
+            .replace('@[', '@')
+            .replace(']', '');
 
           arr.push({ id, display });
         });

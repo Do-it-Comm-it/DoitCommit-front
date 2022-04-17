@@ -15,7 +15,13 @@ type DropDownProps<T> = {
 //Reference: How to extend generic type for functional components.
 //https://stackoverflow.com/questions/51459971/type-of-generic-stateless-component-react-or-extending-generic-function-interfa
 
-const DropDown = <T extends unknown>({ width = 300, height = 50, items, onSelect, placeholder }: DropDownProps<T>) => {
+const DropDown = <T extends unknown>({
+  width = 300,
+  height = 50,
+  items,
+  onSelect,
+  placeholder,
+}: DropDownProps<T>) => {
   const [isActive, setIsActive] = useState(false);
   const [list, setList] = useState<T[] | null>(null);
   const [value, setValue] = useState<string>('');
@@ -44,7 +50,7 @@ const DropDown = <T extends unknown>({ width = 300, height = 50, items, onSelect
       setIsActive((prev) => !prev);
       setValue('');
     },
-    [onSelect],
+    [onSelect]
   );
 
   const onChangeText = useCallback((text: string) => {

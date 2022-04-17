@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
       .catch((err) => {
         return Promise.reject(err);
       });
-  },
+  }
 );
 
 export const requestAPI = () => {

@@ -22,7 +22,13 @@ interface Props {
   todoId?: number;
 }
 
-const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Props) => {
+const TodoModal = ({
+  onClose,
+  stopPropagation,
+  width,
+  height,
+  todoId = -1,
+}: Props) => {
   const theme = useTheme();
   const { useTodoItem, useTodoList } = useTodo();
   const { refetch } = useTodoList();
@@ -64,16 +70,28 @@ const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Pro
         [e.target.name]: e.target.value,
       });
     },
-    [setTodo, todo],
+    [setTodo, todo]
   );
 
   return (
-    <ModalContainer width={width} height={height} onClose={onClose} stopPropagation={stopPropagation}>
+    <ModalContainer
+      width={width}
+      height={height}
+      onClose={onClose}
+      stopPropagation={stopPropagation}
+    >
       <Container>
         <Header>
-          <Input defaultValue={todo.title} onChange={onChangeInput} placeholder="제목 없음" name="title" />
+          <Input
+            defaultValue={todo.title}
+            onChange={onChangeInput}
+            placeholder="제목 없음"
+            name="title"
+          />
           {todo.isFixed ? (
-            <NotiFixedIcon onClick={() => setTodo({ ...todo, isFixed: false })} />
+            <NotiFixedIcon
+              onClick={() => setTodo({ ...todo, isFixed: false })}
+            />
           ) : (
             <NotiIcon onClick={() => setTodo({ ...todo, isFixed: true })} />
           )}
@@ -89,8 +107,15 @@ const TodoModal = ({ onClose, stopPropagation, width, height, todoId = -1 }: Pro
           }}
         />
         <Divider />
-        <TextAreaContainer content={todo.content} onChangeContent={onChangeInput} />
-        <ContentRow alignItems="center" justifyContent="center" padding="20px 0">
+        <TextAreaContainer
+          content={todo.content}
+          onChangeContent={onChangeInput}
+        />
+        <ContentRow
+          alignItems="center"
+          justifyContent="center"
+          padding="20px 0"
+        >
           <DIButton
             onClick={() => {
               setModal({ ...modal, visible: false });

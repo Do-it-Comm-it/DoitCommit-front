@@ -3,12 +3,19 @@ import { SetStateAction } from 'react';
 import { ChangeEvent } from 'react';
 import { useCallback, useState } from 'react';
 
-type ReturnType<T> = [T, (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, Dispatch<SetStateAction<T>>];
+type ReturnType<T> = [
+  T,
+  (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
+  Dispatch<SetStateAction<T>>
+];
 const useInput = <T>(initialData: T): ReturnType<T> => {
   const [value, setValue] = useState(initialData);
-  const handler = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValue(e.target.value as unknown as T);
-  }, []);
+  const handler = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setValue(e.target.value as unknown as T);
+    },
+    []
+  );
 
   return [value, handler, setValue];
 };

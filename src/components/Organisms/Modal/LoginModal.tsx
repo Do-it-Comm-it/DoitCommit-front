@@ -14,7 +14,12 @@ type LoginModalProps = {
   height?: number;
 };
 
-const LoginModal = ({ onClose, stopPropagation, width, height }: LoginModalProps) => {
+const LoginModal = ({
+  onClose,
+  stopPropagation,
+  width,
+  height,
+}: LoginModalProps) => {
   const theme = useTheme();
   return (
     <ModalContainer

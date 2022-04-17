@@ -9,7 +9,13 @@ type CommunityBoxProps = {
   isMarked: boolean;
 };
 
-const CommunityBox = ({ title, subTitle, body, tech, isMarked }: CommunityBoxProps) => {
+const CommunityBox = ({
+  title,
+  subTitle,
+  body,
+  tech,
+  isMarked,
+}: CommunityBoxProps) => {
   return (
     <Container>
       <Header>

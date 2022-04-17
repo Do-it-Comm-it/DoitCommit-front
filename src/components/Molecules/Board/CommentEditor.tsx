@@ -14,7 +14,13 @@ interface Props {
 
   onToggle?: (value: boolean) => void;
 }
-const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle, commentId }: Props) => {
+const CommentEditor = ({
+  defaultValue,
+  boardId,
+  mentionData,
+  onToggle,
+  commentId,
+}: Props) => {
   const queryClient = useQueryClient();
   const [input, setInput] = useState({
     content: defaultValue?.content ?? '',
@@ -67,7 +73,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle, commentId
     search: string,
     highlightedDisplay: React.ReactNode,
     index: number,
-    focused: boolean,
+    focused: boolean
   ) => React.ReactNode = useCallback(
     (member, search, highlightedDisplay, index, focus) => {
       return (
@@ -77,7 +83,7 @@ const CommentEditor = ({ defaultValue, boardId, mentionData, onToggle, commentId
         </EachMention>
       );
     },
-    [mentionData],
+    [mentionData]
   );
   useEffect(() => {
     if (textareaRef.current) {
@@ -186,7 +192,8 @@ const ButtonWrapper = styled.div`
 const Button = styled.button<{ backgroundColor?: string }>`
   padding: 11px 30px;
   border-radius: 51px;
-  background-color: ${({ theme, backgroundColor }) => backgroundColor ?? theme.colors.primary.default};
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor ?? theme.colors.primary.default};
   color: #ffffff;
   font-size: 20px;
   font-weight: 500;
@@ -207,7 +214,8 @@ export const EachMention = styled.button<{ focus: boolean }>`
     width: 30px;
     height: 30px;
   }
-  background-color: ${({ focus, theme }) => focus && theme.colors.primary.default};
+  background-color: ${({ focus, theme }) =>
+    focus && theme.colors.primary.default};
   color: ${({ focus, theme }) => focus && theme.colors.white};
 `;
 const ImageContainer = styled.div`

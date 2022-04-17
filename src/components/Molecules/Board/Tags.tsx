@@ -10,7 +10,8 @@ const Tags = () => {
   return (
     <Container>
       <Text>인기태그</Text>
-      {tags && tags.map((tag) => <Tag key={tag.tagId}>{tag.tagName}</Tag>).slice(0, 7)}
+      {tags &&
+        tags.map((tag) => <Tag key={tag.tagId}>{tag.tagName}</Tag>).slice(0, 7)}
     </Container>
   );
 };

@@ -44,7 +44,11 @@ const ContentBox: React.FC<Props> = ({
           >
             {title}
           </Title>
-          <PlusIcon size={16} onClick={onClick} color={theme.colors.gray.gray950} />
+          <PlusIcon
+            size={16}
+            onClick={onClick}
+            color={theme.colors.gray.gray950}
+          />
         </HeaderWrapper>
       )}
 
@@ -83,7 +87,8 @@ const Container = styled.div<{ contentWidth?: number; contentHeight?: number }>`
   position: relative;
   flex-direction: column;
   width: ${({ contentWidth }) => (contentWidth ? `${contentWidth}px` : `100%`)};
-  height: ${({ contentHeight }) => (contentHeight ? `${contentHeight}px` : `100%`)};
+  height: ${({ contentHeight }) =>
+    contentHeight ? `${contentHeight}px` : `100%`};
 `;
 
 const LoginWrapper = styled.div`

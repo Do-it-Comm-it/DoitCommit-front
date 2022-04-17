@@ -38,11 +38,22 @@ const HomeTodoList = () => {
   const { data: todos, refetch: onRefetch } = useTodoList();
 
   return (
-    <ContentBox title="투데이 투두 리스트" requiredHeader requiredLogin={user ? false : true}>
+    <ContentBox
+      title="투데이 투두 리스트"
+      requiredHeader
+      requiredLogin={user ? false : true}
+    >
       <TodoWrapper>
         {user
-          ? todos && todos.slice(0, 4).map((todo) => <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />)
-          : emptyTodo.map((todo, index) => <TodoBox key={index} todo={todo} onRefetch={onRefetch} />)}
+          ? todos &&
+            todos
+              .slice(0, 4)
+              .map((todo) => (
+                <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />
+              ))
+          : emptyTodo.map((todo, index) => (
+              <TodoBox key={index} todo={todo} onRefetch={onRefetch} />
+            ))}
         <AddTodoBox />
       </TodoWrapper>
     </ContentBox>

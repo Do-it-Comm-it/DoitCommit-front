@@ -18,14 +18,21 @@ const Modal = () => {
   }, []);
 
   useEffect(() => {
-    if (user && user.nickname === null) setModal({ id: 'register', visible: true });
+    if (user && user.nickname === null)
+      setModal({ id: 'register', visible: true });
   }, [user, setModal]);
 
   return (
     <>
-      {modal.id === 'login' && modal.visible && <LoginModal onClose={closeModal} stopPropagation={stopPropagation} />}
+      {modal.id === 'login' && modal.visible && (
+        <LoginModal onClose={closeModal} stopPropagation={stopPropagation} />
+      )}
       {modal.id === 'register' && modal.visible && (
-        <RegisterModal onFinish={closeModal} onClose={closeModal} stopPropagation={stopPropagation} />
+        <RegisterModal
+          onFinish={closeModal}
+          onClose={closeModal}
+          stopPropagation={stopPropagation}
+        />
       )}
       {modal.id === 'todo' && modal.visible && (
         <TodoModal

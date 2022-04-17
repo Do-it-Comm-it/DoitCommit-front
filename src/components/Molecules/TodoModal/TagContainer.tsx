@@ -9,7 +9,12 @@ interface Props {
   onChangeImportance: (importance: string) => void;
   onChangeType: (type: TodoType) => void;
 }
-const TagContainer = ({ importance, onChangeImportance, type, onChangeType }: Props) => {
+const TagContainer = ({
+  importance,
+  onChangeImportance,
+  type,
+  onChangeType,
+}: Props) => {
   const theme = useTheme();
   return (
     <Container>
@@ -85,10 +90,15 @@ const Label = styled.label`
   color: ${({ theme }) => theme.colors.black};
 `;
 
-const CheckButton = styled.div<{ backgroundColor?: string; color?: string; checked?: boolean }>`
+const CheckButton = styled.div<{
+  backgroundColor?: string;
+  color?: string;
+  checked?: boolean;
+}>`
   border-radius: 50px;
   padding: 6px 22px;
-  background-color: ${({ checked, backgroundColor, theme }) => (checked ? backgroundColor : 'transparent')};
+  background-color: ${({ checked, backgroundColor, theme }) =>
+    checked ? backgroundColor : 'transparent'};
   color: ${({ checked, color }) => (checked ? color : '#DADADA')};
   border: ${({ checked }) => (checked ? 'none' : '1px solid #dadada')};
   font-size: 18px;

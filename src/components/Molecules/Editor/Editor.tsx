@@ -8,7 +8,9 @@ type Props = {
 
 const Editor = ({ width, height }: Props) => {
   const theme = useTheme();
-  return <div id="editor" style={{ width, height, color: theme.colors.black }} />;
+  return (
+    <div id="editor" style={{ width, height, color: theme.colors.black }} />
+  );
 };
 
 export default React.memo(Editor);

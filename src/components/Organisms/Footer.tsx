@@ -32,7 +32,9 @@ const Footer = () => {
         ))}
       </FooterMenu>
 
-      <CopyRightText>Copyright © 2022 Doitcommit, All rights reserved.</CopyRightText>
+      <CopyRightText>
+        Copyright © 2022 Doitcommit, All rights reserved.
+      </CopyRightText>
     </Container>
   );
 };

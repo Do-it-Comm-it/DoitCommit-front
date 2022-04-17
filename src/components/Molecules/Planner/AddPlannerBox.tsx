@@ -11,7 +11,9 @@ const AddPlannerBox = () => {
 
   const [, setModal] = useRecoilState(modalAtom);
   return (
-    <Container onClick={() => setModal({ id: user ? 'none' : 'login', visible: true })}>
+    <Container
+      onClick={() => setModal({ id: user ? 'none' : 'login', visible: true })}
+    >
       <PlusIcon size={40} color={theme.colors.gray.gray950} />
     </Container>
   );

@@ -3,7 +3,9 @@ import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
 const getBoardListByPage = async (page: number, boardCategoryId: number) => {
-  const { data } = await requestAPI().get(`/board/list?page=${page + 1}&size=16&boardCategoryId=${boardCategoryId}`);
+  const { data } = await requestAPI().get(
+    `/board/list?page=${page + 1}&size=16&boardCategoryId=${boardCategoryId}`
+  );
   return data;
 };
 
@@ -18,11 +20,17 @@ const saveBoard = async (request: RequestBoard) => {
 };
 
 const getCommentList = async (boardId: number, page: number) => {
-  const { data } = await requestAPI().get(`/boards/${boardId}/comments?page=${page}`);
+  const { data } = await requestAPI().get(
+    `/boards/${boardId}/comments?page=${page}`
+  );
   return data;
 };
 
-const addComment = async (body: { boardId: number; content: string; memberIdSet?: any[] }) => {
+const addComment = async (body: {
+  boardId: number;
+  content: string;
+  memberIdSet?: any[];
+}) => {
   const { code } = await requestAPI().post('/comments', body);
   return code;
 };
