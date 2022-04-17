@@ -1,4 +1,4 @@
-import { board, user } from '@src/service/api';
+import { board } from '@src/service/api';
 import { IBoard, IBoardList } from '@src/typings/Board';
 import {
   useInfiniteQuery,
@@ -8,9 +8,18 @@ import {
 } from 'react-query';
 import { useUser } from './useAuthentication';
 
-export const useBoards = (boardType: number) => {
+export const useBoards = (
+  boardType: number,
+  tagType?: number,
+  search?: string
+) => {
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const result = await board.getBoardListByPage(pageParam, boardType);
+    const result = await board.getBoardListByPage(
+      pageParam,
+      boardType,
+      tagType,
+      search
+    );
     return {
       data: result.dtoList,
       nextPage: pageParam + 1,
@@ -24,7 +33,7 @@ export const useBoards = (boardType: number) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery('boards', fetchPosts, {
+  } = useInfiniteQuery(`boards-${tagType}-${search}`, fetchPosts, {
     getNextPageParam: (lastPage) => {
       if (lastPage.data.length !== 0) {
         return lastPage.nextPage;

@@ -1,8 +1,6 @@
 import DILink from '@src/components/Atoms/DILink';
 import React from 'react';
 import styled from 'styled-components';
-import SearchBar from '../../Molecules/Board/SearchBar';
-import Tags from '../../Molecules/Board/Tags';
 
 const Header = () => {
   return (
@@ -15,8 +13,6 @@ const Header = () => {
           공지사항
         </DILink>
       </div>
-      <SearchBar />
-      <Tags />
     </Container>
   );
 };
@@ -27,7 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 250px;
+  height: 150px;
   align-items: center;
   justify-content: space-evenly;
   gap: 30px;

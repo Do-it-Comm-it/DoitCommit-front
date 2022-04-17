@@ -5,13 +5,17 @@ import { devices } from '@src/utils/theme';
 import { useSetRecoilState } from 'recoil';
 import keywordAtom from '@src/recoil/atom/keyword';
 
-const SearchBar = () => {
-  const setKeyword = useSetRecoilState(keywordAtom);
+type Props = {
+  onChangeSearch: (search: string) => void;
+};
+
+const SearchBar = ({ onChangeSearch }: Props) => {
+  // const setKeyword = useSetRecoilState(keywordAtom);
   const onChangeKeyword = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setKeyword(e.target.value);
+      onChangeSearch(e.target.value);
     },
-    [setKeyword]
+    [onChangeSearch]
   );
   return (
     <Container>

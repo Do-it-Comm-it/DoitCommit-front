@@ -4,15 +4,43 @@ import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';
 
-const Tags = () => {
-  const { useLimitPopularTag } = useTag();
-  const { data: tags, isLoading } = useLimitPopularTag();
-  if (isLoading) return <LottieLoading width={50} height={30} />;
+type Props = {
+  onChangeCategory: (tagId: number | undefined) => void;
+  category?: number;
+};
+
+const Tags = ({ onChangeCategory, category }: Props) => {
+  const { useLimitPopularTag, usePopularTag } = useTag();
+  // const { data: tags, isLoading } = usePopularTag();
+
+  const tags = [
+    { tagId: 1, tagName: '직장인' },
+    { tagId: 2, tagName: '공대생' },
+    { tagId: 3, tagName: '취준생' },
+    { tagId: 4, tagName: '고민' },
+  ];
+  if (false) return <LottieLoading width={50} height={30} />;
   return (
     <Container>
       <Text>인기태그</Text>
       {tags &&
-        tags.map((tag) => <Tag key={tag.tagId}>{tag.tagName}</Tag>).slice(0, 7)}
+        tags
+          .map((tag) => (
+            <Tag
+              isActive={category ? category === tag.tagId : false}
+              key={tag.tagId}
+              onClick={() => {
+                if (category === tag.tagId) {
+                  onChangeCategory(undefined);
+                } else {
+                  onChangeCategory(tag.tagId);
+                }
+              }}
+            >
+              {tag.tagName}
+            </Tag>
+          ))
+          .slice(0, 7)}
     </Container>
   );
 };
@@ -33,8 +61,9 @@ const Container = styled.div`
   }
 `;
 
-const Tag = styled.div`
-  background-color: ${({ theme }) => theme.colors.gray.gray100};
+const Tag = styled.div<{ isActive: boolean }>`
+  background-color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.success : theme.colors.gray.gray100};
   border-radius: 50px;
   padding: 6px 22px;
   color: ${({ theme }) => theme.colors.gray.gray400};

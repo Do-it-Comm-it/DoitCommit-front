@@ -1,13 +1,21 @@
 import DIText from '@src/components/Atoms/DIText';
+import LottieError from '@src/components/Atoms/LottieError';
+import LottieLoading from '@src/components/Atoms/LottieLoading';
 import Card from '@src/components/Molecules/Board/Card';
+import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import { useBoards } from '@src/hooks/useBoards';
+import { useDebounce } from '@src/hooks/useDebounce';
 import { IBoard } from '@src/typings/Board';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { useTheme } from 'styled-components';
 
+const NOTICE_ID = 1;
+
 const Announcement = () => {
   const theme = useTheme();
+  const [search, setSearch] = useState<string>();
+  const debouncedKeyword = useDebounce(search, 250);
   const [active, setActive] = useState({
     newest: true,
     bookmark: false,
@@ -19,52 +27,69 @@ const Announcement = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(1);
+  } = useBoards(NOTICE_ID, undefined, debouncedKeyword);
 
-  if (isLoading) return <div>Loading..</div>;
-  if (isError) return <h2>Error!</h2>;
+  const onChangeSearch = useCallback((search) => {
+    setSearch(search);
+  }, []);
+
   return (
-    <InfiniteScroll
-      hasMore={hasNextPage}
-      loadMore={fetchNextPage as any}
-      style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <FilterContainer>
-        <DIText
-          fontColor={theme.colors.gray.gray950}
-          fontWeight={500}
-          fontSize={20}
+    <React.Fragment>
+      <HeaderContainer>
+        <SearchBar onChangeSearch={onChangeSearch} />
+      </HeaderContainer>
+      {isLoading ? (
+        <LottieLoading />
+      ) : (
+        <InfiniteScroll
+          hasMore={hasNextPage}
+          loadMore={fetchNextPage as any}
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
         >
-          최신 아티클을 둘러보세요
-        </DIText>
-        <ButtonWrapper>
-          <FilterButton
-            active={active.newest}
-            onClick={() => setActive({ bookmark: false, newest: true })}
-          >
-            최신
-          </FilterButton>
-          <FilterButton
-            active={active.bookmark}
-            onClick={() => setActive({ newest: false, bookmark: true })}
-          >
-            북마크
-          </FilterButton>
-        </ButtonWrapper>
-      </FilterContainer>
-      <Container>
-        {boards?.pages.map((page) =>
-          page.data.map((b: IBoard, i: number) => <Card board={b} key={i} />)
-        )}
-        {isFetchingNextPage && <p>Loading..</p>}
-      </Container>
-    </InfiniteScroll>
+          <FilterContainer>
+            <DIText
+              fontColor={theme.colors.gray.gray950}
+              fontWeight={500}
+              fontSize={20}
+            >
+              최신 아티클을 둘러보세요
+            </DIText>
+            <ButtonWrapper>
+              <FilterButton
+                active={active.newest}
+                onClick={() => setActive({ bookmark: false, newest: true })}
+              >
+                최신
+              </FilterButton>
+              <FilterButton
+                active={active.bookmark}
+                onClick={() => setActive({ newest: false, bookmark: true })}
+              >
+                북마크
+              </FilterButton>
+            </ButtonWrapper>
+          </FilterContainer>
+          <Container>
+            {isError ? (
+              <LottieError errorMessage={'게시글을 불러오는데 실패했습니다!'} />
+            ) : (
+              boards?.pages.map((page) =>
+                page.data.map((b: IBoard, i: number) => (
+                  <Card board={b} key={i} />
+                ))
+              )
+            )}
+            {isFetchingNextPage && <LottieLoading />}
+          </Container>
+        </InfiniteScroll>
+      )}
+    </React.Fragment>
   );
 };
 const Container = styled.div`
@@ -79,7 +104,16 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 `;
+const HeaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
+  padding: 30px 0px;
+  width: 100%;
+  height: 100%;
+`;
 const FilterContainer = styled.div`
   display: flex;
   width: 90%;
