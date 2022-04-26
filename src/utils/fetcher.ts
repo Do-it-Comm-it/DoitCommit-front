@@ -2,16 +2,13 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const apiUrl = process.env.API_URL ?? 'http://localhost:8888';
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: apiUrl,
   headers: {
     accept: 'application/json',
   },
   withCredentials: true, // for cookie
 });
-
-//axios refreshtoken controller by intercpetors.
-axiosInstance.interceptors.request.use();
 
 // Login -> refresh Token , accessToken to Cookie, but when accessToken expires,
 // new request need to be prepared with new accessToken.
@@ -32,9 +29,7 @@ axiosInstance.interceptors.response.use(
       .then(() => {
         return axiosInstance(err.response?.config!); // 이전 request 재요청
       })
-      .catch((err) => {
-        return Promise.reject(err);
-      });
+      .catch((err) => {});
   }
 );
 
@@ -57,7 +52,11 @@ export const requestAPI = () => {
         headers: {
           'Content-Type': contentType ?? 'application/json',
         },
-      }).then(handleResponse);
+      })
+        .then(handleResponse)
+        .catch((e) => {
+          console.log(e);
+        });
     };
   };
 

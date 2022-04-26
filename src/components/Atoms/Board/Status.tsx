@@ -21,6 +21,7 @@ const Status = ({ board }: Props) => {
   const onClickHeart = useCallback(async () => {
     mutation.mutate(board);
   }, [board, mutation]);
+
   return (
     <Container>
       <CommentSVG />

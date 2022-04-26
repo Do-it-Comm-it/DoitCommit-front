@@ -6,6 +6,7 @@ import Planner from '@src/components/Organisms/Home/Planner';
 import Community from '@src/components/Organisms/Home/Community';
 import AdBanner from '@src/components/Organisms/Home/AdBanner';
 import { devices } from '@src/utils/theme';
+import LottieLoading from '@src/components/Atoms/LottieLoading';
 const Home = () => {
   return (
     <Container>
@@ -21,7 +22,7 @@ const Home = () => {
           </Bottom>
         </Column>
         <Row>
-          <React.Suspense fallback={<div>Loading..</div>}>
+          <React.Suspense fallback={<LottieLoading />}>
             <HomeTodoList />
           </React.Suspense>
         </Row>

@@ -13,6 +13,7 @@ const saveExtendedUserInfo = async (User: IUser) => {
 
 const getUserInfo = async () => {
   const { data } = await requestAPI().get('/members/info');
+
   return {
     ...data,
     interestTechSet: data.interestTechSet.map((tech: string) => {

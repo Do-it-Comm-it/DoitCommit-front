@@ -20,6 +20,7 @@ export const useBoards = (
       tagType,
       search
     );
+
     return {
       data: result.dtoList,
       nextPage: pageParam + 1,

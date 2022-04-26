@@ -10,4 +10,5 @@ export interface IUser {
   url2?: string | null;
   githubUrl?: string | null;
   regDate?: Date;
+  role?: string;
 }

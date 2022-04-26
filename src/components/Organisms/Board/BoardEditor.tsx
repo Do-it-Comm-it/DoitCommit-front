@@ -12,6 +12,8 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
 import { useNavigate } from 'react-router-dom';
 import './bubble.css';
+import { useUser } from '@src/hooks/useAuthentication';
+import ToggleSwitch from '@src/components/Atoms/DIToggleSwitch';
 const Module = {
   toolbar: {
     container: [
@@ -43,8 +45,10 @@ const defaultEditorState: RequestBoard = {
 };
 
 const BoardEditor = () => {
+  const { data: user } = useUser();
   const navigate = useNavigate();
   const theme = useTheme();
+  const [isNotice, setIsNotice] = useState<boolean>(false);
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] =
@@ -167,6 +171,7 @@ const BoardEditor = () => {
     postBoard(
       {
         ...editorState,
+        categoryId: isNotice ? 1 : 2,
         boardHashtag: tags.map((t) => String(t.tagId)),
         allImageArr: allImages.map((i) => ({
           fileNm: i.fileNm,
@@ -186,7 +191,7 @@ const BoardEditor = () => {
         },
       }
     );
-  }, [allImages, editorState, tags, postBoard, navigate]);
+  }, [allImages, editorState, tags, isNotice, postBoard, navigate]);
 
   return (
     <Container>
@@ -200,6 +205,18 @@ const BoardEditor = () => {
       </Header>
       <Editor height={500} />
       <BottomSection>
+        {user && user.role === 'ADMIN' && (
+          <ToggleContainer>
+            <ToggleText>{isNotice ? '공지사항' : '커뮤니티'}</ToggleText>
+            <ToggleSwitch
+              value={isNotice}
+              onChange={() => {
+                setIsNotice((prev) => !prev);
+              }}
+            />
+          </ToggleContainer>
+        )}
+
         <DIButton
           onClick={() => {
             alert('아직 개발중입니다.');
@@ -265,4 +282,21 @@ const BottomSection = styled.div`
   gap: 10px;
 `;
 
+const ToggleContainer = styled.div`
+  display: flex;
+  width: 150px;
+  align-items: center;
+  height: 100%;
+`;
+
+const ToggleText = styled.div`
+  width: 90px;
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 51px;
+
+  color: ${({ theme }) => theme.colors.black};
+`;
 export default BoardEditor;

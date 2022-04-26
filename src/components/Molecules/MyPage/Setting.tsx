@@ -26,7 +26,6 @@ const Setting = () => {
         ...toggle,
         [name]: checked,
       });
-      console.log([name], checked);
     },
     [toggle]
   );
