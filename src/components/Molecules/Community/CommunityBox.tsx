@@ -37,6 +37,11 @@ const Container = styled.div`
   border-radius: 10px;
   margin-top: 12px;
 
+  @media (max-width: ${1870}px) {
+    width: 100%;
+    gap: 10px;
+  }
+
   @media (max-width: ${1295}px) {
     width: 100%;
   }

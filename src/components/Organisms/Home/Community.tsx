@@ -26,9 +26,10 @@ const EmptyText = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 50px;
+  height: 300px;
   color: ${({ theme }) => theme.colors.gray.gray500};
   font-weight: 500;
   font-size: 18px;
 `;
+
 export default Community;

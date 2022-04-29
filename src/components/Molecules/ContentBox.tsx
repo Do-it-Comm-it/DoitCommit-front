@@ -158,8 +158,6 @@ const ContentWrapper = styled.div<{
   /* filter: ${({ requiredLogin }) => `
     blur(${requiredLogin ? 10 : 0}px)
   `}; */
-  justify-content: center;
-  align-items: center;
 
   /* ${({ requiredLogin }) => requiredLogin && 'pointer-events : none'};
   ${({ requiredLogin }) => requiredLogin && 'user-select: none'}; */

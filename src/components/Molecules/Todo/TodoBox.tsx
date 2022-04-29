@@ -106,10 +106,6 @@ const Wrapper = styled.div`
   border-radius: 10px;
 
   @media ${devices.laptop} {
-    max-width: 386px;
-  }
-
-  @media ${devices.tablet} {
     max-width: 100%;
   }
 `;

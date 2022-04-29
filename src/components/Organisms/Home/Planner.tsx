@@ -76,6 +76,7 @@ const PlannerWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  min-width: 400px;
 `;
 const Dates = styled.div`
   display: flex;
@@ -83,6 +84,11 @@ const Dates = styled.div`
   margin: 16px 0px;
   align-items: center;
   justify-content: space-around;
+
+  @media (max-width: ${1870}px) {
+    justify-content: center;
+    gap: 10px;
+  }
 `;
 
 const Planners = styled.div`

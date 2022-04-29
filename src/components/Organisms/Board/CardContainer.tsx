@@ -129,7 +129,7 @@ const HeaderContainer = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  padding: 30px 0px;
+  padding-bottom: 30px;
   width: 100%;
   height: 100%;
 `;

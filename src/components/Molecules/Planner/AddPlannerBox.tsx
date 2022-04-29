@@ -31,6 +31,10 @@ const Container = styled.div`
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;
 
+  @media (max-width: ${1870}px) {
+    width: 374px;
+  }
+
   @media (max-width: ${1295}px) {
     width: 100%;
     margin: 10px;

@@ -39,7 +39,7 @@ const Container = styled.div`
   border-radius: 10px;
 
   @media ${devices.laptop} {
-    max-width: 386px;
+    max-width: 100%;
   }
 
   @media ${devices.tablet} {

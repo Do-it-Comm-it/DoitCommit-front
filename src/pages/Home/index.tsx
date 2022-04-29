@@ -53,7 +53,10 @@ const Column = styled.div`
   flex-direction: column;
 
   @media ${devices.laptop} {
-    max-width: 100%;
+    width: 100%;
+  }
+  @media ${devices.tablet} {
+    width: 100%;
   }
 `;
 const Row = styled.div`
@@ -65,7 +68,12 @@ const Row = styled.div`
   flex-direction: row;
   margin-left: 30px;
 
+  @media (max-width: ${1580}px) {
+    max-width: 400px;
+  }
+
   @media ${devices.laptop} {
+    max-width: 100%;
     margin-top: 30px;
     margin-left: 0px;
   }
@@ -80,6 +88,11 @@ const Bottom = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
+
+  @media (max-width: ${1870}px) {
+    flex-direction: column;
+  }
+
   @media (max-width: ${1295}px) {
     flex-direction: column;
     align-items: center;
