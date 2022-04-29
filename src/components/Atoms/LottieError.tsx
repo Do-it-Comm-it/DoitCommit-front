@@ -31,8 +31,12 @@ const LottieError = ({ errorMessage }: Props) => {
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 300px;
   height: 300px;
+  justify-content: center;
+  align-items: center;
 `;
 const ErrorAnimationDiv = styled.div``;
 const ErrorText = styled.div`

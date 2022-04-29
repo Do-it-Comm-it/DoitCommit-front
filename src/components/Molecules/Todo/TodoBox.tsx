@@ -14,9 +14,10 @@ import PinSVG from '@src/assets/notification.svg';
 type TodoBoxProps = {
   todo: ITodos;
   onRefetch: () => void;
+  isEmpty?: boolean;
 };
 
-const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
+const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
   const setModal = useSetRecoilState(modalAtom);
 
   const onDelete = useCallback(async () => {
@@ -48,21 +49,25 @@ const TodoBox = ({ todo, onRefetch }: TodoBoxProps) => {
     <Wrapper>
       {todo && (
         <Container>
-          <Header>
-            <Labels>
-              <PlannerLabel level={todo.importance} />
-              <PlannerLabel name={todo.type} />
-            </Labels>
-            {todo.isFixed ? (
-              <FillPin onClick={onFixed} />
-            ) : (
-              <Pin onClick={onFixed} />
-            )}
-          </Header>
+          {!isEmpty && (
+            <Header>
+              <Labels>
+                <PlannerLabel level={todo.importance} />
+                <PlannerLabel name={todo.type} />
+              </Labels>
+              {todo.isFixed ? (
+                <FillPin onClick={onFixed} />
+              ) : (
+                <Pin onClick={onFixed} />
+              )}
+            </Header>
+          )}
           <Content>
-            <Title>{todo.title}</Title>
-            <DateRow>{ConvertDate(todo.todoDateTime ?? '')}</DateRow>
-            <Body>{todo.content}</Body>
+            <Title isEmpty={isEmpty}>{todo.title}</Title>
+            {!isEmpty && (
+              <DateRow>{ConvertDate(todo.todoDateTime ?? '')}</DateRow>
+            )}
+            <Body isEmpty={isEmpty}>{todo.content}</Body>
           </Content>
           <Footer>
             <DeleteIcon onClick={onDelete} />
@@ -93,7 +98,7 @@ const Wrapper = styled.div`
   display: flex;
   min-width: 286px;
   min-height: 330px;
-  width: 100%;
+  max-width: 385px;
   background: ${({ theme }) => theme.colors.gray.gray200};
   flex-direction: column;
 
@@ -162,13 +167,16 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Title = styled.span`
+const Title = styled.span<{ isEmpty?: boolean }>`
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
+  font-size: ${({ isEmpty }) => (isEmpty ? 24 : 20)}px;
   line-height: 29px;
   color: ${({ theme }) => theme.colors.gray.gray950};
+
+  word-wrap: break-word;
+  white-space: pre-line;
 `;
 const DateRow = styled.span`
   margin-top: 12px;
@@ -179,7 +187,7 @@ const DateRow = styled.span`
   line-height: 17px;
   color: ${({ theme }) => theme.colors.gray.gray400};
 `;
-const Body = styled.span`
+const Body = styled.span<{ isEmpty?: boolean }>`
   margin-top: 25px;
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
@@ -187,7 +195,8 @@ const Body = styled.span`
   font-size: 16px;
   line-height: 23px;
 
-  color: ${({ theme }) => theme.colors.gray.gray400};
+  color: ${({ theme, isEmpty }) =>
+    isEmpty ? theme.colors.primary.default : theme.colors.gray.gray400};
 `;
 const Footer = styled.div`
   align-self: flex-end;

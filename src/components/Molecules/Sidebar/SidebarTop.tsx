@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ExpandIcon from '@src/assets/menu_extended.svg';
-import DIText from '@src/components/Atoms/DIText';
+import LogoSvg from '@src/assets/logo.svg';
 
 type Props = {
   open: boolean;
@@ -15,19 +15,7 @@ const SidebarTop = ({ open, onToggle }: Props) => {
         <ExpandIcon />
       </IconWrapper>
       <Container>
-        <DIText
-          fontColor="#ffffff"
-          fontWeight={700}
-          fontSize={22}
-          style={{
-            letterSpacing: 0.2,
-            whiteSpace: 'initial',
-            textAlign: 'center',
-            userSelect: 'none',
-          }}
-        >
-          두잇커밋
-        </DIText>
+        <Logo />
       </Container>
     </SidebarTopWrapper>
   );
@@ -75,5 +63,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+const Logo = styled(LogoSvg)``;
 
 export default SidebarTop;

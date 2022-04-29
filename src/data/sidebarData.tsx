@@ -10,31 +10,37 @@ export const sidebarItem = [
     title: '홈화면',
     icon: <MenuIcon />,
     path: '/',
+    needLogin: false,
   },
   {
     title: '두잇플래너',
     icon: <CalendarIcon />,
     path: '#',
+    needLogin: true,
   },
   {
     title: '두잇챌린지',
     icon: <ChallengeIcon />,
     path: '#',
+    needLogin: true,
   },
   {
     title: '커뮤니티',
     icon: <CommunityIcon />,
     path: '/community',
+    needLogin: false,
   },
 
   {
     title: '마이두잇',
     icon: <DoitIcon />,
     path: '#',
+    needLogin: false,
   },
   {
     title: '마이페이지',
     icon: <MypageIcon width={24} height={24} />,
     path: '/mypage',
+    needLogin: true,
   },
 ];

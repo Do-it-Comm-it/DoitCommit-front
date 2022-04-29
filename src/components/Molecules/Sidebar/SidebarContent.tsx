@@ -2,19 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { sidebarItem } from '@src/data/sidebarData';
+import { useUser } from '@src/hooks/useAuthentication';
 
 type Props = {
   onClose: () => void;
 };
 
 const SidebarContent = ({ onClose }: Props) => {
+  const { data: user } = useUser();
   return (
     <Container>
       <SidebarUl>
         <div>
           {sidebarItem.map((item, index) => (
             <li key={index}>
-              <SidebarLink to={item.path} onClick={onClose}>
+              <SidebarLink
+                to={!user && item.needLogin ? '#' : item.path}
+                onClick={
+                  !user && item.needLogin
+                    ? () => {
+                        alert('로그인이 필요합니다.');
+                      }
+                    : onClose
+                }
+              >
                 {item.icon}
                 <span>{item.title}</span>
               </SidebarLink>

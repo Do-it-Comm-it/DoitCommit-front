@@ -10,11 +10,13 @@ import LottieError from '@src/components/Atoms/LottieError';
 import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import Tags from '@src/components/Molecules/Board/Tags';
 import { useDebounce } from '@src/hooks/useDebounce';
+import { useUser } from '@src/hooks/useAuthentication';
 
 const COMMUNITY_ID = 2;
 
 const CardContainer = () => {
   const theme = useTheme();
+  const { data: user } = useUser();
   const [category, setCategory] = useState<number>();
   const [search, setSearch] = useState<string>();
   const debouncedKeyword = useDebounce(search, 250);
@@ -82,18 +84,25 @@ const CardContainer = () => {
               </FilterButton>
             </ButtonWrapper>
           </FilterContainer>
-          <Container>
-            {isError ? (
-              <LottieError errorMessage={'게시글을 불러오는데 실패했습니다!'} />
-            ) : (
-              boards?.pages.map((page) =>
+
+          {isError ? (
+            <LottieError
+              errorMessage={
+                user
+                  ? '게시글을 불러오는데 실패했습니다!'
+                  : '로그인이 필요합니다'
+              }
+            />
+          ) : (
+            <Container>
+              {boards?.pages.map((page) =>
                 page.data.map((b: IBoard, i: number) => (
                   <Card board={b} key={i} />
                 ))
-              )
-            )}
-            {isFetchingNextPage && <LottieLoading />}
-          </Container>
+              )}
+            </Container>
+          )}
+          {isFetchingNextPage && <LottieLoading />}
         </InfiniteScroll>
       )}
     </React.Fragment>

@@ -46,7 +46,7 @@ const ContentBox: React.FC<Props> = ({
           </Title>
           <PlusIcon
             size={16}
-            onClick={onClick}
+            onClick={requiredLogin ? onClickLogin : onClick}
             color={theme.colors.gray.gray950}
           />
         </HeaderWrapper>
@@ -54,7 +54,8 @@ const ContentBox: React.FC<Props> = ({
 
       <ContentWrapper requiredLogin={requiredLogin}>{children}</ContentWrapper>
 
-      {requiredLogin && (
+      {/**초기 디자인에 로그인 모달 ~2022-04-30 */}
+      {/* {requiredLogin && (
         <LoginWrapper>
           <OpacityBox />
           <Content>
@@ -77,7 +78,7 @@ const ContentBox: React.FC<Props> = ({
             />
           </Content>
         </LoginWrapper>
-      )}
+      )} */}
     </Container>
   );
 };
@@ -91,47 +92,56 @@ const Container = styled.div<{ contentWidth?: number; contentHeight?: number }>`
     contentHeight ? `${contentHeight}px` : `100%`};
 `;
 
-const LoginWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  min-width: 80px;
-  max-width: 500px;
-  width: 70%;
-  height: 50%;
-  min-height: 200px;
-  border-radius: 5px;
-  box-shadow: ${({ theme }) => theme.boxShadow};
-  background: ${({ theme }) => theme.colors.gray.gray155};
-`;
-const OpacityBox = styled.div`
-  opacity: 0.2;
-  background-color: ${({ theme }) => theme.colors.gray.gray100};
-`;
-const Content = styled.div`
-  height: 200px;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-`;
+/**초기 디자인에 로그인 모달 ~2022-04-30 */
+
+// const LoginWrapper = styled.div`
+//   position: absolute;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   margin: auto;
+//   min-width: 80px;
+//   max-width: 500px;
+//   width: 70%;
+//   height: 50%;
+//   min-height: 200px;
+//   border-radius: 5px;
+//   box-shadow: ${({ theme }) => theme.boxShadow};
+//   background: ${({ theme }) => theme.colors.gray.gray155};
+// `;
+// const OpacityBox = styled.div`
+//   opacity: 0.2;
+//   background-color: ${({ theme }) => theme.colors.gray.gray100};
+// `;
+// const Content = styled.div`
+//   height: 200px;
+//   background: transparent;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-around;
+// `;
+// const SubTitle = styled(DIText)``;
+// const LoginButton = styled(DIButton)``;
+// const LockIcon = styled(MdOutlineLockOpen)``;
+// const LoginHeader = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   text-align: center;
+// `;
 const Title = styled(DIText)``;
-const SubTitle = styled(DIText)``;
-const LoginButton = styled(DIButton)``;
 const PlusIcon = styled(HiOutlinePlus)`
   &:hover {
     cursor: pointer;
     opacity: 0.8;
   }
 `;
-const LockIcon = styled(MdOutlineLockOpen)``;
+
 const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -139,25 +149,20 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   margin: 0px 5px;
 `;
-const LoginHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-`;
+
 const ContentWrapper = styled.div<{
   requiredLogin?: boolean;
 }>`
   display: flex;
   flex-direction: column;
-  filter: ${({ requiredLogin }) => `
+  /* filter: ${({ requiredLogin }) => `
     blur(${requiredLogin ? 10 : 0}px)
-  `};
+  `}; */
   justify-content: center;
   align-items: center;
 
-  ${({ requiredLogin }) => requiredLogin && 'pointer-events : none'};
-  ${({ requiredLogin }) => requiredLogin && 'user-select: none'};
+  /* ${({ requiredLogin }) => requiredLogin && 'pointer-events : none'};
+  ${({ requiredLogin }) => requiredLogin && 'user-select: none'}; */
 `;
 
 export default ContentBox;

@@ -26,12 +26,6 @@ const HeaderNavigation = () => {
     <Navigation position={'top'}>
       <ExpandIcon open={open} onClick={onToggle} />
 
-      <LeftArea>
-        <SearchBarWrapper>
-          <SearchBar />
-        </SearchBarWrapper>
-      </LeftArea>
-
       <RightArea>
         {!user && (
           <Content>
@@ -54,26 +48,14 @@ const HeaderNavigation = () => {
   );
 };
 
-const LeftArea = styled.div`
-  justify-self: flex-start;
-  margin-right: auto;
-  margin-left: 40px;
-`;
 const RightArea = styled.div`
   display: flex;
+  margin-left: auto;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
 `;
-const SearchBarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  height: 70%;
-  @media ${devices.tablet} {
-    display: none;
-  }
-`;
+
 const Content = styled.div`
   display: flex;
   flex-direction: row;

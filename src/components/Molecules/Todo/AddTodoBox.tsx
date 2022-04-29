@@ -4,10 +4,21 @@ import { HiOutlinePlus } from 'react-icons/hi';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { devices } from '@src/utils/theme';
-const AddTodoBox = () => {
+
+type Props = {
+  requiredLogin?: boolean;
+};
+
+const AddTodoBox = ({ requiredLogin }: Props) => {
   const [, setModal] = useRecoilState(modalAtom);
   return (
-    <Container onClick={() => setModal({ id: 'todo', visible: true })}>
+    <Container
+      onClick={() =>
+        requiredLogin
+          ? setModal({ id: 'login', visible: true })
+          : setModal({ id: 'todo', visible: true })
+      }
+    >
       <PlusIcon size={40} />
     </Container>
   );
@@ -18,6 +29,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-width: 286px;
+  max-width: 385px;
   min-height: 330px;
   width: 100%;
 

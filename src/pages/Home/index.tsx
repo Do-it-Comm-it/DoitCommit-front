@@ -10,55 +10,44 @@ import LottieLoading from '@src/components/Atoms/LottieLoading';
 const Home = () => {
   return (
     <Container>
-      <ContentWrapper>
-        <Column>
-          <Top>
-            <HomeTitle />
-            <AdBanner />
-          </Top>
-          <Bottom>
-            <Planner />
-            <Community />
-          </Bottom>
-        </Column>
-        <Row>
-          <React.Suspense fallback={<LottieLoading />}>
-            <HomeTodoList />
-          </React.Suspense>
-        </Row>
-      </ContentWrapper>
+      <Column>
+        <Top>
+          <HomeTitle />
+          <AdBanner />
+        </Top>
+        <Bottom>
+          <Planner />
+          <Community />
+        </Bottom>
+      </Column>
+      <Row>
+        <React.Suspense fallback={<LottieLoading />}>
+          <HomeTodoList />
+        </React.Suspense>
+      </Row>
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   height: 100%;
   padding: 70px;
   padding-left: 153px;
   padding-bottom: 20px;
+  justify-content: center;
 
   @media ${devices.laptop} {
     padding: 8%;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-
-  @media ${devices.laptop} {
     flex-direction: column;
     align-items: center;
   }
 `;
+
 const Column = styled.div`
-  width: 100%;
-  max-width: 800px;
+  width: 800px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -69,6 +58,7 @@ const Column = styled.div`
 `;
 const Row = styled.div`
   width: 100%;
+  max-width: 800px;
   height: 100%;
   display: flex;
   margin-top: 10px;

@@ -2,8 +2,8 @@ import React, { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import Search from '@src/assets/search.svg';
 import { devices } from '@src/utils/theme';
-import { useSetRecoilState } from 'recoil';
-import keywordAtom from '@src/recoil/atom/keyword';
+// import { useSetRecoilState } from 'recoil';
+// import keywordAtom from '@src/recoil/atom/keyword';
 
 type Props = {
   onChangeSearch: (search: string) => void;
@@ -36,6 +36,7 @@ const Container = styled.div`
   max-width: 656px;
   display: flex;
   align-items: center;
+  padding: 20px;
   @media ${devices.tablet} {
     width: 100%;
   }
@@ -62,7 +63,7 @@ const Input = styled.input`
 `;
 const SearchIcon = styled(Search)`
   position: absolute;
-  top: 25px;
+  top: 40px;
   right: 35px;
   cursor: pointer;
   & > path {

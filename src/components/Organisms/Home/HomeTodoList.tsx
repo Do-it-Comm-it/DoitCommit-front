@@ -11,24 +11,24 @@ import { ITodos, TodoType } from '@src/typings/Todos';
 const emptyTodo: Array<ITodos> = [
   {
     type: TodoType.DAILY,
-    content: '',
+    content: '새로운 목표를 달성 할 수 있어요.',
     importance: 'LOW',
     isFixed: false,
-    title: '',
+    title: '투두 리스트를 \n 쉽게 관리해 보세요.',
   },
   {
     type: TodoType.DAILY,
-    content: '',
+    content: '함께 공부할 팀원들을 모집 할 수 있어요',
     importance: 'LOW',
     isFixed: false,
-    title: '',
+    title: '두잇 그룹으로 \n 함께 스터디 해 보세요.',
   },
   {
     type: TodoType.DAILY,
-    content: '',
+    content: '더 많은 정보를 공유 해 주세요.',
     importance: 'LOW',
     isFixed: false,
-    title: '',
+    title: '좋은 정보를 \n 우리 함께 나눠요.',
   },
 ];
 
@@ -39,7 +39,11 @@ const HomeTodoList = () => {
 
   return (
     <ContentBox
-      title="투데이 투두 리스트"
+      title={
+        user
+          ? `🔥 목표 달성이 얼마 남지 않았어요!`
+          : `📘 로그인 후 이용 가능합니다.`
+      }
       requiredHeader
       requiredLogin={user ? false : true}
     >
@@ -52,9 +56,9 @@ const HomeTodoList = () => {
                 <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />
               ))
           : emptyTodo.map((todo, index) => (
-              <TodoBox key={index} todo={todo} onRefetch={onRefetch} />
+              <TodoBox key={index} todo={todo} onRefetch={onRefetch} isEmpty />
             ))}
-        <AddTodoBox />
+        <AddTodoBox requiredLogin={user ? false : true} />
       </TodoWrapper>
     </ContentBox>
   );
