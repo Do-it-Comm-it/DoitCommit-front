@@ -34,7 +34,7 @@ export const useBoards = (
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(`boards-${tagType}-${search}`, fetchPosts, {
+  } = useInfiniteQuery(`boards-page`, fetchPosts, {
     getNextPageParam: (lastPage) => {
       if (lastPage.data.length !== 0) {
         return lastPage.nextPage;
@@ -64,10 +64,10 @@ export const useBoardListMutation = (
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
-      await queryClient.cancelQueries('boards');
-      const snapshot = queryClient.getQueryData('boards');
+      await queryClient.cancelQueries('boards-page');
+      const snapshot = queryClient.getQueryData('boards-page');
 
-      queryClient.setQueryData<IBoardList>('boards', (old) => ({
+      queryClient.setQueryData<IBoardList>('boards-page', (old) => ({
         pages: old
           ? old.pages.map((page) => ({
               ...page,

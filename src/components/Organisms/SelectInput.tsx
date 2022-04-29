@@ -20,13 +20,22 @@ const SelectInput = ({ onChange, width, value }: Props) => {
       isMulti
       placeholder={'EX) Java, C#, Javascript'}
       styles={{
+        valueContainer: (defaultStyles) => ({
+          ...defaultStyles,
+          backgroundColor: theme.colors.gray.gray100,
+        }),
         input: (defaultStyles) => ({
           ...defaultStyles,
           height: 45,
         }),
+        menu: (defaultStyles) => ({
+          ...defaultStyles,
+          backgroundColor: theme.colors.gray.gray100,
+          color: theme.colors.black,
+        }),
         placeholder: (defaultStyles) => ({
           ...defaultStyles,
-          color: theme.colors.gray.gray300,
+          color: theme.colors.black,
         }),
         multiValue: (defaultStyles) => ({
           ...defaultStyles,
@@ -38,13 +47,18 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           paddingBottom: 5,
           backgroundColor: theme.colors.primary.default,
         }),
+
+        indicatorsContainer: (defaultStyles) => ({
+          ...defaultStyles,
+          backgroundColor: theme.colors.gray.gray100,
+        }),
         multiValueLabel: (defaultStyles) => ({
           ...defaultStyles,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: theme.colors.primary.default,
-          color: theme.colors.white,
+          color: theme.colors.black,
         }),
         multiValueRemove: (defaultStyles) => ({
           ...defaultStyles,
@@ -56,7 +70,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           marginRight: -6,
           marginTop: -5,
           marginBottom: -5,
-          color: theme.colors.white,
+          color: theme.colors.black,
         }),
       }}
     />
