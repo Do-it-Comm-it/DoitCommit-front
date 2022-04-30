@@ -69,17 +69,19 @@ const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
             )}
             <Body isEmpty={isEmpty}>{todo.content}</Body>
           </Content>
-          <Footer>
-            <DeleteIcon onClick={onDelete} />
-            <Left>
-              <EditIcon onClick={onEdit} />
-              {todo.isFinished ? (
-                <CheckFinishedIcon onClick={onFinish} />
-              ) : (
-                <CheckIcon onClick={onFinish} />
-              )}
-            </Left>
-          </Footer>
+          {!isEmpty && (
+            <Footer>
+              <DeleteIcon onClick={onDelete} />
+              <Left>
+                <EditIcon onClick={onEdit} />
+                {todo.isFinished ? (
+                  <CheckFinishedIcon onClick={onFinish} />
+                ) : (
+                  <CheckIcon onClick={onFinish} />
+                )}
+              </Left>
+            </Footer>
+          )}
         </Container>
       )}
     </Wrapper>
