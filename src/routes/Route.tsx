@@ -14,20 +14,23 @@ export const CommonComponentWrapper: React.FC = ({ children }) => {
   }, [location]);
 
   return (
-    <Container isIndexPage={isIndexPage}>
-      <Sidebar />
-      <Modal />
-      <Body>
-        <HeaderNavigation />
-        <Routes>{children}</Routes>
-      </Body>
+    <>
+      <Container isIndexPage={isIndexPage}>
+        <Sidebar />
+        <Modal />
+        <Body>
+          <HeaderNavigation />
+          <Routes>{children}</Routes>
+        </Body>
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 };
 
 const Container = styled.div<{ isIndexPage?: boolean }>`
   width: 100%;
+  min-height: 100vh;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -39,5 +42,4 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 200px;
 `;

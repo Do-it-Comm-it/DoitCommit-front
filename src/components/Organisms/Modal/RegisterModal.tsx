@@ -187,7 +187,6 @@ const RegisterModal = ({
         <CardContent>
           <SelectInput
             onChange={(value) => setInterestTechSet(value as Tech[])}
-            width={200}
           />
         </CardContent>
         <CardBottom>

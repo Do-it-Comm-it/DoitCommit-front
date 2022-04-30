@@ -78,7 +78,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
 };
 
 const TechSelect = styled(Select)<{ width?: number }>`
-  width: ${({ width }) => width}%;
+  width: ${({ width }) => (width ? `${width}px` : '100%')};
 `;
 
 export default React.memo(
