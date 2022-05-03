@@ -16,12 +16,14 @@ const getUserInfo = async () => {
 
   return {
     ...data,
-    interestTechSet: data.interestTechSet.map((tech: string) => {
-      return {
-        value: tech,
-        label: tech,
-      };
-    }),
+    interestTechSet: data.interestTechSet
+      ? data.interestTechSet.map((tech: string) => {
+          return {
+            value: tech,
+            label: tech,
+          };
+        })
+      : [],
   };
 };
 

@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
     axiosInstance.interceptors.response.eject(0);
     return axiosInstance
       .get('/auth/refreshToken') // 임의로 정해둔 새로운 accessToken을 발급받기 위한 컨트롤러
-      .then(() => {
+      .then((data) => {
         return axiosInstance(err.response?.config!).then(handleResponse); // 이전 request 재요청
       })
       .catch((err) => {});

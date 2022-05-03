@@ -19,7 +19,11 @@ const CommunityBox = ({ item }: CommunityBoxProps) => {
         </TechBox>
         <ContentBox>
           <SubTitle>{item.boardTitle}</SubTitle>
-          <Body>{item.boardContent.substring(0, 20)}</Body>
+          <Body
+            dangerouslySetInnerHTML={{
+              __html: item.boardContent.substring(0, 20),
+            }}
+          ></Body>
         </ContentBox>
       </Content>
     </Container>

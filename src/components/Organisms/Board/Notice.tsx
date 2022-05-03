@@ -29,7 +29,7 @@ const Announcement = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(NOTICE_ID, undefined, debouncedKeyword);
+  } = useBoards(NOTICE_ID, undefined, debouncedKeyword || '');
 
   const onChangeSearch = useCallback((search) => {
     setSearch(search);

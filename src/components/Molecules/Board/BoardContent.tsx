@@ -27,6 +27,7 @@ const BoardContent = ({ boardData }: Props) => {
     }
     return page[0].commentsData.commentCount % 5;
   };
+
   return (
     <Container>
       <Content>

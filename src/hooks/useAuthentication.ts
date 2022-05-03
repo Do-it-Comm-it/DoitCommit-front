@@ -6,9 +6,7 @@ export const useUser = () => {
   const user = useQuery<IUser | null>(
     'user',
     async () => {
-      return await userAPI.getUserInfo().catch(() => {
-        return null;
-      });
+      return await userAPI.getUserInfo();
     },
     {
       refetchOnMount: false,

@@ -31,7 +31,7 @@ const CardContainer = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(COMMUNITY_ID, category, debouncedKeyword);
+  } = useBoards(COMMUNITY_ID, category, debouncedKeyword || '');
 
   const onChangeCategory = useCallback((categoryId) => {
     setCategory(categoryId);
