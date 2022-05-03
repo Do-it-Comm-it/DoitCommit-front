@@ -2,11 +2,13 @@ import Body from '@src/components/Organisms/Board/Body';
 import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';
-
+import Skeleton from '@src/components/Molecules/LoadingSkeleton';
 const Board = () => {
   return (
     <Container>
-      <Body />
+      <Skeleton.Suspense>
+        <Body />
+      </Skeleton.Suspense>
     </Container>
   );
 };

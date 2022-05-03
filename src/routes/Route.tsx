@@ -5,9 +5,13 @@ import React, { useMemo } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '@src/components/Organisms/Footer';
+import Skeleton from '@src/components/Molecules/LoadingSkeleton';
+import { modalAtom } from '@src/recoil/atom/modal';
+import { useRecoilValue } from 'recoil';
+
 export const CommonComponentWrapper: React.FC = ({ children }) => {
   const location = useLocation();
-
+  const modal = useRecoilValue(modalAtom);
   const isIndexPage = useMemo(() => {
     const check = location.pathname !== '/' && location.pathname !== '/mypage';
     return check ? false : true;
@@ -17,9 +21,11 @@ export const CommonComponentWrapper: React.FC = ({ children }) => {
     <>
       <Container isIndexPage={isIndexPage}>
         <Sidebar />
-        <Modal />
+        {modal.visible && <Modal />}
         <Body>
-          <HeaderNavigation />
+          <Skeleton.Suspense>
+            <HeaderNavigation />
+          </Skeleton.Suspense>
           <Routes>{children}</Routes>
         </Body>
       </Container>

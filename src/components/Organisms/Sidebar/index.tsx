@@ -9,6 +9,7 @@ import { devices } from '@src/utils/theme';
 import { useRecoilState } from 'recoil';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
 import useOutsideClick from '@src/hooks/useOutsideClick';
+import Skeleton from '@src/components/Molecules/LoadingSkeleton';
 
 const Sidebar = () => {
   const [open, setOpen] = useRecoilState(sidebarAtom);
@@ -20,7 +21,9 @@ const Sidebar = () => {
   return (
     <SidebarContainer open={open} ref={sidebarRef}>
       <SidebarTop open={open} onToggle={onToggle} />
-      <SidebarContent onClose={onClose} />
+      <Skeleton.Suspense>
+        <SidebarContent onClose={onClose} />
+      </Skeleton.Suspense>
       <SidebarFooter />
     </SidebarContainer>
   );

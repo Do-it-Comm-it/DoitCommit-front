@@ -6,24 +6,31 @@ import Planner from '@src/components/Organisms/Home/Planner';
 import Community from '@src/components/Organisms/Home/Community';
 import AdBanner from '@src/components/Organisms/Home/AdBanner';
 import { devices } from '@src/utils/theme';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import Skeleton from '@src/components/Molecules/LoadingSkeleton';
+
 const Home = () => {
   return (
     <Container>
       <Column>
         <Top>
-          <HomeTitle />
+          <Skeleton.Suspense>
+            <HomeTitle />
+          </Skeleton.Suspense>
           <AdBanner />
         </Top>
         <Bottom>
-          <Planner />
-          <Community />
+          <Skeleton.Suspense>
+            <Planner />
+          </Skeleton.Suspense>
+          <Skeleton.Suspense>
+            <Community />
+          </Skeleton.Suspense>
         </Bottom>
       </Column>
       <Row>
-        <React.Suspense fallback={<LottieLoading />}>
+        <Skeleton.Suspense>
           <HomeTodoList />
-        </React.Suspense>
+        </Skeleton.Suspense>
       </Row>
     </Container>
   );

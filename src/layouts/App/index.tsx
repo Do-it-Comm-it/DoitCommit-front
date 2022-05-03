@@ -12,47 +12,34 @@ import { CommonComponentWrapper } from '@src/routes/Route';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import ProtectedRoute from '@src/routes/ProtectedRoute';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import Skeleton from '@src/components/Molecules/LoadingSkeleton';
+
 const App = () => {
   const { theme } = useDarkMode();
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
-      <React.Suspense
-        fallback={
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              height: '100vh',
 
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <LottieLoading />
-          </div>
-        }
-      >
-        <ThemeProvider theme={theme === 'light' ? light : dark}>
-          <BrowserRouter>
-            <GlobalStyle />
-            <CommonComponentWrapper>
-              <Route path="/*" element={<Home />} />
-              <Route
-                path="/mypage/*"
-                element={
+      <ThemeProvider theme={theme === 'light' ? light : dark}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <CommonComponentWrapper>
+            <Route path="/*" element={<Home />} />
+            <Route
+              path="/mypage/*"
+              element={
+                <Skeleton.Suspense>
                   <ProtectedRoute>
                     <MyPage />
                   </ProtectedRoute>
-                }
-              />
-              <Route path="/community/*" element={<Board />} />
-            </CommonComponentWrapper>
-          </BrowserRouter>
-        </ThemeProvider>
-      </React.Suspense>
+                </Skeleton.Suspense>
+              }
+            />
+            <Route path="/community/*" element={<Board />} />
+          </CommonComponentWrapper>
+        </BrowserRouter>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
