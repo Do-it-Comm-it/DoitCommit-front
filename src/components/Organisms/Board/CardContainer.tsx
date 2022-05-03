@@ -97,7 +97,12 @@ const CardContainer = () => {
             <Container>
               {boards?.pages.map((page) =>
                 page.data.map((b: IBoard, i: number) => (
-                  <Card board={b} key={i} />
+                  <Card
+                    board={b}
+                    key={i}
+                    category={category || null}
+                    search={search || ''}
+                  />
                 ))
               )}
             </Container>

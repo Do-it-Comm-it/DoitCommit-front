@@ -9,15 +9,20 @@ import { board as boardApi } from '@src/service/api';
 
 interface Props {
   board: IBoard;
+  category: number | null;
+  search: string;
 }
-const Status = ({ board }: Props) => {
+const Status = ({ board, category, search }: Props) => {
   const mutation = useBoardListMutation(
     {
       myHeart: !board.myHeart,
       heartCnt: board.myHeart ? board.heartCnt! - 1 : board.heartCnt! + 1,
     },
-    boardApi.toggleHeart
+    boardApi.toggleHeart,
+    category,
+    search
   );
+
   const onClickHeart = useCallback(async () => {
     mutation.mutate(board);
   }, [board, mutation]);

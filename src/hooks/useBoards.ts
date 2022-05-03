@@ -34,15 +34,15 @@ export const useBoards = (
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(`boards-page`, fetchPosts, {
+  } = useInfiniteQuery([`boards-page`, tagType, search], fetchPosts, {
     getNextPageParam: (lastPage) => {
       if (lastPage.data.length !== 0) {
         return lastPage.nextPage;
       }
       return undefined;
     },
-    refetchOnWindowFocus: false,
     refetchOnMount: true,
+    refetchOnWindowFocus: false,
     refetchOnReconnect: true,
     retry: 1,
   });
@@ -59,32 +59,41 @@ export const useBoards = (
 
 export const useBoardListMutation = (
   fieldToEdit: Partial<IBoard>,
-  api: (selectedBoard: IBoard) => Promise<void>
+  api: (selectedBoard: IBoard) => Promise<void>,
+  category: number | null,
+  search: string | null
 ) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
-      await queryClient.cancelQueries('boards-page');
-      const snapshot = queryClient.getQueryData('boards-page');
+      await queryClient.cancelQueries(['boards-page', category, search]);
+      const snapshot = queryClient.getQueryData([
+        'boards-page',
+        category,
+        search,
+      ]);
 
-      queryClient.setQueryData<IBoardList>('boards-page', (old) => ({
-        pages: old
-          ? old.pages.map((page) => ({
-              ...page,
-              data: page.data.map((board: IBoard) => {
-                if (board.boardId === selectedBoard.boardId) {
-                  return {
-                    ...board,
-                    ...fieldToEdit,
-                  };
-                } else {
-                  return board;
-                }
-              }),
-            }))
-          : [],
-        pageParams: old ? old.pageParams : [],
-      }));
+      queryClient.setQueryData<IBoardList>(
+        ['boards-page', category, search],
+        (old) => ({
+          pages: old
+            ? old.pages.map((page) => ({
+                ...page,
+                data: page.data.map((board: IBoard) => {
+                  if (board.boardId === selectedBoard.boardId) {
+                    return {
+                      ...board,
+                      ...fieldToEdit,
+                    };
+                  } else {
+                    return board;
+                  }
+                }),
+              }))
+            : [],
+          pageParams: old ? old.pageParams : [],
+        })
+      );
 
       // Return a snapshot so we can rollback in case of failure
       return {

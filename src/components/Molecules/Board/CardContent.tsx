@@ -10,15 +10,19 @@ import { Link } from 'react-router-dom';
 import { useBoardListMutation } from '@src/hooks/useBoards';
 interface Props {
   board: IBoard;
+  category: number | null;
+  search: string;
 }
-const CardContent = ({ board }: Props) => {
+const CardContent = ({ board, category, search }: Props) => {
   const theme = useTheme();
   const keyword = useRecoilValue(keywordState);
   const mutation = useBoardListMutation(
     {
       myBookmark: !board.myBookmark,
     },
-    boardApi.toggleBookmark
+    boardApi.toggleBookmark,
+    category,
+    search
   );
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);

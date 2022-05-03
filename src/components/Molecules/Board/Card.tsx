@@ -8,8 +8,10 @@ import Status from '@src/components/Atoms/Board/Status';
 
 interface Props {
   board: IBoard;
+  category: number | null;
+  search: string;
 }
-const Card = ({ board }: Props) => {
+const Card = ({ board, category, search }: Props) => {
   return (
     <Container>
       <Link
@@ -21,11 +23,11 @@ const Card = ({ board }: Props) => {
           writerImageUrl={board.writerImageUrl}
         />
       </Link>
-      <CardContent board={board} />
+      <CardContent board={board} category={category} search={search} />
 
       <Bottom>
         <Author>by. {board.writer}</Author>
-        <Status board={board} />
+        <Status board={board} category={category} search={search} />
       </Bottom>
     </Container>
   );
