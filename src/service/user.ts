@@ -12,12 +12,29 @@ const saveExtendedUserInfo = async (User: IUser) => {
 };
 
 const getUserInfo = async () => {
-  const { data } = await requestAPI().get('/members/info');
+  const result = await requestAPI().get('/members/info');
 
+  if (result.nickname) {
+    return {
+      ...result,
+      interestTechSet: result.interestTechSet
+        ? result.interestTechSet.map((tech: string) => {
+            return {
+              value: tech,
+              label: tech,
+            };
+          })
+        : [],
+    };
+  }
+
+  if (typeof result.data === 'undefined') {
+    return null;
+  }
   return {
-    ...data,
-    interestTechSet: data.interestTechSet
-      ? data.interestTechSet.map((tech: string) => {
+    ...result.data,
+    interestTechSet: result.data.interestTechSet
+      ? result.data.interestTechSet.map((tech: string) => {
           return {
             value: tech,
             label: tech,
