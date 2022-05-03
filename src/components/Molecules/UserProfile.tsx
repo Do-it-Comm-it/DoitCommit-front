@@ -40,7 +40,9 @@ const UserProfile = ({
           .getQueryCache()
           .findAll('user')
           .forEach((query) => query.setData(null));
-        queryClient.invalidateQueries('user');
+        queryClient.removeQueries('user');
+        queryClient.removeQueries('main-board');
+        queryClient.removeQueries('boards-page');
       }
     } catch (err) {
       console.log(err);

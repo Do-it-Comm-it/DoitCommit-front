@@ -10,12 +10,10 @@ const LoadingSkeleton = () => {
   return <Skeleton style={{ width: '100%', height: '100%' }} />;
 };
 
-const Suspense = ({ children, count = 3 }: Props) => {
+const Suspense = ({ children }: Props) => {
   return (
     <React.Suspense
-      fallback={
-        <Skeleton style={{ width: '100%', height: '100%' }} count={count} />
-      }
+      fallback={<Skeleton style={{ width: '100%', height: '100%' }} />}
     >
       {children}
     </React.Suspense>

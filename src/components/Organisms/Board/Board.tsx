@@ -13,7 +13,9 @@ const Board = () => {
     `board/${id}`,
     async () => {
       if (id) {
-        return await boardAPI.getBoardById(id);
+        const result = await boardAPI.getBoardById(id);
+
+        return result;
       }
     },
     {
@@ -34,8 +36,14 @@ const Board = () => {
   if (isLoading) return <LottieLoading />;
   return (
     <Container>
-      <BoardHeader boardData={boardData!} />
-      <BoardContent boardData={boardData!} />
+      {boardData ? (
+        <>
+          <BoardHeader boardData={boardData} />
+          <BoardContent boardData={boardData} />
+        </>
+      ) : (
+        <LottieLoading />
+      )}
     </Container>
   );
 };
