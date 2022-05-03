@@ -36,7 +36,7 @@ export const useBoards = (
     isFetchingNextPage,
   } = useInfiniteQuery([`boards-page`, tagType, search], fetchPosts, {
     getNextPageParam: (lastPage) => {
-      if (lastPage.data.length !== 0) {
+      if (lastPage.data && lastPage.data.length !== 0) {
         return lastPage.nextPage;
       }
       return undefined;

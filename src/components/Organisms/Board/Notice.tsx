@@ -89,7 +89,7 @@ const Announcement = () => {
           ) : (
             <Container>
               {boards?.pages.map((page) =>
-                page.data.map((b: IBoard, i: number) => (
+                page.data?.map((b: IBoard, i: number) => (
                   <Card
                     board={b}
                     key={i}

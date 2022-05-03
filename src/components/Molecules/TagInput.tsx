@@ -34,9 +34,11 @@ const TagInput = ({ onChange, value }: Props) => {
 
   const filteredOption = useMemo(() => {
     if (debouncedSearch && tagList) {
-      return tagList
-        .filter((tag) => tag.tagName.includes(debouncedSearch))
-        .slice(0, 8);
+      if (tagList.length > 0) {
+        return tagList
+          .filter((tag) => tag.tagName.includes(debouncedSearch))
+          .slice(0, 8);
+      }
     }
   }, [debouncedSearch, tagList]);
 

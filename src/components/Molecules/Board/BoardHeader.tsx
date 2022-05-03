@@ -41,7 +41,8 @@ const BoardHeader = ({ boardData }: Props) => {
             <Tag key={id}>#{tag}</Tag>
           ))}
           <Author>
-            by. {boardData.writer} {format(parseISO(boardData.regDate), 'PP')}
+            by. {boardData.writer}
+            {boardData.regDate ? format(parseISO(boardData.regDate), 'PP') : ''}
           </Author>
         </Info>
       </Left>
