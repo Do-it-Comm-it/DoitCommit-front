@@ -4,7 +4,7 @@ import BoardHeader from '@src/components/Molecules/Board/BoardHeader';
 import { board as boardAPI } from '@src/service/api';
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Board = () => {
@@ -42,7 +42,10 @@ const Board = () => {
           <BoardContent boardData={boardData} />
         </>
       ) : (
-        <LottieLoading />
+        <>
+          <LottieLoading />
+          <ReloadText to={`/board/${id}`}>새로고침</ReloadText>
+        </>
       )}
     </Container>
   );
@@ -56,3 +59,5 @@ const Container = styled.div`
   max-width: 44rem;
   width: 100%;
 `;
+
+const ReloadText = styled(Link)``;

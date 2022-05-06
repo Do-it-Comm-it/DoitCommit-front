@@ -10,8 +10,9 @@ interface Props {
   board: IBoard;
   category: number | null;
   search: string;
+  isBookmark: boolean;
 }
-const Card = ({ board, category, search }: Props) => {
+const Card = ({ board, category, search, isBookmark }: Props) => {
   return (
     <Container>
       <Link
@@ -23,11 +24,21 @@ const Card = ({ board, category, search }: Props) => {
           writerImageUrl={board.writerImageUrl}
         />
       </Link>
-      <CardContent board={board} category={category} search={search} />
+      <CardContent
+        board={board}
+        category={category}
+        search={search}
+        isBookmark={isBookmark}
+      />
 
       <Bottom>
         <Author>by. {board.writer}</Author>
-        <Status board={board} category={category} search={search} />
+        <Status
+          board={board}
+          category={category}
+          search={search}
+          isBookmark={isBookmark}
+        />
       </Bottom>
     </Container>
   );

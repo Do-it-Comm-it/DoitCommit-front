@@ -2,6 +2,22 @@ import { IBoard, RequestBoard } from '@src/typings/Board';
 import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
+const getBookmarkBoardListByPage = async (
+  page: number,
+  boardCategoryId: number,
+  tagCategoryId?: number,
+  keyword?: string
+) => {
+  const { data } = await requestAPI().get(
+    `/bookmarks?page=${
+      page + 1
+    }&size=16&boardCategoryId=${boardCategoryId}&tagCategoryId=${
+      tagCategoryId || ''
+    }&keyword=${keyword || ''}`
+  );
+  return data;
+};
+
 const getBoardListByPage = async (
   page: number,
   boardCategoryId: number,
@@ -79,6 +95,7 @@ const toggleBookmark = async (selectedBoard: IBoard) => {
   }
 };
 const boardApiList = {
+  getBookmarkBoardListByPage,
   getBoardListByPage,
   getMainPageBoard,
   getBoardById,

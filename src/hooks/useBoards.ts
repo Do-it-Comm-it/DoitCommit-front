@@ -11,8 +11,23 @@ import { useUser } from './useAuthentication';
 export const useBoards = (
   boardType: number,
   tagType?: number,
-  search?: string
+  search?: string,
+  isBookmark?: boolean
 ) => {
+  const fetchBookmarkPosts = async ({ pageParam = 0 }) => {
+    const result = await board.getBookmarkBoardListByPage(
+      pageParam,
+      boardType,
+      tagType,
+      search
+    );
+
+    return {
+      data: result.dtoList,
+      nextPage: pageParam + 1,
+    };
+  };
+
   const fetchPosts = async ({ pageParam = 0 }) => {
     const result = await board.getBoardListByPage(
       pageParam,
@@ -34,18 +49,22 @@ export const useBoards = (
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery([`boards-page`, tagType, search], fetchPosts, {
-    getNextPageParam: (lastPage) => {
-      if (lastPage.data && lastPage.data.length !== 0) {
-        return lastPage.nextPage;
-      }
-      return undefined;
-    },
-    refetchOnMount: true,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: true,
-    retry: 1,
-  });
+  } = useInfiniteQuery(
+    [`boards-page`, tagType, search, isBookmark],
+    isBookmark ? fetchBookmarkPosts : fetchPosts,
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.data && lastPage.data.length !== 0) {
+          return lastPage.nextPage;
+        }
+        return undefined;
+      },
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+      retry: 1,
+    }
+  );
 
   return {
     boards,
@@ -61,12 +80,18 @@ export const useBoardListMutation = (
   fieldToEdit: Partial<IBoard>,
   api: (selectedBoard: IBoard) => Promise<void>,
   category: number | null,
-  search: string | null
+  search: string | null,
+  isBookmark: boolean
 ) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
-      await queryClient.cancelQueries(['boards-page', category, search]);
+      await queryClient.cancelQueries([
+        'boards-page',
+        category,
+        search,
+        isBookmark,
+      ]);
       const snapshot = queryClient.getQueryData([
         'boards-page',
         category,
@@ -74,7 +99,7 @@ export const useBoardListMutation = (
       ]);
 
       queryClient.setQueryData<IBoardList>(
-        ['boards-page', category, search],
+        ['boards-page', category, search, isBookmark],
         (old) => ({
           pages: old
             ? old.pages.map((page) => ({
