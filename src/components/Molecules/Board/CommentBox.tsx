@@ -69,7 +69,7 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
                 fontWeight={400}
                 fontSize={16}
               >
-                {commentData.regDateTime}
+                {commentData.regDateTime.replaceAll('-', '.').replace('T', ' ')}  {/* dateFormat -> yyyy MM.dd hh:mm*/}
               </DIText>
               {user?.nickname === commentData.nickname && (
                 <IconWrapper ref={iconRef}>
