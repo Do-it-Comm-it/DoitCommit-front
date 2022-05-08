@@ -732,12 +732,24 @@
   top: 50%;
   width: 18px;
 }
-.ql-bubble .ql-picker.ql-header .ql-picker-label[data-label]:not([data-label=''])::before,
-.ql-bubble .ql-picker.ql-font .ql-picker-label[data-label]:not([data-label=''])::before,
-.ql-bubble .ql-picker.ql-size .ql-picker-label[data-label]:not([data-label=''])::before,
-.ql-bubble .ql-picker.ql-header .ql-picker-item[data-label]:not([data-label=''])::before,
-.ql-bubble .ql-picker.ql-font .ql-picker-item[data-label]:not([data-label=''])::before,
-.ql-bubble .ql-picker.ql-size .ql-picker-item[data-label]:not([data-label=''])::before {
+.ql-bubble
+  .ql-picker.ql-header
+  .ql-picker-label[data-label]:not([data-label=''])::before,
+.ql-bubble
+  .ql-picker.ql-font
+  .ql-picker-label[data-label]:not([data-label=''])::before,
+.ql-bubble
+  .ql-picker.ql-size
+  .ql-picker-label[data-label]:not([data-label=''])::before,
+.ql-bubble
+  .ql-picker.ql-header
+  .ql-picker-item[data-label]:not([data-label=''])::before,
+.ql-bubble
+  .ql-picker.ql-font
+  .ql-picker-item[data-label]:not([data-label=''])::before,
+.ql-bubble
+  .ql-picker.ql-size
+  .ql-picker-item[data-label]:not([data-label=''])::before {
   content: attr(data-label);
 }
 .ql-bubble .ql-picker.ql-header {
