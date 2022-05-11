@@ -20,10 +20,8 @@ const CardContainer = () => {
   const [category, setCategory] = useState<number>();
   const [search, setSearch] = useState<string>();
   const debouncedKeyword = useDebounce(search, 250);
-  const [active, setActive] = useState({
-    newest: true,
-    bookmark: false,
-  });
+  const [isBookmark, setIsBookmark] = useState<boolean>(false);
+
   const {
     boards,
     isLoading,
@@ -31,7 +29,7 @@ const CardContainer = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(COMMUNITY_ID, category, debouncedKeyword || '');
+  } = useBoards(COMMUNITY_ID, category, debouncedKeyword || '', isBookmark);
 
   const onChangeCategory = useCallback((categoryId) => {
     setCategory(categoryId);
@@ -71,14 +69,14 @@ const CardContainer = () => {
             </DIText>
             <ButtonWrapper>
               <FilterButton
-                active={active.newest}
-                onClick={() => setActive({ bookmark: false, newest: true })}
+                active={!isBookmark}
+                onClick={() => setIsBookmark(false)}
               >
                 최신
               </FilterButton>
               <FilterButton
-                active={active.bookmark}
-                onClick={() => setActive({ newest: false, bookmark: true })}
+                active={isBookmark}
+                onClick={() => setIsBookmark(true)}
               >
                 북마크
               </FilterButton>
@@ -102,6 +100,7 @@ const CardContainer = () => {
                     key={i}
                     category={category || null}
                     search={search || ''}
+                    isBookmark={isBookmark}
                   />
                 ))
               )}

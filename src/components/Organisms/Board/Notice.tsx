@@ -18,10 +18,7 @@ const Announcement = () => {
   const { data: user } = useUser();
   const [search, setSearch] = useState<string>();
   const debouncedKeyword = useDebounce(search, 250);
-  const [active, setActive] = useState({
-    newest: true,
-    bookmark: false,
-  });
+  const [isBookmark, setIsBookmark] = useState<boolean>(false);
   const {
     boards,
     isLoading,
@@ -29,7 +26,7 @@ const Announcement = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(NOTICE_ID, undefined, debouncedKeyword || '');
+  } = useBoards(NOTICE_ID, undefined, debouncedKeyword || '', isBookmark);
 
   const onChangeSearch = useCallback((search) => {
     setSearch(search);
@@ -64,14 +61,14 @@ const Announcement = () => {
             </DIText>
             <ButtonWrapper>
               <FilterButton
-                active={active.newest}
-                onClick={() => setActive({ bookmark: false, newest: true })}
+                active={!isBookmark}
+                onClick={() => setIsBookmark(false)}
               >
                 최신
               </FilterButton>
               <FilterButton
-                active={active.bookmark}
-                onClick={() => setActive({ newest: false, bookmark: true })}
+                active={isBookmark}
+                onClick={() => setIsBookmark(true)}
               >
                 북마크
               </FilterButton>
@@ -95,6 +92,7 @@ const Announcement = () => {
                     key={i}
                     category={null}
                     search={search || ''}
+                    isBookmark={isBookmark}
                   />
                 ))
               )}

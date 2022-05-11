@@ -12,8 +12,9 @@ interface Props {
   board: IBoard;
   category: number | null;
   search: string;
+  isBookmark: boolean;
 }
-const CardContent = ({ board, category, search }: Props) => {
+const CardContent = ({ board, category, search, isBookmark }: Props) => {
   const theme = useTheme();
   const keyword = useRecoilValue(keywordState);
   const mutation = useBoardListMutation(
@@ -22,7 +23,8 @@ const CardContent = ({ board, category, search }: Props) => {
     },
     boardApi.toggleBookmark,
     category,
-    search
+    search,
+    isBookmark
   );
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);

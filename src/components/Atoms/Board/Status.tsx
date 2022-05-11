@@ -11,8 +11,9 @@ interface Props {
   board: IBoard;
   category: number | null;
   search: string;
+  isBookmark: boolean;
 }
-const Status = ({ board, category, search }: Props) => {
+const Status = ({ board, category, search, isBookmark }: Props) => {
   const mutation = useBoardListMutation(
     {
       myHeart: !board.myHeart,
@@ -20,7 +21,8 @@ const Status = ({ board, category, search }: Props) => {
     },
     boardApi.toggleHeart,
     category,
-    search
+    search,
+    isBookmark
   );
 
   const onClickHeart = useCallback(async () => {
