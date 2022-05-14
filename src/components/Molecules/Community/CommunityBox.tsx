@@ -6,6 +6,8 @@ type CommunityBoxProps = {
   item: IBoard;
 };
 
+const catImg = 'https://t1.daumcdn.net/cfile/tistory/9995DC405C057A600A';
+
 const CommunityBox = ({ item }: CommunityBoxProps) => {
   return (
     <Container>
@@ -15,6 +17,16 @@ const CommunityBox = ({ item }: CommunityBoxProps) => {
       </Header>
       <Content>
         <TechBox>
+          {' '}
+          {/* TODO: 이미지url이 정상작동할때 변경해준다. */}
+          <img
+            src={
+              item.writerImageUrl?.includes('null')
+                ? catImg
+                : item.writerImageUrl
+            }
+            alt="profile"
+          />
           <Circle />
         </TechBox>
         <ContentBox>
@@ -92,14 +104,16 @@ const TechBox = styled.div`
   justify-content: center;
   width: 70px;
   height: 70px;
-
   background: ${({ theme }) => theme.colors.sub};
-
   box-shadow: 0px 0px 20px rgba(143, 146, 148, 0.1);
   border-radius: 10px;
-
   color: #ffffff;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
+
 const ContentBox = styled.div`
   display: flex;
   margin-left: 22px;
