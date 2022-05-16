@@ -9,7 +9,7 @@ const Community = () => {
   const { data: user } = useUser();
 
   return (
-    <ContentBox title="최신아티클" requiredHeader>
+    <ContentBox title="커뮤니티" requiredHeader>
       {MainBoards ? (
         MainBoards.map((board) => (
           <CommunityBox key={board.boardId} item={board} />
