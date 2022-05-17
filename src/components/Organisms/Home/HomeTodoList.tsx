@@ -6,28 +6,27 @@ import { devices } from '@src/utils/theme';
 import styled from 'styled-components';
 import useTodo from '@src/hooks/useTodo';
 import { useUser } from '@src/hooks/useAuthentication';
-import { ITodos, TodoType } from '@src/typings/Todos';
-import Skeleton from '@src/components/Molecules/LoadingSkeleton';
+import { Importance, ITodos, TodoType } from '@src/typings/Todos';
 
 const emptyTodo: Array<ITodos> = [
   {
-    type: TodoType.DAILY,
+    type: TodoType.PRIVATE,
     content: '새로운 목표를 달성 할 수 있어요.',
-    importance: 'LOW',
+    importance: Importance.LOW,
     isFixed: false,
     title: '투두 리스트를 \n 쉽게 관리해 보세요.',
   },
   {
-    type: TodoType.DAILY,
+    type: TodoType.PRIVATE,
     content: '함께 공부할 팀원들을 모집 할 수 있어요',
-    importance: 'LOW',
+    importance: Importance.LOW,
     isFixed: false,
     title: '두잇 그룹으로 \n 함께 스터디 해 보세요.',
   },
   {
-    type: TodoType.DAILY,
+    type: TodoType.PRIVATE,
     content: '더 많은 정보를 공유 해 주세요.',
-    importance: 'LOW',
+    importance: Importance.LOW,
     isFixed: false,
     title: '좋은 정보를 \n 우리 함께 나눠요.',
   },

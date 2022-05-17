@@ -8,9 +8,10 @@ import EditIconSVG from '@src/assets/filled_edit_icon.svg';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import DeleteConfirmIconSVG from '@src/assets/delete_confirm.svg';
 import { useUser } from '@src/hooks/useAuthentication';
-import { board, date } from '@src/service/api';
+import { board } from '@src/service/api';
 import { useQueryClient } from 'react-query';
 import useOutsideClick from '@src/hooks/useOutsideClick';
+import date from '@src/utils/date';
 
 interface Props {
   boardId: number;
