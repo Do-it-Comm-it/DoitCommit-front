@@ -11,7 +11,7 @@ import { modalAtom } from '@src/recoil/atom/modal';
 import ModalContainer from '@src/components/Molecules/ModalContainer';
 
 import { todo as todoAPI } from '@src/service/api';
-import { ITodos, TodoType } from '@src/typings/Todos';
+import { Importance, ITodos, TodoType } from '@src/typings/Todos';
 import useTodo from '@src/hooks/useTodo';
 
 interface Props {
@@ -35,9 +35,9 @@ const TodoModal = ({
   const [modal, setModal] = useRecoilState(modalAtom);
   const [todo, setTodo] = useState<ITodos>({
     title: '',
-    importance: 'LOW',
+    importance: Importance.LOW,
     content: '',
-    type: TodoType.DAILY,
+    type: TodoType.PRIVATE,
     isFinished: false,
     isFixed: false,
   });

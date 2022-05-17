@@ -3,7 +3,7 @@ export interface ITodos {
   title: string;
   content: string;
   type: TodoType;
-  importance: string;
+  importance: Importance;
   isFixed: boolean;
   isFinished?: boolean;
   todoDateTime?: string;
@@ -19,7 +19,12 @@ export type AddTodo = {
 export type TodoList = ITodos[];
 
 export enum TodoType {
-  'STUDY' = 'STUDY',
-  'DAILY' = 'DAILY',
-  'WORK' = 'WORK',
+  GROUP = 'GROUP',
+  PRIVATE = 'PRIVATE',
+}
+
+export enum Importance {
+  HIGH = 'HIGH',
+  MEDIUM = 'MEDIUM',
+  LOW = 'LOW',
 }
