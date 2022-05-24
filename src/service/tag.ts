@@ -15,10 +15,16 @@ const getTags = async () => {
   return data;
 };
 
+const getLimitPopularTags7Days = async () => {
+  const data = await requestAPI().get('/popularTags/limit/7Days');
+  return data;
+};
+
 const tagApiList = {
   getPopularTags,
   getLimitPopularTags,
   getTags,
+  getLimitPopularTags7Days,
 };
 
 export default tagApiList;

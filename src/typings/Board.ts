@@ -34,5 +34,6 @@ export interface RequestBoard {
 export type Tag = {
   tagId: number;
   tagName: string;
+  count: number;
 };
 export type BoardImage = { fileNm: string; filePath: string; url?: string };

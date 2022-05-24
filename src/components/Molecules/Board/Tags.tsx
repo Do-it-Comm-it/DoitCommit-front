@@ -1,7 +1,10 @@
 import LottieLoading from '@src/components/Atoms/LottieLoading';
 import useTag from '@src/hooks/useTag';
+import tag from '@src/service/tag';
+import { Tag } from '@src/typings/Board';
 import { devices } from '@src/utils/theme';
 import React from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 
 type Props = {
@@ -10,16 +13,28 @@ type Props = {
 };
 
 const Tags = ({ onChangeCategory, category }: Props) => {
-  const { useLimitPopularTag, usePopularTag } = useTag();
-  // const { data: tags, isLoading } = usePopularTag();
+  const { useLimitPopularTag, usePopularTag, useLimitPopularTag7Day } =
+    useTag();
+  const limit7DayData = useLimitPopularTag7Day();
+  let tags; // 반환해줄 데이터
+  let isLimitLoading;
+  if (limit7DayData.data === undefined) {
+    let limitData = useLimitPopularTag();
+    tags = limitData.data;
+    isLimitLoading = limitData.isLoading;
+  } else {
+    tags = limit7DayData.data;
+  }
 
-  const tags = [
-    { tagId: 1, tagName: '직장인' },
-    { tagId: 2, tagName: '공대생' },
-    { tagId: 3, tagName: '취준생' },
-    { tagId: 4, tagName: '고민' },
-  ];
-  if (false) return <LottieLoading width={50} height={30} />;
+  // const tags = [
+  //   { tagId: 1, tagName: '직장인' },
+  //   { tagId: 2, tagName: '공대생' },
+  //   { tagId: 3, tagName: '취준생' },
+  //   { tagId: 4, tagName: '고민' },
+  // ];
+  if (limit7DayData.isLoading || isLimitLoading)
+    //7일인기 데이터 로딩 || 전체인기 데이터 로딩
+    return <LottieLoading width={50} height={30} />;
   return (
     <Container>
       <Text>인기태그</Text>
