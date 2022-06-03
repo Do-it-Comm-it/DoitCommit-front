@@ -13,9 +13,18 @@ const useTag = () => {
   };
 
   const useLimitPopularTag = () => {
-    return useQuery<Array<Tag>>(popularTagKey, async () => {
-      return await tag.getLimitPopularTags();
-    });
+    return useQuery<Array<Tag>>(
+      popularTagKey,
+      async () => {
+        return await tag.getLimitPopularTags();
+      },
+      {
+        refetchOnMount: true,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+        retry: 1,
+      }
+    );
   };
 
   const useTagList = () => {

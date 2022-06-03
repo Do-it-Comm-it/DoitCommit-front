@@ -11,36 +11,27 @@ type Props = {
 
 const Tags = ({ onChangeCategory, category }: Props) => {
   const { useLimitPopularTag, usePopularTag } = useTag();
-  // const { data: tags, isLoading } = usePopularTag();
-
-  const tags = [
-    { tagId: 1, tagName: '직장인' },
-    { tagId: 2, tagName: '공대생' },
-    { tagId: 3, tagName: '취준생' },
-    { tagId: 4, tagName: '고민' },
-  ];
-  if (false) return <LottieLoading width={50} height={30} />;
+  const { data: tags, isLoading } = useLimitPopularTag();
+  if (isLoading) return <LottieLoading width={50} height={30} />;
   return (
     <Container>
       <Text>인기태그</Text>
       {tags &&
-        tags
-          .map((tag) => (
-            <Tag
-              isActive={category ? category === tag.tagId : false}
-              key={tag.tagId}
-              onClick={() => {
-                if (category === tag.tagId) {
-                  onChangeCategory(undefined);
-                } else {
-                  onChangeCategory(tag.tagId);
-                }
-              }}
-            >
-              {tag.tagName}
-            </Tag>
-          ))
-          .slice(0, 7)}
+        tags.map((tag) => (
+          <Tag
+            isActive={category ? category === tag.tagId : false}
+            key={tag.tagId}
+            onClick={() => {
+              if (category === tag.tagId) {
+                onChangeCategory(undefined);
+              } else {
+                onChangeCategory(tag.tagId);
+              }
+            }}
+          >
+            {tag.tagName}
+          </Tag>
+        ))}
     </Container>
   );
 };
