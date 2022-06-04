@@ -11,6 +11,7 @@ import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import Tags from '@src/components/Molecules/Board/Tags';
 import { useDebounce } from '@src/hooks/useDebounce';
 import { useUser } from '@src/hooks/useAuthentication';
+import LottieEmpty from '@src/components/Atoms/LottieEmpty';
 
 const COMMUNITY_ID = 2;
 
@@ -92,19 +93,31 @@ const CardContainer = () => {
               }
             />
           ) : (
-            <Container>
-              {boards?.pages.map((page) =>
-                page.data?.map((b: IBoard, i: number) => (
-                  <Card
-                    board={b}
-                    key={i}
-                    category={category || null}
-                    search={search || ''}
-                    isBookmark={isBookmark}
-                  />
-                ))
+            <React.Fragment>
+              {boards?.pages[0].data.length === 0 ? (
+                <LottieEmpty
+                  emptyMessage={
+                    isBookmark
+                      ? '해당 북마크 게시글은 찾을 수 없습니다'
+                      : '해당 태그에 관련된 게시글은 찾을 수 없습니다'
+                  }
+                />
+              ) : (
+                <Container>
+                  {boards?.pages.map((page) =>
+                    page.data?.map((b: IBoard, i: number) => (
+                      <Card
+                        board={b}
+                        key={i}
+                        category={category || null}
+                        search={search || ''}
+                        isBookmark={isBookmark}
+                      />
+                    ))
+                  )}
+                </Container>
               )}
-            </Container>
+            </React.Fragment>
           )}
           {isFetchingNextPage && <LottieLoading />}
         </InfiniteScroll>
