@@ -1,6 +1,5 @@
 import DIText from '@src/components/Atoms/DIText';
-import LottieEmptyOrError from '@src/components/Atoms/LottieEmptyOrError';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import Card from '@src/components/Molecules/Board/Card';
 import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import { useUser } from '@src/hooks/useAuthentication';
@@ -38,7 +37,7 @@ const Announcement = () => {
         <SearchBar onChangeSearch={onChangeSearch} />
       </HeaderContainer>
       {isLoading ? (
-        <LottieLoading />
+        <LottieAnimation type="loading" />
       ) : (
         <InfiniteScroll
           hasMore={hasNextPage}
@@ -76,7 +75,7 @@ const Announcement = () => {
           </FilterContainer>
 
           {isError ? (
-            <LottieEmptyOrError
+            <LottieAnimation
               type="error"
               message={
                 user
@@ -99,7 +98,7 @@ const Announcement = () => {
               )}
             </Container>
           )}
-          {isFetchingNextPage && <LottieLoading />}
+          {isFetchingNextPage && <LottieAnimation type="loading" />}
         </InfiniteScroll>
       )}
     </React.Fragment>

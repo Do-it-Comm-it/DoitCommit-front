@@ -5,12 +5,11 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { useBoards } from '@src/hooks/useBoards';
 import { IBoard } from '@src/typings/Board';
 import DIText from '@src/components/Atoms/DIText';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
 import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import Tags from '@src/components/Molecules/Board/Tags';
 import { useDebounce } from '@src/hooks/useDebounce';
 import { useUser } from '@src/hooks/useAuthentication';
-import LottieEmptyOrError from '@src/components/Atoms/LottieEmptyOrError';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 
 const COMMUNITY_ID = 2;
 
@@ -46,7 +45,7 @@ const CardContainer = () => {
         <Tags onChangeCategory={onChangeCategory} category={category} />
       </HeaderContainer>
       {isLoading ? (
-        <LottieLoading />
+        <LottieAnimation type="loading" />
       ) : (
         <InfiniteScroll
           hasMore={hasNextPage}
@@ -84,7 +83,7 @@ const CardContainer = () => {
           </FilterContainer>
 
           {isError ? (
-            <LottieEmptyOrError
+            <LottieAnimation
               type="error"
               message={
                 user
@@ -95,7 +94,7 @@ const CardContainer = () => {
           ) : (
             <React.Fragment>
               {boards?.pages[0].data.length === 0 ? (
-                <LottieEmptyOrError
+                <LottieAnimation
                   type="empty"
                   message={
                     isBookmark
@@ -120,7 +119,7 @@ const CardContainer = () => {
               )}
             </React.Fragment>
           )}
-          {isFetchingNextPage && <LottieLoading />}
+          {isFetchingNextPage && <LottieAnimation type="loading" />}
         </InfiniteScroll>
       )}
     </React.Fragment>
