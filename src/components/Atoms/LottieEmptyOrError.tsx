@@ -2,12 +2,21 @@ import styled from 'styled-components';
 import lottie from 'lottie-web';
 import React, { useEffect, useRef } from 'react';
 import LottieEmptyJson from '@src/assets/lottie/empty.json';
+import LottieErrorJson from '@src/assets/lottie/error.json';
+
+type LottieType = 'error' | 'empty';
+
+const lottieMaps = new Map([
+  ['error', LottieErrorJson as any],
+  ['empty', LottieEmptyJson],
+]);
 
 type Props = {
-  emptyMessage: string | null;
+  type: LottieType;
+  message: string | null | React.ReactNode;
 };
 
-const LottieEmpty = ({ emptyMessage }: Props) => {
+const LottieEmptyOrError = ({ type, message }: Props) => {
   const emptyRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -17,15 +26,15 @@ const LottieEmpty = ({ emptyMessage }: Props) => {
         renderer: 'svg',
         loop: false,
         autoplay: true,
-        animationData: LottieEmptyJson,
+        animationData: lottieMaps.get(type) || LottieEmptyJson,
       });
     }
-  }, []);
+  }, [type]);
 
   return (
     <Container>
       <EmptyAnimationDiv ref={emptyRef} />
-      <EmptyText>{emptyMessage}</EmptyText>
+      <EmptyText>{message}</EmptyText>
     </Container>
   );
 };
@@ -47,4 +56,4 @@ const EmptyText = styled.div`
   font-size: 16px;
 `;
 
-export default LottieEmpty;
+export default LottieEmptyOrError;
