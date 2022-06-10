@@ -9,7 +9,7 @@ import { devices } from '@src/utils/theme';
 import { useRecoilState } from 'recoil';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
 import useOutsideClick from '@src/hooks/useOutsideClick';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 
 const Sidebar = () => {
   const [open, setOpen] = useRecoilState(sidebarAtom);
@@ -21,7 +21,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer open={open} ref={sidebarRef}>
       <SidebarTop open={open} onToggle={onToggle} />
-      <React.Suspense fallback={<LottieLoading />}>
+      <React.Suspense fallback={<LottieAnimation type="loading" />}>
         <SidebarContent onClose={onClose} />
       </React.Suspense>
       <SidebarFooter />

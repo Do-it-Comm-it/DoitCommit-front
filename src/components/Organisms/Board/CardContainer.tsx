@@ -5,13 +5,11 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { useBoards } from '@src/hooks/useBoards';
 import { IBoard } from '@src/typings/Board';
 import DIText from '@src/components/Atoms/DIText';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
-import LottieError from '@src/components/Atoms/LottieError';
 import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import Tags from '@src/components/Molecules/Board/Tags';
 import { useDebounce } from '@src/hooks/useDebounce';
 import { useUser } from '@src/hooks/useAuthentication';
-import LottieEmpty from '@src/components/Atoms/LottieEmpty';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 
 const COMMUNITY_ID = 2;
 
@@ -47,7 +45,7 @@ const CardContainer = () => {
         <Tags onChangeCategory={onChangeCategory} category={category} />
       </HeaderContainer>
       {isLoading ? (
-        <LottieLoading />
+        <LottieAnimation type="loading" />
       ) : (
         <InfiniteScroll
           hasMore={hasNextPage}
@@ -85,8 +83,9 @@ const CardContainer = () => {
           </FilterContainer>
 
           {isError ? (
-            <LottieError
-              errorMessage={
+            <LottieAnimation
+              type="error"
+              message={
                 user
                   ? '게시글을 불러오는데 실패했습니다!'
                   : '로그인이 필요합니다'
@@ -95,8 +94,9 @@ const CardContainer = () => {
           ) : (
             <React.Fragment>
               {boards?.pages[0].data.length === 0 ? (
-                <LottieEmpty
-                  emptyMessage={
+                <LottieAnimation
+                  type="empty"
+                  message={
                     isBookmark
                       ? '해당 북마크 게시글은 찾을 수 없습니다'
                       : '해당 태그에 관련된 게시글은 찾을 수 없습니다'
@@ -119,7 +119,7 @@ const CardContainer = () => {
               )}
             </React.Fragment>
           )}
-          {isFetchingNextPage && <LottieLoading />}
+          {isFetchingNextPage && <LottieAnimation type="loading" />}
         </InfiniteScroll>
       )}
     </React.Fragment>

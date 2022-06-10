@@ -1,4 +1,4 @@
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import useTag from '@src/hooks/useTag';
 import { devices } from '@src/utils/theme';
 import React from 'react';
@@ -10,9 +10,10 @@ type Props = {
 };
 
 const Tags = ({ onChangeCategory, category }: Props) => {
-  const { useLimitPopularTag, usePopularTag } = useTag();
+  const { useLimitPopularTag } = useTag();
   const { data: tags, isLoading } = useLimitPopularTag();
-  if (isLoading) return <LottieLoading width={50} height={30} />;
+  if (isLoading)
+    return <LottieAnimation type="loading" width={50} height={30} />;
   return (
     <Container>
       <Text>인기태그</Text>

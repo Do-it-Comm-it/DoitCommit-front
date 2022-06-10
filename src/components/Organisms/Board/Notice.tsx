@@ -1,6 +1,5 @@
 import DIText from '@src/components/Atoms/DIText';
-import LottieError from '@src/components/Atoms/LottieError';
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import Card from '@src/components/Molecules/Board/Card';
 import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import { useUser } from '@src/hooks/useAuthentication';
@@ -38,7 +37,7 @@ const Announcement = () => {
         <SearchBar onChangeSearch={onChangeSearch} />
       </HeaderContainer>
       {isLoading ? (
-        <LottieLoading />
+        <LottieAnimation type="loading" />
       ) : (
         <InfiniteScroll
           hasMore={hasNextPage}
@@ -76,8 +75,9 @@ const Announcement = () => {
           </FilterContainer>
 
           {isError ? (
-            <LottieError
-              errorMessage={
+            <LottieAnimation
+              type="error"
+              message={
                 user
                   ? '게시글을 불러오는데 실패했습니다!'
                   : '로그인이 필요합니다'
@@ -98,7 +98,7 @@ const Announcement = () => {
               )}
             </Container>
           )}
-          {isFetchingNextPage && <LottieLoading />}
+          {isFetchingNextPage && <LottieAnimation type="loading" />}
         </InfiniteScroll>
       )}
     </React.Fragment>

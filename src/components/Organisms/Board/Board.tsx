@@ -1,4 +1,4 @@
-import LottieLoading from '@src/components/Atoms/LottieLoading';
+import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import BoardContent from '@src/components/Molecules/Board/BoardContent';
 import BoardHeader from '@src/components/Molecules/Board/BoardHeader';
 import { board as boardAPI } from '@src/service/api';
@@ -33,7 +33,7 @@ const Board = () => {
     });
   }, []);
 
-  if (isLoading) return <LottieLoading />;
+  if (isLoading) return <LottieAnimation type="loading" />;
   return (
     <Container>
       {boardData ? (
@@ -43,7 +43,7 @@ const Board = () => {
         </>
       ) : (
         <>
-          <LottieLoading />
+          <LottieAnimation type="loading" />
           <ReloadText to={`/board/${id}`}>새로고침</ReloadText>
         </>
       )}
