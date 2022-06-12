@@ -4,6 +4,8 @@ import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 import DIInput from '../Atoms/DIInput';
+import Tags from './Board/Tags';
+import HeaderSearch from '@src/assets/header-search.svg';
 
 type Props = {
   onClose: () => void;
@@ -11,7 +13,7 @@ type Props = {
 
 const SearchBox = ({ onClose }: Props) => {
   const [target, setTarget] = useState<EventTarget>();
-
+  const [category, setCategory] = useState<number>();
   const onSaveCurrentTarget = useCallback((event: MouseEvent) => {
     if (event.target) {
       setTarget(event.target);
@@ -26,7 +28,9 @@ const SearchBox = ({ onClose }: Props) => {
     },
     [setSearch]
   );
-
+  const onChangeCategory = useCallback((categoryId) => {
+    setCategory(categoryId);
+  }, []);
   return (
     <Container
       onClick={(e) => {
@@ -41,16 +45,21 @@ const SearchBox = ({ onClose }: Props) => {
         onMouseDown={onSaveCurrentTarget}
         onMouseUp={onSaveCurrentTarget}
       >
-        <DIInput
-          defaultValue={search.search}
-          placeholder="무엇을 찾으시나요?"
-          onChange={onChange}
-          hasBorder
-          width={840}
-          height={50}
-          backgroundColor={theme.colors.white}
-        />
+        <InputContainer>
+          <Search />
+          <DIInput
+            defaultValue={search.search}
+            placeholder="무엇을 찾으시나요?"
+            onChange={onChange}
+            hasBorder
+            width={840}
+            height={50}
+            backgroundColor={theme.colors.white}
+          />
+        </InputContainer>
+
         <Line />
+        <Tags onChangeCategory={onChangeCategory} category={category} />
       </SearchContainer>
     </Container>
   );
@@ -81,9 +90,17 @@ const SearchContainer = styled.div`
   box-shadow: '0px 0px 12px rgba(0, 0, 0, 0.1)';
 `;
 const Line = styled.div`
-  margin-top: 36px;
+  margin: 36px 0px;
   width: 840px;
 
   border: ${({ theme }) => `1px solid ${theme.colors.gray.gray400}`};
 `;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+`;
+const Search = styled(HeaderSearch)``;
 export default SearchBox;

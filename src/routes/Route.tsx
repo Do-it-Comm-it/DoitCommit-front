@@ -9,7 +9,6 @@ import Skeleton from '@src/components/Molecules/LoadingSkeleton';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { useRecoilValue } from 'recoil';
 import { searchAtom } from '@src/recoil/atom/search';
-import SearchBox from '@src/components/Molecules/SearchBox';
 
 export const CommonComponentWrapper: React.FC = ({ children }) => {
   const location = useLocation();

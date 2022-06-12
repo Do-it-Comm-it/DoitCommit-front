@@ -33,7 +33,6 @@ const Body = () => {
 
   return (
     <Container>
-      {path !== 'edit' && path !== 'board' && <Header />}
       <Routes>
         <Route path="" element={<CardContainer />} />
         <Route path="/notice" element={<Notice />} />

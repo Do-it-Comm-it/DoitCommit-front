@@ -1,13 +1,10 @@
 import Card from '@src/components/Molecules/Board/Card';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useBoards } from '@src/hooks/useBoards';
 import { IBoard } from '@src/typings/Board';
 import DIText from '@src/components/Atoms/DIText';
-import SearchBar from '@src/components/Molecules/Board/SearchBar';
-import Tags from '@src/components/Molecules/Board/Tags';
-import { useDebounce } from '@src/hooks/useDebounce';
 import { useUser } from '@src/hooks/useAuthentication';
 import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 
@@ -16,9 +13,6 @@ const COMMUNITY_ID = 2;
 const CardContainer = () => {
   const theme = useTheme();
   const { data: user } = useUser();
-  const [category, setCategory] = useState<number>();
-  const [search, setSearch] = useState<string>();
-  const debouncedKeyword = useDebounce(search, 250);
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
 
   const {
@@ -28,22 +22,10 @@ const CardContainer = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(COMMUNITY_ID, category, debouncedKeyword || '', isBookmark);
-
-  const onChangeCategory = useCallback((categoryId) => {
-    setCategory(categoryId);
-  }, []);
-
-  const onChangeSearch = useCallback((search) => {
-    setSearch(search);
-  }, []);
+  } = useBoards(COMMUNITY_ID, undefined, undefined, isBookmark);
 
   return (
     <React.Fragment>
-      <HeaderContainer>
-        <SearchBar onChangeSearch={onChangeSearch} />
-        <Tags onChangeCategory={onChangeCategory} category={category} />
-      </HeaderContainer>
       {isLoading ? (
         <LottieAnimation type="loading" />
       ) : (
@@ -109,8 +91,8 @@ const CardContainer = () => {
                       <Card
                         board={b}
                         key={i}
-                        category={category || null}
-                        search={search || ''}
+                        category={null}
+                        search={''}
                         isBookmark={isBookmark}
                       />
                     ))

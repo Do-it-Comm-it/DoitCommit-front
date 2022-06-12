@@ -1,12 +1,10 @@
 import DIText from '@src/components/Atoms/DIText';
 import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import Card from '@src/components/Molecules/Board/Card';
-import SearchBar from '@src/components/Molecules/Board/SearchBar';
 import { useUser } from '@src/hooks/useAuthentication';
 import { useBoards } from '@src/hooks/useBoards';
-import { useDebounce } from '@src/hooks/useDebounce';
 import { IBoard } from '@src/typings/Board';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { useTheme } from 'styled-components';
 
@@ -15,8 +13,6 @@ const NOTICE_ID = 1;
 const Announcement = () => {
   const theme = useTheme();
   const { data: user } = useUser();
-  const [search, setSearch] = useState<string>();
-  const debouncedKeyword = useDebounce(search, 250);
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
   const {
     boards,
@@ -25,17 +21,10 @@ const Announcement = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(NOTICE_ID, undefined, debouncedKeyword || '', isBookmark);
-
-  const onChangeSearch = useCallback((search) => {
-    setSearch(search);
-  }, []);
+  } = useBoards(NOTICE_ID, undefined, undefined, isBookmark);
 
   return (
     <React.Fragment>
-      <HeaderContainer>
-        <SearchBar onChangeSearch={onChangeSearch} />
-      </HeaderContainer>
       {isLoading ? (
         <LottieAnimation type="loading" />
       ) : (
@@ -91,7 +80,7 @@ const Announcement = () => {
                     board={b}
                     key={i}
                     category={null}
-                    search={search || ''}
+                    search={''}
                     isBookmark={isBookmark}
                   />
                 ))
@@ -128,9 +117,9 @@ const HeaderContainer = styled.div`
 `;
 const FilterContainer = styled.div`
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
-  max-width: 800px;
+  max-width: 1700px;
   flex-direction: row;
   margin-top: 1rem;
   margin-bottom: 1rem;
