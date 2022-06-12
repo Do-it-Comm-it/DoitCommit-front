@@ -24,13 +24,13 @@ const SearchBox = ({ onClose }: Props) => {
 
   const onChange = useCallback(
     (text) => {
-      setSearch({ search: text, complete: false });
+      setSearch((prev) => ({ ...prev, search: text, complete: false }));
     },
     [setSearch]
   );
   const onChangeCategory = useCallback(
     (categoryId) => {
-      setSearch((prev) => ({ ...prev, tag: categoryId }));
+      setSearch((prev) => ({ ...prev, tag: categoryId, complete: false }));
     },
     [setSearch]
   );
