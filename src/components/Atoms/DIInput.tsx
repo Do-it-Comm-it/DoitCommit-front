@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import { fi } from 'date-fns/locale';
 
 type DIInputProps = {
   defaultValue?: string;
@@ -14,6 +15,7 @@ type DIInputProps = {
   placeholder?: string;
   style?: React.CSSProperties;
   hasBorder?: boolean;
+  onEnter?: () => void;
 };
 
 const DIInput = ({
@@ -29,6 +31,7 @@ const DIInput = ({
   style,
   fontColor,
   hasBorder,
+  onEnter,
 }: DIInputProps) => {
   return (
     <Input
@@ -41,6 +44,11 @@ const DIInput = ({
       onFocus={onFocus}
       onChange={(event) => {
         onChange(event.target.value);
+      }}
+      onKeyPress={(event) => {
+        if (onEnter && event.key === 'Enter') {
+          onEnter();
+        }
       }}
       onBlur={onBlur}
       placeholder={placeholder}

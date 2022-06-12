@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 import styled from 'styled-components';
 import Notice from './Notice';
-import CardContainer from './CardContainer';
+import Articles from './Articles';
 import FloatingButton from './FloatingButton';
 import BoardEditor from './BoardEditor';
 import Board from './Board';
@@ -34,7 +34,7 @@ const Body = () => {
   return (
     <Container>
       <Routes>
-        <Route path="" element={<CardContainer />} />
+        <Route path="" element={<Articles />} />
         <Route path="/notice" element={<Notice />} />
         {user && <Route path="/edit" element={<BoardEditor />} />}
         <Route path="/board/:id" element={<Board />} />

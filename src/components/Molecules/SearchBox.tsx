@@ -12,31 +12,41 @@ type Props = {
 };
 
 const SearchBox = ({ onClose }: Props) => {
+  const theme = useTheme();
   const [target, setTarget] = useState<EventTarget>();
-  const [category, setCategory] = useState<number>();
+  const [search, setSearch] = useRecoilState(searchAtom);
+
   const onSaveCurrentTarget = useCallback((event: MouseEvent) => {
     if (event.target) {
       setTarget(event.target);
     }
   }, []);
 
-  const [search, setSearch] = useRecoilState(searchAtom);
-  const theme = useTheme();
   const onChange = useCallback(
     (text) => {
-      setSearch({ search: text, tag: null });
+      setSearch({ search: text, complete: false });
     },
     [setSearch]
   );
-  const onChangeCategory = useCallback((categoryId) => {
-    setCategory(categoryId);
-  }, []);
+  const onChangeCategory = useCallback(
+    (categoryId) => {
+      setSearch((prev) => ({ ...prev, tag: categoryId }));
+    },
+    [setSearch]
+  );
+
+  const onEnter = useCallback(() => {
+    onClose();
+    setSearch((prev) => ({ ...prev, complete: true }));
+  }, [setSearch, onClose]);
+
   return (
     <Container
       onClick={(e) => {
         e.stopPropagation();
         if (target === e.currentTarget) {
           onClose();
+          setSearch((prev) => ({ ...prev, complete: true }));
         }
       }}
       onMouseDown={onSaveCurrentTarget}
@@ -51,6 +61,7 @@ const SearchBox = ({ onClose }: Props) => {
             defaultValue={search.search}
             placeholder="무엇을 찾으시나요?"
             onChange={onChange}
+            onEnter={onEnter}
             hasBorder
             width={840}
             height={50}
@@ -59,7 +70,7 @@ const SearchBox = ({ onClose }: Props) => {
         </InputContainer>
 
         <Line />
-        <Tags onChangeCategory={onChangeCategory} category={category} />
+        <Tags onChangeCategory={onChangeCategory} category={search.tag} />
       </SearchContainer>
     </Container>
   );

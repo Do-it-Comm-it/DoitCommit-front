@@ -13,10 +13,15 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import ProtectedRoute from '@src/routes/ProtectedRoute';
 import Skeleton from '@src/components/Molecules/LoadingSkeleton';
+import Articles from '@src/components/Organisms/Board/Articles';
+import { useRecoilValue } from 'recoil';
+import { searchAtom } from '@src/recoil/atom/search';
 
 const App = () => {
   const { theme } = useDarkMode();
   const queryClient = new QueryClient();
+  const { search, tag, complete } = useRecoilValue(searchAtom);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
@@ -25,7 +30,18 @@ const App = () => {
         <BrowserRouter>
           <GlobalStyle />
           <CommonComponentWrapper>
-            <Route path="/*" element={<Home />} />
+            <Route
+              path="/*"
+              element={
+                <Skeleton.Suspense>
+                  {complete ? (
+                    <Articles search={search} tagType={tag} />
+                  ) : (
+                    <Home />
+                  )}
+                </Skeleton.Suspense>
+              }
+            />
             <Route
               path="/mypage/*"
               element={
@@ -36,7 +52,18 @@ const App = () => {
                 </Skeleton.Suspense>
               }
             />
-            <Route path="/community/*" element={<Board />} />
+            <Route
+              path="/community/*"
+              element={
+                <Skeleton.Suspense>
+                  {complete ? (
+                    <Articles search={search} tagType={tag} />
+                  ) : (
+                    <Board />
+                  )}
+                </Skeleton.Suspense>
+              }
+            />
           </CommonComponentWrapper>
         </BrowserRouter>
       </ThemeProvider>

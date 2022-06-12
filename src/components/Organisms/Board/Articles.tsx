@@ -10,7 +10,12 @@ import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 
 const COMMUNITY_ID = 2;
 
-const CardContainer = () => {
+type Props = {
+  search?: string;
+  tagType?: number;
+};
+
+const Articles = ({ search, tagType }: Props) => {
   const theme = useTheme();
   const { data: user } = useUser();
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
@@ -22,7 +27,7 @@ const CardContainer = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(COMMUNITY_ID, undefined, undefined, isBookmark);
+  } = useBoards(COMMUNITY_ID, tagType, search, isBookmark);
 
   return (
     <React.Fragment>
@@ -108,7 +113,7 @@ const CardContainer = () => {
   );
 };
 
-export default CardContainer;
+export default Articles;
 
 const Container = styled.div`
   display: grid;

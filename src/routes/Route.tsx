@@ -8,11 +8,9 @@ import Footer from '@src/components/Organisms/Footer';
 import Skeleton from '@src/components/Molecules/LoadingSkeleton';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { useRecoilValue } from 'recoil';
-import { searchAtom } from '@src/recoil/atom/search';
 
 export const CommonComponentWrapper: React.FC = ({ children }) => {
   const location = useLocation();
-  const search = useRecoilValue(searchAtom);
   const modal = useRecoilValue(modalAtom);
   const isIndexPage = useMemo(() => {
     const check = location.pathname !== '/' && location.pathname !== '/mypage';

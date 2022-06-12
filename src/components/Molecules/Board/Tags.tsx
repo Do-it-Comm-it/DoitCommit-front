@@ -55,7 +55,7 @@ const Container = styled.div`
 
 const Tag = styled.div<{ isActive: boolean }>`
   background-color: ${({ theme, isActive }) =>
-    isActive ? theme.colors.success : theme.colors.gray.gray100};
+    isActive ? theme.colors.primary.light300 : theme.colors.gray.gray100};
   border-radius: 50px;
   padding: 6px 22px;
   color: ${({ theme }) => theme.colors.gray.gray400};
