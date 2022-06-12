@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { sidebarItem } from '@src/data/sidebarData';
 import { useUser } from '@src/hooks/useAuthentication';
+import { useRecoilState } from 'recoil';
+import { searchAtom } from '@src/recoil/atom/search';
 
 type Props = {
   onClose: () => void;
@@ -10,6 +12,8 @@ type Props = {
 
 const SidebarContent = ({ onClose }: Props) => {
   const { data: user } = useUser();
+  const setSearch = useRecoilState(searchAtom)[1];
+
   return (
     <Container>
       <SidebarUl>
@@ -23,7 +27,10 @@ const SidebarContent = ({ onClose }: Props) => {
                     ? () => {
                         alert('로그인이 필요합니다.');
                       }
-                    : onClose
+                    : () => {
+                        setSearch((prev) => ({ ...prev, complete: false }));
+                        onClose();
+                      }
                 }
               >
                 {item.icon}

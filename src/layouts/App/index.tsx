@@ -30,40 +30,31 @@ const App = () => {
         <BrowserRouter>
           <GlobalStyle />
           <CommonComponentWrapper>
-            <Route
-              path="/*"
-              element={
-                <Skeleton.Suspense>
-                  {complete ? (
+            {complete ? (
+              <Route
+                path="*"
+                element={
+                  <Skeleton.Suspense>
                     <Articles search={search} tagType={tag} />
-                  ) : (
-                    <Home />
-                  )}
-                </Skeleton.Suspense>
-              }
-            />
-            <Route
-              path="/mypage/*"
-              element={
-                <Skeleton.Suspense>
-                  <ProtectedRoute>
-                    <MyPage />
-                  </ProtectedRoute>
-                </Skeleton.Suspense>
-              }
-            />
-            <Route
-              path="/community/*"
-              element={
-                <Skeleton.Suspense>
-                  {complete ? (
-                    <Articles search={search} tagType={tag} />
-                  ) : (
-                    <Board />
-                  )}
-                </Skeleton.Suspense>
-              }
-            />
+                  </Skeleton.Suspense>
+                }
+              />
+            ) : (
+              <>
+                <Route path="/*" element={<Home />} />
+                <Route
+                  path="/mypage/*"
+                  element={
+                    <Skeleton.Suspense>
+                      <ProtectedRoute>
+                        <MyPage />
+                      </ProtectedRoute>
+                    </Skeleton.Suspense>
+                  }
+                />
+                <Route path="/community/*" element={<Board />} />
+              </>
+            )}
           </CommonComponentWrapper>
         </BrowserRouter>
       </ThemeProvider>
