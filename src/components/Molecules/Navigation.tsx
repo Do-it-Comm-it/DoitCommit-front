@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 type NavigationProps = {
-  children: React.ReactElement | React.ReactElement[];
+  children: React.ReactElement | React.ReactElement[] | null | Element;
   position?: 'top' | 'right';
 };
 

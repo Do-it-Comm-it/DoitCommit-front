@@ -1,9 +1,7 @@
-import { AiOutlineBell } from 'react-icons/ai';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Navigation from '../Molecules/Navigation';
-import SearchBar from '../Molecules/SearchBar';
 import UserProfile from '../Molecules/UserProfile';
 import UserIcon from '@src/assets/user.svg';
 import { useCallback } from 'react';
@@ -12,39 +10,51 @@ import ExpandIconSVG from '@src/assets/expand.svg';
 import { devices } from '@src/utils/theme';
 import { sidebarAtom } from '@src/recoil/atom/sidebar';
 import { useUser } from '@src/hooks/useAuthentication';
-import { BsBookmark } from 'react-icons/bs';
+import HeaderAlarm from '@src/assets/header-alarm.svg';
+import HeaderBookmark from '@src/assets/header-bookmark.svg';
+import HeaderSearch from '@src/assets/header-search.svg';
+import SearchBox from '../Molecules/SearchBox';
 
 const HeaderNavigation = () => {
   const { data: user } = useUser();
   const setModal = useSetRecoilState(modalAtom);
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [open, setOpen] = useRecoilState(sidebarAtom);
 
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);
   }, [setOpen]);
-  return (
-    <Navigation position={'top'}>
-      <ExpandIcon open={open} onClick={onToggle} />
 
-      <RightArea>
-        {!user && (
-          <Content>
-            <UserIcon
-              width={54}
-              height={54}
-              onClick={() => setModal({ id: 'login', visible: true })}
-            />
-          </Content>
-        )}
-        {user && (
-          <Content>
-            <Bell size={20} />
-            <BookMark size={15} />
-            <UserProfile user={user} isMenuEnable />
-          </Content>
-        )}
-      </RightArea>
-    </Navigation>
+  const onClickSearch = useCallback(() => {
+    setOpenSearch((prev) => !prev);
+  }, []);
+
+  return (
+    <>
+      <Navigation position={'top'}>
+        <ExpandIcon open={open} onClick={onToggle} />
+        <RightArea>
+          <Search onClick={onClickSearch} />
+          <Bell />
+          <BookMark />
+          {!user && (
+            <Content>
+              <UserIcon
+                width={54}
+                height={54}
+                onClick={() => setModal({ id: 'login', visible: true })}
+              />
+            </Content>
+          )}
+          {user && (
+            <Content>
+              <UserProfile user={user} isMenuEnable />
+            </Content>
+          )}
+        </RightArea>
+      </Navigation>
+      {openSearch && <SearchBox onClose={onClickSearch} />}
+    </>
   );
 };
 
@@ -53,7 +63,7 @@ const RightArea = styled.div`
   margin-left: auto;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  gap: 35px;
 `;
 
 const Content = styled.div`
@@ -90,11 +100,13 @@ const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
   }
 `;
 
-const Bell = styled(AiOutlineBell)`
-  color: ${({ theme }) => theme.colors.gray.gray950};
+const Bell = styled(HeaderAlarm)`
+  cursor: pointer;
 `;
-
-const BookMark = styled(BsBookmark)`
-  color: ${({ theme }) => theme.colors.gray.gray950};
+const BookMark = styled(HeaderBookmark)`
+  cursor: pointer;
+`;
+const Search = styled(HeaderSearch)`
+  cursor: pointer;
 `;
 export default HeaderNavigation;
