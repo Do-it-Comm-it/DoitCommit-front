@@ -14,7 +14,8 @@ import HeaderAlarm from '@src/assets/header-alarm.svg';
 import HeaderBookmark from '@src/assets/header-bookmark.svg';
 import HeaderSearch from '@src/assets/header-search.svg';
 import SearchBox from '../Molecules/SearchBox';
-
+import LogoSvg from '@src/assets/logo.svg';
+import { Link } from 'react-router-dom';
 const HeaderNavigation = () => {
   const { data: user } = useUser();
   const setModal = useSetRecoilState(modalAtom);
@@ -34,9 +35,15 @@ const HeaderNavigation = () => {
       <Navigation position={'top'}>
         <ExpandIcon open={open} onClick={onToggle} />
         <LeftArea>
-          <Items>로고?</Items>
+          <Items>
+            <RouterLink to={'/'}>
+              <Logo />
+            </RouterLink>
+          </Items>
           <Items>두잇</Items>
-          <Items>아티클</Items>
+          <Items>
+            <RouterLink to={'/community'}>아티클</RouterLink>
+          </Items>
         </LeftArea>
         <RightArea>
           <Search onClick={onClickSearch} />
@@ -65,7 +72,10 @@ const LeftArea = styled.div`
   display: flex;
   align-items: center;
   & > nav {
-    &:nth-child(1) {
+    &:first-child {
+      border-radius: 10px;
+      padding: 8px;
+      background-color: ${({ theme }) => theme.colors.primary.default};
       margin-right: 30px;
     }
     &:not(first-child) {
@@ -76,6 +86,13 @@ const LeftArea = styled.div`
 `;
 
 const Items = styled.nav`
+  color: ${({ theme }) => theme.colors.gray.gray950};
+`;
+
+const Logo = styled(LogoSvg)``;
+
+const RouterLink = styled(Link)`
+  text-decoration: none;
   color: ${({ theme }) => theme.colors.gray.gray950};
 `;
 

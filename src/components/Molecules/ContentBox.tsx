@@ -6,6 +6,7 @@ import { MdOutlineLockOpen } from 'react-icons/md';
 import DIButton from '../Atoms/DIButton';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { useSetRecoilState } from 'recoil';
+import RouterLinkBox from './RouterLinkBox';
 
 type Props = {
   requiredHeader?: boolean;
@@ -15,6 +16,7 @@ type Props = {
   children?: React.ReactElement | React.ReactElement[];
   onClick?: () => void;
   requiredLogin?: boolean;
+  to?: string; // + 버튼에 링크를 사용하고 싶을때 사용한다.
 };
 
 const ContentBox: React.FC<Props> = ({
@@ -25,6 +27,7 @@ const ContentBox: React.FC<Props> = ({
   contentHeight,
   children,
   onClick,
+  to,
 }: Props) => {
   const theme = useTheme();
   const setModal = useSetRecoilState(modalAtom);
@@ -44,11 +47,15 @@ const ContentBox: React.FC<Props> = ({
           >
             {title}
           </Title>
-          <PlusIcon
-            size={16}
-            onClick={requiredLogin ? onClickLogin : onClick}
-            color={theme.colors.gray.gray950}
-          />
+          {to ? (
+            <RouterLinkBox to={to} />
+          ) : (
+            <PlusIcon
+              size={16}
+              onClick={requiredLogin ? onClickLogin : onClick}
+              color={theme.colors.gray.gray950}
+            />
+          )}
         </HeaderWrapper>
       )}
 

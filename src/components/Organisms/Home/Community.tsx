@@ -7,16 +7,13 @@ import styled from 'styled-components';
 const Community = () => {
   const { data: MainBoards } = useMainPageBoard();
   const { data: user } = useUser();
-
   return (
-    <ContentBox title="최신 아티클" requiredHeader>
-      {MainBoards ? (
+    <ContentBox title="체크 두잇" requiredHeader>
+      {MainBoards &&
         MainBoards.map((board) => (
           <CommunityBox key={board.boardId} item={board} />
-        ))
-      ) : (
-        <EmptyText>{user ? '비어있습니다.' : '로그인이 필요합니다.'}</EmptyText>
-      )}
+        ))}
+      {/* <EmptyText>{user ? '비어있습니다.' : '로그인이 필요합니다.'}</EmptyText> */}
     </ContentBox>
   );
 };

@@ -36,28 +36,32 @@ const HomeTodoList = () => {
   const { data: user } = useUser();
   const { useTodoList } = useTodo();
   const { data: todos, refetch: onRefetch } = useTodoList();
-
+  // 최신 아최신 아티클 - 6시간마다 주기적으로 바뀌는 api 이후 수정
   return (
     <ContentBox
       title={
-        user
-          ? `🔥 목표 달성이 얼마 남지 않았어요!`
-          : `📘 로그인 후 이용 가능합니다.`
+        // user
+        //   ? `🔥 목표 달성이 얼마 남지 않았어요!`
+        //   : `📘 로그인 후 이용 가능합니다.`
+        '📘 최신 아티클'
       }
       requiredHeader
       requiredLogin={user ? false : true}
+      to={'/community'}
     >
       <TodoWrapper>
-        {user
-          ? todos &&
-            todos
-              .slice(0, 4)
-              .map((todo) => (
-                <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />
-              ))
-          : emptyTodo.map((todo, index) => (
-              <TodoBox key={index} todo={todo} onRefetch={onRefetch} isEmpty />
-            ))}
+        {
+          // todos &&
+          //   todos
+          //     .slice(0, 4)
+          //     .map((todo) => (
+          //       <TodoBox key={todo.todoId} todo={todo} onRefetch={onRefetch} />
+          //     ))
+          emptyTodo.map((todo, index) => (
+            <TodoBox key={index} todo={todo} onRefetch={onRefetch} isEmpty />
+          ))
+        }
+        {/* <RouterLinkBox to={'/community'}></RouterLinkBox> */}
         <AddTodoBox requiredLogin={user ? false : true} />
       </TodoWrapper>
     </ContentBox>
