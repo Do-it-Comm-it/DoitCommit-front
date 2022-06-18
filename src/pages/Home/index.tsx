@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import HomeTitle from '@src/components/Organisms/Home/HomeTitle';
 import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
 import Planner from '@src/components/Organisms/Home/Planner';
@@ -7,8 +7,11 @@ import Community from '@src/components/Organisms/Home/Community';
 import AdBanner from '@src/components/Organisms/Home/AdBanner';
 import { devices } from '@src/utils/theme';
 import Skeleton from '@src/components/Molecules/LoadingSkeleton';
+import DIButton from '@src/components/Atoms/DIButton';
+import ThemeButton from '@src/components/Atoms/ThemeButton';
 
 const Home = () => {
+  const theme = useTheme();
   return (
     <Container>
       <Column>
@@ -32,6 +35,9 @@ const Home = () => {
           <HomeTodoList />
         </Skeleton.Suspense>
       </Row>
+      <ModeBtn>
+        <ThemeButton />
+      </ModeBtn>
     </Container>
   );
 };
@@ -45,12 +51,19 @@ const Container = styled.div`
   padding-left: 153px;
   padding-bottom: 20px;
   justify-content: center;
-
+  position: relative;
   @media ${devices.laptop} {
     padding: 8%;
     flex-direction: column;
     align-items: center;
   }
+`;
+
+const ModeBtn = styled.div`
+  position: absolute;
+  bottom: -20px;
+  right: 90px;
+  /* 데스크탑 아래크기는 고려하지않았음.*/
 `;
 
 const Column = styled.div`
