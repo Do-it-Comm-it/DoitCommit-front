@@ -20,7 +20,7 @@ export const CommonComponentWrapper: React.FC = ({ children }) => {
   return (
     <>
       <Container isIndexPage={isIndexPage}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         {modal.visible && <Modal />}
         <Body>
           <Skeleton.Suspense>

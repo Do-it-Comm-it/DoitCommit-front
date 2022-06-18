@@ -13,32 +13,36 @@ import ThemeButton from '@src/components/Atoms/ThemeButton';
 const Home = () => {
   const theme = useTheme();
   return (
-    <Container>
-      <Column>
-        <Top>
+    <>
+      <Container>
+        <Column>
+          <Top>
+            <Skeleton.Suspense>
+              <HomeTitle />
+            </Skeleton.Suspense>
+            <AdBanner />
+          </Top>
+          <Bottom>
+            <Skeleton.Suspense>
+              <Planner />
+            </Skeleton.Suspense>
+            <Skeleton.Suspense>
+              <Community />
+            </Skeleton.Suspense>
+          </Bottom>
+        </Column>
+        <Row>
           <Skeleton.Suspense>
-            <HomeTitle />
+            <HomeTodoList />
           </Skeleton.Suspense>
-          <AdBanner />
-        </Top>
-        <Bottom>
-          <Skeleton.Suspense>
-            <Planner />
-          </Skeleton.Suspense>
-          <Skeleton.Suspense>
-            <Community />
-          </Skeleton.Suspense>
-        </Bottom>
-      </Column>
-      <Row>
-        <Skeleton.Suspense>
-          <HomeTodoList />
-        </Skeleton.Suspense>
-      </Row>
-      <ModeBtn>
-        <ThemeButton />
-      </ModeBtn>
-    </Container>
+        </Row>
+      </Container>
+      <BtnWrap>
+        <ModeBtn>
+          <ThemeButton />
+        </ModeBtn>
+      </BtnWrap>
+    </>
   );
 };
 
@@ -47,11 +51,10 @@ const Container = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  padding: 70px;
-  padding-left: 153px;
-  padding-bottom: 20px;
+  padding: 70px 70px 0 70px;
+  /* padding-left: 153px; */
+  /* padding-bottom: 20px; */
   justify-content: center;
-  position: relative;
   @media ${devices.laptop} {
     padding: 8%;
     flex-direction: column;
@@ -59,10 +62,13 @@ const Container = styled.div`
   }
 `;
 
+const BtnWrap = styled.div`
+  width: 100%;
+`;
+
 const ModeBtn = styled.div`
-  position: absolute;
-  bottom: -20px;
-  right: 90px;
+  padding: 0 140px 30px 140px;
+  float: right;
   /* 데스크탑 아래크기는 고려하지않았음.*/
 `;
 
