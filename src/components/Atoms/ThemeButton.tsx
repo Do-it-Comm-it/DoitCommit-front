@@ -13,30 +13,23 @@ const ThemeButton = () => {
     justifyContent: 'center',
   };
   return (
-    <>
+    <DIButton
+      borderRadius={51}
+      backgroundColor={themeColor.colors.gray.gray600}
+      borderColor={themeColor.colors.gray.gray600}
+      onClick={toggleTheme}
+      style={style}
+    >
       {theme === 'light' ? (
-        <DIButton
-          borderRadius={51}
-          backgroundColor={themeColor.colors.gray.gray600}
-          borderColor={themeColor.colors.gray.gray600}
-          onClick={toggleTheme}
-          style={style}
-        >
+        <>
           다크모드 <DarkModeIcon />
-        </DIButton>
+        </>
       ) : (
-        <DIButton
-          borderRadius={51}
-          backgroundColor={themeColor.colors.gray.gray800}
-          onClick={toggleTheme}
-          borderColor={themeColor.colors.gray.gray800}
-          style={style}
-        >
-          라이트모드
-          <LightModeIcon />
-        </DIButton>
+        <>
+          라이트모드 <LightModeIcon />
+        </>
       )}
-    </>
+    </DIButton>
   );
 };
 
