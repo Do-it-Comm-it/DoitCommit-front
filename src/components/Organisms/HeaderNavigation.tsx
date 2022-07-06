@@ -40,9 +40,9 @@ const HeaderNavigation = () => {
               <Logo />
             </RouterLink>
           </Items>
-          <Items>두잇</Items>
+          <Items>두잇</Items>
           <Items>
-            <RouterLink to={'/community'}>아티클</RouterLink>
+            <RouterLink to={'/community'}>아티클</RouterLink>
           </Items>
         </LeftArea>
         <RightArea>
