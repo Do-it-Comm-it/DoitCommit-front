@@ -119,7 +119,7 @@ const Circle = styled.div<{ width: number; height: number }>`
   height: ${({ height }) => height}px;
 `;
 const ProfileImage = styled.img`
-  border-radius: 100px;
+  border-radius: 10px;
 `;
 
 const Menu = styled.div`

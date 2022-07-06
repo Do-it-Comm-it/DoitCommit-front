@@ -17,11 +17,13 @@ const HomeTitle = () => {
         fontSize={30}
         fontFamily={theme.font.NotoSansKRBold}
         fontColor={theme.colors.gray.gray950}
+        fontWeight={700}
       >
-        {user?.nickname ?? `Stranger`}님!{'  '}
+        {/* {user?.nickname ?? `Stranger`}님!{'  '}
         {user?.nickname
           ? `두잇커밋과 함께한지, ${diffDate}일째 입니다.`
-          : `두잇커밋에 어서오세요!`}
+          : `두잇커밋에 어서오세요!`} */}
+        공유 커뮤니티 두잇! 환영합니다.
       </Title>
     </Container>
   );
