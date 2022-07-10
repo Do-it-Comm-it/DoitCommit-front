@@ -64,6 +64,7 @@ const Container = styled.div`
 
 const BtnWrap = styled.div`
   width: 100%;
+  margin-top: 14px;
 `;
 
 const ModeBtn = styled.div`

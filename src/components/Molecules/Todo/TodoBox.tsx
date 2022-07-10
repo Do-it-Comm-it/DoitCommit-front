@@ -11,6 +11,8 @@ import { devices } from '@src/utils/theme';
 import { convertDayToName } from '../Planner/PlannerDate';
 import { ITodos } from '@src/typings/Todos';
 import PinSVG from '@src/assets/notification.svg';
+import BookmarkSVG from '@src/assets/bookmark.svg';
+import { useState } from 'react';
 type TodoBoxProps = {
   todo: ITodos;
   onRefetch: () => void;
@@ -18,6 +20,7 @@ type TodoBoxProps = {
 };
 
 const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
+  const [hide, setHide] = useState(false);
   const setModal = useSetRecoilState(modalAtom);
 
   const onDelete = useCallback(async () => {
@@ -46,7 +49,15 @@ const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
   }, [setModal, todo.todoId]);
 
   return (
-    <Wrapper>
+    <Wrapper
+      onMouseEnter={() => {
+        setHide(true);
+      }}
+      onMouseLeave={() => {
+        setHide(false);
+      }}
+    >
+      {hide && <BookmarkIcon />}
       {todo && (
         <Container>
           {!isEmpty && (
@@ -103,7 +114,7 @@ const Wrapper = styled.div`
   max-width: 385px;
   background: ${({ theme }) => theme.colors.gray.gray200};
   flex-direction: column;
-
+  position: relative;
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;
 
@@ -160,6 +171,18 @@ const CheckFinishedIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.gray.gray400};
   fill: ${({ theme }) => theme.colors.primary.light400};
 `;
+const BookmarkIcon = styled(BookmarkSVG)`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.gray.gray400};
+    fill: ${({ theme }) => theme.colors.gray.gray400};
+  }
+  width: 32px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 25px;
+`;
+
 const Content = styled.div`
   height: 80%;
   display: flex;
