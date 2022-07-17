@@ -2,6 +2,7 @@ import Body from '@src/components/Organisms/MyPage/Body';
 import { devices } from '@src/utils/theme';
 import React from 'react';
 import styled from 'styled-components';
+
 const MyPage = () => {
   return (
     <Container>

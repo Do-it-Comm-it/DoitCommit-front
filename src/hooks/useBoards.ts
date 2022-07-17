@@ -171,7 +171,7 @@ export const useMainPageBoard = () => {
       return await board.getMainPageBoard();
     },
     {
-      enabled: user !== null,
+      enabled: user !== null && user !== undefined,
     }
   );
 };
