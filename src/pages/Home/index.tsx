@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import HomeTitle from '@src/components/Organisms/Home/HomeTitle';
 import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
 import Planner from '@src/components/Organisms/Home/Planner';
@@ -7,11 +7,9 @@ import Community from '@src/components/Organisms/Home/Community';
 import AdBanner from '@src/components/Organisms/Home/AdBanner';
 import { devices } from '@src/utils/theme';
 import Skeleton from '@src/components/Molecules/LoadingSkeleton';
-import DIButton from '@src/components/Atoms/DIButton';
 import ThemeButton from '@src/components/Atoms/ThemeButton';
 
 const Home = () => {
-  const theme = useTheme();
   return (
     <>
       <Container>

@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 
 // Login -> refresh Token , accessToken to Cookie, but when accessToken expires,
 // new request need to be prepared with new accessToken.
-// requset -> 401 Unauthorized (accessToken expires) -> request new accessToken -> request previous ones
+// request -> 401 Unauthorized (accessToken expires) -> request new accessToken -> request previous ones
 // with newly earned accessToken
 const handleResponse = (response: AxiosResponse) => {
   if (response.status === 401 || response.status === 403) {
