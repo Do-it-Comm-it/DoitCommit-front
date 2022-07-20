@@ -18,7 +18,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
       onChange={onChange}
       options={options}
       isMulti
-      placeholder={'EX) Java, C#, Javascript'}
+      placeholder={'관심있는 분야'}
       styles={{
         valueContainer: (defaultStyles) => ({
           ...defaultStyles,
