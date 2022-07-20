@@ -77,7 +77,7 @@ const ProfileInfoArea = () => {
             />
           ))}
           <Content>
-            <Label>관심기술</Label>
+            <Label>관심분야</Label>
             <SelectInput
               onChange={(value) => {
                 setInput({
