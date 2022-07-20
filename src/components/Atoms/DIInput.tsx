@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
-import { fi } from 'date-fns/locale';
 
 type DIInputProps = {
+  maxLength?: number;
   defaultValue?: string;
   width?: number;
   height?: number;
@@ -19,6 +19,7 @@ type DIInputProps = {
 };
 
 const DIInput = ({
+  maxLength,
   defaultValue = '',
   width = 120,
   height = 30,
@@ -35,6 +36,7 @@ const DIInput = ({
 }: DIInputProps) => {
   return (
     <Input
+      maxLength={maxLength}
       value={defaultValue}
       borderRadius={borderRadius}
       backgroundColor={backgroundColor}
