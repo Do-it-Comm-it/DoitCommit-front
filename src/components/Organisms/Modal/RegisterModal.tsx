@@ -2,7 +2,7 @@ import DIButton from '@src/components/Atoms/DIButton';
 import DIText from '@src/components/Atoms/DIText';
 import UserProfile from '@src/components/Molecules/UserProfile';
 import CloseIcon from '@src/assets/close_button.svg';
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import styled, { useTheme } from 'styled-components';
 import DIInput from '../../Atoms/DIInput';
@@ -28,6 +28,18 @@ type RegisterModalProps = {
   height?: number;
 };
 
+enum NICKNAME_MESSAGE {
+  LIMIT = '15글자 이상은 불가능합니다.',
+  SPECIAL = '특수문자는 불가능합니다.',
+  ALREADY_HAVE = '이미 사용중인 닉네임입니다',
+  ENTER = '닉네임을 적어주세요.',
+  AVAILABLE = '사용가능한 닉네임입니다.',
+}
+
+const SpecialCharacterRegex =
+  // eslint-disable-next-line no-useless-escape
+  /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+
 //TODO:
 //1. Check user nickname is already taken or not.
 //2. Upload Profile Image.
@@ -41,13 +53,16 @@ const RegisterModal = ({
 }: RegisterModalProps) => {
   const { data: user } = useUser();
   const theme = useTheme();
+  const [placeHolderMessage, setPlaceHolderMessage] = useState<string>(
+    NICKNAME_MESSAGE.ENTER
+  );
   const [page, setPage] = useState<number>(0);
   const [nickname, setNickname] = useState('');
   const [interestTechSet, setInterestTechSet] = useState<Tech[]>([]);
   const [file, setFile] = useRecoilState(fileAtom);
   const debounceInput = useDebounce(nickname, 200);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
-  const { data: check } = useQuery(
+  const { data: check, isLoading } = useQuery(
     ['nicknameCheck', debounceInput],
     () => userAPI.checkNickname(debounceInput as string),
     {
@@ -85,6 +100,20 @@ const RegisterModal = ({
     },
     [setNickname]
   );
+
+  useEffect(() => {
+    if (SpecialCharacterRegex.test(nickname)) {
+      setPlaceHolderMessage(NICKNAME_MESSAGE.SPECIAL);
+    } else if (nickname.length > 15) {
+      setPlaceHolderMessage(NICKNAME_MESSAGE.LIMIT);
+    } else if (nickname.length === 0) {
+      setPlaceHolderMessage(NICKNAME_MESSAGE.ENTER);
+    } else if (!check && !isLoading) {
+      setPlaceHolderMessage(NICKNAME_MESSAGE.ALREADY_HAVE);
+    } else if (check) {
+      setPlaceHolderMessage(NICKNAME_MESSAGE.AVAILABLE);
+    }
+  }, [nickname, check, isLoading]);
 
   const queryClient = useQueryClient();
   const onCompleteSignUp = useMutation(
@@ -131,29 +160,34 @@ const RegisterModal = ({
               width={285}
               height={65}
               onChange={onChangeName}
-              placeholder={'최대 8글자'}
+              maxLength={15}
+              placeholder={'최대 15글자'}
             />
           </InputPlace>
-          {check ? (
-            <DIText
-              fontColor={theme.colors.primary.default}
-              style={{ paddingTop: 13 }}
-            >
+
+          <DIText
+            fontColor={
+              placeHolderMessage === NICKNAME_MESSAGE.AVAILABLE
+                ? theme.colors.primary.default
+                : theme.colors.warning
+            }
+            style={{ paddingTop: 13 }}
+          >
+            {placeHolderMessage === NICKNAME_MESSAGE.AVAILABLE ? (
               <AiOutlineCheck />
-              사용가능한 닉네임입니다.
-            </DIText>
-          ) : (
-            <DIText fontColor={theme.colors.warning} style={{ paddingTop: 13 }}>
+            ) : (
               <RiErrorWarningLine />
-              이미 사용중인 닉네임입니다.
-            </DIText>
-          )}
+            )}
+            {placeHolderMessage}
+          </DIText>
         </CardContent>
         <CardBottom>
           <DIButton
             borderRadius={60}
             backgroundColor={theme.colors.primary.default}
-            disabled={!check || nickname.trim().length === 0}
+            disabled={
+              !check || nickname.trim().length === 0 || nickname.length > 15
+            }
             value={'다음'}
             onClick={() => {
               onChangePage(1);
@@ -162,7 +196,7 @@ const RegisterModal = ({
         </CardBottom>
       </CardStyle>
     );
-  }, [nickname, onChangeName, onChangePage, theme, check]);
+  }, [nickname, placeHolderMessage, onChangeName, onChangePage, theme, check]);
 
   const TechContent = useCallback(() => {
     return (
