@@ -11,6 +11,8 @@ import { devices } from '@src/utils/theme';
 import { convertDayToName } from '../Planner/PlannerDate';
 import { ITodos } from '@src/typings/Todos';
 import PinSVG from '@src/assets/notification.svg';
+import BookmarkSVG from '@src/assets/bookmark.svg';
+import { useState } from 'react';
 type TodoBoxProps = {
   todo: ITodos;
   onRefetch: () => void;
@@ -18,6 +20,7 @@ type TodoBoxProps = {
 };
 
 const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
+  const [isHover, setIsHover] = useState<boolean>(false);
   const setModal = useSetRecoilState(modalAtom);
 
   const onDelete = useCallback(async () => {
@@ -45,8 +48,20 @@ const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
     setModal({ id: 'todo', visible: true, todoId: todo.todoId });
   }, [setModal, todo.todoId]);
 
+  const onToggle = useCallback((value) => {
+    setIsHover(value);
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper
+      onMouseEnter={() => {
+        onToggle(true);
+      }}
+      onMouseLeave={() => {
+        onToggle(false);
+      }}
+    >
+      <BookmarkIcon isHover={isHover} />
       {todo && (
         <Container>
           {!isEmpty && (
@@ -103,10 +118,9 @@ const Wrapper = styled.div`
   max-width: 385px;
   background: ${({ theme }) => theme.colors.gray.gray200};
   flex-direction: column;
-
+  position: relative;
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;
-
   @media ${devices.laptop} {
     max-width: 100%;
   }
@@ -160,6 +174,20 @@ const CheckFinishedIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.gray.gray400};
   fill: ${({ theme }) => theme.colors.primary.light400};
 `;
+const BookmarkIcon = styled(BookmarkSVG)<{ isHover: boolean }>`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.gray.gray400};
+    fill: ${({ theme }) => theme.colors.gray.gray400};
+  }
+  width: 32px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  transition: all 0.7s;
+  opacity: ${({ isHover }) => (isHover ? 1 : 0)};
+`;
+
 const Content = styled.div`
   height: 80%;
   display: flex;
