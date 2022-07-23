@@ -20,7 +20,7 @@ type TodoBoxProps = {
 };
 
 const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
-  const [hide, setHide] = useState(false);
+  const [isHover, setIsHover] = useState<boolean>(false);
   const setModal = useSetRecoilState(modalAtom);
 
   const onDelete = useCallback(async () => {
@@ -48,16 +48,20 @@ const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
     setModal({ id: 'todo', visible: true, todoId: todo.todoId });
   }, [setModal, todo.todoId]);
 
+  const onToggle = useCallback((value) => {
+    setIsHover(value);
+  }, []);
+
   return (
     <Wrapper
       onMouseEnter={() => {
-        setHide(true);
+        onToggle(true);
       }}
       onMouseLeave={() => {
-        setHide(false);
+        onToggle(false);
       }}
     >
-      {hide && <BookmarkIcon />}
+      <BookmarkIcon isHover={isHover} />
       {todo && (
         <Container>
           {!isEmpty && (
@@ -117,7 +121,6 @@ const Wrapper = styled.div`
   position: relative;
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;
-
   @media ${devices.laptop} {
     max-width: 100%;
   }
@@ -171,7 +174,7 @@ const CheckFinishedIcon = styled(BsCheckCircle)`
   color: ${({ theme }) => theme.colors.gray.gray400};
   fill: ${({ theme }) => theme.colors.primary.light400};
 `;
-const BookmarkIcon = styled(BookmarkSVG)`
+const BookmarkIcon = styled(BookmarkSVG)<{ isHover: boolean }>`
   & > path {
     stroke: ${({ theme }) => theme.colors.gray.gray400};
     fill: ${({ theme }) => theme.colors.gray.gray400};
@@ -181,6 +184,8 @@ const BookmarkIcon = styled(BookmarkSVG)`
   position: absolute;
   right: 10px;
   top: 25px;
+  transition: all 0.7s;
+  opacity: ${({ isHover }) => (isHover ? 1 : 0)};
 `;
 
 const Content = styled.div`
