@@ -13,21 +13,24 @@ import { useQueryClient } from 'react-query';
 import useOutsideClick from '@src/hooks/useOutsideClick';
 import date from '@src/utils/date';
 import { FaReply } from 'react-icons/fa';
+import { useReplyComment } from '@src/hooks/useComments';
 
 interface Props {
   boardId: number;
   mentionData: IMemberTagResDto[];
   commentData: IComment;
+  depth: number;
 }
-const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
+
+const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
   const { data: user } = useUser();
   const queryClient = useQueryClient();
   const theme = useTheme();
   const [edit, setEdit] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
-  const [showReply, setShowReply] = useState<boolean>(true);
-
+  const [showReply, setShowReply] = useState<boolean>(false);
+  const { mutate: onReplyComment } = useReplyComment(boardId);
   const onDeleteComment = useCallback(
     async (commentId: number) => {
       await board.deleteComment(commentId);
@@ -39,15 +42,23 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
     setEdit(value);
   }, []);
   const text = useCommentRegex(commentData);
-  const onReply = useCallback(() => {
+
+  const onShowReply = useCallback(() => {
     setShowReply((prev) => !prev);
   }, []);
+
+  const onReply = useCallback(
+    (content: string) => {
+      onReplyComment({ boardId, content, parentId: commentData.commentId });
+    },
+    [boardId, onReplyComment, commentData]
+  );
 
   useOutsideClick(iconRef, () => setConfirm(false));
 
   return (
     <Wrapper>
-      <Container>
+      <Container childDepth={depth}>
         {edit ? (
           <>
             <CommentEditor
@@ -91,9 +102,9 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
                       <DeleteIconSVG onClick={() => setConfirm(true)} />
                     )}
                   </IconWrapper>
-                ) : (
-                  <ReplyIcon onClick={onReply} />
-                )}
+                ) : user !== null ? (
+                  <ReplyIcon onClick={onShowReply} />
+                ) : null}
               </Header>
               {!commentData.isExist ? (
                 <p style={{ color: theme.colors.gray.gray500 }}>
@@ -109,19 +120,34 @@ const CommentBox = ({ boardId, mentionData, commentData }: Props) => {
           </>
         )}
       </Container>
-      {showReply && <ReplyBox onClose={onReply} />}
+      {commentData.childList
+        ? commentData.childList.length
+          ? commentData.childList.map((comment) => (
+              <CommentBox
+                key={comment.commentId}
+                boardId={boardId}
+                commentData={comment}
+                mentionData={mentionData}
+                depth={depth + 1}
+              />
+            ))
+          : null
+        : null}
+      {showReply && <ReplyBox onClose={onShowReply} onReply={onReply} />}
     </Wrapper>
   );
 };
 
 export default React.memo(CommentBox);
 
-const Container = styled.div`
+const Container = styled.div<{ childDepth?: number }>`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: ${({ childDepth }) =>
+    childDepth ? `calc(100% - ${childDepth * 80})` : `100%`};
   border-top: 1px solid #e0e1e4;
   padding: 44px 0;
+  margin-left: ${({ childDepth }) => (childDepth ? childDepth * 80 : 0)}px;
 `;
 
 const Profile = styled.img`
@@ -171,9 +197,10 @@ const Wrapper = styled.div`
 
 type ReplyBoxProps = {
   onClose: () => void;
+  onReply: (content: string) => void;
 };
 
-const ReplyBox = ({ onClose }: ReplyBoxProps) => {
+const ReplyBox = ({ onClose, onReply }: ReplyBoxProps) => {
   const theme = useTheme();
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [body, setBody] = useState<string>('');
@@ -203,7 +230,15 @@ const ReplyBox = ({ onClose }: ReplyBoxProps) => {
         >
           취소
         </Button>
-        <Button onClick={() => {}}>답장</Button>
+        <Button
+          onClick={() => {
+            onReply(body);
+            setBody('');
+            onClose();
+          }}
+        >
+          답장
+        </Button>
       </ButtonWrapper>
     </ReplyContainer>
   );
