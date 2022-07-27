@@ -47,6 +47,7 @@ const BoardContent = ({ boardData }: Props) => {
               boardId={boardData.boardId!}
               mentionData={commentsData.memberTagResDtoList}
               commentData={c}
+              depth={0}
             />
           ))
         )}

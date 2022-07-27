@@ -59,6 +59,7 @@ const getCommentList = async (boardId: number, page: number) => {
 const addComment = async (body: {
   boardId: number;
   content: string;
+  parentId?: number;
   memberIdSet?: any[];
 }) => {
   const { code } = await requestAPI().post('/comments', body);
@@ -69,6 +70,7 @@ const deleteComment = async (commentId: number) => {
   const { code } = await requestAPI().patch(`/comments/${commentId}/isExist`);
   return code;
 };
+
 const updateComment = async ({ body }: IUpdateCommentDto) => {
   const { code } = await requestAPI().put(`/comments/${body.commentId}`, body);
   return code;

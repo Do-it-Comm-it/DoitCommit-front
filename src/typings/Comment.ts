@@ -19,6 +19,7 @@ export interface IComment {
   nickname: string;
   regDateTime: string;
   writerId: string;
+  childList: IComment[];
 }
 
 export interface IMemberTagResDto {

@@ -1,6 +1,20 @@
 import { board } from '@src/service/api';
 import { ICommentRes } from '@src/typings/Comment';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
+
+export const useReplyComment = (boardId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation(board.addComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(`comments/${boardId}`);
+    },
+    onError: () => {
+      alert('error occurred during reply comment');
+      queryClient.invalidateQueries(`comments/${boardId}`);
+    },
+  });
+};
 
 const useComments = (boardId: number) => {
   const fetchComments = async ({ pageParam = 1 }) => {
