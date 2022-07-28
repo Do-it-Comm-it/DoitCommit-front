@@ -33,9 +33,18 @@ const CardContent = ({ board, category, search, isBookmark }: Props) => {
   return (
     <Container>
       <Top>
-        {board.boardHashtagNameList?.map((tag, id) => (
-          <Tags key={id}>#{tag}</Tags>
-        ))}
+        <Title>
+          <Highlighter
+            highlightStyle={{
+              color: theme.colors.primary.default,
+            }}
+            highlightTag="strong"
+            searchWords={keyword}
+            autoEscape={true}
+            textToHighlight={board.boardTitle}
+          />
+        </Title>
+
         {board.myBookmark ? (
           <BsBookmarkFill
             onClick={onClickBookmark}
@@ -58,17 +67,11 @@ const CardContent = ({ board, category, search, isBookmark }: Props) => {
         style={{ width: '100%', height: '100%', textDecoration: 'none' }}
       >
         <Middle>
-          <Title>
-            <Highlighter
-              highlightStyle={{
-                color: theme.colors.primary.default,
-              }}
-              highlightTag="strong"
-              searchWords={keyword}
-              autoEscape={true}
-              textToHighlight={board.boardTitle}
-            />
-          </Title>
+          <TagsContainer>
+          {board.boardHashtagNameList?.map((tag, id) => (
+            <Tags key={id}>#{tag}</Tags>
+            ))}
+            </TagsContainer>
           <Content>
             <Highlighter
               highlightStyle={{
@@ -104,10 +107,16 @@ const Container = styled.div`
   border-bottom-right-radius: 10px;
   gap: 10px;
 `;
+const TagsContainer = styled.div``;
+// 빈 div역할
 const Tags = styled.span`
-  color: ${({ theme }) => theme.colors.gray.gray400};
+  color: ${({ theme }) => theme.colors.primary.default};
   font-weight: 400;
   font-size: 14px;
+  margin-left: 8px;
+  &:first-child {
+    margin: 0;
+  }
 `;
 
 const Title = styled.p`
