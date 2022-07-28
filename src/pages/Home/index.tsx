@@ -32,6 +32,7 @@ const Home = () => {
         <Row>
           <Skeleton.Suspense>
             <HomeTodoList />
+            {/* 최신 아티클 4개 들어갈 자리 */}
           </Skeleton.Suspense>
         </Row>
       </Container>

@@ -61,7 +61,7 @@ const TodoBox = ({ todo, onRefetch, isEmpty }: TodoBoxProps) => {
         onToggle(false);
       }}
     >
-      <BookmarkIcon isHover={isHover} />
+      {/* <BookmarkIcon isHover={isHover} /> */}
       {todo && (
         <Container>
           {!isEmpty && (
