@@ -11,47 +11,77 @@ interface Props {
   category: number | null;
   search: string;
   isBookmark: boolean;
+  isHome?: boolean; // 아티클페이지인지 메인페이지인지 구별하는 Prop
 }
-const Card = ({ board, category, search, isBookmark }: Props) => {
-  return (
-    <Container>
-      <Link
-        to={`/community/board/${board.boardId}`}
-        style={{ width: '100%', textDecoration: 'none' }}
-      >
-        <Thumbnail
-          thumbnail={board.thumbnailUrl}
-          writerImageUrl={board.writerImageUrl}
-        />
-      </Link>
-      <CardContent
-        board={board}
-        category={category}
-        search={search}
-        isBookmark={isBookmark}
-      />
+const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
+  console.log(board);
 
-      <Bottom>
-        <Author>by. {board.writer}</Author>
-        <Status
-          board={board}
-          category={category}
-          search={search}
-          isBookmark={isBookmark}
-        />
-      </Bottom>
-    </Container>
+  return (
+    <>
+      {isHome ? (
+        <Container isHome={true}>
+          <Link
+            to={`/community/board/${board.boardId}`}
+            style={{ width: '100%', textDecoration: 'none' }}
+          >
+            <Thumbnail
+              thumbnail={
+                'https://doitcommit.s3.ap-northeast-2.amazonaws.com/2022/07/24/99cef549-f0f3-41e9-94fc-d1f3770dfa01_MjA2NDkuNDAwODY5NDU2NDM2MTY1ODY0NjkwOTQzNg%3D.png'
+              }
+              writerImageUrl={board.writerImageUrl}
+              isHome={true}
+              writer={'사용자이름'}
+              tags={board.boardHashtagNameList}
+            />
+          </Link>
+          <CardContent
+            board={board}
+            category={category}
+            search={search}
+            isBookmark={isBookmark}
+            isHome={isHome}
+          />
+        </Container>
+      ) : (
+        <Container>
+          <Link
+            to={`/community/board/${board.boardId}`}
+            style={{ width: '100%', textDecoration: 'none' }}
+          >
+            <Thumbnail
+              thumbnail={board.thumbnailUrl}
+              writerImageUrl={board.writerImageUrl}
+            />
+          </Link>
+          <CardContent
+            board={board}
+            category={category}
+            search={search}
+            isBookmark={isBookmark}
+          />
+          <Bottom>
+            <Author>by. {board.writer}</Author>
+            <Status
+              board={board}
+              category={category}
+              search={search}
+              isBookmark={isBookmark}
+            />
+          </Bottom>
+        </Container>
+      )}
+    </>
   );
 };
 
 export default React.memo(Card);
 
-const Container = styled.div`
+const Container = styled.div<{ isHome?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 386px;
   max-width: 386px;
-  height: 451px;
+  height: ${({ isHome }) => (isHome ? '330px' : '451px')};
   background-color: ${({ theme }) => theme.colors.gray.gray100};
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 10px;

@@ -8,6 +8,7 @@ import AdBanner from '@src/components/Organisms/Home/AdBanner';
 import { devices } from '@src/utils/theme';
 import Skeleton from '@src/components/Molecules/LoadingSkeleton';
 import ThemeButton from '@src/components/Atoms/ThemeButton';
+import MainBoard from '@src/components/Organisms/Home/MainBoard';
 
 const Home = () => {
   return (
@@ -31,7 +32,8 @@ const Home = () => {
         </Column>
         <Row>
           <Skeleton.Suspense>
-            <HomeTodoList />
+            {/* <HomeTodoList /> */}
+            <MainBoard />
             {/* 최신 아티클 4개 들어갈 자리 */}
           </Skeleton.Suspense>
         </Row>

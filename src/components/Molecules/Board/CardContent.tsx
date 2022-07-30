@@ -13,8 +13,15 @@ interface Props {
   category: number | null;
   search: string;
   isBookmark: boolean;
+  isHome?: boolean;
 }
-const CardContent = ({ board, category, search, isBookmark }: Props) => {
+const CardContent = ({
+  board,
+  category,
+  search,
+  isBookmark,
+  isHome,
+}: Props) => {
   const theme = useTheme();
   const keyword = useRecoilValue(keywordState);
   const mutation = useBoardListMutation(
@@ -67,11 +74,15 @@ const CardContent = ({ board, category, search, isBookmark }: Props) => {
         style={{ width: '100%', height: '100%', textDecoration: 'none' }}
       >
         <Middle>
-          <TagsContainer>
-          {board.boardHashtagNameList?.map((tag, id) => (
-            <Tags key={id}>#{tag}</Tags>
-            ))}
-            </TagsContainer>
+          <>
+            {isHome ? null : (
+              <TagsContainer>
+                {board.boardHashtagNameList?.map((tag, id) => (
+                  <Tags key={id}>#{tag}</Tags>
+                ))}
+              </TagsContainer>
+            )}
+          </>
           <Content>
             <Highlighter
               highlightStyle={{

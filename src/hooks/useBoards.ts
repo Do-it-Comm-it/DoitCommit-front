@@ -163,15 +163,7 @@ export const useSingleBoardMutation = (
 };
 
 export const useMainPageBoard = () => {
-  const { data: user } = useUser();
-
-  return useQuery<Array<IBoard>>(
-    'main-board',
-    async () => {
-      return await board.getMainPageBoard();
-    },
-    {
-      enabled: user !== null && user !== undefined,
-    }
-  );
+  return useQuery<Array<IBoard>>('main-board', async () => {
+    return await board.getMainPageBoard();
+  });
 };
