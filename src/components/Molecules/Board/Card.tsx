@@ -1,6 +1,6 @@
 import CardContent from './CardContent';
 import Thumbnail from '@src/components/Atoms/Board/Thumbnail';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IBoard } from '@src/typings/Board';
@@ -14,16 +14,28 @@ interface Props {
   isHome?: boolean; // 아티클페이지인지 메인페이지인지 구별하는 Prop
 }
 const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
-  console.log(board);
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const onToggle = useCallback((value) => {
+    setIsHover(value);
+  }, []);
 
   return (
     <>
       {isHome ? (
-        <Container isHome={true}>
+        <Container
+          isHome={true}
+          onMouseEnter={() => {
+            onToggle(true);
+          }}
+          onMouseLeave={() => {
+            onToggle(false);
+          }}
+        >
           <Link
             to={`/community/board/${board.boardId}`}
             style={{ width: '100%', textDecoration: 'none' }}
           >
+            {/* TODO: 22.07-31 썸네일, writer Props는 백엔드 수정 후 변경해준다.*/}
             <Thumbnail
               thumbnail={
                 'https://doitcommit.s3.ap-northeast-2.amazonaws.com/2022/07/24/99cef549-f0f3-41e9-94fc-d1f3770dfa01_MjA2NDkuNDAwODY5NDU2NDM2MTY1ODY0NjkwOTQzNg%3D.png'
@@ -40,10 +52,18 @@ const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
             search={search}
             isBookmark={isBookmark}
             isHome={isHome}
+            isHover={isHover}
           />
         </Container>
       ) : (
-        <Container>
+        <Container
+          onMouseEnter={() => {
+            onToggle(true);
+          }}
+          onMouseLeave={() => {
+            onToggle(false);
+          }}
+        >
           <Link
             to={`/community/board/${board.boardId}`}
             style={{ width: '100%', textDecoration: 'none' }}
@@ -58,6 +78,7 @@ const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
             category={category}
             search={search}
             isBookmark={isBookmark}
+            isHover={isHover}
           />
           <Bottom>
             <Author>by. {board.writer}</Author>

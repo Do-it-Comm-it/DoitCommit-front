@@ -14,6 +14,7 @@ interface Props {
   search: string;
   isBookmark: boolean;
   isHome?: boolean;
+  isHover: boolean;
 }
 const CardContent = ({
   board,
@@ -21,6 +22,7 @@ const CardContent = ({
   search,
   isBookmark,
   isHome,
+  isHover,
 }: Props) => {
   const theme = useTheme();
   const keyword = useRecoilValue(keywordState);
@@ -36,7 +38,6 @@ const CardContent = ({
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);
   }, [mutation, board]);
-
   return (
     <Container>
       <Top>
@@ -56,7 +57,12 @@ const CardContent = ({
           <BsBookmarkFill
             onClick={onClickBookmark}
             color={theme.colors.primary.default}
-            style={{ marginLeft: 'auto', cursor: 'pointer' }}
+            style={{
+              marginLeft: 'auto',
+              cursor: 'pointer',
+              transition: 'all 0.7s',
+              opacity: isHover ? 1 : 0,
+            }}
           />
         ) : (
           <BsBookmark
@@ -65,6 +71,8 @@ const CardContent = ({
               marginLeft: 'auto',
               cursor: 'pointer',
               color: theme.colors.gray.gray400,
+              transition: 'all 0.7s',
+              opacity: isHover ? 1 : 0,
             }}
           />
         )}
