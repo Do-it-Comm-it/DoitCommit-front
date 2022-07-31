@@ -6,8 +6,6 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 const MainBoard = () => {
   const { data: MainBoards } = useMainPageBoard();
-  console.log(MainBoards);
-
   return (
     <ContentBox title={'📘 최신 아티클'} requiredHeader to={'/community'}>
       <Container>

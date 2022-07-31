@@ -28,7 +28,7 @@ const Thumbnail = ({
               <>
                 <Image src={writerImageUrl || ''} />
                 <Division>
-                  <Author>{writer}</Author>
+                  <Author>by. {writer}</Author>
                   <Tags>
                     {tags?.map((tag, id) => (
                       <Tags key={id}>#{tag}</Tags>
