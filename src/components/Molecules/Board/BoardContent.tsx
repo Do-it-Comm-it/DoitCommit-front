@@ -49,6 +49,7 @@ const BoardContent = ({ boardData }: Props) => {
               commentData={c}
               commentParentId={c.commentId}
               depth={0}
+              childLength={c.childList.length}
             />
           ))
         )}

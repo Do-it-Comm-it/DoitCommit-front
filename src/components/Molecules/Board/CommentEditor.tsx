@@ -154,7 +154,7 @@ const Container = styled.div`
 `;
 
 const Input = styled(MentionsInput)`
-  width: 100%;
+  width: 80%;
   resize: none;
   outline: none;
   border: none;

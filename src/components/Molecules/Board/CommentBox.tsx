@@ -4,9 +4,9 @@ import { IComment, IMemberTagResDto } from '@src/typings/Comment';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import CommentEditor, { CommentType } from './CommentEditor';
-import EditIconSVG from '@src/assets/filled_edit_icon.svg';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import DeleteConfirmIconSVG from '@src/assets/delete_confirm.svg';
+import CountReplyIconSVG from '@src/assets/count-reply.svg';
 import { useUser } from '@src/hooks/useAuthentication';
 import { board } from '@src/service/api';
 import { useQueryClient } from 'react-query';
@@ -21,6 +21,7 @@ interface Props {
   commentData: IComment;
   depth: number;
   commentParentId?: number;
+  childLength?: number;
 }
 
 const CommentBox = ({
@@ -29,15 +30,17 @@ const CommentBox = ({
   mentionData,
   commentData,
   depth,
+  childLength,
 }: Props) => {
   const { data: user } = useUser();
   const queryClient = useQueryClient();
-  const theme = useTheme();
   const [edit, setEdit] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
   const [showReply, setShowReply] = useState<boolean>(false);
+  const text = useCommentRegex(commentData);
   const { mutate: onReplyComment } = useReplyComment(boardId);
+
   const onDeleteComment = useCallback(
     async (commentId: number) => {
       await board.deleteComment(commentId);
@@ -45,10 +48,10 @@ const CommentBox = ({
     },
     [boardId, queryClient]
   );
+
   const onToggle = useCallback((value) => {
     setEdit(value);
   }, []);
-  const text = useCommentRegex(commentData);
 
   const onOpenReply = useCallback((isOpen: boolean) => {
     setShowReply(isOpen);
@@ -88,29 +91,16 @@ const CommentBox = ({
           />
         ) : (
           <>
-            <Left>
+            <ProfileSide>
               <Profile src={commentData.imageUrl} alt="user_profile" />
-            </Left>
-            <Right>
+            </ProfileSide>
+            <CommentSide>
               <Header>
-                <DIText
-                  fontColor={theme.colors.gray.gray950}
-                  fontWeight={350}
-                  fontSize={20}
-                >
-                  {commentData.nickname}
-                </DIText>
-                <DIText
-                  fontColor={theme.colors.gray.gray500}
-                  fontWeight={400}
-                  fontSize={16}
-                >
-                  {date.dateFormat(commentData.regDateTime)}
-                </DIText>
+                <Nickname>{commentData.nickname}</Nickname>
+                <DateText>{date.dateFormat(commentData.regDateTime)}</DateText>
 
                 {user?.nickname === commentData.nickname ? (
                   <IconWrapper ref={iconRef}>
-                    <EditIconSVG onClick={() => setEdit(true)} />
                     {confirm ? (
                       <DeleteConfirmIconSVG
                         onClick={() => onDeleteComment(commentData.commentId)}
@@ -119,42 +109,31 @@ const CommentBox = ({
                       <DeleteIconSVG onClick={() => setConfirm(true)} />
                     )}
                   </IconWrapper>
-                ) : user !== null ? (
-                  <ReplyIcon
-                    onClick={() => {
-                      onOpenReply(true);
-                    }}
-                  />
                 ) : null}
               </Header>
-              {!commentData.isExist ? (
-                <p style={{ color: theme.colors.gray.gray500 }}>
-                  삭제된 댓글입니다.
-                </p>
+              {commentData.isExist ? (
+                <Content dangerouslySetInnerHTML={{ __html: text }} />
               ) : (
-                <p
-                  dangerouslySetInnerHTML={{ __html: text }}
-                  style={{ color: theme.colors.gray.gray500 }}
-                ></p>
+                <Content>삭제된 댓글입니다.</Content>
               )}
-            </Right>
+              <BottomWrapper>
+                <ReplyText onClick={() => onOpenReply(true)}>
+                  답글달기
+                </ReplyText>
+                {user?.nickname === commentData.nickname ? (
+                  <EditText onClick={() => setEdit(true)}>수정하기</EditText>
+                ) : null}
+                {childLength ? (
+                  <ReplyCount>
+                    <CountReplyIconSVG />
+                    {childLength}
+                  </ReplyCount>
+                ) : null}
+              </BottomWrapper>
+            </CommentSide>
           </>
         )}
       </Container>
-      {commentData.childList
-        ? commentData.childList.length
-          ? commentData.childList.map((comment) => (
-              <CommentBox
-                key={comment.commentId}
-                boardId={boardId}
-                commentData={comment}
-                mentionData={mentionData}
-                depth={depth + 1}
-                commentParentId={commentParentId}
-              />
-            ))
-          : null
-        : null}
       {showReply && (
         <CommentEditor
           boardId={boardId}
@@ -165,6 +144,18 @@ const CommentBox = ({
           commentId={commentParentId}
         />
       )}
+      {commentData.childList && commentData.childList.length
+        ? commentData.childList.map((comment) => (
+            <CommentBox
+              key={comment.commentId}
+              boardId={boardId}
+              commentData={comment}
+              mentionData={mentionData}
+              depth={depth + 1}
+              commentParentId={commentParentId}
+            />
+          ))
+        : null}
     </Wrapper>
   );
 };
@@ -177,7 +168,7 @@ const Container = styled.div<{ childDepth?: number }>`
   width: ${({ childDepth }) =>
     childDepth ? `calc(100% - ${childDepth * 80})` : `100%`};
   border-top: 1px solid #e0e1e4;
-  padding: 44px 0;
+  padding: 40px 0px;
   margin-left: ${({ childDepth }) => (childDepth ? childDepth * 80 : 0)}px;
 `;
 
@@ -186,13 +177,15 @@ const Profile = styled.img`
   height: 69px;
   border-radius: 10px;
 `;
-const Right = styled.div`
+
+const CommentSide = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
-const Left = styled.div`
+
+const ProfileSide = styled.div`
   display: flex;
   width: 30%;
   align-items: center;
@@ -203,25 +196,90 @@ const Left = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: row;
+
+  align-items: center;
   width: 100%;
   gap: 16px;
 `;
 
 const IconWrapper = styled.div`
-  & > svg {
-    cursor: pointer;
-  }
   display: flex;
   flex-direction: row;
   gap: 5px;
   margin-left: auto;
-`;
-
-const ReplyIcon = styled(FaReply)`
-  margin-left: auto;
+  & > svg {
+    cursor: pointer;
+  }
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Content = styled.p`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  color: ${({ theme }) => theme.colors.gray.gray500};
+
+  padding-top: 10px;
+  padding-bottom: 25px;
+  font-size: 16px;
+  line-height: 140%;
+
+  word-wrap: break-word;
+`;
+
+const Nickname = styled(DIText)`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 160%;
+
+  color: ${({ theme }) => theme.colors.gray.gray950};
+`;
+
+const DateText = styled(DIText)`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  /* or 22px */
+
+  /* Gray/Gray500 */
+
+  color: ${({ theme }) => theme.colors.gray.gray500};
+`;
+
+const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  gap: 24px;
+`;
+
+const BottomText = styled(DIText)`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  cursor: pointer;
+`;
+
+const ReplyText = styled(BottomText)`
+  color: ${({ theme }) => theme.colors.primary.default};
+`;
+
+const EditText = styled(BottomText)`
+  color: ${({ theme }) => theme.colors.gray.gray500};
+`;
+
+const ReplyCount = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 `;
