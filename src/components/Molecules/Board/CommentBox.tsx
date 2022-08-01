@@ -3,7 +3,7 @@ import useCommentRegex from '@src/hooks/useCommentRegex';
 import { IComment, IMemberTagResDto } from '@src/typings/Comment';
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import CommentEditor from './CommentEditor';
+import CommentEditor, { CommentType } from './CommentEditor';
 import EditIconSVG from '@src/assets/filled_edit_icon.svg';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import DeleteConfirmIconSVG from '@src/assets/delete_confirm.svg';
@@ -20,9 +20,16 @@ interface Props {
   mentionData: IMemberTagResDto[];
   commentData: IComment;
   depth: number;
+  commentParentId?: number;
 }
 
-const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
+const CommentBox = ({
+  commentParentId,
+  boardId,
+  mentionData,
+  commentData,
+  depth,
+}: Props) => {
   const { data: user } = useUser();
   const queryClient = useQueryClient();
   const theme = useTheme();
@@ -43,15 +50,27 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
   }, []);
   const text = useCommentRegex(commentData);
 
-  const onShowReply = useCallback(() => {
-    setShowReply((prev) => !prev);
+  const onOpenReply = useCallback((isOpen: boolean) => {
+    setShowReply(isOpen);
   }, []);
 
   const onReply = useCallback(
-    (content: string) => {
-      onReplyComment({ boardId, content, parentId: commentData.commentId });
+    ({ parentId, content, mentions }: CommentType) => {
+      onReplyComment(
+        {
+          boardId,
+          content,
+          parentId,
+          memberIdSet: mentions,
+        },
+        {
+          onSuccess: () => {
+            setShowReply(false);
+          },
+        }
+      );
     },
-    [boardId, onReplyComment, commentData]
+    [boardId, onReplyComment]
   );
 
   useOutsideClick(iconRef, () => setConfirm(false));
@@ -60,15 +79,13 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
     <Wrapper>
       <Container childDepth={depth}>
         {edit ? (
-          <>
-            <CommentEditor
-              boardId={boardId}
-              mentionData={mentionData}
-              defaultValue={commentData}
-              onToggle={onToggle}
-              commentId={commentData.commentId}
-            />
-          </>
+          <CommentEditor
+            boardId={boardId}
+            mentionData={mentionData}
+            defaultValue={commentData}
+            onToggle={onToggle}
+            commentId={commentData.commentId}
+          />
         ) : (
           <>
             <Left>
@@ -103,7 +120,11 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
                     )}
                   </IconWrapper>
                 ) : user !== null ? (
-                  <ReplyIcon onClick={onShowReply} />
+                  <ReplyIcon
+                    onClick={() => {
+                      onOpenReply(true);
+                    }}
+                  />
                 ) : null}
               </Header>
               {!commentData.isExist ? (
@@ -129,11 +150,21 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
                 commentData={comment}
                 mentionData={mentionData}
                 depth={depth + 1}
+                commentParentId={commentParentId}
               />
             ))
           : null
         : null}
-      {showReply && <ReplyBox onClose={onShowReply} onReply={onReply} />}
+      {showReply && (
+        <CommentEditor
+          boardId={boardId}
+          mentionData={mentionData}
+          defaultValue={commentData}
+          onToggle={onOpenReply}
+          onReply={onReply}
+          commentId={commentParentId}
+        />
+      )}
     </Wrapper>
   );
 };
@@ -193,106 +224,4 @@ const ReplyIcon = styled(FaReply)`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-type ReplyBoxProps = {
-  onClose: () => void;
-  onReply: (content: string) => void;
-};
-
-const ReplyBox = ({ onClose, onReply }: ReplyBoxProps) => {
-  const theme = useTheme();
-  const textRef = useRef<HTMLTextAreaElement | null>(null);
-  const [body, setBody] = useState<string>('');
-
-  const onChangeText = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    const onChangeTextAreaHeight = () => {
-      if (textRef.current) {
-        textRef.current.style.height = 'auto';
-        textRef.current.style.height = textRef.current.scrollHeight + 'px';
-      }
-    };
-
-    setBody(e.target.value);
-    onChangeTextAreaHeight();
-  }, []);
-
-  return (
-    <ReplyContainer>
-      <TextArea ref={textRef} value={body} onChange={onChangeText} />
-      <ButtonWrapper>
-        <Button
-          color={theme.colors.gray.gray300}
-          onClick={() => {
-            setBody('');
-            onClose();
-          }}
-        >
-          취소
-        </Button>
-        <Button
-          onClick={() => {
-            onReply(body);
-            setBody('');
-            onClose();
-          }}
-        >
-          답장
-        </Button>
-      </ButtonWrapper>
-    </ReplyContainer>
-  );
-};
-
-const ReplyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  color: ${({ theme }) => theme.colors.gray.gray950};
-  min-height: 80px;
-  max-height: 200px;
-  outline: none;
-  resize: none;
-  border: none;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 10px 0px;
-`;
-
-const ButtonWrapper = styled.div`
-  margin-left: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  padding: 10px 0px;
-`;
-
-const Button = styled.button<{ color?: string }>`
-  border: none;
-
-  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 140%;
-  /* or 25px */
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  width: 94px;
-  height: 47px;
-  left: 941px;
-  top: 163px;
-
-  background: ${({ theme, color }) => color || theme.colors.primary.default};
-  border-radius: 51px;
-
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.gray.gray100};
 `;
