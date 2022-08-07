@@ -16,7 +16,6 @@ interface Props {
   commentId?: number;
   mentionData: IMemberTagResDto[];
   defaultValue?: IComment;
-
   onToggle?: (value: boolean) => void;
   onReply?: (comment: CommentType) => void;
 }
@@ -117,7 +116,11 @@ const CommentEditor = ({
         allowSuggestionsAboveCursor
         value={input.content}
         onChange={onChangeChat}
-        placeholder="멋진 글에 대한 소감을 입력해보세요!"
+        placeholder={
+          onReply
+            ? '답글을 입력해주세요!'
+            : '멋진 글에 대한 소감을 입력해보세요!'
+        }
         inputRef={textareaRef}
       >
         <Mention
@@ -151,6 +154,7 @@ const Container = styled.div`
   min-height: 200px;
   border-radius: 10px;
   position: relative;
+  margin: 10px 0px;
 `;
 
 const Input = styled(MentionsInput)`

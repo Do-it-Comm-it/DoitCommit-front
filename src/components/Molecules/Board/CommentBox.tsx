@@ -1,8 +1,8 @@
 import DIText from '@src/components/Atoms/DIText';
 import useCommentRegex from '@src/hooks/useCommentRegex';
 import { IComment, IMemberTagResDto } from '@src/typings/Comment';
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
-import styled, { useTheme } from 'styled-components';
+import React, { useCallback, useRef, useState } from 'react';
+import styled from 'styled-components';
 import CommentEditor, { CommentType } from './CommentEditor';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import DeleteConfirmIconSVG from '@src/assets/delete_confirm.svg';
@@ -12,7 +12,6 @@ import { board } from '@src/service/api';
 import { useQueryClient } from 'react-query';
 import useOutsideClick from '@src/hooks/useOutsideClick';
 import date from '@src/utils/date';
-import { FaReply } from 'react-icons/fa';
 import { useReplyComment } from '@src/hooks/useComments';
 
 interface Props {
@@ -138,7 +137,6 @@ const CommentBox = ({
         <CommentEditor
           boardId={boardId}
           mentionData={mentionData}
-          defaultValue={commentData}
           onToggle={onOpenReply}
           onReply={onReply}
           commentId={commentParentId}
