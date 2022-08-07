@@ -53,6 +53,7 @@ const ProfileInfoArea = () => {
     },
     {
       onSuccess: () => {
+        alert('프로필을 저장하였습니다.');
         queryClient.invalidateQueries('user');
       },
     }
@@ -92,15 +93,16 @@ const ProfileInfoArea = () => {
             <AddInput onClick={addForm} />
           </div>
           <DIButton
-            color={theme.colors.black}
+            color={theme.colors.gray.gray100}
             backgroundColor={theme.colors.primary.default}
             borderColor={theme.colors.primary.default}
             onClick={() => {
               onSubmit.mutate(input as any);
             }}
-            borderRadius={51}
+            borderRadius={50}
+            height={55}
           >
-            내 프로필 저장
+            프로필 저장
           </DIButton>
         </Container>
       )}

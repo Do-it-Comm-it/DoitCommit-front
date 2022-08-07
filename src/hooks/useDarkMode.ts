@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react';
 
 const useDarkMode = () => {
   const [theme, setTheme] = useRecoilState(themeAtom);
+
   const toggleTheme = useCallback(() => {
     // atom effect로 set이 실행되면 localStorage 갱신
     theme === 'light' ? setTheme('dark') : setTheme('light');
@@ -15,7 +16,16 @@ const useDarkMode = () => {
       setTheme(theme);
     }
   }, [setTheme, theme]);
-  return { theme, toggleTheme };
+
+  const toggleLight = useCallback(() => {
+    setTheme('light');
+  }, [setTheme]);
+
+  const toggleDark = useCallback(() => {
+    setTheme('dark');
+  }, [setTheme]);
+
+  return { theme, toggleTheme, toggleDark, toggleLight };
 };
 
 export default useDarkMode;

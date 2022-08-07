@@ -58,7 +58,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: theme.colors.primary.default,
-          color: theme.colors.black,
+          color: theme.colors.gray.gray100,
         }),
         multiValueRemove: (defaultStyles) => ({
           ...defaultStyles,
@@ -70,7 +70,7 @@ const SelectInput = ({ onChange, width, value }: Props) => {
           marginRight: -6,
           marginTop: -5,
           marginBottom: -5,
-          color: theme.colors.black,
+          color: theme.colors.gray.gray100,
         }),
       }}
     />
