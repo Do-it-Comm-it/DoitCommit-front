@@ -3,7 +3,6 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Navigation from '../Molecules/Navigation';
 import UserProfile from '../Molecules/UserProfile';
-import UserIcon from '@src/assets/user.svg';
 import { useCallback } from 'react';
 import { modalAtom } from '@src/recoil/atom/modal';
 import ExpandIconSVG from '@src/assets/expand.svg';

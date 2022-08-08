@@ -12,7 +12,7 @@ const Body = () => {
       <Header />
       <Routes>
         <Route
-          path="/"
+          path="/info"
           element={
             <ProfileContent>
               <ProfileImageArea />

@@ -5,9 +5,14 @@ import React, { useCallback, useState } from 'react';
 import { ChangeEvent } from 'react';
 import styled, { useTheme } from 'styled-components';
 import ToggleSwitch from '../../Atoms/DIToggleSwitch';
+import LightModeIcon from '@src/assets/lightmode.svg';
+import DarkModeIcon from '@src/assets/darkmode.svg';
+import useDarkMode from '@src/hooks/useDarkMode';
 
 const Setting = () => {
   const theme = useTheme();
+  const { toggleLight, toggleDark } = useDarkMode();
+
   const [toggle, setToggle] = useState<{
     mention: boolean;
     notification: boolean;
@@ -33,8 +38,8 @@ const Setting = () => {
     <Container>
       <DIText
         fontColor={theme.colors.gray.gray950}
-        fontWeight={400}
-        fontSize={25}
+        fontWeight={600}
+        fontSize={24}
       >
         알림 설정
       </DIText>
@@ -44,15 +49,18 @@ const Setting = () => {
             fontColor={theme.colors.gray.gray950}
             fontWeight={400}
             fontSize={20}
+            style={{
+              paddingBottom: 16,
+            }}
           >
-            게시물 알림
+            모든 알림 비활성화
           </DIText>
           <DIText
             fontColor={theme.colors.gray.gray400}
             fontSize={16}
             fontWeight={400}
           >
-            멘션과 댓글에 대한 푸시 알림을 받으세요.
+            모든 알림을 받지 않습니다.
           </DIText>
         </TextContainer>
         <ToggleSwitch
@@ -67,15 +75,18 @@ const Setting = () => {
             fontColor={theme.colors.gray.gray950}
             fontWeight={400}
             fontSize={20}
+            style={{
+              paddingBottom: 16,
+            }}
           >
-            일정 알림
+            아티클 알림
           </DIText>
           <DIText
             fontColor={theme.colors.gray.gray400}
             fontSize={16}
             fontWeight={400}
           >
-            다가오는 일정, 투두리스트의 알림을 받으세요.
+            멘션과 댓글에 대한 푸시 알림을 받으세요.
           </DIText>
         </TextContainer>
         <ToggleSwitch
@@ -90,16 +101,18 @@ const Setting = () => {
             fontColor={theme.colors.gray.gray950}
             fontWeight={400}
             fontSize={20}
+            style={{
+              paddingBottom: 16,
+            }}
           >
-            이메일 알림
+            일정 알림
           </DIText>
           <DIText
             fontColor={theme.colors.gray.gray400}
             fontSize={16}
             fontWeight={400}
           >
-            모든 페이지의 멘션, 댓글 및 편집에 대한 업데이트를 이메일로
-            받으세요.
+            다가오는 일정, 투두리스트의 알림을 받으세요.
           </DIText>
         </TextContainer>
         <ToggleSwitch
@@ -108,34 +121,11 @@ const Setting = () => {
           onChange={onChangeToggle}
         />
       </Content>
-      <Content>
-        <TextContainer>
-          <DIText
-            fontColor={theme.colors.gray.gray950}
-            fontWeight={400}
-            fontSize={20}
-          >
-            모든 알림 비활성화
-          </DIText>
-          <DIText
-            fontColor={theme.colors.gray.gray400}
-            fontSize={16}
-            fontWeight={400}
-          >
-            모든 알림을 받지 않습니다.
-          </DIText>
-        </TextContainer>
-        <ToggleSwitch
-          name="notification"
-          value={toggle.notification}
-          onChange={onChangeToggle}
-        />
-      </Content>
 
       <DIText
         fontColor={theme.colors.gray.gray950}
         fontSize={25}
-        fontWeight={400}
+        fontWeight={600}
       >
         계정 설정
       </DIText>
@@ -146,6 +136,9 @@ const Setting = () => {
             fontColor={theme.colors.gray.gray950}
             fontWeight={400}
             fontSize={20}
+            style={{
+              paddingBottom: 16,
+            }}
           >
             테마 설정
           </DIText>
@@ -161,18 +154,20 @@ const Setting = () => {
           <DIButton
             borderRadius={51}
             backgroundColor={theme.colors.primary.default}
-            onClick={() => {}}
+            onClick={toggleLight}
             borderColor={theme.colors.primary.default}
           >
-            라이트모드
+            <ButtonTextContainer>
+              라이트모드 <LightModeIcon />
+            </ButtonTextContainer>
           </DIButton>
           <DIButton
             borderRadius={51}
             backgroundColor={theme.colors.gray.gray600}
             borderColor={theme.colors.gray.gray600}
-            onClick={() => {}}
+            onClick={toggleDark}
           >
-            다크모드
+            다크모드 <DarkModeIcon />
           </DIButton>
         </span>
       </Content>
@@ -183,6 +178,9 @@ const Setting = () => {
             fontColor={theme.colors.gray.gray950}
             fontWeight={400}
             fontSize={20}
+            style={{
+              paddingBottom: 16,
+            }}
           >
             내 계정 삭제
           </DIText>
@@ -191,16 +189,16 @@ const Setting = () => {
             fontSize={16}
             fontWeight={400}
           >
-            현재 세션을 제외한 모든 활성 세션에서 로그아웃되면 다시 로그인
-            해야합니다.
+            탈퇴 7일 후 완전 삭제 됩니다.
           </DIText>
         </TextContainer>
         <DIButton
-          borderRadius={51}
+          borderRadius={50}
           backgroundColor="transparent"
           borderColor={theme.colors.warning}
           color={theme.colors.warning}
           onClick={() => {}}
+          height={50}
         >
           내 계정 삭제
         </DIButton>
@@ -223,7 +221,7 @@ const Setting = () => {
         borderRadius={51}
         onClick={() => {}}
       >
-        내 프로필 저장
+        시스템 저장
       </DIButton>
     </Container>
   );
@@ -246,11 +244,11 @@ const Content = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray300};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray.gray200};
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 0;
+  padding: 40px 0;
 
   & > span > button {
     margin-right: 15px;
@@ -277,4 +275,10 @@ const TextContainer = styled.div`
       white-space: pre-wrap;
     }
   }
+`;
+
+const ButtonTextContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

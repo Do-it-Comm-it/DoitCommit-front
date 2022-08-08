@@ -2,8 +2,6 @@ import DIText from '@src/components/Atoms/DIText';
 import React, { useCallback } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { HiOutlinePlus } from 'react-icons/hi';
-import { MdOutlineLockOpen } from 'react-icons/md';
-import DIButton from '../Atoms/DIButton';
 import { modalAtom } from '@src/recoil/atom/modal';
 import { useSetRecoilState } from 'recoil';
 import RouterLinkBox from './RouterLinkBox';

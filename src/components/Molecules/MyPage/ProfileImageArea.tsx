@@ -35,9 +35,9 @@ const ProfileImageArea = () => {
   return (
     <Container>
       <DIText
-        fontColor={theme.colors.gray.gray200}
+        fontColor={theme.colors.gray.gray800}
         fontWeight={500}
-        fontSize={25}
+        fontSize={24}
         style={{ marginBottom: '20px' }}
       >
         프로필 설정
@@ -71,9 +71,9 @@ const Container = styled.div`
   }
 `;
 const ProfileImage = styled.img`
-  width: 245px;
-  height: 245px;
-  border-radius: 100%;
+  width: 238px;
+  height: 238px;
+  border-radius: 10px;
 `;
 const ImageWrapper = styled.div`
   width: 100%;
@@ -82,8 +82,8 @@ const ImageWrapper = styled.div`
 
 const EditIcon = styled(EditIconSVG)`
   position: absolute;
-  bottom: 0;
-  right: 50px;
+  bottom: 0px;
+  right: 0px;
   cursor: pointer;
 `;
 
