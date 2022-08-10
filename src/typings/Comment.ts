@@ -32,6 +32,6 @@ export interface IUpdateCommentDto {
   body: {
     content: string;
     commentId: number;
-    memberIdSet: string[];
+    memberIdSet?: string[];
   };
 }

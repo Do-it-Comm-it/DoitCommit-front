@@ -1,18 +1,17 @@
 import DIText from '@src/components/Atoms/DIText';
 import useCommentRegex from '@src/hooks/useCommentRegex';
 import { IComment, IMemberTagResDto } from '@src/typings/Comment';
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import CommentEditor from './CommentEditor';
-import EditIconSVG from '@src/assets/filled_edit_icon.svg';
+import React, { useCallback, useRef, useState } from 'react';
+import styled from 'styled-components';
+import CommentEditor, { CommentType } from './CommentEditor';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
 import DeleteConfirmIconSVG from '@src/assets/delete_confirm.svg';
+import CountReplyIconSVG from '@src/assets/count-reply.svg';
 import { useUser } from '@src/hooks/useAuthentication';
 import { board } from '@src/service/api';
 import { useQueryClient } from 'react-query';
 import useOutsideClick from '@src/hooks/useOutsideClick';
 import date from '@src/utils/date';
-import { FaReply } from 'react-icons/fa';
 import { useReplyComment } from '@src/hooks/useComments';
 
 interface Props {
@@ -20,17 +19,27 @@ interface Props {
   mentionData: IMemberTagResDto[];
   commentData: IComment;
   depth: number;
+  commentParentId?: number;
+  childLength?: number;
 }
 
-const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
+const CommentBox = ({
+  commentParentId,
+  boardId,
+  mentionData,
+  commentData,
+  depth,
+  childLength,
+}: Props) => {
   const { data: user } = useUser();
   const queryClient = useQueryClient();
-  const theme = useTheme();
   const [edit, setEdit] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
   const [showReply, setShowReply] = useState<boolean>(false);
+  const text = useCommentRegex(commentData);
   const { mutate: onReplyComment } = useReplyComment(boardId);
+
   const onDeleteComment = useCallback(
     async (commentId: number) => {
       await board.deleteComment(commentId);
@@ -38,20 +47,32 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
     },
     [boardId, queryClient]
   );
+
   const onToggle = useCallback((value) => {
     setEdit(value);
   }, []);
-  const text = useCommentRegex(commentData);
 
-  const onShowReply = useCallback(() => {
-    setShowReply((prev) => !prev);
+  const onOpenReply = useCallback((isOpen: boolean) => {
+    setShowReply(isOpen);
   }, []);
 
   const onReply = useCallback(
-    (content: string) => {
-      onReplyComment({ boardId, content, parentId: commentData.commentId });
+    ({ parentId, content, mentions }: CommentType) => {
+      onReplyComment(
+        {
+          boardId,
+          content,
+          parentId,
+          memberIdSet: mentions,
+        },
+        {
+          onSuccess: () => {
+            setShowReply(false);
+          },
+        }
+      );
     },
-    [boardId, onReplyComment, commentData]
+    [boardId, onReplyComment]
   );
 
   useOutsideClick(iconRef, () => setConfirm(false));
@@ -60,40 +81,25 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
     <Wrapper>
       <Container childDepth={depth}>
         {edit ? (
-          <>
-            <CommentEditor
-              boardId={boardId}
-              mentionData={mentionData}
-              defaultValue={commentData}
-              onToggle={onToggle}
-              commentId={commentData.commentId}
-            />
-          </>
+          <CommentEditor
+            boardId={boardId}
+            mentionData={mentionData}
+            defaultValue={commentData}
+            onToggle={onToggle}
+            commentId={commentData.commentId}
+          />
         ) : (
           <>
-            <Left>
+            <ProfileSide>
               <Profile src={commentData.imageUrl} alt="user_profile" />
-            </Left>
-            <Right>
+            </ProfileSide>
+            <CommentSide>
               <Header>
-                <DIText
-                  fontColor={theme.colors.gray.gray950}
-                  fontWeight={350}
-                  fontSize={20}
-                >
-                  {commentData.nickname}
-                </DIText>
-                <DIText
-                  fontColor={theme.colors.gray.gray500}
-                  fontWeight={400}
-                  fontSize={16}
-                >
-                  {date.dateFormat(commentData.regDateTime)}
-                </DIText>
+                <Nickname>{commentData.nickname}</Nickname>
+                <DateText>{date.dateFormat(commentData.regDateTime)}</DateText>
 
                 {user?.nickname === commentData.nickname ? (
                   <IconWrapper ref={iconRef}>
-                    <EditIconSVG onClick={() => setEdit(true)} />
                     {confirm ? (
                       <DeleteConfirmIconSVG
                         onClick={() => onDeleteComment(commentData.commentId)}
@@ -102,38 +108,52 @@ const CommentBox = ({ boardId, mentionData, commentData, depth }: Props) => {
                       <DeleteIconSVG onClick={() => setConfirm(true)} />
                     )}
                   </IconWrapper>
-                ) : user !== null ? (
-                  <ReplyIcon onClick={onShowReply} />
                 ) : null}
               </Header>
-              {!commentData.isExist ? (
-                <p style={{ color: theme.colors.gray.gray500 }}>
-                  삭제된 댓글입니다.
-                </p>
+              {commentData.isExist ? (
+                <Content dangerouslySetInnerHTML={{ __html: text }} />
               ) : (
-                <p
-                  dangerouslySetInnerHTML={{ __html: text }}
-                  style={{ color: theme.colors.gray.gray500 }}
-                ></p>
+                <Content>삭제된 댓글입니다.</Content>
               )}
-            </Right>
+              <BottomWrapper>
+                <ReplyText onClick={() => onOpenReply(true)}>
+                  답글달기
+                </ReplyText>
+                {user?.nickname === commentData.nickname ? (
+                  <EditText onClick={() => setEdit(true)}>수정하기</EditText>
+                ) : null}
+                {childLength ? (
+                  <ReplyCount>
+                    <CountReplyIconSVG />
+                    {childLength}
+                  </ReplyCount>
+                ) : null}
+              </BottomWrapper>
+            </CommentSide>
           </>
         )}
       </Container>
-      {commentData.childList
-        ? commentData.childList.length
-          ? commentData.childList.map((comment) => (
-              <CommentBox
-                key={comment.commentId}
-                boardId={boardId}
-                commentData={comment}
-                mentionData={mentionData}
-                depth={depth + 1}
-              />
-            ))
-          : null
+      {showReply && (
+        <CommentEditor
+          boardId={boardId}
+          mentionData={mentionData}
+          onToggle={onOpenReply}
+          onReply={onReply}
+          commentId={commentParentId}
+        />
+      )}
+      {commentData.childList && commentData.childList.length
+        ? commentData.childList.map((comment) => (
+            <CommentBox
+              key={comment.commentId}
+              boardId={boardId}
+              commentData={comment}
+              mentionData={mentionData}
+              depth={depth + 1}
+              commentParentId={commentParentId}
+            />
+          ))
         : null}
-      {showReply && <ReplyBox onClose={onShowReply} onReply={onReply} />}
     </Wrapper>
   );
 };
@@ -146,7 +166,7 @@ const Container = styled.div<{ childDepth?: number }>`
   width: ${({ childDepth }) =>
     childDepth ? `calc(100% - ${childDepth * 80})` : `100%`};
   border-top: 1px solid #e0e1e4;
-  padding: 44px 0;
+  padding: 40px 0px;
   margin-left: ${({ childDepth }) => (childDepth ? childDepth * 80 : 0)}px;
 `;
 
@@ -155,13 +175,15 @@ const Profile = styled.img`
   height: 69px;
   border-radius: 10px;
 `;
-const Right = styled.div`
+
+const CommentSide = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
-const Left = styled.div`
+
+const ProfileSide = styled.div`
   display: flex;
   width: 30%;
   align-items: center;
@@ -172,22 +194,20 @@ const Left = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: row;
+
+  align-items: center;
   width: 100%;
   gap: 16px;
 `;
 
 const IconWrapper = styled.div`
-  & > svg {
-    cursor: pointer;
-  }
   display: flex;
   flex-direction: row;
   gap: 5px;
   margin-left: auto;
-`;
-
-const ReplyIcon = styled(FaReply)`
-  margin-left: auto;
+  & > svg {
+    cursor: pointer;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -195,104 +215,69 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-type ReplyBoxProps = {
-  onClose: () => void;
-  onReply: (content: string) => void;
-};
+const Content = styled.p`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  color: ${({ theme }) => theme.colors.gray.gray500};
 
-const ReplyBox = ({ onClose, onReply }: ReplyBoxProps) => {
-  const theme = useTheme();
-  const textRef = useRef<HTMLTextAreaElement | null>(null);
-  const [body, setBody] = useState<string>('');
+  padding-top: 10px;
+  padding-bottom: 25px;
+  font-size: 16px;
+  line-height: 140%;
 
-  const onChangeText = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    const onChangeTextAreaHeight = () => {
-      if (textRef.current) {
-        textRef.current.style.height = 'auto';
-        textRef.current.style.height = textRef.current.scrollHeight + 'px';
-      }
-    };
-
-    setBody(e.target.value);
-    onChangeTextAreaHeight();
-  }, []);
-
-  return (
-    <ReplyContainer>
-      <TextArea ref={textRef} value={body} onChange={onChangeText} />
-      <ButtonWrapper>
-        <Button
-          color={theme.colors.gray.gray300}
-          onClick={() => {
-            setBody('');
-            onClose();
-          }}
-        >
-          취소
-        </Button>
-        <Button
-          onClick={() => {
-            onReply(body);
-            setBody('');
-            onClose();
-          }}
-        >
-          답장
-        </Button>
-      </ButtonWrapper>
-    </ReplyContainer>
-  );
-};
-
-const ReplyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  word-wrap: break-word;
 `;
 
-const TextArea = styled.textarea`
-  width: 100%;
-  color: ${({ theme }) => theme.colors.gray.gray950};
-  min-height: 80px;
-  max-height: 200px;
-  outline: none;
-  resize: none;
-  border: none;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 10px 0px;
-`;
-
-const ButtonWrapper = styled.div`
-  margin-left: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  padding: 10px 0px;
-`;
-
-const Button = styled.button<{ color?: string }>`
-  border: none;
-
+const Nickname = styled(DIText)`
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
   font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 160%;
+
+  color: ${({ theme }) => theme.colors.gray.gray950};
+`;
+
+const DateText = styled(DIText)`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
   line-height: 140%;
-  /* or 25px */
+  /* or 22px */
 
+  /* Gray/Gray500 */
+
+  color: ${({ theme }) => theme.colors.gray.gray500};
+`;
+
+const BottomWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  gap: 24px;
+`;
 
-  width: 94px;
-  height: 47px;
-  left: 941px;
-  top: 163px;
-
-  background: ${({ theme, color }) => color || theme.colors.primary.default};
-  border-radius: 51px;
-
+const BottomText = styled(DIText)`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.gray.gray100};
+`;
+
+const ReplyText = styled(BottomText)`
+  color: ${({ theme }) => theme.colors.primary.default};
+`;
+
+const EditText = styled(BottomText)`
+  color: ${({ theme }) => theme.colors.gray.gray500};
+`;
+
+const ReplyCount = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 `;
