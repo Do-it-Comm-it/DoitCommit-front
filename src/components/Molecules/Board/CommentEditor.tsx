@@ -6,13 +6,18 @@ import { board } from '@src/service/api';
 import { IComment, IMemberTagResDto } from '@src/typings/Comment';
 import { useQueryClient } from 'react-query';
 
+export type CommentType = {
+  parentId?: number;
+  content: string;
+  mentions?: string[];
+};
 interface Props {
   boardId: number;
   commentId?: number;
   mentionData: IMemberTagResDto[];
   defaultValue?: IComment;
-
   onToggle?: (value: boolean) => void;
+  onReply?: (comment: CommentType) => void;
 }
 const CommentEditor = ({
   defaultValue,
@@ -20,9 +25,10 @@ const CommentEditor = ({
   mentionData,
   onToggle,
   commentId,
+  onReply,
 }: Props) => {
   const queryClient = useQueryClient();
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<CommentType>({
     content: defaultValue?.content ?? '',
     mentions: defaultValue?.memberIdSet ?? [],
   });
@@ -41,7 +47,14 @@ const CommentEditor = ({
 
   const onSubmit = useCallback(async () => {
     //defaultValue가 존재하면 즉 수정할 때는 수정 api 아니면 생성 api 호출 (분기)
-    if (onToggle && commentId) {
+    if (onReply) {
+      onReply({
+        parentId: commentId,
+        content: input.content,
+        mentions: input.mentions,
+      });
+      setInput({ content: '', mentions: [] });
+    } else if (onToggle && commentId) {
       const result = await board.updateComment({
         body: {
           commentId,
@@ -65,7 +78,7 @@ const CommentEditor = ({
         setInput({ content: '', mentions: [] });
       }
     }
-  }, [input, boardId, queryClient, onToggle, commentId]);
+  }, [input, boardId, onReply, queryClient, onToggle, commentId]);
 
   // render fn for suggestion list
   const renderUserSuggestion: (
@@ -85,6 +98,7 @@ const CommentEditor = ({
     },
     [mentionData]
   );
+
   useEffect(() => {
     if (textareaRef.current) {
       autosize(textareaRef.current);
@@ -93,7 +107,7 @@ const CommentEditor = ({
 
   return (
     <Container>
-      {onToggle && (
+      {onToggle && !onReply && (
         <ImageContainer>
           <img src={defaultValue?.imageUrl} alt="profile_user" />
         </ImageContainer>
@@ -102,7 +116,11 @@ const CommentEditor = ({
         allowSuggestionsAboveCursor
         value={input.content}
         onChange={onChangeChat}
-        placeholder="멋진 글에 대한 소감을 입력해보세요!"
+        placeholder={
+          onReply
+            ? '답글을 입력해주세요!'
+            : '멋진 글에 대한 소감을 입력해보세요!'
+        }
         inputRef={textareaRef}
       >
         <Mention
@@ -136,10 +154,11 @@ const Container = styled.div`
   min-height: 200px;
   border-radius: 10px;
   position: relative;
+  margin: 10px 0px;
 `;
 
 const Input = styled(MentionsInput)`
-  width: 100%;
+  width: 80%;
   resize: none;
   outline: none;
   border: none;

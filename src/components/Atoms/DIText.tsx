@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 
 type DITextProps = {
+  className?: string;
   fontColor?: string;
   fontSize?: number;
   fontWeight?: number;
@@ -14,6 +15,7 @@ type DITextProps = {
 
 //TO DO: Add font-family , Linkable Text(Optional)
 const DIText = ({
+  className,
   fontColor,
   fontSize = 16,
   fontWeight = 400,
@@ -25,6 +27,7 @@ const DIText = ({
 }: DITextProps) => {
   return (
     <Text
+      className={className}
       style={style}
       fontColor={fontColor}
       fontSize={fontSize}
