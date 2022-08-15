@@ -81,7 +81,8 @@ export const useBoardListMutation = (
   api: (selectedBoard: IBoard) => Promise<void>,
   category: number | null,
   search: string | null,
-  isBookmark: boolean
+  isBookmark: boolean,
+  isHome?: boolean
 ) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
@@ -97,7 +98,6 @@ export const useBoardListMutation = (
         category,
         search,
       ]);
-
       queryClient.setQueryData<IBoardList>(
         ['boards-page', category, search, isBookmark],
         (old) => ({
@@ -126,7 +126,9 @@ export const useBoardListMutation = (
       };
     },
     onSuccess() {
-      queryClient.invalidateQueries('boards');
+      isHome
+        ? queryClient.invalidateQueries('main-board')
+        : queryClient.invalidateQueries('boards-page');
     },
   });
 
