@@ -1,12 +1,12 @@
 import { IBoard } from '@src/typings/Board';
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import CommentBox from './CommentBox';
 import CommentEditor from './CommentEditor';
 import useComments from '@src/hooks/useComments';
 import { IComment, ICommentRes } from '@src/typings/Comment';
-import ExpandIconSVG from '@src/assets/expand_comment.svg';
 import CommentIconSVG from '@src/assets/comment.svg';
+import ShowMoreText from '@src/components/Atoms/ShowMoreText';
 
 interface Props {
   boardData: IBoard;
@@ -16,27 +16,29 @@ const BoardContent = ({ boardData }: Props) => {
     boardData.boardId!
   );
 
-  const getComputedExtraPage = (
-    page: {
-      commentsData: ICommentRes;
-      nextPage: number;
-    }[]
-  ) => {
-    if (page[0].commentsData.commentCount >= 5 * (page.length + 1)) {
-      return 5;
-    }
-    return page[0].commentsData.commentCount % 5;
-  };
+  const getComputedExtraPage = useCallback(
+    (
+      page: {
+        commentsData: ICommentRes;
+        nextPage: number;
+      }[]
+    ) => {
+      if (page[0].commentsData.commentCount >= 3 * (page.length + 1)) {
+        return 3;
+      }
+      return page[0].commentsData.commentCount % 3;
+    },
+    []
+  );
 
   return (
     <Container>
       <Content>
-        <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }}></div>
+        <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }} />
       </Content>
-      {/* 댓글이 5개가 넘었을 경우 더보기 */}
       <CommentCountWrapper>
         <CommentIconSVG />
-        <span>{comments?.pages[0].commentsData.commentCount}</span>
+        <TotalText>{comments?.pages[0].commentsData.commentCount}</TotalText>
       </CommentCountWrapper>
 
       {!isLoading &&
@@ -54,14 +56,10 @@ const BoardContent = ({ boardData }: Props) => {
           ))
         )}
       {hasNextPage && (
-        <LoadMoreWrapper>
-          <div onClick={() => fetchNextPage()}>
-            <span>
-              {getComputedExtraPage(comments?.pages!)}개의 댓글 더 보기
-            </span>
-            <ExpandIconSVG />
-          </div>
-        </LoadMoreWrapper>
+        <ShowMoreText
+          onClick={() => fetchNextPage()}
+          length={getComputedExtraPage(comments?.pages!)}
+        />
       )}
       {!isLoading && (
         <CommentEditor
@@ -113,40 +111,15 @@ const Content = styled.div`
   }
 `;
 
-const LoadMoreWrapper = styled.div`
-  display: flex;
-  flex-basis: content;
-  flex-direction: row;
-  justify-content: center;
-  gap: 4px;
-  margin-bottom: 1.75rem;
-
-  & > div {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    & > span {
-      color: ${({ theme }) => theme.colors.primary.default};
-      font-weight: 500;
-      font-size: 20px;
-    }
-
-    & > svg {
-      & > path {
-        fill: ${({ theme }) => theme.colors.primary.default};
-      }
-    }
-  }
-`;
 const CommentCountWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 15px;
   gap: 5px;
+`;
 
-  & > span {
-    color: ${({ theme }) => theme.colors.primary.default};
-    font-weight: 400;
-    font-size: 16px;
-  }
+const TotalText = styled.span`
+  color: ${({ theme }) => theme.colors.primary.default};
+  font-weight: 400;
+  font-size: 16px;
 `;

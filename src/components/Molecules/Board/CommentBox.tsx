@@ -1,7 +1,7 @@
 import DIText from '@src/components/Atoms/DIText';
 import useCommentRegex from '@src/hooks/useCommentRegex';
 import { IComment, IMemberTagResDto } from '@src/typings/Comment';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import CommentEditor, { CommentType } from './CommentEditor';
 import DeleteIconSVG from '@src/assets/filled_delete_icon.svg';
@@ -13,6 +13,7 @@ import { useQueryClient } from 'react-query';
 import useOutsideClick from '@src/hooks/useOutsideClick';
 import date from '@src/utils/date';
 import { useReplyComment } from '@src/hooks/useComments';
+import ShowMoreText from '@src/components/Atoms/ShowMoreText';
 
 interface Props {
   boardId: number;
@@ -31,6 +32,7 @@ const CommentBox = ({
   depth,
   childLength,
 }: Props) => {
+  const [showMore, setShowMore] = useState(false);
   const { data: user } = useUser();
   const queryClient = useQueryClient();
   const [edit, setEdit] = useState(false);
@@ -76,6 +78,15 @@ const CommentBox = ({
   );
 
   useOutsideClick(iconRef, () => setConfirm(false));
+
+  const childComments = useMemo(() => {
+    const comments = commentData.childList;
+    if (comments) {
+      return showMore ? comments : comments.slice(0, 3);
+    } else {
+      return [];
+    }
+  }, [commentData.childList, showMore]);
 
   return (
     <Wrapper>
@@ -142,18 +153,22 @@ const CommentBox = ({
           commentId={commentParentId}
         />
       )}
-      {commentData.childList && commentData.childList.length
-        ? commentData.childList.map((comment) => (
-            <CommentBox
-              key={comment.commentId}
-              boardId={boardId}
-              commentData={comment}
-              mentionData={mentionData}
-              depth={depth + 1}
-              commentParentId={commentParentId}
-            />
-          ))
-        : null}
+      {childComments.map((comment) => (
+        <CommentBox
+          key={comment.commentId}
+          boardId={boardId}
+          commentData={comment}
+          mentionData={mentionData}
+          depth={depth + 1}
+          commentParentId={commentParentId}
+        />
+      ))}
+      {depth === 0 && !showMore && commentData.childList.length > 3 ? (
+        <ShowMoreText
+          onClick={() => setShowMore(true)}
+          length={commentData.childList.length - 3}
+        />
+      ) : null}
     </Wrapper>
   );
 };
