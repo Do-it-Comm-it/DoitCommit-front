@@ -90,7 +90,14 @@ const checkNickname = async (nickname: string) => {
   return data;
 };
 
+const getInterestTech = async () => {
+  const { data } = await requestAPI().get('/interest/tech');
+
+  return data;
+};
+
 const userApiList = {
+  getInterestTech,
   getAuthUser,
   saveExtendedUserInfo,
   getUserInfo,

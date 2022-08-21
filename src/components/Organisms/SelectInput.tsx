@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Select from 'react-select';
-import options from '@src/data/techListData';
 import styled, { useTheme } from 'styled-components';
 import { Tech } from '@src/typings/Tech';
+import { useUserInterestTech } from '@src/hooks/useUser';
 
 interface Props {
   onChange: (value: unknown) => void;
@@ -11,6 +11,18 @@ interface Props {
 }
 const SelectInput = ({ onChange, width, value }: Props) => {
   const theme = useTheme();
+  const { data: interestList } = useUserInterestTech();
+
+  const options = useMemo(() => {
+    if (interestList) {
+      return interestList.map((interest: any) => ({
+        value: interest.interestTechId,
+        label: interest.interestTechNm,
+      }));
+    }
+    return [];
+  }, [interestList]);
+
   return (
     <TechSelect
       value={value}

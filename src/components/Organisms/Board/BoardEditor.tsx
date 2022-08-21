@@ -11,9 +11,10 @@ import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
 import { useNavigate } from 'react-router-dom';
-import './bubble.css';
 import { useUser } from '@src/hooks/useAuthentication';
 import ToggleSwitch from '@src/components/Atoms/DIToggleSwitch';
+import './snow.css';
+
 const Module = {
   toolbar: {
     container: [
@@ -31,7 +32,6 @@ const Module = {
       [{ align: [] }],
     ],
     readOnly: false,
-    theme: 'snow',
   },
 };
 
@@ -139,7 +139,7 @@ const BoardEditor = () => {
       },
       placeholder: '내용을 입력하세요.',
       readOnly: false,
-      theme: 'bubble',
+      theme: 'snow',
     });
 
     quill.getModule('toolbar').addHandler('image', imageHandler);
