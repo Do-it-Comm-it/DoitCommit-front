@@ -33,7 +33,8 @@ const CardContent = ({
     boardApi.toggleBookmark,
     category,
     search,
-    isBookmark
+    isBookmark,
+    isHome
   );
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);
