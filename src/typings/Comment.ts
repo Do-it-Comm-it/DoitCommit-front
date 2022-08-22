@@ -1,5 +1,6 @@
 export interface ICommentRes {
-  commentCount: number;
+  totalCommentCnt: number;
+  parentCommentCnt: number;
   memberTagResDtoList: IMemberTagResDto[];
   commentResDtoList: ICommentResDto;
 }

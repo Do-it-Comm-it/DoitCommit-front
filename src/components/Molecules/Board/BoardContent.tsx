@@ -23,10 +23,10 @@ const BoardContent = ({ boardData }: Props) => {
         nextPage: number;
       }[]
     ) => {
-      if (page[0].commentsData.commentCount >= 3 * (page.length + 1)) {
+      if (page[0].commentsData.parentCommentCnt >= 3 * (page.length + 1)) {
         return 3;
       }
-      return page[0].commentsData.commentCount % 3;
+      return page[0].commentsData.parentCommentCnt % 3;
     },
     []
   );
@@ -38,7 +38,7 @@ const BoardContent = ({ boardData }: Props) => {
       </Content>
       <CommentCountWrapper>
         <CommentIconSVG />
-        <TotalText>{comments?.pages[0].commentsData.commentCount}</TotalText>
+        <TotalText>{comments?.pages[0].commentsData.totalCommentCnt}</TotalText>
       </CommentCountWrapper>
 
       {!isLoading &&
