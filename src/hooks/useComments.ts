@@ -18,7 +18,11 @@ export const useReplyComment = (boardId: number) => {
 
 const useComments = (boardId: number) => {
   const fetchComments = async ({ pageParam = 1 }) => {
-    const result: ICommentRes = await board.getCommentList(boardId, pageParam);
+    const result: ICommentRes = await board.getCommentList(
+      boardId,
+      pageParam,
+      3
+    );
     return {
       commentsData: result,
       nextPage: pageParam + 1,

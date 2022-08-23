@@ -49,9 +49,9 @@ const saveBoard = async (request: RequestBoard) => {
   return data;
 };
 
-const getCommentList = async (boardId: number, page: number) => {
+const getCommentList = async (boardId: number, page: number, size: number) => {
   const { data } = await requestAPI().get(
-    `/boards/${boardId}/comments?page=${page}`
+    `/boards/${boardId}/comments?page=${page}&size=${size}`
   );
   return data;
 };
