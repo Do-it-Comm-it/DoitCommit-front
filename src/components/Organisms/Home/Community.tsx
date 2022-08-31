@@ -1,8 +1,6 @@
-import CommunityBox from '@src/components/Molecules/Community/CommunityBox';
 import ContentBox from '@src/components/Molecules/ContentBox';
-import { useMainPageBoard } from '@src/hooks/useBoards';
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 const Community = () => {
   return (
     <ContentBox title="체크 두잇" requiredHeader>
@@ -15,14 +13,14 @@ const Community = () => {
   );
 };
 
-const EmptyText = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-  color: ${({ theme }) => theme.colors.gray.gray500};
-  font-weight: 500;
-  font-size: 18px;
-`;
+// const EmptyText = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   height: 300px;
+//   color: ${({ theme }) => theme.colors.gray.gray500};
+//   font-weight: 500;
+//   font-size: 18px;
+// `;
 
 export default Community;

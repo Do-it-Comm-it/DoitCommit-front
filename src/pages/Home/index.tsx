@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import HomeTitle from '@src/components/Organisms/Home/HomeTitle';
-import HomeTodoList from '@src/components/Organisms/Home/HomeTodoList';
 import Planner from '@src/components/Organisms/Home/Planner';
 import Community from '@src/components/Organisms/Home/Community';
 import AdBanner from '@src/components/Organisms/Home/AdBanner';

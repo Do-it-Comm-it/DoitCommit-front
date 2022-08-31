@@ -6,7 +6,6 @@ import {
   useQuery,
   useQueryClient,
 } from 'react-query';
-import { useUser } from './useAuthentication';
 
 export const useBoards = (
   boardType: number,

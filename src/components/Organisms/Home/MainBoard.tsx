@@ -3,7 +3,7 @@ import ContentBox from '@src/components/Molecules/ContentBox';
 import { useMainPageBoard } from '@src/hooks/useBoards';
 import { IBoard } from '@src/typings/Board';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 const MainBoard = () => {
   const { data: MainBoards } = useMainPageBoard();
   return (

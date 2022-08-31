@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Container, ContentCol, ContentRow } from '@src/components/Atoms/Modal';
 import { Importance, TodoType } from '@src/typings/Todos';

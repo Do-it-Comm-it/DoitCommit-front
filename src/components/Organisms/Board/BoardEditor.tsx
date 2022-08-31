@@ -208,7 +208,7 @@ const BoardEditor = () => {
         },
       }
     );
-  }, [allImages, editorState, tags, isNotice, postBoard, navigate]);
+  }, [category, allImages, postBoard, editorState, tags, navigate]);
 
   return (
     <Container>
