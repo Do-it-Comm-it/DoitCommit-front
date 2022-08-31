@@ -9,8 +9,7 @@ import { useUser } from '@src/hooks/useAuthentication';
 import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import OpenerSVG from '@src/assets/opener.svg';
 import useOutsideClick from '@src/hooks/useOutsideClick';
-
-const COMMUNITY_ID = 2;
+import { filterNumber, filterString } from '@src/utils/board';
 
 type Props = {
   search?: string;
@@ -22,8 +21,8 @@ const Articles = ({ search, tagType }: Props) => {
   const { data: user } = useUser();
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
   const [isOpener, setIsOpener] = useState<boolean>(false);
-  const [filterBoard, setfilterBoard] = useState<string>('최신순');
-  const [filterPosition, setFilterPostion] = useState<string>('전체'); // 개발,디자인,기획
+  const [filterBoard, setFilterBoard] = useState<string>('최신순');
+  const [filterPosition, setFilterPosition] = useState<string>('전체'); // 개발,디자인,기획
   const filterRef = useRef<HTMLUListElement>(null);
   const {
     boards,
@@ -32,7 +31,13 @@ const Articles = ({ search, tagType }: Props) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(COMMUNITY_ID, tagType, search, isBookmark);
+  } = useBoards(
+    filterNumber(filterPosition),
+    tagType,
+    search,
+    isBookmark,
+    filterString(filterBoard)
+  );
 
   useOutsideClick(filterRef, () => setIsOpener(false));
   return (
@@ -64,7 +69,7 @@ const Articles = ({ search, tagType }: Props) => {
                       key={pos}
                       active={filterPosition === pos}
                       onClick={() => {
-                        setFilterPostion(pos);
+                        setFilterPosition(pos);
                       }}
                     >
                       {pos}
@@ -97,7 +102,7 @@ const Articles = ({ search, tagType }: Props) => {
                           key={FBoard}
                           isSelect={FBoard === filterBoard}
                           onClick={() => {
-                            setfilterBoard(FBoard);
+                            setFilterBoard(FBoard);
                             setIsOpener(false);
                           }}
                         >
@@ -166,16 +171,6 @@ const Container = styled.div`
   justify-content: center;
   row-gap: 30px;
   column-gap: 30px;
-  width: 100%;
-  height: 100%;
-`;
-const HeaderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  padding-bottom: 30px;
   width: 100%;
   height: 100%;
 `;

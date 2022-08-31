@@ -1,7 +1,13 @@
 import DIButton from '@src/components/Atoms/DIButton';
 import Editor from '@src/components/Molecules/Editor/Editor';
 import TagInput from '@src/components/Molecules/TagInput';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useMutation } from 'react-query';
 import { board as boardAPI } from '@src/service/api';
@@ -14,6 +20,9 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '@src/hooks/useAuthentication';
 import ToggleSwitch from '@src/components/Atoms/DIToggleSwitch';
 import './snow.css';
+import OpenerSVG from '@src/assets/opener.svg';
+import useOutsideClick from '@src/hooks/useOutsideClick';
+import { filterNumber } from '@src/utils/board';
 
 const Module = {
   toolbar: {
@@ -53,13 +62,15 @@ const BoardEditor = () => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] =
     useState<RequestBoard>(defaultEditorState);
-
+  const [category, setCategory] = useState<string>('분류');
+  const [isOpener, setIsOpener] = useState<boolean>(false);
+  const categoryRef = useRef<HTMLUListElement>(null);
   const { mutate: postBoard } = useMutation((boardData: RequestBoard) =>
     boardAPI.saveBoard(boardData)
   );
 
   const { mutate: saveImage } = useImage();
-
+  useOutsideClick(categoryRef, () => setIsOpener(false));
   useEffect(() => {
     Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
 
@@ -164,6 +175,11 @@ const BoardEditor = () => {
   }, []);
 
   const onSubmit = useCallback(() => {
+    if (category === '분류') {
+      alert('게시글 분야 선택은 필수입니다.');
+      setIsOpener(true);
+      return;
+    }
     const images = allImages.filter(
       (image) => image.url && editorState.boardContent.includes(image.url)
     );
@@ -171,7 +187,8 @@ const BoardEditor = () => {
     postBoard(
       {
         ...editorState,
-        categoryId: isNotice ? 1 : 2,
+        // categoryId: isNotice ? 1 : 2,
+        categoryId: filterNumber(category),
         boardHashtag: tags.map((t) => String(t.tagId)),
         allImageArr: allImages.map((i) => ({
           fileNm: i.fileNm,
@@ -191,18 +208,52 @@ const BoardEditor = () => {
         },
       }
     );
-  }, [allImages, editorState, tags, isNotice, postBoard, navigate]);
+  }, [category, allImages, postBoard, editorState, tags, navigate]);
 
   return (
     <Container>
       <Header>
-        <TitleInput
-          onChange={onChangeTitle}
-          defaultValue={editorState.boardTitle}
-          placeholder={'제목을 입력하세요.'}
-        />
+        <Flex>
+          <TitleInput
+            onChange={onChangeTitle}
+            defaultValue={editorState.boardTitle}
+            placeholder={'제목을 입력하세요.'}
+          />
+          <ButtonWrapper ref={categoryRef}>
+            <FilterButton
+              onClick={() => {
+                setIsOpener((prev) => !prev);
+              }}
+            >
+              {category}
+            </FilterButton>
+            <FilterOpener
+              isOpener={isOpener}
+              onClick={() => {
+                setIsOpener((prev) => !prev);
+              }}
+            />
+            {isOpener && (
+              <FilterWrap>
+                {['기획', '개발', '디자인'].map((e) => (
+                  <Filter
+                    key={e}
+                    isSelect={e === category}
+                    onClick={() => {
+                      setCategory(e);
+                      setIsOpener(false);
+                    }}
+                  >
+                    {e}
+                  </Filter>
+                ))}
+              </FilterWrap>
+            )}
+          </ButtonWrapper>
+        </Flex>
         <TagInput onChange={onChangeTag} value={tags} />
       </Header>
+
       <Editor height={500} />
       <BottomSection>
         {user && user.role === 'ADMIN' && (
@@ -256,6 +307,12 @@ const Header = styled.div`
   margin-bottom: 50px;
 `;
 
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const TitleInput = styled.input`
   border: none;
   outline: none;
@@ -299,4 +356,56 @@ const ToggleText = styled.div`
 
   color: ${({ theme }) => theme.colors.black};
 `;
+
+const ButtonWrapper = styled.ul`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+`;
+
+const FilterButton = styled.li`
+  color: ${({ theme }) => theme.colors.gray.gray950};
+  list-style: none;
+  cursor: pointer;
+`;
+
+const FilterOpener = styled(({ isOpener, ...props }) => (
+  <OpenerSVG {...props} />
+))<{ isOpener?: boolean }>`
+  & > path {
+    stroke: ${({ theme }) => theme.colors.primary.default};
+  }
+  cursor: pointer;
+  ${({ isOpener }) =>
+    isOpener ? `transform: rotate(-180deg)` : `transform: rotate(0deg)`};
+`;
+
+const FilterWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  left: 8;
+`;
+
+const Filter = styled.button<{ isSelect: boolean }>`
+  width: 108px;
+  height: 49px;
+  background: ${({ isSelect }) => (isSelect ? '#F9F9F9' : '#FEFEFE')};
+  border: 1px solid transparent;
+  color: ${({ theme, isSelect }) =>
+    isSelect ? theme.colors.primary.default : theme.colors.gray.gray950};
+  cursor: pointer;
+  &:first-child {
+    border-radius: 10px 10px 0px 0px;
+  }
+  &:last-child {
+    border-radius: 0px 0px 10px 10px;
+  }
+  z-index: 2;
+`;
+
 export default BoardEditor;

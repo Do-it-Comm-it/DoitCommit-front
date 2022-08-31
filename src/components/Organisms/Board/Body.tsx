@@ -1,6 +1,4 @@
-import Header from '@src/components/Organisms/Board/Header';
 import React, { useMemo } from 'react';
-
 import styled from 'styled-components';
 import Notice from './Notice';
 import Articles from './Articles';
