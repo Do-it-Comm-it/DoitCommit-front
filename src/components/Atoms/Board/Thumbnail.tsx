@@ -88,6 +88,8 @@ const Image = styled.img<{
   height: ${({ thumbnail, isHome }) =>
     isHome && thumbnail ? '139px' : thumbnail ? '170px' : '40px'};
   border-radius: ${({ thumbnail }) => (thumbnail ? '10px 10px 0 0' : '10px')};
+
+  object-fit: cover;
 `;
 
 const Author = styled.span`
