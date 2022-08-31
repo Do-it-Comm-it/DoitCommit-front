@@ -52,7 +52,7 @@ export const useBoards = (
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [`boards-page`, tagType, search, isBookmark, sortType],
+    [`boards-page`, tagType, search, isBookmark, sortType, boardType],
     isBookmark ? fetchBookmarkPosts : fetchPosts,
     {
       getNextPageParam: (lastPage) => {

@@ -9,9 +9,7 @@ import { useUser } from '@src/hooks/useAuthentication';
 import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import OpenerSVG from '@src/assets/opener.svg';
 import useOutsideClick from '@src/hooks/useOutsideClick';
-import { filterString } from '@src/utils/string';
-
-const COMMUNITY_ID = 2;
+import { filterNumber, filterString } from '@src/utils/board';
 
 type Props = {
   search?: string;
@@ -34,7 +32,7 @@ const Articles = ({ search, tagType }: Props) => {
     fetchNextPage,
     isFetchingNextPage,
   } = useBoards(
-    COMMUNITY_ID,
+    filterNumber(filterPosition),
     tagType,
     search,
     isBookmark,
