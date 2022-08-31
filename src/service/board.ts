@@ -6,14 +6,17 @@ const getBookmarkBoardListByPage = async (
   page: number,
   boardCategoryId: number,
   tagCategoryId?: number,
-  keyword?: string
+  keyword?: string,
+  sortType?: string
 ) => {
   const { data } = await requestAPI().get(
     `/bookmarks?page=${
       page + 1
     }&size=16&boardCategoryId=${boardCategoryId}&tagCategoryId=${
       tagCategoryId || ''
-    }&keyword=${keyword || ''}`
+    }
+      &keyword=${keyword || ''}&sortType=${sortType || ''}
+    `
   );
   return data;
 };
@@ -22,14 +25,16 @@ const getBoardListByPage = async (
   page: number,
   boardCategoryId: number,
   tagCategoryId?: number,
-  keyword?: string
+  keyword?: string,
+  sortType?: string
 ) => {
   const { data } = await requestAPI().get(
-    `/board/list?page=${
-      page + 1
-    }&size=16&boardCategoryId=${boardCategoryId}&tagCategoryId=${
-      tagCategoryId || ''
-    }&keyword=${keyword || ''}`
+    `/board/list?page=${page + 1}&size=16&boardCategoryId=${
+      boardCategoryId || ''
+    }
+    &tagCategoryId=${tagCategoryId || ''}
+    &keyword=${keyword || ''}&sortType=${sortType || ''}
+    `
   );
   return data;
 };

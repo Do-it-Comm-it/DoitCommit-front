@@ -12,7 +12,8 @@ export const useBoards = (
   boardType: number,
   tagType?: number,
   search?: string,
-  isBookmark?: boolean
+  isBookmark?: boolean,
+  sortType?: string
 ) => {
   const fetchBookmarkPosts = async ({ pageParam = 0 }) => {
     const result = await board.getBookmarkBoardListByPage(
@@ -33,7 +34,8 @@ export const useBoards = (
       pageParam,
       boardType,
       tagType,
-      search
+      search,
+      sortType
     );
 
     return {
@@ -50,7 +52,7 @@ export const useBoards = (
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [`boards-page`, tagType, search, isBookmark],
+    [`boards-page`, tagType, search, isBookmark, sortType],
     isBookmark ? fetchBookmarkPosts : fetchPosts,
     {
       getNextPageParam: (lastPage) => {

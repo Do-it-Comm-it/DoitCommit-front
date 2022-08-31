@@ -1,5 +1,5 @@
 import Card from '@src/components/Molecules/Board/Card';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useBoards } from '@src/hooks/useBoards';
@@ -9,6 +9,7 @@ import { useUser } from '@src/hooks/useAuthentication';
 import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import OpenerSVG from '@src/assets/opener.svg';
 import useOutsideClick from '@src/hooks/useOutsideClick';
+import { filterString } from '@src/utils/string';
 
 const COMMUNITY_ID = 2;
 
@@ -32,7 +33,13 @@ const Articles = ({ search, tagType }: Props) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useBoards(COMMUNITY_ID, tagType, search, isBookmark);
+  } = useBoards(
+    COMMUNITY_ID,
+    tagType,
+    search,
+    isBookmark,
+    filterString(filterBoard)
+  );
 
   useOutsideClick(filterRef, () => setIsOpener(false));
   return (
