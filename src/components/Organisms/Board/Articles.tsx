@@ -10,6 +10,7 @@ import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import OpenerSVG from '@src/assets/opener.svg';
 import useOutsideClick from '@src/hooks/useOutsideClick';
 import { filterNumber, filterString } from '@src/utils/board';
+import PopularCard from '@src/components/Molecules/Board/PopularCard';
 
 type Props = {
   search?: string;
@@ -54,10 +55,22 @@ const Articles = ({ search, tagType }: Props) => {
           }}
         >
           <div>
+            <div>
+              <DIText
+                fontColor={theme.colors.gray.gray950}
+                fontWeight={700}
+                fontSize={24}
+              >
+                🔥 가장 인기있는 아티클
+              </DIText>
+              <div>
+                <PopularCard/>
+              </div>
+            </div>
             <DIText
               fontColor={theme.colors.gray.gray950}
-              fontWeight={500}
-              fontSize={20}
+              fontWeight={700}
+              fontSize={24}
             >
               최신 아티클을 둘러보세요
             </DIText>

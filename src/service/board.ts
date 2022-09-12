@@ -44,6 +44,13 @@ const getMainPageBoard = async () => {
   return data;
 };
 
+const getPopularBoard = async (
+  limit: number,
+) => {
+  const {data} = await requestAPI().get(`/board/list/main?limit=${limit}&order=boardCnt`)
+  return data;
+}
+
 const getBoardById = async (id: string) => {
   const { data } = await requestAPI().get(`/board?boardId=${id}`);
   return data;
@@ -105,6 +112,7 @@ const boardApiList = {
   getBookmarkBoardListByPage,
   getBoardListByPage,
   getMainPageBoard,
+  getPopularBoard,
   getBoardById,
   saveBoard,
   getCommentList,

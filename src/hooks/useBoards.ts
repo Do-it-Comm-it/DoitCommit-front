@@ -170,3 +170,9 @@ export const useMainPageBoard = () => {
     return await board.getMainPageBoard();
   });
 };
+
+export const usePopularBoard = (limit:number) => {
+  return useQuery<Array<IBoard>>('popular-board', async () => {
+    return await board.getPopularBoard(limit);
+  });
+}
