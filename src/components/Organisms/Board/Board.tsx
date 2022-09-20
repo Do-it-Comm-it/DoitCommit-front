@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import OtherBoard from './OtherBoard';
 
 const Board = () => {
   const { id } = useParams();
@@ -33,6 +34,8 @@ const Board = () => {
     });
   }, []);
 
+  console.log(boardData);
+
   if (isLoading) return <LottieAnimation type="loading" />;
   return (
     <Container>
@@ -40,6 +43,7 @@ const Board = () => {
         <>
           <BoardHeader boardData={boardData} />
           <BoardContent boardData={boardData} />
+          <OtherBoard memberId={3} />
         </>
       ) : (
         <>

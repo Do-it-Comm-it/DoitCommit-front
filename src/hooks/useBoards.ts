@@ -170,3 +170,9 @@ export const useMainPageBoard = () => {
     return await board.getMainPageBoard();
   });
 };
+
+export const useOtherBoard = (memberId: number) => {
+  return useQuery<Array<IBoard>>('other-board', async () => {
+    return await board.getOtherBoardByMemberId(memberId);
+  });
+};
