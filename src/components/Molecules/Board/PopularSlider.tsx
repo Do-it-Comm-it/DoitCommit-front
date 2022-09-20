@@ -13,7 +13,6 @@ import 'slick-carousel/slick/slick-theme.css';
  */
 const settings = {
   dots: true,
-  infinite: true,
   speed: 500,
   slidesToShow: 2,
   slidesToScroll: 2,
@@ -40,8 +39,8 @@ const PopularSlider = () => {
           sliderRef.current.slickNext();
         }}
         style={{ position: 'absolute', top: '45%', right: 10 }}
-      ></Arrow>
-      <Slider
+      />
+      <StyledSlider
         {...settings}
         dotsClass="popular-css"
         arrows={false}
@@ -58,7 +57,7 @@ const PopularSlider = () => {
             isPopular={true}
           />
         ))}
-      </Slider>
+      </StyledSlider>
     </Container>
   );
 };
@@ -66,13 +65,17 @@ const PopularSlider = () => {
 const Container = styled.div`
   position: relative;
   margin: 30px 0;
+  width: 100%;
+  max-height: 400px;
 `;
 
 const Arrow = styled(ArrowSVG)`
-  position: 'absolute';
+  position: absolute;
   cursor: pointer;
-  top: '45%';
+  top: 45%;
   z-index: 1;
 `;
+
+const StyledSlider = styled(Slider)``;
 
 export default PopularSlider;
