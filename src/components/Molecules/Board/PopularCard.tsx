@@ -50,6 +50,7 @@ const PCard = ({
       onMouseLeave={() => {
         onToggle(false);
       }}
+      img={board.thumbnailUrl ? board.thumbnailUrl : ''}
     >
       <BookMark>
         {board.myBookmark ? (
@@ -121,14 +122,13 @@ const PCard = ({
 const Container = styled.div<{ img?: string }>`
   width: 100%;
   height: 281px;
-  background-image: ${({ img }) => (img ? `url(${img})` : null)};
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  object-fit: cover;
-  ${({ img }) =>
+  background-image: ${({ img }) =>
     img
-      ? `background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url(${img})`
-      : `background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))`};
+      ? `linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url(${img})`
+      : 'linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))'};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   border-radius: 10px;
   /* margin: 0 20px; */
   position: relative;
