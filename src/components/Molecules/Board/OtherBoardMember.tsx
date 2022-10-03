@@ -23,7 +23,7 @@ const OtherBoardMember = ({ nickname, memberImageUrl, position }: Props) => {
         </MemberNameWrapper>
 
         <MemberDescription>
-          {'현직 스타트업 프로덕트 디자이너로 근무하고 있습니다.'}
+          {`현직 스타트업 ${position || '멤버'}로 근무하고 있습니다.`}
         </MemberDescription>
       </Content>
       <OtherBoardButton>
