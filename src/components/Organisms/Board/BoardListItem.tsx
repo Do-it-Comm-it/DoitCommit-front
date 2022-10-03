@@ -1,5 +1,5 @@
 import { IBoard } from '@src/typings/Board';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
@@ -14,10 +14,21 @@ const BoardListItem = ({ board }: Props) => {
     navigate('/community/board/' + board.boardId);
   }, [board, navigate]);
 
+  const tags = useMemo(() => {
+    if (board.boardHashtagNameList) {
+      return board.boardHashtagNameList.reduce(
+        (prev, curr) => `${prev} #${curr}`,
+        ''
+      );
+    }
+    return '';
+  }, [board.boardHashtagNameList]);
+
   return (
     <Container onClick={onClickBoard}>
       {board.thumbnailUrl ? <ThumbnailImage src={board.thumbnailUrl} /> : null}
       <Content>
+        <BoardTag>{tags}</BoardTag>
         <Title>{board.boardTitle}</Title>
         <Description
           dangerouslySetInnerHTML={{
@@ -75,6 +86,16 @@ const Description = styled.div`
   line-height: 22px;
   /* Gray/Gray400 */
   color: ${({ theme }) => theme.colors.gray.gray400};
+`;
+
+const BoardTag = styled.div`
+  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+
+  color: ${({ theme }) => theme.colors.primary.default};
 `;
 
 export default BoardListItem;
