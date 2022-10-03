@@ -1,7 +1,9 @@
+import OtherBoardMember from '@src/components/Molecules/Board/OtherBoardMember';
 import { useOtherBoard } from '@src/hooks/useBoards';
 import React from 'react';
 import { useMemo } from 'react';
 import styled from 'styled-components';
+import BoardListItem from './BoardListItem';
 
 type Props = {
   memberId: number;
@@ -13,8 +15,27 @@ const OtherBoard = ({ memberId }: Props) => {
   console.log(data);
 
   const title = useMemo(() => {
-    return `작성자의 다른 글 ${0}`;
-  }, []);
+    if (data) {
+      return `작성자의 다른 글 (${data.totalBoardCnt})`;
+    }
+    return `작성자의 다른 글 (${0})`;
+  }, [data]);
+
+  if (data) {
+    return (
+      <Container>
+        <OtherBoardTitle>{title}</OtherBoardTitle>
+        {data.boardOfMemberResDtoList.map((board) => (
+          <BoardListItem key={board.boardId} board={board} />
+        ))}
+        <OtherBoardMember
+          nickname={data.nickname}
+          memberImageUrl={data.memberImageUrl}
+          position={data.position}
+        />
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -28,6 +49,8 @@ const Container = styled.div`
   flex-direction: column;
 
   width: 100%;
+
+  gap: 32px;
 `;
 
 const OtherBoardTitle = styled.h3`

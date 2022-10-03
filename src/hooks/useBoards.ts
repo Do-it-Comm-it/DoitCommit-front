@@ -1,5 +1,5 @@
 import { board } from '@src/service/api';
-import { IBoard, IBoardList } from '@src/typings/Board';
+import { IBoard, IBoardList, OtherBoard } from '@src/typings/Board';
 import {
   useInfiniteQuery,
   useMutation,
@@ -172,7 +172,7 @@ export const useMainPageBoard = () => {
 };
 
 export const useOtherBoard = (memberId: number) => {
-  return useQuery<Array<IBoard>>('other-board', async () => {
+  return useQuery<OtherBoard>('other-board', async () => {
     return await board.getOtherBoardByMemberId(memberId);
   });
 };

@@ -34,8 +34,6 @@ const Board = () => {
     });
   }, []);
 
-  console.log(boardData);
-
   if (isLoading) return <LottieAnimation type="loading" />;
   return (
     <Container>
@@ -43,7 +41,7 @@ const Board = () => {
         <>
           <BoardHeader boardData={boardData} />
           <BoardContent boardData={boardData} />
-          <OtherBoard memberId={3} />
+          <OtherBoard memberId={5} />
         </>
       ) : (
         <>
