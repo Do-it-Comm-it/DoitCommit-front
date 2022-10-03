@@ -41,7 +41,8 @@ const Board = () => {
         <>
           <BoardHeader boardData={boardData} />
           <BoardContent boardData={boardData} />
-          <OtherBoard memberId={5} />
+          {/** TODO: need memberId from boardData */}
+          <OtherBoard memberId={13} />
         </>
       ) : (
         <>

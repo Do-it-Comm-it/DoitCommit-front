@@ -12,8 +12,6 @@ type Props = {
 const OtherBoard = ({ memberId }: Props) => {
   const { data } = useOtherBoard(memberId);
 
-  console.log(data);
-
   const title = useMemo(() => {
     if (data) {
       return `작성자의 다른 글 (${data.totalBoardCnt})`;
@@ -51,6 +49,9 @@ const Container = styled.div`
   width: 100%;
 
   gap: 32px;
+
+  margin-top: 130px;
+  margin-bottom: 110px;
 `;
 
 const OtherBoardTitle = styled.h3`

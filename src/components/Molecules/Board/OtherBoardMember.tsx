@@ -41,8 +41,10 @@ const Container = styled.div`
   gap: 35px;
 `;
 const Image = styled.img`
-  width: 125px;
-  height: 125px;
+  min-width: 125px;
+  min-height: 125px;
+  max-width: 125px;
+  max-height: 125px;
 
   border-radius: 10px;
 `;
@@ -56,6 +58,8 @@ const Content = styled.div`
 const MemberNameWrapper = styled.div`
   display: flex;
   flex-direction: row;
+
+  padding-bottom: 10px;
 `;
 const FontText = styled.span`
   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
