@@ -49,6 +49,13 @@ const getBoardById = async (id: string) => {
   return data;
 };
 
+const getOtherBoardByMemberId = async (memberId: number) => {
+  const { data } = await requestAPI().get(
+    `/board/members/${memberId}/limit?limit=3`
+  );
+  return data;
+};
+
 const saveBoard = async (request: RequestBoard) => {
   const { data } = await requestAPI().post(`/board`, request);
   return data;
@@ -101,6 +108,7 @@ const toggleBookmark = async (selectedBoard: IBoard) => {
       break;
   }
 };
+
 const boardApiList = {
   getBookmarkBoardListByPage,
   getBoardListByPage,
@@ -113,6 +121,7 @@ const boardApiList = {
   updateComment,
   toggleHeart,
   toggleBookmark,
+  getOtherBoardByMemberId,
 };
 
 export default boardApiList;

@@ -36,3 +36,12 @@ export type Tag = {
   tagName: string;
 };
 export type BoardImage = { fileNm: string; filePath: string; url?: string };
+
+export type OtherBoard = {
+  boardOfMemberResDtoList: IBoard[];
+  memberId: number;
+  memberImageUrl: string | null;
+  nickname: string | null;
+  position: string | null;
+  totalBoardCnt: number;
+};

@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import OtherBoard from './OtherBoard';
 
 const Board = () => {
   const { id } = useParams();
@@ -40,6 +41,8 @@ const Board = () => {
         <>
           <BoardHeader boardData={boardData} />
           <BoardContent boardData={boardData} />
+          {/** TODO: need memberId from boardData */}
+          <OtherBoard memberId={13} />
         </>
       ) : (
         <>
