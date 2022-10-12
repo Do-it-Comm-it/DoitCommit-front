@@ -10,8 +10,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styled, { useTheme } from 'styled-components';
 import OpenerSVG from '@src/assets/opener.svg';
 import { IBoard } from '@src/typings/Board';
-import { useRecoilValue } from 'recoil';
-import bookmarkAtom from '@src/recoil/atom/bookmark';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import myBoardAtom from '@src/recoil/atom/myBoard';
 type Props = {
   search?: string;
   tagType?: number;
@@ -24,7 +24,7 @@ const MainArticle = ({ tagType, search }: Props) => {
   const [isOpener, setIsOpener] = useState<boolean>(false);
   const [filterBoard, setFilterBoard] = useState<string>('최신순');
   const [filterPosition, setFilterPosition] = useState<string>('전체'); // 개발,디자인,기획
-  const isShowBookmarkList = useRecoilValue(bookmarkAtom);
+  const [myBoard, setMyBoard] = useRecoilState(myBoardAtom);
   const filterRef = useRef<HTMLUListElement>(null);
 
   useOutsideClick(filterRef, () => setIsOpener(false));
@@ -49,12 +49,18 @@ const MainArticle = ({ tagType, search }: Props) => {
         height: '100%',
       }}
     >
-      {isShowBookmarkList ? (
+      {(myBoard.bookmark || myBoard.history)  &&
         <Flex>
-          <SelectList active={isShowBookmarkList}>북마크</SelectList>
-          <SelectList>히스토리</SelectList>
+          <SelectList active={myBoard.bookmark} onClick={() => {
+            setMyBoard({bookmark: true,history: false})
+          }}>북마크</SelectList>
+          <SelectList active={myBoard.history} onClick={() => {
+            setMyBoard({bookmark: false,history: true})
+          }}>히스토리</SelectList>
         </Flex>
-      ) : (
+        }
+        {
+          (!myBoard.bookmark || !myBoard.history) && 
         <DIText
           fontColor={theme.colors.gray.gray950}
           fontWeight={700}
@@ -62,7 +68,8 @@ const MainArticle = ({ tagType, search }: Props) => {
         >
           최신 아티클을 둘러보세요
         </DIText>
-      )}
+        }
+      
       <FilterContainer>
         <FilterPositionWrap>
           {['전체', '기획', '개발', '디자인'].map(

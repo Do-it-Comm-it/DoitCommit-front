@@ -15,13 +15,13 @@ import HeaderSearch from '@src/assets/header-search.svg';
 import SearchBox from '../Molecules/SearchBox';
 import LogoSvg from '@src/assets/logo.svg';
 import { Link } from 'react-router-dom';
-import bookmarkAtom from '@src/recoil/atom/bookmark';
+import myBoardAtom from '@src/recoil/atom/myBoard';
 const HeaderNavigation = () => {
   const { data: user } = useUser();
   const setModal = useSetRecoilState(modalAtom);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [open, setOpen] = useRecoilState(sidebarAtom);
-  const setBookmark = useSetRecoilState(bookmarkAtom);
+  const [myBoard, setMyBoard] = useRecoilState(myBoardAtom);
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);
   }, [setOpen]);
@@ -31,8 +31,8 @@ const HeaderNavigation = () => {
   }, []);
 
   const onBookMarkToggle = useCallback(() => {
-    setBookmark((prev) => !prev);
-  }, [setBookmark]);
+    setMyBoard({ bookmark: !myBoard.bookmark, history: false });
+  }, [setMyBoard, myBoard]);
 
   return (
     <>

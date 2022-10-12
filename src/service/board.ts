@@ -66,6 +66,23 @@ const getCommentList = async (boardId: number, page: number, size: number) => {
   return data;
 };
 
+const getHistoryBoards = async (
+  page: number,
+  boardCategoryId: number,
+  tagCategoryId?: number,
+  keyword?: string
+) => {
+  const { data } = await requestAPI().get(
+    `/boards/history?page=${page + 1}&size=16&boardCategoryId=${
+      boardCategoryId || ''
+    }&tagCategoryId=${tagCategoryId || ''}
+      &keyword=${keyword || ''}
+    `
+  );
+  console.log(data);
+  return data
+};
+
 const addComment = async (body: {
   boardId: number;
   content: string;
@@ -119,6 +136,7 @@ const boardApiList = {
   updateComment,
   toggleHeart,
   toggleBookmark,
+  getHistoryBoards,
 };
 
 export default boardApiList;
