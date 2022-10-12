@@ -1,3 +1,4 @@
+import { useRecoilValue } from 'recoil';
 import { board } from '@src/service/api';
 import { IBoard, IBoardList } from '@src/typings/Board';
 import {
@@ -6,6 +7,7 @@ import {
   useQuery,
   useQueryClient,
 } from 'react-query';
+import bookmarkAtom from '@src/recoil/atom/bookmark';
 
 export const useBoards = (
   boardType: number,
@@ -14,12 +16,14 @@ export const useBoards = (
   isBookmark?: boolean,
   sortType?: string
 ) => {
+  const isShowBookmarkList = useRecoilValue(bookmarkAtom); // 북마크조회가 아닐때는 기본 메인 아티클을 표시한다.
   const fetchBookmarkPosts = async ({ pageParam = 0 }) => {
     const result = await board.getBookmarkBoardListByPage(
       pageParam,
       boardType,
       tagType,
-      search
+      search,
+      sortType
     );
 
     return {
@@ -52,7 +56,7 @@ export const useBoards = (
     isFetchingNextPage,
   } = useInfiniteQuery(
     [`boards-page`, tagType, search, isBookmark, sortType, boardType],
-    isBookmark ? fetchBookmarkPosts : fetchPosts,
+    isShowBookmarkList ? fetchBookmarkPosts : fetchPosts,
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.data && lastPage.data.length !== 0) {

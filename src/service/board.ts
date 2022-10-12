@@ -10,11 +10,9 @@ const getBookmarkBoardListByPage = async (
   sortType?: string
 ) => {
   const { data } = await requestAPI().get(
-    `/bookmarks?page=${
-      page + 1
-    }&size=16&boardCategoryId=${boardCategoryId}&tagCategoryId=${
-      tagCategoryId || ''
-    }
+    `/bookmarks?page=${page + 1}&size=16&boardCategoryId=${
+      boardCategoryId || ''
+    }&tagCategoryId=${tagCategoryId || ''}
       &keyword=${keyword || ''}&sortType=${sortType || ''}
     `
   );

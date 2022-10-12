@@ -10,7 +10,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styled, { useTheme } from 'styled-components';
 import OpenerSVG from '@src/assets/opener.svg';
 import { IBoard } from '@src/typings/Board';
-
+import { useRecoilValue } from 'recoil';
+import bookmarkAtom from '@src/recoil/atom/bookmark';
 type Props = {
   search?: string;
   tagType?: number;
@@ -23,7 +24,7 @@ const MainArticle = ({ tagType, search }: Props) => {
   const [isOpener, setIsOpener] = useState<boolean>(false);
   const [filterBoard, setFilterBoard] = useState<string>('최신순');
   const [filterPosition, setFilterPosition] = useState<string>('전체'); // 개발,디자인,기획
-
+  const isShowBookmarkList = useRecoilValue(bookmarkAtom);
   const filterRef = useRef<HTMLUListElement>(null);
 
   useOutsideClick(filterRef, () => setIsOpener(false));
@@ -36,6 +37,7 @@ const MainArticle = ({ tagType, search }: Props) => {
       isBookmark,
       filterString(filterBoard)
     );
+  console.log(boards);
 
   return (
     <InfiniteScroll
@@ -47,13 +49,20 @@ const MainArticle = ({ tagType, search }: Props) => {
         height: '100%',
       }}
     >
-      <DIText
-        fontColor={theme.colors.gray.gray950}
-        fontWeight={700}
-        fontSize={24}
-      >
-        최신 아티클을 둘러보세요
-      </DIText>
+      {isShowBookmarkList ? (
+        <Flex>
+          <SelectList active={isShowBookmarkList}>북마크</SelectList>
+          <SelectList>히스토리</SelectList>
+        </Flex>
+      ) : (
+        <DIText
+          fontColor={theme.colors.gray.gray950}
+          fontWeight={700}
+          fontSize={24}
+        >
+          최신 아티클을 둘러보세요
+        </DIText>
+      )}
       <FilterContainer>
         <FilterPositionWrap>
           {['전체', '기획', '개발', '디자인'].map(
@@ -238,6 +247,20 @@ const FilterPositionList = styled.li<{ active: boolean }>`
     margin-left: 8px;
     cursor: pointer;
   }
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const SelectList = styled.div<{ active?: boolean }>`
+  margin: 0 30px;
+  cursor: pointer;
+  color: ${({ theme, active }) =>
+    active ? theme.colors.primary.default : theme.colors.gray.gray950};
+  text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
+  text-underline-offset: ${({ active }) => (active ? '5px' : 'none')};
 `;
 
 export default MainArticle;
