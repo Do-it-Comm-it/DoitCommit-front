@@ -52,7 +52,7 @@ export const useBoards = (
       pageParam,
       boardType,
       tagType,
-      search,
+      search
     );
 
     return {
@@ -69,8 +69,22 @@ export const useBoards = (
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [`boards-page`, tagType, search, isBookmark, sortType, boardType],
-    isShowBookmarkList.bookmark ? fetchBookmarkPosts : fetchPosts,
+    [
+      `boards-page`,
+      tagType,
+      search,
+      isBookmark,
+      sortType,
+      boardType,
+      isShowBookmarkList.bookmark,
+      isShowBookmarkList.history,
+    ],
+    isShowBookmarkList.bookmark && !isShowBookmarkList.history
+      ? // 북마크 조회, 히스토리 조회 , 메인 리스트 조회
+        fetchBookmarkPosts
+      : !isShowBookmarkList.bookmark && isShowBookmarkList.history
+      ? fetchHistoryPosts
+      : fetchPosts,
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.data && lastPage.data.length !== 0) {

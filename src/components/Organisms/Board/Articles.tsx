@@ -19,7 +19,7 @@ const Articles = (props: Props) => {
       {(isShowBookmarkList.bookmark || isShowBookmarkList.history) && (
         <MainArticle {...props} />
       )}
-      {(!isShowBookmarkList.bookmark || !isShowBookmarkList.history) && (
+      {!isShowBookmarkList.bookmark && !isShowBookmarkList.history && (
         <>
           <DIText
             fontColor={theme.colors.gray.gray950}

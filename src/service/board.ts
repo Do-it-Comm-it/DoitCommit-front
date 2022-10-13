@@ -80,7 +80,7 @@ const getHistoryBoards = async (
     `
   );
   console.log(data);
-  return data
+  return data;
 };
 
 const addComment = async (body: {

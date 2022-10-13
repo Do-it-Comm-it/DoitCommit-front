@@ -49,18 +49,27 @@ const MainArticle = ({ tagType, search }: Props) => {
         height: '100%',
       }}
     >
-      {(myBoard.bookmark || myBoard.history)  &&
+      {(myBoard.bookmark || myBoard.history) && (
         <Flex>
-          <SelectList active={myBoard.bookmark} onClick={() => {
-            setMyBoard({bookmark: true,history: false})
-          }}>북마크</SelectList>
-          <SelectList active={myBoard.history} onClick={() => {
-            setMyBoard({bookmark: false,history: true})
-          }}>히스토리</SelectList>
+          <SelectList
+            active={myBoard.bookmark}
+            onClick={() => {
+              setMyBoard({ bookmark: true, history: false });
+            }}
+          >
+            북마크
+          </SelectList>
+          <SelectList
+            active={myBoard.history}
+            onClick={() => {
+              setMyBoard({ bookmark: false, history: true });
+            }}
+          >
+            히스토리
+          </SelectList>
         </Flex>
-        }
-        {
-          (!myBoard.bookmark || !myBoard.history) && 
+      )}
+      {!myBoard.bookmark && !myBoard.history && (
         <DIText
           fontColor={theme.colors.gray.gray950}
           fontWeight={700}
@@ -68,8 +77,8 @@ const MainArticle = ({ tagType, search }: Props) => {
         >
           최신 아티클을 둘러보세요
         </DIText>
-        }
-      
+      )}
+
       <FilterContainer>
         <FilterPositionWrap>
           {['전체', '기획', '개발', '디자인'].map(
@@ -86,40 +95,48 @@ const MainArticle = ({ tagType, search }: Props) => {
             )
           )}
         </FilterPositionWrap>
-
-        <ButtonWrapper ref={filterRef}>
-          <FilterButton
-            active={!isBookmark}
-            onClick={() => {
-              setIsBookmark(false);
-              setIsOpener((prev) => !prev);
-            }}
-          >
+        {!myBoard.bookmark && !myBoard.history && (
+          <ButtonWrapper ref={filterRef}>
+            <FilterButton
+              active={!isBookmark}
+              isClick={true}
+              onClick={() => {
+                setIsBookmark(false);
+                setIsOpener((prev) => !prev);
+              }}
+            >
+              {filterBoard}
+            </FilterButton>
+            <FilterOpener
+              isOpener={isOpener}
+              onClick={() => {
+                setIsOpener((prev) => !prev);
+              }}
+            />
+            {isOpener && (
+              <FilterWrap>
+                {['최신순', '좋아요순', '조회수순'].map((FBoard: string) => (
+                  <Filter
+                    key={FBoard}
+                    isSelect={FBoard === filterBoard}
+                    onClick={() => {
+                      setFilterBoard(FBoard);
+                      setIsOpener(false);
+                    }}
+                  >
+                    {FBoard}
+                  </Filter>
+                ))}
+              </FilterWrap>
+            )}
+          </ButtonWrapper>
+        )}
+        {myBoard.bookmark && !myBoard.history && (
+          // 클릭 효과를 없앤다.
+          <FilterButton active={true} isClick={false}>
             {filterBoard}
           </FilterButton>
-          <FilterOpener
-            isOpener={isOpener}
-            onClick={() => {
-              setIsOpener((prev) => !prev);
-            }}
-          />
-          {isOpener && (
-            <FilterWrap>
-              {['최신순', '좋아요순', '조회수순'].map((FBoard: string) => (
-                <Filter
-                  key={FBoard}
-                  isSelect={FBoard === filterBoard}
-                  onClick={() => {
-                    setFilterBoard(FBoard);
-                    setIsOpener(false);
-                  }}
-                >
-                  {FBoard}
-                </Filter>
-              ))}
-            </FilterWrap>
-          )}
-        </ButtonWrapper>
+        )}
       </FilterContainer>
       {isError ? (
         <LottieAnimation
@@ -195,13 +212,13 @@ const ButtonWrapper = styled.ul`
   position: relative;
 `;
 
-const FilterButton = styled.li<{ active: boolean }>`
+const FilterButton = styled.li<{ active?: boolean; isClick?: boolean }>`
   color: ${({ theme }) => theme.colors.gray.gray950};
   list-style: ${({ active }) => !active && 'none'};
   &::marker {
     color: ${({ theme }) => theme.colors.primary.default};
   }
-  cursor: pointer;
+  cursor: ${({ isClick }) => (!isClick ? 'auto' : 'pointer')};
 `;
 
 const FilterOpener = styled(({ isOpener, ...props }) => (
@@ -259,11 +276,13 @@ const FilterPositionList = styled.li<{ active: boolean }>`
 const Flex = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 66px;
 `;
 
 const SelectList = styled.div<{ active?: boolean }>`
   margin: 0 30px;
   cursor: pointer;
+  font-size: 24px;
   color: ${({ theme, active }) =>
     active ? theme.colors.primary.default : theme.colors.gray.gray950};
   text-decoration: ${({ active }) => (active ? 'underline' : 'none')};

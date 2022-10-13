@@ -1,15 +1,15 @@
 import { atom } from 'recoil';
 
 type myBoards = {
-  bookmark : boolean;
-  history: boolean
-}
+  bookmark: boolean;
+  history: boolean;
+};
 
 const myBoardAtom = atom<myBoards>({
   key: 'atom/bookmark',
   default: {
     bookmark: false,
-    history: false
+    history: false,
   },
 });
 
