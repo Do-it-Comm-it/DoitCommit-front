@@ -37,12 +37,10 @@ const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
           >
             {/* TODO: 22.07-31 썸네일, writer Props는 백엔드 수정 후 변경해준다.*/}
             <Thumbnail
-              thumbnail={
-                'https://doitcommit.s3.ap-northeast-2.amazonaws.com/2022/07/24/99cef549-f0f3-41e9-94fc-d1f3770dfa01_MjA2NDkuNDAwODY5NDU2NDM2MTY1ODY0NjkwOTQzNg%3D.png'
-              }
+              thumbnail={board.thumbnailUrl ? board.thumbnailUrl : null}
               writerImageUrl={board.writerImageUrl}
               isHome={true}
-              writer={'사용자이름'}
+              writer={board.writer ? board.writer : '사용자이름'}
               tags={board.boardHashtagNameList}
             />
           </Link>

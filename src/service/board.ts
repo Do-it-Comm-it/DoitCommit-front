@@ -10,11 +10,9 @@ const getBookmarkBoardListByPage = async (
   sortType?: string
 ) => {
   const { data } = await requestAPI().get(
-    `/bookmarks?page=${
-      page + 1
-    }&size=16&boardCategoryId=${boardCategoryId}&tagCategoryId=${
-      tagCategoryId || ''
-    }
+    `/bookmarks?page=${page + 1}&size=16&boardCategoryId=${
+      boardCategoryId || ''
+    }&tagCategoryId=${tagCategoryId || ''}
       &keyword=${keyword || ''}&sortType=${sortType || ''}
     `
   );
@@ -44,6 +42,13 @@ const getMainPageBoard = async () => {
   return data;
 };
 
+const getPopularBoard = async (limit: number) => {
+  const { data } = await requestAPI().get(
+    `/board/list/main?limit=${limit}&order=boardCnt`
+  );
+  return data;
+};
+
 const getBoardById = async (id: string) => {
   const { data } = await requestAPI().get(`/board?boardId=${id}`);
   return data;
@@ -65,6 +70,23 @@ const getCommentList = async (boardId: number, page: number, size: number) => {
   const { data } = await requestAPI().get(
     `/boards/${boardId}/comments?page=${page}&size=${size}`
   );
+  return data;
+};
+
+const getHistoryBoards = async (
+  page: number,
+  boardCategoryId: number,
+  tagCategoryId?: number,
+  keyword?: string
+) => {
+  const { data } = await requestAPI().get(
+    `/boards/history?page=${page + 1}&size=16&boardCategoryId=${
+      boardCategoryId || ''
+    }&tagCategoryId=${tagCategoryId || ''}
+      &keyword=${keyword || ''}
+    `
+  );
+  console.log(data);
   return data;
 };
 
@@ -113,6 +135,7 @@ const boardApiList = {
   getBookmarkBoardListByPage,
   getBoardListByPage,
   getMainPageBoard,
+  getPopularBoard,
   getBoardById,
   saveBoard,
   getCommentList,
@@ -121,6 +144,7 @@ const boardApiList = {
   updateComment,
   toggleHeart,
   toggleBookmark,
+  getHistoryBoards,
   getOtherBoardByMemberId,
 };
 

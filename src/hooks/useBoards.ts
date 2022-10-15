@@ -1,3 +1,4 @@
+import { useRecoilValue } from 'recoil';
 import { board } from '@src/service/api';
 import { IBoard, IBoardList, OtherBoard } from '@src/typings/Board';
 import {
@@ -6,6 +7,7 @@ import {
   useQuery,
   useQueryClient,
 } from 'react-query';
+import myBoardAtom from '@src/recoil/atom/myBoard';
 
 export const useBoards = (
   boardType: number,
@@ -14,12 +16,14 @@ export const useBoards = (
   isBookmark?: boolean,
   sortType?: string
 ) => {
+  const isShowBookmarkList = useRecoilValue(myBoardAtom); // 북마크조회가 아닐때는 기본 메인 아티클을 표시한다.
   const fetchBookmarkPosts = async ({ pageParam = 0 }) => {
     const result = await board.getBookmarkBoardListByPage(
       pageParam,
       boardType,
       tagType,
-      search
+      search,
+      sortType
     );
 
     return {
@@ -43,6 +47,20 @@ export const useBoards = (
     };
   };
 
+  const fetchHistoryPosts = async ({ pageParam = 0 }) => {
+    const result = await board.getHistoryBoards(
+      pageParam,
+      boardType,
+      tagType,
+      search
+    );
+
+    return {
+      data: result.dtoList,
+      nextPage: pageParam + 1,
+    };
+  };
+
   const {
     data: boards,
     isLoading,
@@ -51,8 +69,22 @@ export const useBoards = (
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    [`boards-page`, tagType, search, isBookmark, sortType, boardType],
-    isBookmark ? fetchBookmarkPosts : fetchPosts,
+    [
+      `boards-page`,
+      tagType,
+      search,
+      isBookmark,
+      sortType,
+      boardType,
+      isShowBookmarkList.bookmark,
+      isShowBookmarkList.history,
+    ],
+    isShowBookmarkList.bookmark && !isShowBookmarkList.history
+      ? // 북마크 조회, 히스토리 조회 , 메인 리스트 조회
+        fetchBookmarkPosts
+      : !isShowBookmarkList.bookmark && isShowBookmarkList.history
+      ? fetchHistoryPosts
+      : fetchPosts,
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.data && lastPage.data.length !== 0) {
@@ -83,24 +115,31 @@ export const useBoardListMutation = (
   category: number | null,
   search: string | null,
   isBookmark: boolean,
-  isHome?: boolean
+  isHome?: boolean,
+  isPopular?: boolean
 ) => {
   const queryClient = useQueryClient();
   const mutation = useMutation(api, {
     onMutate: async (selectedBoard: IBoard) => {
       await queryClient.cancelQueries([
-        'boards-page',
+        // 홈에는 heart기능이없으니 popular와 일반 board를 나눈다.
+        isPopular ? 'popular-board' : 'boards-page',
         category,
         search,
         isBookmark,
       ]);
       const snapshot = queryClient.getQueryData([
-        'boards-page',
+        isPopular ? 'popular-board' : 'boards-page',
         category,
         search,
       ]);
       queryClient.setQueryData<IBoardList>(
-        ['boards-page', category, search, isBookmark],
+        [
+          isPopular ? 'popular-board' : 'boards-page',
+          category,
+          search,
+          isBookmark,
+        ],
         (old) => ({
           pages: old
             ? old.pages.map((page) => ({
@@ -127,9 +166,14 @@ export const useBoardListMutation = (
       };
     },
     onSuccess() {
-      isHome
-        ? queryClient.invalidateQueries('main-board')
-        : queryClient.invalidateQueries('boards-page');
+      if (isHome) {
+        queryClient.invalidateQueries('main-board');
+      }
+      if (isPopular) {
+        queryClient.invalidateQueries('popular-board');
+      } else {
+        queryClient.invalidateQueries('boards-page');
+      }
     },
   });
 
@@ -171,6 +215,11 @@ export const useMainPageBoard = () => {
   });
 };
 
+export const usePopularBoard = (limit: number) => {
+  return useQuery<Array<IBoard>>('popular-board', async () => {
+    return await board.getPopularBoard(limit);
+  });
+};
 export const useOtherBoard = (memberId: number) => {
   return useQuery<OtherBoard>('other-board', async () => {
     return await board.getOtherBoardByMemberId(memberId);

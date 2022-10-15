@@ -14,13 +14,15 @@ import HeaderBookmark from '@src/assets/header-bookmark.svg';
 import HeaderSearch from '@src/assets/header-search.svg';
 import SearchBox from '../Molecules/SearchBox';
 import LogoSvg from '@src/assets/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import myBoardAtom from '@src/recoil/atom/myBoard';
 const HeaderNavigation = () => {
   const { data: user } = useUser();
+  const location = useLocation();
   const setModal = useSetRecoilState(modalAtom);
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [open, setOpen] = useRecoilState(sidebarAtom);
-
+  const [myBoard, setMyBoard] = useRecoilState(myBoardAtom);
   const onToggle = useCallback(() => {
     setOpen((prev) => !prev);
   }, [setOpen]);
@@ -28,6 +30,17 @@ const HeaderNavigation = () => {
   const onClickSearch = useCallback(() => {
     setOpenSearch((prev) => !prev);
   }, []);
+
+  const onBookMarkToggle = useCallback(() => {
+    // 아티클 메인 페이지에서만 북마크 리스트를 조회할 수 있도록한다.
+    if (location.pathname === '/community') {
+      if (myBoard.history) {
+        setMyBoard({ bookmark: false, history: false });
+      } else {
+        setMyBoard({ bookmark: !myBoard.bookmark, history: false });
+      }
+    }
+  }, [setMyBoard, myBoard, location]);
 
   return (
     <>
@@ -54,7 +67,7 @@ const HeaderNavigation = () => {
           {user && (
             <>
               <Bell />
-              <BookMark />
+              <BookMark onClick={onBookMarkToggle} />
               <Content>
                 <UserProfile user={user} isMenuEnable />
               </Content>
