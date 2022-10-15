@@ -51,8 +51,6 @@ const getPopularBoard = async (limit: number) => {
 
 const getBoardById = async (id: string) => {
   const { data } = await requestAPI().get(`/board?boardId=${id}`);
-
-  console.log(data);
   return data;
 };
 
@@ -73,6 +71,11 @@ const getCommentList = async (boardId: number, page: number, size: number) => {
     `/boards/${boardId}/comments?page=${page}&size=${size}`
   );
   return data;
+};
+
+const deleteBoard = async (boardId: number) => {
+  const { message } = await requestAPI().delete(`/board/${boardId}`);
+  return message;
 };
 
 const getHistoryBoards = async (
@@ -148,6 +151,7 @@ const boardApiList = {
   toggleBookmark,
   getHistoryBoards,
   getOtherBoardByMemberId,
+  deleteBoard,
 };
 
 export default boardApiList;

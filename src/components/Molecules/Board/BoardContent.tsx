@@ -1,5 +1,5 @@
 import { IBoard } from '@src/typings/Board';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import CommentBox from './CommentBox';
 import CommentEditor from './CommentEditor';
@@ -8,6 +8,9 @@ import { IComment, ICommentRes } from '@src/typings/Comment';
 import CommentIconSVG from '@src/assets/comment.svg';
 import ShowMoreText from '@src/components/Atoms/ShowMoreText';
 import { useUser } from '@src/hooks/useAuthentication';
+import { useDeleteBoard } from '@src/hooks/useBoards';
+import { useNavigate } from 'react-router';
+import ConfirmModal from '@src/components/Organisms/Modal/ConfirmModal';
 
 interface Props {
   boardData: IBoard;
@@ -16,8 +19,10 @@ const BoardContent = ({ boardData }: Props) => {
   const { comments, isLoading, fetchNextPage, hasNextPage } = useComments(
     boardData.boardId!
   );
+  const [showConfirm, setShowConfirm] = useState(false);
   const { data: user } = useUser();
-
+  const { mutate } = useDeleteBoard();
+  const navigate = useNavigate();
   //TODO: check my board by userId or email?
   const isMyBoard = boardData.writer === user?.nickname;
 
@@ -36,6 +41,21 @@ const BoardContent = ({ boardData }: Props) => {
     []
   );
 
+  const onDeleteBoard = useCallback(async () => {
+    if (boardData.boardId) {
+      mutate(boardData.boardId, {
+        onSuccess: () => {
+          navigate('/community');
+        },
+      });
+    } else {
+    }
+  }, [boardData.boardId, mutate, navigate]);
+
+  const onShowConfirm = useCallback(() => {
+    setShowConfirm(true);
+  }, []);
+
   return (
     <Container>
       <Content>
@@ -43,7 +63,7 @@ const BoardContent = ({ boardData }: Props) => {
       </Content>
       {isMyBoard ? (
         <ButtonWrapper>
-          <DeleteButton onClick={() => {}}>삭제</DeleteButton>
+          <DeleteButton onClick={onShowConfirm}>삭제</DeleteButton>
           <EditButton onClick={() => {}}>수정</EditButton>
         </ButtonWrapper>
       ) : null}
@@ -78,6 +98,14 @@ const BoardContent = ({ boardData }: Props) => {
             comments?.pages[0].commentsData.memberTagResDtoList || []
           }
           boardId={boardData.boardId!}
+        />
+      )}
+      {showConfirm && (
+        <ConfirmModal
+          title="게시글 삭제"
+          content="게시글을 삭제하시겠습니까?"
+          onConfirm={onDeleteBoard}
+          onClose={() => setShowConfirm(false)}
         />
       )}
     </Container>
