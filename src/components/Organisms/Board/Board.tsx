@@ -34,7 +34,9 @@ const Board = () => {
     });
   }, []);
 
+  console.log(boardData);
   if (isLoading) return <LottieAnimation type="loading" />;
+
   return (
     <Container>
       {boardData ? (
@@ -42,7 +44,7 @@ const Board = () => {
           <BoardHeader boardData={boardData} />
           <BoardContent boardData={boardData} />
           {/** TODO: need memberId from boardData */}
-          <OtherBoard memberId={13} />
+          <OtherBoard memberId={boardData.writerId} />
         </>
       ) : (
         <>

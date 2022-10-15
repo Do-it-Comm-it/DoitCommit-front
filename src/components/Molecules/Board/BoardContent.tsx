@@ -7,6 +7,7 @@ import useComments from '@src/hooks/useComments';
 import { IComment, ICommentRes } from '@src/typings/Comment';
 import CommentIconSVG from '@src/assets/comment.svg';
 import ShowMoreText from '@src/components/Atoms/ShowMoreText';
+import { useUser } from '@src/hooks/useAuthentication';
 
 interface Props {
   boardData: IBoard;
@@ -15,6 +16,10 @@ const BoardContent = ({ boardData }: Props) => {
   const { comments, isLoading, fetchNextPage, hasNextPage } = useComments(
     boardData.boardId!
   );
+  const { data: user } = useUser();
+
+  //TODO: check my board by userId or email?
+  const isMyBoard = boardData.writer === user?.nickname;
 
   const getComputedExtraPage = useCallback(
     (
@@ -36,6 +41,12 @@ const BoardContent = ({ boardData }: Props) => {
       <Content>
         <div dangerouslySetInnerHTML={{ __html: boardData.boardContent }} />
       </Content>
+      {isMyBoard ? (
+        <ButtonWrapper>
+          <DeleteButton onClick={() => {}}>삭제</DeleteButton>
+          <EditButton onClick={() => {}}>수정</EditButton>
+        </ButtonWrapper>
+      ) : null}
       <CommentCountWrapper>
         <CommentIconSVG />
         <TotalText>{comments?.pages[0].commentsData.totalCommentCnt}</TotalText>
@@ -122,4 +133,36 @@ const TotalText = styled.span`
   color: ${({ theme }) => theme.colors.primary.default};
   font-weight: 400;
   font-size: 16px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 30%;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 15px;
+  margin-left: auto;
+`;
+
+const CirCleButton = styled.button`
+  width: 95px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 50px;
+`;
+
+const EditButton = styled(CirCleButton)`
+  border: 1px solid ${({ theme }) => theme.colors.primary.default};
+
+  background-color: ${({ theme }) => theme.colors.primary.default};
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const DeleteButton = styled(CirCleButton)`
+  border: 1px solid ${({ theme }) => theme.colors.warning};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.warning};
+  cursor: pointer;
 `;

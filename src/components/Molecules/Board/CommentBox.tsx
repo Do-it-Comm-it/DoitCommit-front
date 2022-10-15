@@ -192,7 +192,7 @@ const Profile = styled.img`
 `;
 
 const CommentSide = styled.div`
-  width: 100%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -51,6 +51,8 @@ const getPopularBoard = async (limit: number) => {
 
 const getBoardById = async (id: string) => {
   const { data } = await requestAPI().get(`/board?boardId=${id}`);
+
+  console.log(data);
   return data;
 };
 
