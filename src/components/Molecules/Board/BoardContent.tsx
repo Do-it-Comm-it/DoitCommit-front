@@ -23,7 +23,8 @@ const BoardContent = ({ boardData }: Props) => {
   const { data: user } = useUser();
   const { mutate } = useDeleteBoard();
   const navigate = useNavigate();
-  //TODO: check my board by userId or email?
+
+  //TODO: check my board by userId or email
   const isMyBoard = boardData.writer === user?.nickname;
 
   const getComputedExtraPage = useCallback(
@@ -56,6 +57,10 @@ const BoardContent = ({ boardData }: Props) => {
     setShowConfirm(true);
   }, []);
 
+  const onEditBoard = useCallback(() => {
+    navigate(`/community/edit/`, { state: { boardData } });
+  }, [boardData, navigate]);
+
   return (
     <Container>
       <Content>
@@ -64,7 +69,7 @@ const BoardContent = ({ boardData }: Props) => {
       {isMyBoard ? (
         <ButtonWrapper>
           <DeleteButton onClick={onShowConfirm}>삭제</DeleteButton>
-          <EditButton onClick={() => {}}>수정</EditButton>
+          <EditButton onClick={onEditBoard}>수정</EditButton>
         </ButtonWrapper>
       ) : null}
       <CommentCountWrapper>

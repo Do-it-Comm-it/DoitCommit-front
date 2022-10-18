@@ -1,4 +1,4 @@
-import { IBoard, RequestBoard } from '@src/typings/Board';
+import { IBoard, RequestBoard, RequestUpdateBoard } from '@src/typings/Board';
 import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
@@ -63,6 +63,11 @@ const getOtherBoardByMemberId = async (memberId: number) => {
 
 const saveBoard = async (request: RequestBoard) => {
   const { data } = await requestAPI().post(`/board`, request);
+  return data;
+};
+
+const putBoard = async (request: RequestUpdateBoard) => {
+  const { data } = await requestAPI().put(`/board`, request);
   return data;
 };
 
@@ -152,6 +157,7 @@ const boardApiList = {
   getHistoryBoards,
   getOtherBoardByMemberId,
   deleteBoard,
+  putBoard,
 };
 
 export default boardApiList;

@@ -11,7 +11,7 @@ const getLimitPopularTags = async () => {
 };
 
 const getTags = async () => {
-  const { data } = await requestAPI().get('/board/tag');
+  const { data } = await requestAPI().get('/hashtags');
   return data;
 };
 

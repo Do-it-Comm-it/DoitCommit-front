@@ -34,7 +34,6 @@ const Board = () => {
     });
   }, []);
 
-  console.log(boardData);
   if (isLoading) return <LottieAnimation type="loading" />;
 
   return (

@@ -11,12 +11,17 @@ import React, {
 import styled, { useTheme } from 'styled-components';
 import { useMutation } from 'react-query';
 import { board as boardAPI } from '@src/service/api';
-import { BoardImage, RequestBoard, Tag } from '@src/typings/Board';
+import {
+  BoardImage,
+  RequestBoard,
+  RequestUpdateBoard,
+  Tag,
+} from '@src/typings/Board';
 import Quill from 'quill';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '@src/hooks/useAuthentication';
 import ToggleSwitch from '@src/components/Atoms/DIToggleSwitch';
 import './snow.css';
@@ -53,11 +58,14 @@ const defaultEditorState: RequestBoard = {
   boardHashtag: [],
 };
 
+const CATEGORY = ['기획', '개발', '디자인'];
 const BoardEditor = () => {
-  const { data: user } = useUser();
+  // const { data: user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
-  const [isNotice, setIsNotice] = useState<boolean>(false);
+  //deprecated notice information in board.
+  // const [isNotice, setIsNotice] = useState<boolean>(false);
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] =
@@ -68,6 +76,49 @@ const BoardEditor = () => {
   const { mutate: postBoard } = useMutation((boardData: RequestBoard) =>
     boardAPI.saveBoard(boardData)
   );
+  const { mutate: putBoard } = useMutation((boardData: RequestUpdateBoard) =>
+    boardAPI.putBoard(boardData)
+  );
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (location.state) {
+      const board = (location.state as any)?.boardData;
+
+      if (board) {
+        //make edit mode.
+        setIsEdit(true);
+
+        setCategory(CATEGORY[board.categoryId - 1]);
+        setTags(
+          board.boardHashtag.map((tag: { [key: number]: string }) => {
+            const key = Object.keys(tag)[0];
+            const value = tag[key as any];
+            return {
+              tagId: Number(key),
+              tagName: value,
+              value: Number(key),
+              label: `#${value}`,
+            };
+          })
+        );
+        setEditorState({
+          ...board,
+          categoryId: board.categoryId,
+          boardHashtag: board.boardHashtag.map(
+            (tag: { [key: number]: string }) => {
+              const key = Object.keys(tag)[0];
+              return String(key);
+            }
+          ),
+        });
+
+        //html to delta in quill.
+        const quill = new Quill('#editor');
+        quill.clipboard.dangerouslyPasteHTML(board.boardContent);
+      }
+    }
+  }, [location.state]);
 
   const { mutate: saveImage } = useImage();
   useOutsideClick(categoryRef, () => setIsOpener(false));
@@ -75,8 +126,8 @@ const BoardEditor = () => {
     Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
 
     const imageDropHandler = (
-      imageDataUrl: string,
-      type: string,
+      _imageDataUrl: string,
+      _type: string,
       imageData: any
     ) => {
       const file = imageData.toFile();
@@ -174,6 +225,48 @@ const BoardEditor = () => {
     setTags(value);
   }, []);
 
+  const onEdit = useCallback(() => {
+    const { boardTitle, boardContent, categoryId } = editorState;
+    if (boardTitle === '') {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (boardContent === '') {
+      alert('내용을 입력해주세요.');
+      return;
+    }
+    if (categoryId === 0) {
+      alert('카테고리를 선택해주세요.');
+      return;
+    }
+    const board = (location.state as any)?.boardData;
+
+    putBoard(
+      {
+        boardId: board.boardId,
+        imageForEditorRegDto: {
+          allImageList: [],
+          deletedImageList: [],
+          imageList: [],
+        },
+        boardHashtag: tags.map((t) => t.tagId),
+        boardContent: editorState.boardContent,
+        boardTitle: editorState.boardTitle,
+        categoryId: editorState.categoryId,
+      },
+      {
+        onSuccess: () => {
+          alert('게시글이 등록되었습니다.');
+          navigate(-1);
+        },
+        onError: (error) => {
+          console.log(error);
+          alert('등록에 실패했습니다.');
+        },
+      }
+    );
+  }, [editorState, location.state, navigate, putBoard, tags]);
+
   const onSubmit = useCallback(() => {
     if (category === '분류') {
       alert('게시글 분야 선택은 필수입니다.');
@@ -256,7 +349,7 @@ const BoardEditor = () => {
 
       <Editor height={500} />
       <BottomSection>
-        {user && user.role === 'ADMIN' && (
+        {/* {user && user.role === 'ADMIN' && (
           <ToggleContainer>
             <ToggleText>{isNotice ? '공지사항' : '커뮤니티'}</ToggleText>
             <ToggleSwitch
@@ -266,7 +359,7 @@ const BoardEditor = () => {
               }}
             />
           </ToggleContainer>
-        )}
+        )} */}
 
         <DIButton
           onClick={() => {
@@ -280,13 +373,13 @@ const BoardEditor = () => {
           저장하기
         </DIButton>
         <DIButton
-          onClick={onSubmit}
+          onClick={isEdit ? onEdit : onSubmit}
           backgroundColor={theme.colors.primary.default}
           width={134}
           height={51}
           borderRadius={50}
         >
-          발행하기
+          {isEdit ? '수정하기' : '발행하기'}
         </DIButton>
       </BottomSection>
     </Container>
@@ -339,23 +432,23 @@ const BottomSection = styled.div`
   gap: 10px;
 `;
 
-const ToggleContainer = styled.div`
-  display: flex;
-  width: 150px;
-  align-items: center;
-  height: 100%;
-`;
+// const ToggleContainer = styled.div`
+//   display: flex;
+//   width: 150px;
+//   align-items: center;
+//   height: 100%;
+// `;
 
-const ToggleText = styled.div`
-  width: 90px;
-  font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 51px;
+// const ToggleText = styled.div`
+//   width: 90px;
+//   font-family: ${({ theme }) => theme.font.NotoSansKRRegular};
+//   font-style: normal;
+//   font-weight: bold;
+//   font-size: 16px;
+//   line-height: 51px;
 
-  color: ${({ theme }) => theme.colors.black};
-`;
+//   color: ${({ theme }) => theme.colors.black};
+// `;
 
 const ButtonWrapper = styled.ul`
   display: flex;
