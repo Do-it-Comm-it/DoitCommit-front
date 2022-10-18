@@ -91,32 +91,30 @@ const BoardEditor = () => {
 
         setCategory(CATEGORY[board.categoryId - 1]);
         setTags(
-          board.boardHashtag.map((tag: { [key: number]: string }) => {
-            const key = Object.keys(tag)[0];
-            const value = tag[key as any];
-            return {
-              tagId: Number(key),
-              tagName: value,
-              value: Number(key),
-              label: `#${value}`,
-            };
-          })
+          board.boardHashtag
+            ? board.boardHashtag.map((tag: { [key: number]: string }) => {
+                const key = Object.keys(tag)[0];
+                const value = tag[key as any];
+                return {
+                  tagId: Number(key),
+                  tagName: value,
+                  value: Number(key),
+                  label: `#${value}`,
+                };
+              })
+            : []
         );
         setEditorState({
           ...board,
           categoryId: board.categoryId,
-          boardHashtag: board.boardHashtag.map(
-            (tag: { [key: number]: string }) => {
-              const key = Object.keys(tag)[0];
-              return String(key);
-            }
-          ),
         });
 
         //html to delta in quill.
         const quill = new Quill('#editor');
         quill.clipboard.dangerouslyPasteHTML(board.boardContent);
       }
+
+      console.log(board.boardContent, allImages);
     }
   }, [location.state]);
 
