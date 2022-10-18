@@ -37,4 +37,19 @@ function filterNumber(string: string) {
   }
 }
 
-export { filterString, filterNumber };
+function StringToFilterNumber(number: number) {
+  switch (number) {
+    case 0:
+      return '전체';
+    case 1:
+      return '기획';
+    case 2:
+      return '개발';
+    case 3:
+      return '디자인';
+    default:
+      return '전체';
+  }
+}
+
+export { filterString, filterNumber, StringToFilterNumber };

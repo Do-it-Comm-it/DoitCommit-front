@@ -22,12 +22,10 @@ import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import { useImage } from '@src/hooks/useImage';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '@src/hooks/useAuthentication';
-import ToggleSwitch from '@src/components/Atoms/DIToggleSwitch';
 import './snow.css';
 import OpenerSVG from '@src/assets/opener.svg';
 import useOutsideClick from '@src/hooks/useOutsideClick';
-import { filterNumber } from '@src/utils/board';
+import { filterNumber, StringToFilterNumber } from '@src/utils/board';
 
 const Module = {
   toolbar: {
@@ -58,14 +56,10 @@ const defaultEditorState: RequestBoard = {
   boardHashtag: [],
 };
 
-const CATEGORY = ['기획', '개발', '디자인'];
 const BoardEditor = () => {
-  // const { data: user } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  //deprecated notice information in board.
-  // const [isNotice, setIsNotice] = useState<boolean>(false);
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] =
@@ -89,7 +83,7 @@ const BoardEditor = () => {
         //make edit mode.
         setIsEdit(true);
 
-        setCategory(CATEGORY[board.categoryId - 1]);
+        setCategory(StringToFilterNumber(board.categoryId));
         setTags(
           board.boardHashtag
             ? board.boardHashtag.map((tag: { [key: number]: string }) => {
@@ -114,7 +108,7 @@ const BoardEditor = () => {
         quill.clipboard.dangerouslyPasteHTML(board.boardContent);
       }
 
-      console.log(board.boardContent, allImages);
+      // console.log(board.boardContent, allImages);
     }
   }, [location.state]);
 
@@ -239,18 +233,22 @@ const BoardEditor = () => {
     }
     const board = (location.state as any)?.boardData;
 
+    const imageList = allImages.filter(
+      (image) => image.url && editorState.boardContent.includes(image.url)
+    );
+
     putBoard(
       {
         boardId: board.boardId,
         imageForEditorRegDto: {
           allImageList: [],
           deletedImageList: [],
-          imageList: [],
+          imageList: imageList,
         },
         boardHashtag: tags.map((t) => t.tagId),
         boardContent: editorState.boardContent,
         boardTitle: editorState.boardTitle,
-        categoryId: editorState.categoryId,
+        categoryId: filterNumber(category),
       },
       {
         onSuccess: () => {
@@ -263,7 +261,7 @@ const BoardEditor = () => {
         },
       }
     );
-  }, [editorState, location.state, navigate, putBoard, tags]);
+  }, [category, editorState, location.state, navigate, putBoard, tags]);
 
   const onSubmit = useCallback(() => {
     if (category === '분류') {
