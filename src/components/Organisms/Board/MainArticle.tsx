@@ -5,13 +5,14 @@ import { useUser } from '@src/hooks/useAuthentication';
 import { useBoards } from '@src/hooks/useBoards';
 import useOutsideClick from '@src/hooks/useOutsideClick';
 import { filterNumber, filterString } from '@src/utils/board';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { useTheme } from 'styled-components';
 import OpenerSVG from '@src/assets/opener.svg';
 import { IBoard } from '@src/typings/Board';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import myBoardAtom from '@src/recoil/atom/myBoard';
+import { searchAtom } from '@src/recoil/atom/search';
 type Props = {
   search?: string;
   tagType?: number;
@@ -25,6 +26,7 @@ const MainArticle = ({ tagType, search }: Props) => {
   const [filterBoard, setFilterBoard] = useState<string>('최신순');
   const [filterPosition, setFilterPosition] = useState<string>('전체'); // 개발,디자인,기획
   const [myBoard, setMyBoard] = useRecoilState(myBoardAtom);
+  const isSearch = useRecoilValue(searchAtom);
   const filterRef = useRef<HTMLUListElement>(null);
 
   useOutsideClick(filterRef, () => setIsOpener(false));
@@ -37,7 +39,6 @@ const MainArticle = ({ tagType, search }: Props) => {
       isBookmark,
       filterString(filterBoard)
     );
-  console.log(boards);
 
   return (
     <InfiniteScroll
@@ -49,7 +50,7 @@ const MainArticle = ({ tagType, search }: Props) => {
         height: '100%',
       }}
     >
-      {(myBoard.bookmark || myBoard.history) && (
+      {(myBoard.bookmark || myBoard.history) && !isSearch.complete && (
         <Flex>
           <SelectList
             active={myBoard.bookmark}
@@ -69,75 +70,158 @@ const MainArticle = ({ tagType, search }: Props) => {
           </SelectList>
         </Flex>
       )}
-      {!myBoard.bookmark && !myBoard.history && (
-        <DIText
-          fontColor={theme.colors.gray.gray950}
-          fontWeight={700}
-          fontSize={24}
-        >
-          최신 아티클을 둘러보세요
-        </DIText>
-      )}
-
-      <FilterContainer>
-        <FilterPositionWrap>
-          {['전체', '기획', '개발', '디자인'].map(
-            (pos: string, index: number) => (
-              <FilterPositionList
-                key={pos}
-                active={filterPosition === pos}
-                onClick={() => {
-                  setFilterPosition(pos);
-                }}
-              >
-                {pos}
-              </FilterPositionList>
+      {isSearch.complete ? (
+        <>
+          {
+            /*
+            - 필터옵션이 보이지 않는경우 만약 검색을 하였을때, data가 없으면 필터옵션을 숨겨준다.
+            - 필터옵션이 보이는 경우
+            1. data가 존재하고
+            2. 해당 data를 필터링하다 data가 없으면 필터링옵션이 숨김처리되는것을 방지하여
+            3. 필터포지션 기본값이 아닐때만 필터옵션을 보이도록 처리하였음.
+            */
+            (boards?.pages[0].data.length > 0 || filterPosition !== '전체') && (
+              <FilterContainer>
+                <FilterPositionWrap>
+                  {['전체', '기획', '개발', '디자인'].map(
+                    (pos: string, index: number) => (
+                      <FilterPositionList
+                        key={pos}
+                        active={filterPosition === pos}
+                        onClick={() => {
+                          setFilterPosition(pos);
+                        }}
+                      >
+                        {pos}
+                      </FilterPositionList>
+                    )
+                  )}
+                </FilterPositionWrap>
+                {!myBoard.bookmark && !myBoard.history && (
+                  <ButtonWrapper ref={filterRef}>
+                    <FilterButton
+                      active={!isBookmark}
+                      isClick={true}
+                      onClick={() => {
+                        setIsBookmark(false);
+                        setIsOpener((prev) => !prev);
+                      }}
+                    >
+                      {filterBoard}
+                    </FilterButton>
+                    <FilterOpener
+                      isOpener={isOpener}
+                      onClick={() => {
+                        setIsOpener((prev) => !prev);
+                      }}
+                    />
+                    {isOpener && (
+                      <FilterWrap>
+                        {['최신순', '좋아요순', '조회수순'].map(
+                          (FBoard: string) => (
+                            <Filter
+                              key={FBoard}
+                              isSelect={FBoard === filterBoard}
+                              onClick={() => {
+                                setFilterBoard(FBoard);
+                                setIsOpener(false);
+                              }}
+                            >
+                              {FBoard}
+                            </Filter>
+                          )
+                        )}
+                      </FilterWrap>
+                    )}
+                  </ButtonWrapper>
+                )}
+                {myBoard.bookmark && !myBoard.history && (
+                  // 클릭 효과를 없앤다.
+                  <FilterButton active={true} isClick={false}>
+                    {filterBoard}
+                  </FilterButton>
+                )}
+              </FilterContainer>
             )
-          )}
-        </FilterPositionWrap>
-        {!myBoard.bookmark && !myBoard.history && (
-          <ButtonWrapper ref={filterRef}>
-            <FilterButton
-              active={!isBookmark}
-              isClick={true}
-              onClick={() => {
-                setIsBookmark(false);
-                setIsOpener((prev) => !prev);
-              }}
+          }
+        </>
+      ) : (
+        <>
+          {!myBoard.bookmark && !myBoard.history && (
+            <DIText
+              fontColor={theme.colors.gray.gray950}
+              fontWeight={700}
+              fontSize={24}
             >
-              {filterBoard}
-            </FilterButton>
-            <FilterOpener
-              isOpener={isOpener}
-              onClick={() => {
-                setIsOpener((prev) => !prev);
-              }}
-            />
-            {isOpener && (
-              <FilterWrap>
-                {['최신순', '좋아요순', '조회수순'].map((FBoard: string) => (
-                  <Filter
-                    key={FBoard}
-                    isSelect={FBoard === filterBoard}
+              최신 아티클을 둘러보세요
+            </DIText>
+          )}
+          {
+            <FilterContainer>
+              <FilterPositionWrap>
+                {['전체', '기획', '개발', '디자인'].map(
+                  (pos: string, index: number) => (
+                    <FilterPositionList
+                      key={pos}
+                      active={filterPosition === pos}
+                      onClick={() => {
+                        setFilterPosition(pos);
+                      }}
+                    >
+                      {pos}
+                    </FilterPositionList>
+                  )
+                )}
+              </FilterPositionWrap>
+              {!myBoard.bookmark && !myBoard.history && (
+                <ButtonWrapper ref={filterRef}>
+                  <FilterButton
+                    active={!isBookmark}
+                    isClick={true}
                     onClick={() => {
-                      setFilterBoard(FBoard);
-                      setIsOpener(false);
+                      setIsBookmark(false);
+                      setIsOpener((prev) => !prev);
                     }}
                   >
-                    {FBoard}
-                  </Filter>
-                ))}
-              </FilterWrap>
-            )}
-          </ButtonWrapper>
-        )}
-        {myBoard.bookmark && !myBoard.history && (
-          // 클릭 효과를 없앤다.
-          <FilterButton active={true} isClick={false}>
-            {filterBoard}
-          </FilterButton>
-        )}
-      </FilterContainer>
+                    {filterBoard}
+                  </FilterButton>
+                  <FilterOpener
+                    isOpener={isOpener}
+                    onClick={() => {
+                      setIsOpener((prev) => !prev);
+                    }}
+                  />
+                  {isOpener && (
+                    <FilterWrap>
+                      {['최신순', '좋아요순', '조회수순'].map(
+                        (FBoard: string) => (
+                          <Filter
+                            key={FBoard}
+                            isSelect={FBoard === filterBoard}
+                            onClick={() => {
+                              setFilterBoard(FBoard);
+                              setIsOpener(false);
+                            }}
+                          >
+                            {FBoard}
+                          </Filter>
+                        )
+                      )}
+                    </FilterWrap>
+                  )}
+                </ButtonWrapper>
+              )}
+              {myBoard.bookmark && !myBoard.history && (
+                // 클릭 효과를 없앤다.
+                <FilterButton active={true} isClick={false}>
+                  {filterBoard}
+                </FilterButton>
+              )}
+            </FilterContainer>
+          }
+        </>
+      )}
+
       {isError ? (
         <LottieAnimation
           type="error"
@@ -153,7 +237,11 @@ const MainArticle = ({ tagType, search }: Props) => {
               message={
                 isBookmark
                   ? '해당 북마크 게시글은 찾을 수 없습니다'
-                  : '해당 태그에 관련된 게시글은 찾을 수 없습니다'
+                  : isSearch.complete && filterPosition === '전체'
+                  ? '해당 검색어와 관련된 게시글은 찾을 수 없습니다'
+                  : filterPosition !== '전체'
+                  ? '해당 분야와 관련된 게시글은 찾을 수 없습니다'
+                  : null
               }
             />
           ) : (
