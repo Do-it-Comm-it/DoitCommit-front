@@ -50,6 +50,7 @@ const Container = styled.div<{ width?: number; height?: number }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 `;
 
 const EmptyAnimationDiv = styled.div``;
@@ -57,7 +58,7 @@ const EmptyAnimationDiv = styled.div``;
 const EmptyText = styled.div`
   color: ${({ theme }) => theme.colors.warning};
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
 `;
 
 export default LottieAnimation;
