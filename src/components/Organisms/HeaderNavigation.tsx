@@ -152,9 +152,15 @@ const ExpandIcon = styled(ExpandIconSVG)<{ open: boolean }>`
 `;
 
 const Bell = styled(HeaderAlarm)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.gray.gray950};
+  }
   cursor: pointer;
 `;
 const BookMark = styled(HeaderBookmark)`
+  & > path {
+    fill: ${({ theme }) => theme.colors.gray.gray950};
+  }
   cursor: pointer;
 `;
 const Search = styled(HeaderSearch)`

@@ -24,21 +24,16 @@ const PopularSlider = () => {
   return (
     <Container>
       <Arrow
+        isLeft={true}
         onClick={() => {
           sliderRef.current.slickPrev();
         }}
-        style={{
-          position: 'absolute',
-          top: '45%',
-          left: 10,
-          transform: 'rotate(180deg)',
-        }}
       />
       <Arrow
+        isLeft={false}
         onClick={() => {
           sliderRef.current.slickNext();
         }}
-        style={{ position: 'absolute', top: '45%', right: 10 }}
       />
       <StyledSlider
         {...settings}
@@ -69,11 +64,15 @@ const Container = styled.div`
   max-height: 400px;
 `;
 
-const Arrow = styled(ArrowSVG)`
+const Arrow = styled(ArrowSVG)<{ isLeft: boolean }>`
   position: absolute;
   cursor: pointer;
   top: 45%;
   z-index: 1;
+  ${({ isLeft }) =>
+    isLeft
+      ? `transform: rotate(180deg); left: 20px`
+      : `transform: rotate(0deg); right: 20px`};
 `;
 
 const StyledSlider = styled(Slider)``;
