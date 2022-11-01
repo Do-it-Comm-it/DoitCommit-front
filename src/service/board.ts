@@ -96,7 +96,6 @@ const getHistoryBoards = async (
       &keyword=${keyword || ''}
     `
   );
-  console.log(data);
   return data;
 };
 

@@ -56,10 +56,16 @@ const defaultEditorState: RequestBoard = {
   boardHashtag: [],
 };
 
+type RecentImage = {
+  id: number;
+  url: string;
+};
+
 const BoardEditor = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
+  const [recentImages, setRecentImages] = useState<RecentImage[]>([]);
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] =
@@ -82,6 +88,28 @@ const BoardEditor = () => {
       if (board) {
         //make edit mode.
         setIsEdit(true);
+
+        //object to array
+        if (board.savedImageIdsAndUrl) {
+          const imageArr = Object.keys(board.savedImageIdsAndUrl).map(
+            (key) => ({
+              id: board.savedImageIdsAndUrl[key].imageId as number,
+              url: board.savedImageIdsAndUrl[key].imageUrl as string,
+            })
+          );
+          setRecentImages(imageArr);
+          setAllImages((prev) => [
+            ...prev,
+            ...imageArr.map((image) => {
+              const imageUrl = image.url.split('/');
+              return {
+                fileNm: imageUrl.pop() ?? '',
+                filePath: `${imageUrl[3]}/${imageUrl[4]}/${imageUrl[5]}`,
+                url: image.url,
+              };
+            }),
+          ]);
+        }
 
         setCategory(StringToFilterNumber(board.categoryId));
         setTags(
@@ -107,8 +135,6 @@ const BoardEditor = () => {
         const quill = new Quill('#editor');
         quill.clipboard.dangerouslyPasteHTML(board.boardContent);
       }
-
-      // console.log(board.boardContent, allImages);
     }
   }, [location.state]);
 
@@ -237,12 +263,20 @@ const BoardEditor = () => {
       (image) => image.url && editorState.boardContent.includes(image.url)
     );
 
+    const deletedImageList = recentImages.filter((image) => {
+      if (imageList.some((_image) => _image.url === image.url)) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
     putBoard(
       {
         boardId: board.boardId,
         imageForEditorRegDto: {
-          allImageList: [],
-          deletedImageList: [],
+          allImageList: allImages,
+          deletedImageList: deletedImageList.map((image) => image.id),
           imageList: imageList,
         },
         boardHashtag: tags.map((t) => t.tagId),
@@ -261,7 +295,16 @@ const BoardEditor = () => {
         },
       }
     );
-  }, [category, editorState, location.state, navigate, putBoard, tags]);
+  }, [
+    allImages,
+    category,
+    editorState,
+    location.state,
+    navigate,
+    putBoard,
+    recentImages,
+    tags,
+  ]);
 
   const onSubmit = useCallback(() => {
     if (category === '분류') {
