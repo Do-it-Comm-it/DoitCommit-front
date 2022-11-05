@@ -16,7 +16,7 @@ export const useBoards = (
   isBookmark?: boolean,
   sortType?: string
 ) => {
-  const isShowBookmarkList = useRecoilValue(myBoardAtom); // 북마크조회가 아닐때는 기본 메인 아티클을 표시한다.
+  const myBoard = useRecoilValue(myBoardAtom); // 북마크조회가 아닐때는 기본 메인 아티클을 표시한다.
   const fetchBookmarkPosts = async ({ pageParam = 0 }) => {
     const result = await board.getBookmarkBoardListByPage(
       pageParam,
@@ -76,13 +76,13 @@ export const useBoards = (
       isBookmark,
       sortType,
       boardType,
-      isShowBookmarkList.bookmark,
-      isShowBookmarkList.history,
+      myBoard.bookmark,
+      myBoard.history,
     ],
-    isShowBookmarkList.bookmark && !isShowBookmarkList.history
+    myBoard.bookmark && !myBoard.history
       ? // 북마크 조회, 히스토리 조회 , 메인 리스트 조회
         fetchBookmarkPosts
-      : !isShowBookmarkList.bookmark && isShowBookmarkList.history
+      : !myBoard.bookmark && myBoard.history
       ? fetchHistoryPosts
       : fetchPosts,
     {

@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IBoard } from '@src/typings/Board';
 import Status from '@src/components/Atoms/Board/Status';
-
+import { useRecoilValue } from 'recoil';
+import myBoardAtom from '@src/recoil/atom/myBoard';
 interface Props {
   board: IBoard;
   category: number | null;
@@ -15,10 +16,11 @@ interface Props {
 }
 const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
   const [isHover, setIsHover] = useState<boolean>(false);
+  const myBoard = useRecoilValue(myBoardAtom);
   const onToggle = useCallback((value) => {
     setIsHover(value);
   }, []);
-
+  
   return (
     <>
       {isHome ? (
@@ -78,15 +80,33 @@ const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
             isBookmark={isBookmark}
             isHover={isHover}
           />
-          <Bottom>
-            <Author>by. {board.writer}</Author>
-            <Status
-              board={board}
-              category={category}
-              search={search}
-              isBookmark={isBookmark}
-            />
-          </Bottom>
+          {myBoard.bookmark || myBoard.history ? (
+            <Bottom>
+              <Author>by. {board.writer}</Author>
+              <Status
+                board={board}
+                category={category}
+                search={search}
+                isBookmark={isBookmark}
+              />
+              <Block
+              >
+                <Circle/>
+                <Circle/>
+                <Circle/>
+              </Block>
+            </Bottom>
+          ) : (
+            <Bottom>
+              <Author>by. {board.writer}</Author>
+              <Status
+                board={board}
+                category={category}
+                search={search}
+                isBookmark={isBookmark}
+              />
+            </Bottom>
+          )}
         </Container>
       )}
     </>
@@ -123,4 +143,17 @@ const Author = styled.span`
   font-weight: 400;
   font-size: 14px;
   color: ${({ theme }) => theme.colors.gray.gray400};
+`;
+
+
+const Block = styled.div`
+  cursor: pointer;
+`;
+
+const Circle = styled.div`
+  border-radius: 50px;
+  width: 3px;
+  height: 3px;
+  background-color: ${({ theme }) => theme.colors.gray.gray400};
+  margin: 3px 0px;
 `;
