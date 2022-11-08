@@ -18,9 +18,7 @@ const Articles = (props: Props) => {
   const isSearch = useRecoilValue(searchAtom);
   return (
     <React.Fragment>
-      {(myBoard.bookmark || myBoard.history) && (
-        <MainArticle {...props} />
-      )}
+      {(myBoard.bookmark || myBoard.history) && <MainArticle {...props} />}
       {!myBoard.bookmark && !myBoard.history && (
         <>
           {!isSearch.complete && (

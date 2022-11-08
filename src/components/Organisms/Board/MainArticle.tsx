@@ -39,7 +39,7 @@ const MainArticle = ({ tagType, search }: Props) => {
       isBookmark,
       filterString(filterBoard)
     );
-      
+
   return (
     <InfiniteScroll
       hasMore={hasNextPage}

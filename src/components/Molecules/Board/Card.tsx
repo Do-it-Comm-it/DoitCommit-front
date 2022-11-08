@@ -7,6 +7,9 @@ import { IBoard } from '@src/typings/Board';
 import Status from '@src/components/Atoms/Board/Status';
 import { useRecoilValue } from 'recoil';
 import myBoardAtom from '@src/recoil/atom/myBoard';
+import { useBoardListMutation } from '@src/hooks/useBoards';
+import { board as boardApi } from '@src/service/api';
+import MoreVert from '@src/components/Atoms/Board/MoreVert';
 interface Props {
   board: IBoard;
   category: number | null;
@@ -16,11 +19,25 @@ interface Props {
 }
 const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
   const [isHover, setIsHover] = useState<boolean>(false);
+
   const myBoard = useRecoilValue(myBoardAtom);
   const onToggle = useCallback((value) => {
     setIsHover(value);
   }, []);
-  
+
+  const mutation = useBoardListMutation(
+    {
+      myBookmark: !board.myBookmark,
+    },
+    boardApi.toggleBookmark,
+    category,
+    search,
+    isBookmark,
+    isHome
+  );
+  const onClickBookmark = useCallback(async () => {
+    mutation.mutate(board);
+  }, [mutation, board]);
   return (
     <>
       {isHome ? (
@@ -89,12 +106,12 @@ const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
                 search={search}
                 isBookmark={isBookmark}
               />
-              <Block
-              >
-                <Circle/>
-                <Circle/>
-                <Circle/>
-              </Block>
+              <MoreVert
+                board={board}
+                category={category}
+                search={search}
+                isBookmark={isBookmark}
+              />
             </Bottom>
           ) : (
             <Bottom>
@@ -128,6 +145,7 @@ const Container = styled.div<{ isHome?: boolean }>`
   @media (max-width: 500px) {
     width: 90%;
   }
+  position: relative;
 `;
 
 const Bottom = styled.div`
@@ -143,17 +161,4 @@ const Author = styled.span`
   font-weight: 400;
   font-size: 14px;
   color: ${({ theme }) => theme.colors.gray.gray400};
-`;
-
-
-const Block = styled.div`
-  cursor: pointer;
-`;
-
-const Circle = styled.div`
-  border-radius: 50px;
-  width: 3px;
-  height: 3px;
-  background-color: ${({ theme }) => theme.colors.gray.gray400};
-  margin: 3px 0px;
 `;
