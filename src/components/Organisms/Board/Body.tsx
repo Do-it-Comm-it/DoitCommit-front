@@ -12,10 +12,12 @@ import useScrollTop from '@src/hooks/useScrollTop';
 
 type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 
+const CURRENT_Y = Math.floor(window.innerHeight / 1.5);
 const Body = () => {
   const { data: user } = useUser();
   const location = useLocation();
-  const { showButton, onScroll } = useScrollTop(700);
+  const { showButton, onScroll } = useScrollTop(CURRENT_Y);
+
   const path: BoardPathType = useMemo(() => {
     const name = location.pathname.split('/')[2];
 

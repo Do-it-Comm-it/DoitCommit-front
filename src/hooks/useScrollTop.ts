@@ -17,7 +17,7 @@ const useScrollTop = (currentY: number) => {
     };
     window.addEventListener('scroll', handleShowButton);
     return () => window.removeEventListener('scroll', handleShowButton); // clean up
-  }, []);
+  }, [currentY]);
   return {
     onScroll,
     showButton,
