@@ -48,8 +48,8 @@ const Module = {
 };
 
 const defaultEditorState: RequestBoard = {
-  allImageArr: [],
-  imageArr: [],
+  allImageList: [],
+  imageList: [],
   boardTitle: '',
   boardContent: '',
   categoryId: 2,
@@ -322,11 +322,11 @@ const BoardEditor = () => {
         // categoryId: isNotice ? 1 : 2,
         categoryId: filterNumber(category),
         boardHashtag: tags.map((t) => String(t.tagId)),
-        allImageArr: allImages.map((i) => ({
+        allImageList: allImages.map((i) => ({
           fileNm: i.fileNm,
           filePath: i.filePath,
         })),
-        imageArr: images.map((i) => ({
+        imageList: images.map((i) => ({
           fileNm: i.fileNm,
           filePath: i.filePath,
         })),

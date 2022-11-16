@@ -27,8 +27,8 @@ export interface RequestBoard {
   boardTitle: string;
   boardContent: string;
   boardHashtag: string[];
-  allImageArr: BoardImage[];
-  imageArr: BoardImage[];
+  allImageList: BoardImage[];
+  imageList: BoardImage[];
 }
 
 export interface RequestUpdateBoard {
