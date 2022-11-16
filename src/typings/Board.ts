@@ -27,8 +27,21 @@ export interface RequestBoard {
   boardTitle: string;
   boardContent: string;
   boardHashtag: string[];
-  allImageArr: BoardImage[];
-  imageArr: BoardImage[];
+  allImageList: BoardImage[];
+  imageList: BoardImage[];
+}
+
+export interface RequestUpdateBoard {
+  boardId: number;
+  categoryId: number;
+  boardTitle: string;
+  boardContent: string;
+  boardHashtag: number[];
+  imageForEditorRegDto: {
+    allImageList: BoardImage[];
+    imageList: BoardImage[];
+    deletedImageList: number[];
+  };
 }
 
 export type Tag = {

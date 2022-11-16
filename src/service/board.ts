@@ -1,4 +1,4 @@
-import { IBoard, RequestBoard } from '@src/typings/Board';
+import { IBoard, RequestBoard, RequestUpdateBoard } from '@src/typings/Board';
 import { IUpdateCommentDto } from '@src/typings/Comment';
 import { requestAPI } from '@src/utils/fetcher';
 
@@ -66,11 +66,21 @@ const saveBoard = async (request: RequestBoard) => {
   return data;
 };
 
+const putBoard = async (request: RequestUpdateBoard) => {
+  const { data } = await requestAPI().put(`/board`, request);
+  return data;
+};
+
 const getCommentList = async (boardId: number, page: number, size: number) => {
   const { data } = await requestAPI().get(
     `/boards/${boardId}/comments?page=${page}&size=${size}`
   );
   return data;
+};
+
+const deleteBoard = async (boardId: number) => {
+  const { message } = await requestAPI().delete(`/board/${boardId}`);
+  return message;
 };
 
 const getHistoryBoards = async (
@@ -86,7 +96,6 @@ const getHistoryBoards = async (
       &keyword=${keyword || ''}
     `
   );
-  console.log(data);
   return data;
 };
 
@@ -146,6 +155,8 @@ const boardApiList = {
   toggleBookmark,
   getHistoryBoards,
   getOtherBoardByMemberId,
+  deleteBoard,
+  putBoard,
 };
 
 export default boardApiList;

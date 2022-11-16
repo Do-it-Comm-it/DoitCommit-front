@@ -209,6 +209,11 @@ export const useSingleBoardMutation = (
   return mutation;
 };
 
+export const useDeleteBoard = () => {
+  const mutation = useMutation(board.deleteBoard);
+  return mutation;
+};
+
 export const useMainPageBoard = () => {
   return useQuery<Array<IBoard>>('main-board', async () => {
     return await board.getMainPageBoard();
