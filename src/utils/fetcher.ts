@@ -20,6 +20,10 @@ const handleResponse = (response: AxiosResponse) => {
       error: 'bad Response',
     };
   }
+
+  if (response.status === 400) {
+    return null;
+  }
   return response.data;
 };
 
@@ -50,6 +54,9 @@ export const requestAPI = () => {
         data: bodyJson,
         headers: {
           'Content-Type': contentType ?? 'application/json',
+        },
+        validateStatus: () => {
+          return true;
         },
       })
         .then(handleResponse)
