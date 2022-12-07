@@ -3,16 +3,16 @@ import LottieAnimation from '@src/components/Atoms/LottieAnimation';
 import Card from '@src/components/Molecules/Board/Card';
 import { useUser } from '@src/hooks/useAuthentication';
 import { useBoards } from '@src/hooks/useBoards';
-import useOutsideClick from '@src/hooks/useOutsideClick';
 import { filterNumber, filterString } from '@src/utils/board';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled, { useTheme } from 'styled-components';
-import OpenerSVG from '@src/assets/opener.svg';
+
 import { IBoard } from '@src/typings/Board';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import myBoardAtom from '@src/recoil/atom/myBoard';
 import { searchAtom } from '@src/recoil/atom/search';
+import BoardFilterSelector from '@src/components/Molecules/Board/BoardFilterSelector';
 type Props = {
   search?: string;
   tagType?: number;
@@ -22,14 +22,10 @@ const MainArticle = ({ tagType, search }: Props) => {
   const theme = useTheme();
   const { data: user } = useUser();
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
-  const [isOpener, setIsOpener] = useState<boolean>(false);
   const [filterBoard, setFilterBoard] = useState<string>('최신순');
   const [filterPosition, setFilterPosition] = useState<string>('전체'); // 개발,디자인,기획
   const [myBoard, setMyBoard] = useRecoilState(myBoardAtom);
   const isSearch = useRecoilValue(searchAtom);
-  const filterRef = useRef<HTMLUListElement>(null);
-
-  useOutsideClick(filterRef, () => setIsOpener(false));
 
   const { boards, isError, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useBoards(
@@ -39,6 +35,14 @@ const MainArticle = ({ tagType, search }: Props) => {
       isBookmark,
       filterString(filterBoard)
     );
+
+  const onChangeFilter = useCallback((filterBoard: string) => {
+    setFilterBoard(filterBoard);
+  }, []);
+
+  const onChangeBookmark = useCallback((isBookmark: boolean) => {
+    setIsBookmark(isBookmark);
+  }, []);
 
   return (
     <InfiniteScroll
@@ -98,42 +102,12 @@ const MainArticle = ({ tagType, search }: Props) => {
                   )}
                 </FilterPositionWrap>
                 {!myBoard.bookmark && !myBoard.history && (
-                  <ButtonWrapper ref={filterRef}>
-                    <FilterButton
-                      active={!isBookmark}
-                      isClick={true}
-                      onClick={() => {
-                        setIsBookmark(false);
-                        setIsOpener((prev) => !prev);
-                      }}
-                    >
-                      {filterBoard}
-                    </FilterButton>
-                    <FilterOpener
-                      isOpener={isOpener}
-                      onClick={() => {
-                        setIsOpener((prev) => !prev);
-                      }}
-                    />
-                    {isOpener && (
-                      <FilterWrap>
-                        {['최신순', '좋아요순', '조회수순'].map(
-                          (FBoard: string) => (
-                            <Filter
-                              key={FBoard}
-                              isSelect={FBoard === filterBoard}
-                              onClick={() => {
-                                setFilterBoard(FBoard);
-                                setIsOpener(false);
-                              }}
-                            >
-                              {FBoard}
-                            </Filter>
-                          )
-                        )}
-                      </FilterWrap>
-                    )}
-                  </ButtonWrapper>
+                  <BoardFilterSelector
+                    filter={filterBoard}
+                    active={!isBookmark}
+                    onChangeBookmark={onChangeBookmark}
+                    onChangeFilter={onChangeFilter}
+                  />
                 )}
                 {myBoard.bookmark && !myBoard.history && (
                   // 클릭 효과를 없앤다.
@@ -174,42 +148,12 @@ const MainArticle = ({ tagType, search }: Props) => {
                 )}
               </FilterPositionWrap>
               {!myBoard.bookmark && !myBoard.history && (
-                <ButtonWrapper ref={filterRef}>
-                  <FilterButton
-                    active={!isBookmark}
-                    isClick={true}
-                    onClick={() => {
-                      setIsBookmark(false);
-                      setIsOpener((prev) => !prev);
-                    }}
-                  >
-                    {filterBoard}
-                  </FilterButton>
-                  <FilterOpener
-                    isOpener={isOpener}
-                    onClick={() => {
-                      setIsOpener((prev) => !prev);
-                    }}
-                  />
-                  {isOpener && (
-                    <FilterWrap>
-                      {['최신순', '좋아요순', '조회수순'].map(
-                        (FBoard: string) => (
-                          <Filter
-                            key={FBoard}
-                            isSelect={FBoard === filterBoard}
-                            onClick={() => {
-                              setFilterBoard(FBoard);
-                              setIsOpener(false);
-                            }}
-                          >
-                            {FBoard}
-                          </Filter>
-                        )
-                      )}
-                    </FilterWrap>
-                  )}
-                </ButtonWrapper>
+                <BoardFilterSelector
+                  filter={filterBoard}
+                  active={!isBookmark}
+                  onChangeBookmark={onChangeBookmark}
+                  onChangeFilter={onChangeFilter}
+                />
               )}
               {myBoard.bookmark && !myBoard.history && (
                 // 클릭 효과를 없앤다.
@@ -292,14 +236,6 @@ const FilterContainer = styled.div`
     line-height: 15px;
   }
 `;
-const ButtonWrapper = styled.ul`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-`;
-
 const FilterButton = styled.li<{ active?: boolean; isClick?: boolean }>`
   color: ${({ theme }) => theme.colors.gray.gray950};
   list-style: ${({ active }) => !active && 'none'};
@@ -307,43 +243,6 @@ const FilterButton = styled.li<{ active?: boolean; isClick?: boolean }>`
     color: ${({ theme }) => theme.colors.primary.default};
   }
   cursor: ${({ isClick }) => (!isClick ? 'auto' : 'pointer')};
-`;
-
-const FilterOpener = styled(({ isOpener, ...props }) => (
-  <OpenerSVG {...props} />
-))<{ isOpener?: boolean }>`
-  & > path {
-    stroke: ${({ theme }) => theme.colors.primary.default};
-  }
-  cursor: pointer;
-  ${({ isOpener }) =>
-    isOpener ? `transform: rotate(-180deg)` : `transform: rotate(0deg)`};
-`;
-
-const FilterWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 30px;
-  right: 0;
-  left: 8;
-`;
-
-const Filter = styled.button<{ isSelect: boolean }>`
-  width: 108px;
-  height: 49px;
-  background: ${({ isSelect }) => (isSelect ? '#F9F9F9' : '#FEFEFE')};
-  border: 1px solid transparent;
-  color: ${({ theme, isSelect }) =>
-    isSelect ? theme.colors.primary.default : theme.colors.gray.gray950};
-  cursor: pointer;
-  &:first-child {
-    border-radius: 10px 10px 0px 0px;
-  }
-  &:last-child {
-    border-radius: 0px 0px 10px 10px;
-  }
-  z-index: 2;
 `;
 
 const FilterPositionWrap = styled.ul`
