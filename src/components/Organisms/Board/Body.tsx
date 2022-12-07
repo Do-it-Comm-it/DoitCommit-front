@@ -9,6 +9,7 @@ import { useUser } from '@src/hooks/useAuthentication';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import FloatingScrollButton from './FloatingScrollButton';
 import useScrollTop from '@src/hooks/useScrollTop';
+import MemberOtherBoard from './MemberOtherBoard';
 
 type BoardPathType = 'notice' | 'edit' | 'board' | 'index';
 
@@ -40,6 +41,7 @@ const Body = () => {
         <Route path="/notice" element={<Notice />} />
         {user && <Route path="/edit" element={<BoardEditor />} />}
         <Route path="/board/:id" element={<Board />} />
+        <Route path="/member-board/:memberId" element={<MemberOtherBoard />} />
       </Routes>
 
       {user && path !== 'edit' && path !== 'board' && <FloatingButton />}

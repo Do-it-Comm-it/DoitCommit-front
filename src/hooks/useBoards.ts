@@ -225,8 +225,23 @@ export const usePopularBoard = (limit: number) => {
     return await board.getPopularBoard(limit);
   });
 };
-export const useOtherBoard = (memberId: number) => {
-  return useQuery<OtherBoard>('other-board', async () => {
-    return await board.getOtherBoardByMemberId(memberId);
-  });
+
+type useOtherBoardProps = {
+  memberId: number | null;
+  limit?: number;
+};
+
+export const useOtherBoard = ({ memberId, limit }: useOtherBoardProps) => {
+  return useQuery<OtherBoard>(
+    'other-board',
+    async () => {
+      if (memberId === null) {
+        return new Error('memberId is null');
+      }
+      return await board.getOtherBoardByMemberId(memberId, limit);
+    },
+    {
+      enabled: memberId !== null,
+    }
+  );
 };

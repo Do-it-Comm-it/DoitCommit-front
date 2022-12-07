@@ -54,9 +54,9 @@ const getBoardById = async (id: string) => {
   return data;
 };
 
-const getOtherBoardByMemberId = async (memberId: number) => {
+const getOtherBoardByMemberId = async (memberId: number, limit?: number) => {
   const { data } = await requestAPI().get(
-    `/board/members/${memberId}/limit?limit=3`
+    `/board/members/${memberId}/limit?limit=${limit}`
   );
   return data;
 };
