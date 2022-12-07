@@ -27,8 +27,10 @@ export interface RequestBoard {
   boardTitle: string;
   boardContent: string;
   boardHashtag: string[];
-  allImageArr: BoardImage[];
-  imageArr: BoardImage[];
+  imageForEditorRegDto: {
+    allImageList: BoardImage[];
+    imageList: BoardImage[];
+  };
 }
 
 export interface RequestUpdateBoard {

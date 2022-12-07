@@ -47,9 +47,18 @@ const Module = {
   },
 };
 
-const defaultEditorState: RequestBoard = {
-  allImageArr: [],
-  imageArr: [],
+type EditorState = {
+  allImageList: BoardImage[];
+  imageList: BoardImage[];
+  boardTitle: string;
+  boardContent: string;
+  categoryId: number;
+  boardHashtag: number[];
+};
+
+const defaultEditorState = {
+  allImageList: [],
+  imageList: [],
   boardTitle: '',
   boardContent: '',
   categoryId: 2,
@@ -69,7 +78,7 @@ const BoardEditor = () => {
   const [allImages, setAllImages] = useState<BoardImage[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [editorState, setEditorState] =
-    useState<RequestBoard>(defaultEditorState);
+    useState<EditorState>(defaultEditorState);
   const [category, setCategory] = useState<string>('분류');
   const [isOpener, setIsOpener] = useState<boolean>(false);
   const categoryRef = useRef<HTMLUListElement>(null);
@@ -322,14 +331,16 @@ const BoardEditor = () => {
         // categoryId: isNotice ? 1 : 2,
         categoryId: filterNumber(category),
         boardHashtag: tags.map((t) => String(t.tagId)),
-        allImageArr: allImages.map((i) => ({
-          fileNm: i.fileNm,
-          filePath: i.filePath,
-        })),
-        imageArr: images.map((i) => ({
-          fileNm: i.fileNm,
-          filePath: i.filePath,
-        })),
+        imageForEditorRegDto: {
+          allImageList: allImages.map((i) => ({
+            fileNm: i.fileNm,
+            filePath: i.filePath,
+          })),
+          imageList: images.map((i) => ({
+            fileNm: i.fileNm,
+            filePath: i.filePath,
+          })),
+        },
       },
       {
         onSuccess: (data) => {
