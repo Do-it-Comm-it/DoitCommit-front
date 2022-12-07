@@ -1,5 +1,8 @@
+import myBoardAtom from '@src/recoil/atom/myBoard';
 import React, { useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled, { useTheme } from 'styled-components';
+import DIButton from '@src/components/Atoms/DIButton';
 
 type Menus = {
   link?: string;
@@ -9,7 +12,7 @@ type Menus = {
 
 const Footer = () => {
   const theme = useTheme();
-
+  const myBoard = useRecoilValue(myBoardAtom);
   const MenuItem: Array<Menus> = useMemo(() => {
     // theme.colors.white;
     //#ffffff
@@ -22,24 +25,66 @@ const Footer = () => {
   }, [theme]);
 
   return (
-    <Container>
-      <FooterTitle>두잇커밋</FooterTitle>
-      <FooterMenu>
-        {MenuItem.map((item, index) => (
-          <Item color={item.color} key={index}>
-            {item.name}
-          </Item>
-        ))}
-      </FooterMenu>
+    <>
+      {(myBoard.bookmark || myBoard.history) && (
+        <RemoveContainer>
+          <RemoveWrap>
+            <DIButton
+              backgroundColor={theme.colors.primary.default}
+              borderRadius={51}
+              onClick={() => {
+                null;
+              }}
+            >
+              선택 삭제
+            </DIButton>
+            <DIButton
+              backgroundColor={theme.colors.warning}
+              borderRadius={51}
+              onClick={() => {
+                null;
+              }}
+            >
+              전체 삭제
+            </DIButton>
+          </RemoveWrap>
+        </RemoveContainer>
+      )}
+      <Container>
+        <FooterTitle>두잇커밋</FooterTitle>
+        <FooterMenu>
+          {MenuItem.map((item, index) => (
+            <Item color={item.color} key={index}>
+              {item.name}
+            </Item>
+          ))}
+        </FooterMenu>
 
-      <CopyRightText>
-        Copyright © 2022 Doitcommit, All rights reserved.
-      </CopyRightText>
-    </Container>
+        <CopyRightText>
+          Copyright © 2022 Doitcommit, All rights reserved.
+        </CopyRightText>
+      </Container>
+    </>
   );
 };
 
 export default Footer;
+
+const RemoveContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.gray.gray100};
+  height: 106px;
+  width: 100%;
+  padding: 26px 0px;
+  position: relative;
+`;
+
+const RemoveWrap = styled.div`
+  position: absolute;
+  right: 310px;
+  > button:first-child {
+    margin-right: 16px;
+  }
+`;
 
 const Container = styled.div`
   display: flex;
