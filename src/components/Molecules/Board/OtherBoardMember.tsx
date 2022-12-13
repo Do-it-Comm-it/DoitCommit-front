@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import ProfileIconSVG from '@src/assets/user.svg';
+import { useNavigate } from 'react-router';
 
 type Props = {
   nickname: string | null;
   memberImageUrl: string | null;
   position: string | null;
+  memberId: number;
+  isAlarmButton?: boolean;
 };
 
-const OtherBoardMember = ({ nickname, memberImageUrl, position }: Props) => {
+const OtherBoardMember = ({
+  nickname,
+  memberImageUrl,
+  position,
+  memberId,
+  isAlarmButton,
+}: Props) => {
+  const navigation = useNavigate();
+
+  const onClickOtherBoard = useCallback(() => {
+    navigation(`/community/member-board/${memberId}`);
+  }, [memberId, navigation]);
+
   return (
     <Container>
       {memberImageUrl ? (
@@ -26,7 +41,15 @@ const OtherBoardMember = ({ nickname, memberImageUrl, position }: Props) => {
         </MemberDescription>
       </Content>
       <OtherBoardButton>
-        <OtherBoardButtonText>글 보러가기</OtherBoardButtonText>
+        {isAlarmButton ? (
+          <OtherBoardButtonText onClick={onClickOtherBoard}>
+            구독 알림
+          </OtherBoardButtonText>
+        ) : (
+          <OtherBoardButtonText onClick={onClickOtherBoard}>
+            글 보러가기
+          </OtherBoardButtonText>
+        )}
       </OtherBoardButton>
     </Container>
   );

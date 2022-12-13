@@ -10,7 +10,7 @@ type Props = {
 };
 
 const OtherBoard = ({ memberId }: Props) => {
-  const { data } = useOtherBoard(memberId);
+  const { data } = useOtherBoard({ memberId, limit: 3 });
 
   const title = useMemo(() => {
     if (data) {
@@ -30,6 +30,7 @@ const OtherBoard = ({ memberId }: Props) => {
           nickname={data.nickname}
           memberImageUrl={data.memberImageUrl}
           position={data.position}
+          memberId={data.memberId}
         />
       </Container>
     );
