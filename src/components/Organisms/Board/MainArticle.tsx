@@ -54,7 +54,7 @@ const MainArticle = ({ tagType, search }: Props) => {
         height: '100%',
       }}
     >
-      {(myBoard.bookmark || myBoard.history) && !isSearch.complete && (
+      {(myBoard.bookmark || myBoard.history) && !isSearch.complete && !isError && (
         <Flex>
           <SelectList
             active={myBoard.bookmark}
@@ -130,7 +130,7 @@ const MainArticle = ({ tagType, search }: Props) => {
               최신 아티클을 둘러보세요
             </DIText>
           )}
-          {
+          {!isError && (
             <FilterContainer>
               <FilterPositionWrap>
                 {['전체', '기획', '개발', '디자인'].map(
@@ -162,7 +162,7 @@ const MainArticle = ({ tagType, search }: Props) => {
                 </FilterButton>
               )}
             </FilterContainer>
-          }
+          )}
         </>
       )}
 

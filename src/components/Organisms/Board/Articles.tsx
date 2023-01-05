@@ -14,14 +14,12 @@ type Props = {
 
 const Articles = (props: Props) => {
   const theme = useTheme();
-  const isShowBookmarkList = useRecoilValue(myBoardAtom); // 북마크조회가 아닐때는 기본 메인 아티클을 표시한다.
+  const myBoard = useRecoilValue(myBoardAtom); // 북마크조회가 아닐때는 기본 메인 아티클을 표시한다.
   const isSearch = useRecoilValue(searchAtom);
   return (
     <React.Fragment>
-      {(isShowBookmarkList.bookmark || isShowBookmarkList.history) && (
-        <MainArticle {...props} />
-      )}
-      {!isShowBookmarkList.bookmark && !isShowBookmarkList.history && (
+      {(myBoard.bookmark || myBoard.history) && <MainArticle {...props} />}
+      {!myBoard.bookmark && !myBoard.history && (
         <>
           {!isSearch.complete && (
             <>

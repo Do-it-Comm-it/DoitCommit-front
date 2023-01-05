@@ -140,6 +140,10 @@ const toggleBookmark = async (selectedBoard: IBoard) => {
   }
 };
 
+const deleteBoardHistory = async (board: IBoard) => {
+  await requestAPI().delete(`/boards/${board.boardId}/history`);
+};
+
 const boardApiList = {
   getBookmarkBoardListByPage,
   getBoardListByPage,
@@ -157,6 +161,7 @@ const boardApiList = {
   getOtherBoardByMemberId,
   deleteBoard,
   putBoard,
+  deleteBoardHistory,
 };
 
 export default boardApiList;

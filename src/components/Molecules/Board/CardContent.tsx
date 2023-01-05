@@ -8,6 +8,7 @@ import { IBoard } from '@src/typings/Board';
 import { board as boardApi } from '@src/service/api';
 import { Link } from 'react-router-dom';
 import { useBoardListMutation } from '@src/hooks/useBoards';
+import myBoardAtom from '@src/recoil/atom/myBoard';
 interface Props {
   board: IBoard;
   category: number | null;
@@ -39,6 +40,7 @@ const CardContent = ({
   const onClickBookmark = useCallback(async () => {
     mutation.mutate(board);
   }, [mutation, board]);
+  const myBoard = useRecoilValue(myBoardAtom);
   return (
     <Container>
       <Top>
@@ -62,7 +64,7 @@ const CardContent = ({
               marginLeft: 'auto',
               cursor: 'pointer',
               transition: 'all 0.7s',
-              opacity: isHover ? 1 : 0,
+              opacity: isHover && !myBoard.bookmark ? 1 : 0,
             }}
           />
         ) : (
@@ -73,7 +75,7 @@ const CardContent = ({
               cursor: 'pointer',
               color: theme.colors.gray.gray400,
               transition: 'all 0.7s',
-              opacity: isHover ? 1 : 0,
+              opacity: isHover && !myBoard.bookmark ? 1 : 0,
             }}
           />
         )}

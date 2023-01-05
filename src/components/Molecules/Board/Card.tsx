@@ -5,7 +5,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IBoard } from '@src/typings/Board';
 import Status from '@src/components/Atoms/Board/Status';
-
+import { useRecoilValue } from 'recoil';
+import myBoardAtom from '@src/recoil/atom/myBoard';
+import { useBoardListMutation } from '@src/hooks/useBoards';
+import { board as boardApi } from '@src/service/api';
+import MoreVert from '@src/components/Atoms/Board/MoreVert';
 interface Props {
   board: IBoard;
   category: number | null;
@@ -15,10 +19,25 @@ interface Props {
 }
 const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
   const [isHover, setIsHover] = useState<boolean>(false);
+
+  const myBoard = useRecoilValue(myBoardAtom);
   const onToggle = useCallback((value) => {
     setIsHover(value);
   }, []);
 
+  const mutation = useBoardListMutation(
+    {
+      myBookmark: !board.myBookmark,
+    },
+    boardApi.toggleBookmark,
+    category,
+    search,
+    isBookmark,
+    isHome
+  );
+  const onClickBookmark = useCallback(async () => {
+    mutation.mutate(board);
+  }, [mutation, board]);
   return (
     <>
       {isHome ? (
@@ -78,15 +97,33 @@ const Card = ({ board, category, search, isBookmark, isHome }: Props) => {
             isBookmark={isBookmark}
             isHover={isHover}
           />
-          <Bottom>
-            <Author>by. {board.writer}</Author>
-            <Status
-              board={board}
-              category={category}
-              search={search}
-              isBookmark={isBookmark}
-            />
-          </Bottom>
+          {myBoard.bookmark || myBoard.history ? (
+            <Bottom>
+              <Author>by. {board.writer}</Author>
+              <Status
+                board={board}
+                category={category}
+                search={search}
+                isBookmark={isBookmark}
+              />
+              <MoreVert
+                board={board}
+                category={category}
+                search={search}
+                isBookmark={isBookmark}
+              />
+            </Bottom>
+          ) : (
+            <Bottom>
+              <Author>by. {board.writer}</Author>
+              <Status
+                board={board}
+                category={category}
+                search={search}
+                isBookmark={isBookmark}
+              />
+            </Bottom>
+          )}
         </Container>
       )}
     </>
@@ -108,6 +145,7 @@ const Container = styled.div<{ isHome?: boolean }>`
   @media (max-width: 500px) {
     width: 90%;
   }
+  position: relative;
 `;
 
 const Bottom = styled.div`
