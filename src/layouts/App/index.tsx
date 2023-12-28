@@ -16,11 +16,15 @@ import Skeleton from '@src/components/Molecules/LoadingSkeleton';
 import Articles from '@src/components/Organisms/Board/Articles';
 import { useRecoilValue } from 'recoil';
 import { searchAtom } from '@src/recoil/atom/search';
+import useSocket from '@src/hooks/useSocket';
 
 const App = () => {
   const { theme } = useDarkMode();
   const queryClient = new QueryClient();
   const { search, tag, complete } = useRecoilValue(searchAtom);
+
+  // comment out below line to disable socket
+  // useSocket();
 
   return (
     <QueryClientProvider client={queryClient}>
